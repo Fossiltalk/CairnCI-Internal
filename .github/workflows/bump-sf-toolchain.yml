@@ -1,0 +1,157 @@
+# Checks npm weekly for newer @salesforce/cli and sfdx-git-delta versions and
+# opens a single PR bumping the default: values in sf-validate.yml and sf-deploy.yml.
+# Uses dist-tags.stable for sfdx-git-delta (not latest) to track the stable channel.
+#
+# PRs created by GITHUB_TOKEN do not trigger CI automatically — run the integration
+# test manually on the PR branch before merging.
+name: Bump SF Toolchain Versions
+
+on:
+  schedule:
+    - cron: "0 5 * * 1" # Mondays 05:00 UTC — one hour before integration test
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  bump:
+    name: Check @salesforce/cli + sfdx-git-delta
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Resolve current and latest versions
+        id: versions
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          latest_cli=$(npm view @salesforce/cli version)
+          latest_sgd=$(npm view sfdx-git-delta dist-tags.stable)
+
+          current_cli=$(python3 <<'PY'
+          import sys
+          in_block = False
+          for line in open('.github/workflows/sf-validate.yml'):
+              s = line.lstrip()
+              if s.startswith('sf-cli-version:'):
+                  in_block = True
+              elif in_block and s.startswith('default:'):
+                  print(s.split('"')[1])
+                  sys.exit()
+          PY
+          )
+
+          current_sgd=$(python3 <<'PY'
+          import sys
+          in_block = False
+          for line in open('.github/workflows/sf-validate.yml'):
+              s = line.lstrip()
+              if s.startswith('sgd-version:'):
+                  in_block = True
+              elif in_block and s.startswith('default:'):
+                  print(s.split('"')[1])
+                  sys.exit()
+          PY
+          )
+
+          echo "current_cli=${current_cli}"
+          echo "latest_cli=${latest_cli}"
+          echo "current_sgd=${current_sgd}"
+          echo "latest_sgd=${latest_sgd}"
+
+          {
+            echo "current_cli=${current_cli}"
+            echo "latest_cli=${latest_cli}"
+            echo "current_sgd=${current_sgd}"
+            echo "latest_sgd=${latest_sgd}"
+          } >> "$GITHUB_OUTPUT"
+
+          if [ "${current_cli}" != "${latest_cli}" ] || [ "${current_sgd}" != "${latest_sgd}" ]; then
+            echo "needs_bump=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "needs_bump=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Apply version bumps
+        if: steps.versions.outputs.needs_bump == 'true'
+        shell: bash
+        env:
+          LATEST_CLI: ${{ steps.versions.outputs.latest_cli }}
+          LATEST_SGD: ${{ steps.versions.outputs.latest_sgd }}
+        run: |
+          set -euo pipefail
+          python3 <<'PY'
+          import os
+
+          def bump(path, input_name, new_val):
+              lines = open(path).readlines()
+              in_block = False
+              for i, line in enumerate(lines):
+                  s = line.lstrip()
+                  if s.startswith(f'{input_name}:'):
+                      in_block = True
+                  elif in_block:
+                      if s.startswith('default:'):
+                          indent = len(line) - len(s)
+                          lines[i] = ' ' * indent + f'default: "{new_val}"\n'
+                          in_block = False
+                      elif s and not s.startswith(('description:', 'required:', 'type:', '#')):
+                          in_block = False
+              open(path, 'w').writelines(lines)
+
+          cli = os.environ['LATEST_CLI']
+          sgd = os.environ['LATEST_SGD']
+          for f in ['.github/workflows/sf-validate.yml', '.github/workflows/sf-deploy.yml']:
+              bump(f, 'sf-cli-version', cli)
+              bump(f, 'sgd-version', sgd)
+          PY
+
+      - name: Commit, push, and open PR
+        if: steps.versions.outputs.needs_bump == 'true'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CURRENT_CLI: ${{ steps.versions.outputs.current_cli }}
+          LATEST_CLI: ${{ steps.versions.outputs.latest_cli }}
+          CURRENT_SGD: ${{ steps.versions.outputs.current_sgd }}
+          LATEST_SGD: ${{ steps.versions.outputs.latest_sgd }}
+        run: |
+          set -euo pipefail
+          branch="bump/sf-toolchain"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b "${branch}"
+          git add .github/workflows/sf-validate.yml .github/workflows/sf-deploy.yml
+          git commit -m "chore: bump SF toolchain defaults
+
+          @salesforce/cli: ${CURRENT_CLI} -> ${LATEST_CLI}
+          sfdx-git-delta: ${CURRENT_SGD} -> ${LATEST_SGD}"
+          git push --force origin "${branch}"
+
+          existing=$(gh pr list --head "${branch}" --json number --jq '.[0].number // empty')
+          if [ -n "${existing}" ]; then
+            echo "PR #${existing} already open for ${branch} — updating in place."
+            exit 0
+          fi
+
+          cat > /tmp/pr-body.md <<EOF
+          ## SF Toolchain Version Bump
+
+          | Package | Current | Latest |
+          |---|---|---|
+          | \`@salesforce/cli\` | \`${CURRENT_CLI}\` | \`${LATEST_CLI}\` |
+          | \`sfdx-git-delta\` | \`${CURRENT_SGD}\` | \`${LATEST_SGD}\` |
+
+          Before merging: trigger the integration test on this branch and confirm it passes.
+          EOF
+
+          gh pr create \
+            --title "chore: bump SF toolchain defaults" \
+            --body-file /tmp/pr-body.md \
+            --label "dependencies" \
+            --base main \
+            --head "${branch}"
