@@ -1,0 +1,44 @@
+# Mirrors a version tag from Fossiltalk/CairnCI-Internal to Fossiltalk/CairnCI-Public.
+# Triggers whenever a tag matching v* is pushed here. The public repo is what
+# consumers pin (e.g. Fossiltalk/CairnCI-Public/.github/workflows/sf-validate.yml@v1).
+#
+# Required secrets (stored in CairnCI-Internal):
+#   CAIRNCI_APP_ID          — the GitHub App's numeric App ID
+#   CAIRNCI_APP_PRIVATE_KEY — the PEM private key generated for the app
+name: Publish Tag to Public Repo
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+
+jobs:
+  publish-tag:
+    name: Mirror ${{ github.ref_name }} → CairnCI-Public
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Generate GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.CAIRNCI_APP_ID }}
+          private-key: ${{ secrets.CAIRNCI_APP_PRIVATE_KEY }}
+          repositories: CairnCI-Public
+
+      - name: Push tag to public repo
+        shell: bash
+        env:
+          TAG: ${{ github.ref_name }}
+          TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          set -euo pipefail
+          git remote add public "https://x-access-token:${TOKEN}@github.com/Fossiltalk/CairnCI-Public.git"
+          git push public "refs/tags/${TAG}:refs/tags/${TAG}"
