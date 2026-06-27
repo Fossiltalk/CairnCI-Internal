@@ -1,0 +1,17 @@
+CairnCI
+Copyright 2026 Fossiltalk
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+NOT AFFILIATED WITH SALESFORCE
+  CairnCI is an independent, community-maintained open-source project. It is not
+  affiliated with, endorsed by, sponsored by, or supported by Salesforce, Inc.
+  "Salesforce", "Salesforce DX", and "SFDX" are trademarks of Salesforce, Inc.
+  This documentation references those marks only nominatively, to describe the
+  platform and tools that CairnCI interoperates with. No affiliation,
+  endorsement, or trademark rights are claimed or granted.
+
+This software invokes, but does not redistribute, third-party tools at runtime,
+each under its own license, including:
+  - Salesforce CLI (@salesforce/cli)
+  - sfdx-git-delta (https://github.com/scolladon/sfdx-git-delta)

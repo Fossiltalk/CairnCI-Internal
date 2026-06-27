@@ -1,0 +1,18 @@
+# Dogfood caller: deploy this repo's own metadata on merge to a deployable branch.
+# Reference example for consumers (see examples/caller-deploy.yml).
+name: CI Deploy
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "force-app/**"
+
+jobs:
+  deploy:
+    uses: ./.github/workflows/sf-deploy.yml
+    with:
+      environment: ${{ github.ref_name }}
+      source-dir: force-app
+      test-level: RunLocalTests
+    secrets: inherit

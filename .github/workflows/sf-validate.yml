@@ -1,0 +1,533 @@
+# Reusable workflow: validate a pull request against a Salesforce org.
+#
+# Consumers call this from a thin caller workflow triggered on pull_request.
+# It performs a delta-only, check-only validation (no changes are committed to
+# the org) and publishes the resulting validation job-id as an artifact so a
+# later quick deploy can reuse it.
+#
+# See docs/consumer-setup.md and examples/caller-validate.yml.
+name: Salesforce Validate (reusable)
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        description: "GitHub Environment to validate against (scopes the org secret). Recommended convention: '<branch>-validate' (e.g. 'main-validate') — a separate environment with no deployment branch restrictions, so PR refs can deploy to it. Defaults to no environment (repo-level secret)."
+        required: false
+        type: string
+        default: ""
+      runs-on:
+        description: "Runner label(s) as a JSON array string. e.g. '[\"ubuntu-latest\"]' or '[\"self-hosted\",\"linux\"]'."
+        required: false
+        type: string
+        default: '["ubuntu-latest"]'
+      node-version:
+        description: "Node.js version. Default '20' (pinned; newer LTS releases trigger an unsettled top-level await error in the Salesforce CLI). sfdx-git-delta requires >= 20."
+        required: false
+        type: string
+        default: "20"
+      sf-cli-version:
+        description: "@salesforce/cli version (npm dist-tag or exact version)."
+        required: false
+        type: string
+        default: "latest"
+      sgd-version:
+        description: "sfdx-git-delta plugin version (npm dist-tag or exact version). Default 'stable'."
+        required: false
+        type: string
+        default: "stable"
+      config-file:
+        description: "Path to an optional JSON config file in the consumer repo."
+        required: false
+        type: string
+        default: ".cairnci/config.json"
+      # The settings below resolve as: explicit input (if non-empty) > config file
+      # value > built-in default. Leave them unset to take them from the config file.
+      source-dir:
+        description: "SFDX source directory. Default: force-app."
+        required: false
+        type: string
+        default: ""
+      delta:
+        description: "'true' = validate only changed metadata (sfdx-git-delta); 'false' = validate the entire source-dir. Default: true."
+        required: false
+        type: string
+        default: ""
+      test-level:
+        description: "Apex test level: NoTestRun | RunSpecifiedTests | RunLocalTests | RunAllTestsInOrg. Default: RunLocalTests."
+        required: false
+        type: string
+        default: ""
+      tests:
+        description: "Space/comma separated test classes when test-level is RunSpecifiedTests."
+        required: false
+        type: string
+        default: ""
+      wait:
+        description: "Minutes to wait for validation. Default: 60."
+        required: false
+        type: string
+        default: ""
+      min-coverage:
+        description: "Minimum org-wide Apex test coverage percentage required to pass. Default: 75."
+        required: false
+        type: string
+        default: ""
+      org-mode:
+        description: >-
+          How to obtain the org to validate against. 'auth-url' (default)
+          validates against the org from the SFDX_AUTH_URL secret. 'scratch'
+          creates an ephemeral scratch org from a Dev Hub (DEVHUB_SFDX_AUTH_URL
+          secret), validates against it, then deletes it — useful for
+          integration testing or validating against a clean org.
+        required: false
+        type: string
+        default: "auth-url"
+      scratch-def-file:
+        description: "Scratch org definition file (org-mode: scratch). Default: config/project-scratch-def.json."
+        required: false
+        type: string
+        default: "config/project-scratch-def.json"
+      scratch-duration-days:
+        description: "Scratch org lifetime in days (org-mode: scratch). Default: 1."
+        required: false
+        type: string
+        default: "1"
+      rule-deploy:
+        description: "When 'true', MatchingRule and DuplicateRule metadata is extracted into a separate 3-step path (deactivate → update → activate) to work around Salesforce's active-rule edit restriction. Only applies in delta mode. Default: false."
+        required: false
+        type: string
+        default: ""
+    # Callers must use `secrets: inherit` so `secrets.SFDX_AUTH_URL` resolves
+    # (repo-level for PR validation, or environment-scoped if the caller job is
+    # environment-bound). See sf-deploy.yml for why we don't declare it explicitly.
+
+jobs:
+  validate:
+    name: Validate delta
+    runs-on: ${{ fromJSON(inputs.runs-on) }}
+    environment: ${{ inputs.environment }}
+    steps:
+      - name: Checkout (full history for delta)
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Pre-flight checks
+        shell: bash
+        env:
+          ORG_MODE: ${{ inputs.org-mode }}
+          SFDX_AUTH_URL: ${{ secrets.SFDX_AUTH_URL }}
+          DEVHUB_SFDX_AUTH_URL: ${{ secrets.DEVHUB_SFDX_AUTH_URL }}
+        run: |
+          if [ "$ORG_MODE" = "scratch" ]; then
+            if [ -z "${DEVHUB_SFDX_AUTH_URL:-}" ]; then
+              echo "::error::org-mode 'scratch' requires the DEVHUB_SFDX_AUTH_URL secret." >&2
+              exit 1
+            fi
+          elif [ -z "${SFDX_AUTH_URL:-}" ]; then
+            echo "::error::SFDX_AUTH_URL secret is empty or not set." >&2
+            exit 1
+          fi
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ inputs.node-version }}
+
+      - name: Resolve configuration (input > config file > default)
+        shell: bash
+        env:
+          CONFIG_FILE: ${{ inputs.config-file }}
+          IN_SOURCE_DIR: ${{ inputs.source-dir }}
+          IN_DELTA: ${{ inputs.delta }}
+          IN_TEST_LEVEL: ${{ inputs.test-level }}
+          IN_TESTS: ${{ inputs.tests }}
+          IN_WAIT: ${{ inputs.wait }}
+          IN_MIN_COVERAGE: ${{ inputs.min-coverage }}
+          IN_ROLLBACK_STRATEGY: ""
+          IN_RULE_DEPLOY: ${{ inputs.rule-deploy }}
+        run: |
+          node <<'EOF'
+          const fs = require("fs");
+          const cfgPath = process.env.CONFIG_FILE || "";
+          let cfg = {};
+          if (cfgPath && fs.existsSync(cfgPath)) {
+            try { cfg = JSON.parse(fs.readFileSync(cfgPath, "utf8")); console.log("Loaded config from " + cfgPath); }
+            catch (e) { console.log("::warning::Could not parse " + cfgPath + ": " + e.message); }
+          } else {
+            console.log("No config file at '" + cfgPath + "' — using inputs/defaults.");
+          }
+          const defaults = { sourceDir: "force-app", delta: "true", testLevel: "RunLocalTests", tests: "", wait: "60", minCoverage: "75", rollbackStrategy: "none", ruleDeploy: "false" };
+          const inputs = {
+            sourceDir: process.env.IN_SOURCE_DIR,
+            delta: process.env.IN_DELTA,
+            testLevel: process.env.IN_TEST_LEVEL,
+            tests: process.env.IN_TESTS,
+            wait: process.env.IN_WAIT,
+            minCoverage: process.env.IN_MIN_COVERAGE,
+            rollbackStrategy: process.env.IN_ROLLBACK_STRATEGY,
+            ruleDeploy: process.env.IN_RULE_DEPLOY,
+          };
+          const pick = (k) => {
+            const i = inputs[k];
+            if (i !== undefined && i !== "") return i;
+            if (cfg[k] !== undefined && String(cfg[k]) !== "") return String(cfg[k]);
+            return defaults[k];
+          };
+          const map = {
+            EFFECTIVE_SOURCE_DIR: "sourceDir",
+            EFFECTIVE_DELTA: "delta",
+            EFFECTIVE_TEST_LEVEL: "testLevel",
+            EFFECTIVE_TESTS: "tests",
+            EFFECTIVE_WAIT: "wait",
+            EFFECTIVE_MIN_COVERAGE: "minCoverage",
+            EFFECTIVE_ROLLBACK_STRATEGY: "rollbackStrategy",
+            EFFECTIVE_RULE_DEPLOY: "ruleDeploy",
+          };
+          let out = "";
+          for (const [envName, key] of Object.entries(map)) {
+            const v = pick(key);
+            out += envName + "=" + v + "\n";
+            console.log("resolved " + envName + "=" + v);
+          }
+          fs.appendFileSync(process.env.GITHUB_ENV, out);
+          EOF
+
+      - name: Cache Salesforce toolchain
+        uses: actions/cache@v6
+        with:
+          path: |
+            ~/.npm-global
+            ~/.local/share/sf
+            ~/.sf
+          key: sf-toolchain-${{ runner.os }}-node${{ inputs.node-version }}-cli${{ inputs.sf-cli-version }}-sgd${{ inputs.sgd-version }}
+
+      - name: Install Salesforce CLI + sfdx-git-delta
+        shell: bash
+        env:
+          SF_CLI_VERSION: ${{ inputs.sf-cli-version }}
+          SGD_VERSION: ${{ inputs.sgd-version }}
+          DELTA: ${{ env.EFFECTIVE_DELTA }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$HOME/.npm-global"
+          npm config set prefix "$HOME/.npm-global"
+          echo "$HOME/.npm-global/bin" >> "$GITHUB_PATH"
+          export PATH="$HOME/.npm-global/bin:$PATH"
+
+          cliWanted="$(npm view "@salesforce/cli@${SF_CLI_VERSION}" version)"
+          cliInstalled="$(sf version 2>/dev/null | sed -n 's#.*@salesforce/cli/\([0-9][0-9.]*\).*#\1#p' | head -n1 || true)"
+          if [ "$cliInstalled" = "$cliWanted" ]; then
+            echo "sf CLI $cliInstalled already installed — skipping."
+          else
+            npm install --global "@salesforce/cli@${cliWanted}"
+          fi
+          sf version
+
+          # sfdx-git-delta is only needed for delta mode.
+          if [ "$DELTA" != "true" ]; then
+            echo "Full-branch mode (delta=false) — skipping sfdx-git-delta install."
+          else
+            # Trust the unsigned plugin via the allowlist instead of piping a 'y'
+            # to the prompt. Merge so we don't clobber other allowlisted plugins.
+            allow="$HOME/.config/sf/unsignedPluginAllowList.json"
+            mkdir -p "$(dirname "$allow")"
+            node -e 'const fs=require("fs");const p=process.argv[1];let a=[];try{a=JSON.parse(fs.readFileSync(p,"utf8"));if(!Array.isArray(a))a=[];}catch{}; if(!a.includes("sfdx-git-delta"))a.push("sfdx-git-delta"); fs.writeFileSync(p,JSON.stringify(a));' "$allow"
+
+            sgdWanted="$(npm view "sfdx-git-delta@${SGD_VERSION}" version)"
+            sgdInstalled="$(sf plugins 2>/dev/null | sed -n 's/.*sfdx-git-delta \([0-9][0-9.]*\).*/\1/p' | head -n1 || true)"
+            if [ "$sgdInstalled" = "$sgdWanted" ]; then
+              echo "sfdx-git-delta $sgdInstalled already installed — skipping."
+            else
+              sf plugins install "sfdx-git-delta@${sgdWanted}"
+            fi
+            sf plugins
+          fi
+
+      - name: Authenticate to target org
+        shell: bash
+        env:
+          ORG_MODE: ${{ inputs.org-mode }}
+          SFDX_AUTH_URL: ${{ secrets.SFDX_AUTH_URL }}
+          DEVHUB_SFDX_AUTH_URL: ${{ secrets.DEVHUB_SFDX_AUTH_URL }}
+          SCRATCH_DEF_FILE: ${{ inputs.scratch-def-file }}
+          SCRATCH_DURATION: ${{ inputs.scratch-duration-days }}
+        run: |
+          set -euo pipefail
+          authfile="$(mktemp)"
+          trap 'rm -f "$authfile"' EXIT
+          if [ "$ORG_MODE" = "scratch" ]; then
+            if [ ! -f "$SCRATCH_DEF_FILE" ]; then
+              echo "::error::scratch definition file '$SCRATCH_DEF_FILE' not found." >&2
+              exit 1
+            fi
+            printf '%s' "$DEVHUB_SFDX_AUTH_URL" > "$authfile"
+            sf org login sfdx-url --sfdx-url-file "$authfile" --alias devhub --set-default-dev-hub
+            echo "Creating scratch org from '$SCRATCH_DEF_FILE' (duration ${SCRATCH_DURATION}d)..."
+            sf org create scratch \
+              --definition-file "$SCRATCH_DEF_FILE" \
+              --target-dev-hub devhub \
+              --alias target-org \
+              --set-default \
+              --duration-days "$SCRATCH_DURATION" \
+              --wait 30
+            # Signal the cleanup step to delete the org afterward.
+            echo "SF_SCRATCH_CREATED=true" >> "$GITHUB_ENV"
+          else
+            printf '%s' "$SFDX_AUTH_URL" > "$authfile"
+            sf org login sfdx-url --sfdx-url-file "$authfile" --alias target-org --set-default
+          fi
+
+      - name: Prepare sources (delta or full branch)
+        id: delta
+        shell: bash
+        env:
+          SRC_DIR: ${{ env.EFFECTIVE_SOURCE_DIR }}
+          DELTA: ${{ env.EFFECTIVE_DELTA }}
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          set -euo pipefail
+          if [ "$DELTA" != "true" ]; then
+            echo "Full-branch mode: validating the entire '$SRC_DIR'."
+            echo "deploy-dir=$SRC_DIR" >> "$GITHUB_OUTPUT"
+            echo "has-changes=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          mkdir -p changed-sources
+          sf sgd source delta \
+            --from "origin/${BASE_REF}" \
+            --to "HEAD" \
+            --source-dir "$SRC_DIR" \
+            --output-dir changed-sources \
+            --generate-delta
+          echo "----- delta package.xml -----"
+          cat changed-sources/package/package.xml 2>/dev/null || echo "(none)"
+          echo "deploy-dir=changed-sources/$SRC_DIR" >> "$GITHUB_OUTPUT"
+          if grep -q "<types>" changed-sources/package/package.xml 2>/dev/null; then
+            echo "has-changes=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has-changes=false" >> "$GITHUB_OUTPUT"
+            echo "No deployable metadata changed — nothing to validate."
+          fi
+
+      - name: Split rule metadata (matching + duplicate rules)
+        id: split-rules
+        if: steps.delta.outputs.has-changes == 'true' && env.EFFECTIVE_RULE_DEPLOY == 'true' && env.EFFECTIVE_DELTA == 'true'
+        shell: bash
+        env:
+          SRC_DIR: ${{ env.EFFECTIVE_SOURCE_DIR }}
+        run: |
+          node <<'EOF'
+          const fs = require('fs');
+          const path = require('path');
+          const { execSync } = require('child_process');
+          const srcDir = process.env.SRC_DIR;
+          const cs = 'changed-sources';
+          const pkgPath = `${cs}/package/package.xml`;
+          if (!fs.existsSync(pkgPath)) {
+            fs.appendFileSync(process.env.GITHUB_OUTPUT, 'has-rules=false\nhas-main-pkg=true\n');
+            process.exit(0);
+          }
+          const pkgXml = fs.readFileSync(pkgPath, 'utf8');
+          const RULE_TYPES = ['MatchingRule', 'DuplicateRule'];
+          const typeBlocks = pkgXml.match(/<types>[\s\S]*?<\/types>/g) || [];
+          const ruleBlocks = typeBlocks.filter(b => {
+            const m = b.match(/<name>([^<]+)<\/name>/);
+            return m && RULE_TYPES.includes(m[1].trim());
+          });
+          if (ruleBlocks.length === 0) {
+            fs.appendFileSync(process.env.GITHUB_OUTPUT, 'has-rules=false\nhas-main-pkg=true\n');
+            process.exit(0);
+          }
+          const mainBlocks = typeBlocks.filter(b => {
+            const m = b.match(/<name>([^<]+)<\/name>/);
+            return !(m && RULE_TYPES.includes(m[1].trim()));
+          });
+          const ver = (pkgXml.match(/<version>([^<]+)<\/version>/) || [null,'62.0'])[1];
+          const buildPkg = blocks =>
+            `<?xml version="1.0" encoding="UTF-8"?>\n<Package xmlns="http://soap.sforce.com/2006/04/metadata">\n${blocks.join('\n')}\n    <version>${ver}</version>\n</Package>`;
+          fs.writeFileSync(`${cs}/rules-pkg.xml`, buildPkg(ruleBlocks));
+          if (mainBlocks.length > 0) fs.writeFileSync(`${cs}/main-pkg.xml`, buildPkg(mainBlocks));
+          const deactivateSrc = `${cs}/deactivate-src`;
+          const findFiles = pattern => {
+            try { return execSync(`find ${cs}/${srcDir} -name "${pattern}" 2>/dev/null`).toString().trim().split('\n').filter(Boolean); }
+            catch { return []; }
+          };
+          const copyDeactivated = (files, replacements) => {
+            for (const file of files) {
+              const dest = path.join(deactivateSrc, file.slice(cs.length + 1));
+              fs.mkdirSync(path.dirname(dest), { recursive: true });
+              let content = fs.readFileSync(file, 'utf8');
+              for (const [from, to] of replacements) content = content.replace(from, to);
+              fs.writeFileSync(dest, content);
+            }
+          };
+          copyDeactivated(findFiles('*.matchingRule-meta.xml'),
+            [[/<ruleStatus>Active<\/ruleStatus>/g, '<ruleStatus>Inactive</ruleStatus>']]);
+          copyDeactivated(findFiles('*.duplicateRule-meta.xml'),
+            [[/<isActive>true<\/isActive>/gi, '<isActive>false</isActive>']]);
+          console.log(`Rule split complete. rules-pkg.xml written. deactivate-src created: ${fs.existsSync(deactivateSrc)}`);
+          fs.appendFileSync(process.env.GITHUB_OUTPUT,
+            `has-rules=true\nhas-main-pkg=${mainBlocks.length > 0 ? 'true' : 'false'}\n`);
+          EOF
+
+      - name: Check rule limits
+        if: steps.split-rules.outputs.has-rules == 'true'
+        shell: bash
+        run: |
+          node <<'EOF'
+          const { execSync } = require('child_process');
+          const query = soql => {
+            try {
+              const out = execSync(
+                `sf data query --query "${soql}" --use-tooling-api --target-org target-org --json`,
+                { encoding: 'utf8', stdio: ['pipe','pipe','pipe'] }
+              );
+              return JSON.parse(out).result?.records || [];
+            } catch { return []; }
+          };
+          const LIMIT = 5;
+          // Active matching rules per object
+          const mrRows = query("SELECT SobjectType, COUNT(Id) cnt FROM MatchingRule WHERE Status = 'Active' GROUP BY SobjectType");
+          for (const r of mrRows) {
+            if (r.cnt >= LIMIT) {
+              console.log(`::error::MatchingRule limit reached: ${r.SobjectType} already has ${r.cnt} active matching rules (max ${LIMIT}). Deactivate or remove a rule before deploying new ones.`);
+              process.exitCode = 1;
+            } else if (r.cnt >= LIMIT - 1) {
+              console.log(`::warning::MatchingRule limit approaching: ${r.SobjectType} has ${r.cnt}/${LIMIT} active matching rules.`);
+            }
+          }
+          // Active duplicate rules per object
+          const drRows = query("SELECT SobjectType, COUNT(Id) cnt FROM DuplicateRule WHERE IsActive = true GROUP BY SobjectType");
+          for (const r of drRows) {
+            if (r.cnt >= LIMIT) {
+              console.log(`::error::DuplicateRule limit reached: ${r.SobjectType} already has ${r.cnt} active duplicate rules (max ${LIMIT}). Deactivate or remove a rule before deploying new ones.`);
+              process.exitCode = 1;
+            } else if (r.cnt >= LIMIT - 1) {
+              console.log(`::warning::DuplicateRule limit approaching: ${r.SobjectType} has ${r.cnt}/${LIMIT} active duplicate rules.`);
+            }
+          }
+          if (!process.exitCode) console.log('Rule limits OK.');
+          EOF
+
+      - name: Validate rules — Deactivate (check-only)
+        if: steps.split-rules.outputs.has-rules == 'true'
+        shell: bash
+        env:
+          SRC_DIR: ${{ env.EFFECTIVE_SOURCE_DIR }}
+          WAIT: ${{ env.EFFECTIVE_WAIT }}
+        run: |
+          set -euo pipefail
+          echo "Validating rule deactivation (check-only)..."
+          sf project deploy validate \
+            --source-dir "changed-sources/deactivate-src/${SRC_DIR}" \
+            --test-level NoTestRun \
+            --wait "$WAIT"
+
+      - name: Validate (check-only)
+        id: validate
+        if: steps.delta.outputs.has-changes == 'true' && (steps.split-rules.outputs.has-rules != 'true' || steps.split-rules.outputs.has-main-pkg == 'true')
+        shell: bash
+        env:
+          DEPLOY_DIR: ${{ steps.delta.outputs.deploy-dir }}
+          TEST_LEVEL: ${{ env.EFFECTIVE_TEST_LEVEL }}
+          TESTS: ${{ env.EFFECTIVE_TESTS }}
+          WAIT: ${{ env.EFFECTIVE_WAIT }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          EFFECTIVE_RULE_DEPLOY: ${{ env.EFFECTIVE_RULE_DEPLOY }}
+          HAS_RULES: ${{ steps.split-rules.outputs.has-rules }}
+        run: |
+          set -euo pipefail
+          # --post-destructive-changes requires --manifest. Redirect sfdx-project.json to
+          # the delta output dir so the CLI resolves source-backed components from there.
+          _use_delta_pkg_dir() {
+            node <<'NODE'
+            const fs=require('fs');
+            const p=JSON.parse(fs.readFileSync('sfdx-project.json','utf8'));
+            const dd=process.env.DEPLOY_DIR;
+            const sd=dd.replace(/^changed-sources\//,'');
+            let rep=false;
+            p.packageDirectories=p.packageDirectories.map(d=>{if(d.path===sd){rep=true;return{...d,path:dd};}return d;});
+            if(!rep){const di=p.packageDirectories.findIndex(d=>d.default);(di>=0?p.packageDirectories[di]:p.packageDirectories[0]).path=dd;}
+            fs.writeFileSync('sfdx-project.json',JSON.stringify(p,null,2));
+            console.log('Redirected packageDirectories to '+dd);
+          NODE
+          }
+          if [ "${EFFECTIVE_RULE_DEPLOY:-}" = "true" ] && [ "${HAS_RULES:-}" = "true" ]; then
+            _use_delta_pkg_dir
+            args=(project deploy validate --manifest changed-sources/main-pkg.xml \
+              --test-level "$TEST_LEVEL" --wait "$WAIT" --json)
+          elif [ -f changed-sources/destructiveChanges/destructiveChanges.xml ]; then
+            _use_delta_pkg_dir
+            args=(project deploy validate --manifest changed-sources/package/package.xml \
+              --post-destructive-changes changed-sources/destructiveChanges/destructiveChanges.xml \
+              --test-level "$TEST_LEVEL" --wait "$WAIT" --json)
+          else
+            args=(project deploy validate --source-dir "$DEPLOY_DIR" --test-level "$TEST_LEVEL" --wait "$WAIT" --json)
+          fi
+          if [ "$TEST_LEVEL" = "RunSpecifiedTests" ]; then
+            if [ -z "${TESTS// /}" ]; then
+              echo "::error::test-level RunSpecifiedTests requires 'tests'." >&2
+              exit 1
+            fi
+            for t in ${TESTS//,/ }; do args+=(--tests "$t"); done
+          fi
+
+          echo "Running: sf ${args[*]}"
+          set +e
+          out="$(sf "${args[@]}")"; code=$?
+          set -e
+          echo "$out"
+          jobId="$(printf '%s' "$out" | node -e 'let d="";process.stdin.on("data",c=>d+=c).on("end",()=>{try{const j=JSON.parse(d);process.stdout.write((j.result&&j.result.id)||"")}catch(e){}})')"
+          coveragePct="$(printf '%s' "$out" | node -e 'let d="";process.stdin.on("data",c=>d+=c).on("end",()=>{try{const j=JSON.parse(d);const cov=(j.result&&j.result.details&&j.result.details.runTestResult&&j.result.details.runTestResult.codeCoverage)||[];const total=cov.reduce((s,c)=>s+(c.numLocations||0),0);const covered=cov.reduce((s,c)=>s+((c.numLocations||0)-(c.numLocationsNotCovered||0)),0);process.stdout.write(total>0?String(Math.floor(covered/total*100)):"100")}catch(e){process.stdout.write("100")}})')"
+          printf '{"jobId":"%s","sha":"%s"}\n' "$jobId" "${HEAD_SHA:-}" > validation.json
+          echo "job-id=$jobId" >> "$GITHUB_OUTPUT"
+          echo "coverage=$coveragePct" >> "$GITHUB_OUTPUT"
+          [ "$code" -eq 0 ] || { echo "::error::Validation failed." >&2; exit "$code"; }
+          echo "Validation OK. job-id=$jobId  coverage=${coveragePct}%"
+
+      - name: Validate rules — Activate (check-only)
+        if: steps.split-rules.outputs.has-rules == 'true'
+        shell: bash
+        env:
+          WAIT: ${{ env.EFFECTIVE_WAIT }}
+        run: |
+          set -euo pipefail
+          echo "Validating rule activation (check-only)..."
+          sf project deploy validate \
+            --manifest changed-sources/rules-pkg.xml \
+            --test-level NoTestRun \
+            --wait "$WAIT"
+
+      - name: Check test coverage
+        if: steps.validate.outputs.job-id != ''
+        shell: bash
+        env:
+          COVERAGE: ${{ steps.validate.outputs.coverage }}
+          MIN_COVERAGE: ${{ env.EFFECTIVE_MIN_COVERAGE }}
+        run: |
+          set -euo pipefail
+          echo "Measured coverage: ${COVERAGE}%  (required >= ${MIN_COVERAGE}%)"
+          if [ "${COVERAGE}" -lt "${MIN_COVERAGE}" ]; then
+            echo "::error::Test coverage ${COVERAGE}% is below the required minimum of ${MIN_COVERAGE}%." >&2
+            exit 1
+          fi
+          echo "Coverage OK."
+
+      - name: Upload validation job-id
+        if: steps.validate.outputs.job-id != ''
+        uses: actions/upload-artifact@v7
+        with:
+          name: sf-validation-${{ github.event.pull_request.head.sha }}
+          path: validation.json
+          retention-days: 10
+
+      # Best-effort teardown of the scratch org created in org-mode: scratch.
+      # Runs even on failure; the org also auto-expires after its duration.
+      - name: Delete scratch org
+        if: ${{ always() && env.SF_SCRATCH_CREATED == 'true' }}
+        shell: bash
+        run: |
+          sf org delete scratch --target-org target-org --no-prompt \
+            || echo "::warning::Could not delete the scratch org (it will expire on its own)."

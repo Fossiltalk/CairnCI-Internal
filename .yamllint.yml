@@ -1,0 +1,14 @@
+# Relaxed yamllint config tuned for GitHub Actions YAML.
+extends: default
+
+rules:
+  # GitHub Actions workflows have no `---` document start.
+  document-start: disable
+  # Long `run:`/description lines are common and readable in Actions YAML.
+  line-length: disable
+  # `on:` is a valid mapping key in workflows; don't flag it as a truthy value.
+  truthy:
+    check-keys: false
+  # Comments don't always have two leading spaces in generated/edited YAML.
+  comments:
+    min-spaces-from-content: 1

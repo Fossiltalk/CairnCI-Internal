@@ -1,0 +1,36 @@
+# Layer-2 integration test.
+#
+# Provisions an ephemeral scratch org and validates a small fixture through
+# CairnCI's OWN reusable validate workflow (org-mode: scratch). This is the test
+# org-free Layer-1 (lint + unit) can't do: it proves the assembled workflow
+# actually authenticates, deploy-checks metadata, and runs Apex tests + the
+# coverage gate against a real org. Hermetic — the scratch org is deleted after
+# each run.
+#
+# Requires a `DEVHUB_SFDX_AUTH_URL` repo secret (a Dev Hub auth URL). Runs on
+# demand + weekly, and only in the canonical repo (forks have no secret).
+name: Integration (scratch org)
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * 1" # Mondays 06:00 UTC
+
+permissions:
+  contents: read
+
+jobs:
+  validate-scratch:
+    if: github.repository == 'Fossiltalk/CairnCI'
+    uses: ./.github/workflows/sf-validate.yml
+    with:
+      org-mode: scratch
+      source-dir: tests/fixtures/force-app
+      scratch-def-file: tests/fixtures/config/project-scratch-def.json
+      # A fresh scratch org is empty, so validate the whole fixture (no delta).
+      # Expression form on purpose: actionlint types a quoted "false" as a bool
+      # and won't assign it to this string-typed input; `${{ 'false' }}` is a string.
+      delta: ${{ 'false' }}
+      test-level: RunLocalTests
+      min-coverage: "75"
+    secrets: inherit

@@ -1,0 +1,10 @@
+{
+  "$comment": "Optional. Place at .cairnci/config.json in your repo. Any setting you omit falls back to the built-in default; any input passed explicitly on the caller workflow overrides what's here.",
+  "sourceDir": "force-app",
+  "delta": true,
+  "testLevel": "RunLocalTests",
+  "tests": "",
+  "wait": "60",
+  "rollbackStrategy": "revert-pr",
+  "ruleDeploy": true
+}

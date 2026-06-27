@@ -1,0 +1,578 @@
+# Reusable workflow: deploy to a Salesforce org on merge to a deployable branch.
+#
+# Consumers call this from a thin caller workflow triggered on push to the
+# branches that map to a deployable org (each mapped to a GitHub Environment
+# holding that org's SFDX_AUTH_URL secret).
+#
+# It prefers a quick deploy that reuses the validation produced for the merged
+# pull request (fast, no re-run of Apex tests). It only reuses a validation
+# whose validated commit is an ancestor of the commit being deployed, so the
+# exact same changes are deployed. Otherwise it falls back to a full deploy.
+#
+# See docs/consumer-setup.md and examples/caller-deploy.yml.
+name: Salesforce Deploy (reusable)
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        description: "GitHub Environment to deploy to (scopes the org secret + protection rules)."
+        required: false
+        type: string
+        default: ""
+      runs-on:
+        description: "Runner label(s) as a JSON array string. e.g. '[\"ubuntu-latest\"]'."
+        required: false
+        type: string
+        default: '["ubuntu-latest"]'
+      node-version:
+        description: "Node.js version. Default '20' (pinned; newer LTS releases trigger an unsettled top-level await error in the Salesforce CLI). sfdx-git-delta requires >= 20."
+        required: false
+        type: string
+        default: "20"
+      sf-cli-version:
+        required: false
+        type: string
+        default: "latest"
+      sgd-version:
+        description: "sfdx-git-delta plugin version (npm dist-tag or exact version). Default 'stable'."
+        required: false
+        type: string
+        default: "stable"
+      config-file:
+        description: "Path to an optional JSON config file in the consumer repo."
+        required: false
+        type: string
+        default: ".cairnci/config.json"
+      # The settings below resolve as: explicit input (if non-empty) > config file
+      # value > built-in default. Leave them unset to take them from the config file.
+      source-dir:
+        description: "SFDX source directory. Default: force-app."
+        required: false
+        type: string
+        default: ""
+      delta:
+        description: "'true' = deploy only changed metadata (sfdx-git-delta); 'false' = deploy the entire source-dir. Default: true."
+        required: false
+        type: string
+        default: ""
+      test-level:
+        description: "Apex test level for the full-deploy fallback. Default: RunLocalTests."
+        required: false
+        type: string
+        default: ""
+      tests:
+        required: false
+        type: string
+        default: ""
+      wait:
+        description: "Minutes to wait for the deploy. Default: 60."
+        required: false
+        type: string
+        default: ""
+      rollback-strategy:
+        description: >-
+          What to do with git when the deploy to the org fails (the org itself
+          auto-rolls-back; this re-aligns git with the org). One of:
+          'none' (default), 'revert-pr' (open a PR that reverts the merge —
+          safe for protected branches), or 'revert-push' (push the revert
+          directly — requires the branch to allow pushes from GITHUB_TOKEN).
+          Default: none.
+        required: false
+        type: string
+        default: ""
+      rule-deploy:
+        description: "When 'true', MatchingRule and DuplicateRule metadata is extracted into a separate 3-step path (deactivate → update → activate) to work around Salesforce's active-rule edit restriction. Only applies in delta mode. Default: false."
+        required: false
+        type: string
+        default: ""
+    # No `secrets:` declaration on purpose. Environment-scoped secrets only
+    # resolve inside this reusable workflow's environment-bound job, so callers
+    # MUST use `secrets: inherit` (a declared/explicitly-passed secret would be
+    # evaluated in the caller's context, which has no environment, and come back
+    # empty). With inherit, `secrets.SFDX_AUTH_URL` below resolves from the
+    # GitHub Environment named by `inputs.environment`.
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ${{ fromJSON(inputs.runs-on) }}
+    environment: ${{ inputs.environment }}
+    # Needed only when rollback-strategy is enabled (push a revert / open a PR).
+    # Permissions are still capped by the caller repo's workflow settings.
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout (full history for delta + ancestry check)
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Pre-flight checks
+        shell: bash
+        env:
+          SFDX_AUTH_URL: ${{ secrets.SFDX_AUTH_URL }}
+        run: |
+          if [ -z "${SFDX_AUTH_URL:-}" ]; then
+            echo "::error::SFDX_AUTH_URL secret is empty or not set." >&2
+            exit 1
+          fi
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ inputs.node-version }}
+
+      - name: Resolve configuration (input > config file > default)
+        shell: bash
+        env:
+          CONFIG_FILE: ${{ inputs.config-file }}
+          IN_SOURCE_DIR: ${{ inputs.source-dir }}
+          IN_DELTA: ${{ inputs.delta }}
+          IN_TEST_LEVEL: ${{ inputs.test-level }}
+          IN_TESTS: ${{ inputs.tests }}
+          IN_WAIT: ${{ inputs.wait }}
+          IN_ROLLBACK_STRATEGY: ${{ inputs.rollback-strategy }}
+          IN_RULE_DEPLOY: ${{ inputs.rule-deploy }}
+        run: |
+          node <<'EOF'
+          const fs = require("fs");
+          const cfgPath = process.env.CONFIG_FILE || "";
+          let cfg = {};
+          if (cfgPath && fs.existsSync(cfgPath)) {
+            try { cfg = JSON.parse(fs.readFileSync(cfgPath, "utf8")); console.log("Loaded config from " + cfgPath); }
+            catch (e) { console.log("::warning::Could not parse " + cfgPath + ": " + e.message); }
+          } else {
+            console.log("No config file at '" + cfgPath + "' — using inputs/defaults.");
+          }
+          const defaults = { sourceDir: "force-app", delta: "true", testLevel: "RunLocalTests", tests: "", wait: "60", rollbackStrategy: "none", ruleDeploy: "false" };
+          const inputs = {
+            sourceDir: process.env.IN_SOURCE_DIR,
+            delta: process.env.IN_DELTA,
+            testLevel: process.env.IN_TEST_LEVEL,
+            tests: process.env.IN_TESTS,
+            wait: process.env.IN_WAIT,
+            rollbackStrategy: process.env.IN_ROLLBACK_STRATEGY,
+            ruleDeploy: process.env.IN_RULE_DEPLOY,
+          };
+          const pick = (k) => {
+            const i = inputs[k];
+            if (i !== undefined && i !== "") return i;
+            if (cfg[k] !== undefined && String(cfg[k]) !== "") return String(cfg[k]);
+            return defaults[k];
+          };
+          const map = {
+            EFFECTIVE_SOURCE_DIR: "sourceDir",
+            EFFECTIVE_DELTA: "delta",
+            EFFECTIVE_TEST_LEVEL: "testLevel",
+            EFFECTIVE_TESTS: "tests",
+            EFFECTIVE_WAIT: "wait",
+            EFFECTIVE_ROLLBACK_STRATEGY: "rollbackStrategy",
+            EFFECTIVE_RULE_DEPLOY: "ruleDeploy",
+          };
+          let out = "";
+          for (const [envName, key] of Object.entries(map)) {
+            const v = pick(key);
+            out += envName + "=" + v + "\n";
+            console.log("resolved " + envName + "=" + v);
+          }
+          fs.appendFileSync(process.env.GITHUB_ENV, out);
+          EOF
+
+      - name: Cache Salesforce toolchain
+        uses: actions/cache@v6
+        with:
+          path: |
+            ~/.npm-global
+            ~/.local/share/sf
+            ~/.sf
+          key: sf-toolchain-${{ runner.os }}-node${{ inputs.node-version }}-cli${{ inputs.sf-cli-version }}-sgd${{ inputs.sgd-version }}
+
+      - name: Install Salesforce CLI + sfdx-git-delta
+        shell: bash
+        env:
+          SF_CLI_VERSION: ${{ inputs.sf-cli-version }}
+          SGD_VERSION: ${{ inputs.sgd-version }}
+          DELTA: ${{ env.EFFECTIVE_DELTA }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$HOME/.npm-global"
+          npm config set prefix "$HOME/.npm-global"
+          echo "$HOME/.npm-global/bin" >> "$GITHUB_PATH"
+          export PATH="$HOME/.npm-global/bin:$PATH"
+
+          cliWanted="$(npm view "@salesforce/cli@${SF_CLI_VERSION}" version)"
+          cliInstalled="$(sf version 2>/dev/null | sed -n 's#.*@salesforce/cli/\([0-9][0-9.]*\).*#\1#p' | head -n1 || true)"
+          if [ "$cliInstalled" = "$cliWanted" ]; then
+            echo "sf CLI $cliInstalled already installed — skipping."
+          else
+            npm install --global "@salesforce/cli@${cliWanted}"
+          fi
+          sf version
+
+          # sfdx-git-delta is only needed for delta mode.
+          if [ "$DELTA" != "true" ]; then
+            echo "Full-branch mode (delta=false) — skipping sfdx-git-delta install."
+          else
+            # Trust the unsigned plugin via the allowlist instead of piping a 'y'
+            # to the prompt. Merge so we don't clobber other allowlisted plugins.
+            allow="$HOME/.config/sf/unsignedPluginAllowList.json"
+            mkdir -p "$(dirname "$allow")"
+            node -e 'const fs=require("fs");const p=process.argv[1];let a=[];try{a=JSON.parse(fs.readFileSync(p,"utf8"));if(!Array.isArray(a))a=[];}catch{}; if(!a.includes("sfdx-git-delta"))a.push("sfdx-git-delta"); fs.writeFileSync(p,JSON.stringify(a));' "$allow"
+
+            sgdWanted="$(npm view "sfdx-git-delta@${SGD_VERSION}" version)"
+            sgdInstalled="$(sf plugins 2>/dev/null | sed -n 's/.*sfdx-git-delta \([0-9][0-9.]*\).*/\1/p' | head -n1 || true)"
+            if [ "$sgdInstalled" = "$sgdWanted" ]; then
+              echo "sfdx-git-delta $sgdInstalled already installed — skipping."
+            else
+              sf plugins install "sfdx-git-delta@${sgdWanted}"
+            fi
+            sf plugins
+          fi
+
+      - name: Authenticate to target org
+        shell: bash
+        env:
+          SFDX_AUTH_URL: ${{ secrets.SFDX_AUTH_URL }}
+        run: |
+          set -euo pipefail
+          authfile="$(mktemp)"
+          trap 'rm -f "$authfile"' EXIT
+          printf '%s' "$SFDX_AUTH_URL" > "$authfile"
+          sf org login sfdx-url --sfdx-url-file "$authfile" --alias target-org --set-default
+
+      - name: Prepare sources (delta or full branch)
+        id: delta
+        shell: bash
+        env:
+          SRC_DIR: ${{ env.EFFECTIVE_SOURCE_DIR }}
+          DELTA: ${{ env.EFFECTIVE_DELTA }}
+          BEFORE_SHA: ${{ github.event.before }}
+        run: |
+          set -euo pipefail
+          if [ "$DELTA" != "true" ]; then
+            echo "Full-branch mode: deploying the entire '$SRC_DIR'."
+            echo "deploy-dir=$SRC_DIR" >> "$GITHUB_OUTPUT"
+            echo "has-changes=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          # On a branch push, github.event.before is the previous tip. If it is the
+          # zero-sha (new branch / force scenarios) fall back to the first parent.
+          from="$BEFORE_SHA"
+          if [ -z "$from" ] || [ "$from" = "0000000000000000000000000000000000000000" ]; then
+            from="$(git rev-parse HEAD^ 2>/dev/null || echo HEAD)"
+          fi
+          mkdir -p changed-sources
+          sf sgd source delta \
+            --from "$from" \
+            --to "HEAD" \
+            --source-dir "$SRC_DIR" \
+            --output-dir changed-sources \
+            --generate-delta
+          echo "----- delta package.xml -----"
+          cat changed-sources/package/package.xml 2>/dev/null || echo "(none)"
+          echo "deploy-dir=changed-sources/$SRC_DIR" >> "$GITHUB_OUTPUT"
+          if grep -q "<types>" changed-sources/package/package.xml 2>/dev/null; then
+            echo "has-changes=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has-changes=false" >> "$GITHUB_OUTPUT"
+            echo "No deployable metadata changed — nothing to deploy."
+          fi
+
+      - name: Split rule metadata (matching + duplicate rules)
+        id: split-rules
+        if: steps.delta.outputs.has-changes == 'true' && env.EFFECTIVE_RULE_DEPLOY == 'true' && env.EFFECTIVE_DELTA == 'true'
+        shell: bash
+        env:
+          SRC_DIR: ${{ env.EFFECTIVE_SOURCE_DIR }}
+        run: |
+          node <<'EOF'
+          const fs = require('fs');
+          const path = require('path');
+          const { execSync } = require('child_process');
+          const srcDir = process.env.SRC_DIR;
+          const cs = 'changed-sources';
+          const pkgPath = `${cs}/package/package.xml`;
+          if (!fs.existsSync(pkgPath)) {
+            fs.appendFileSync(process.env.GITHUB_OUTPUT, 'has-rules=false\nhas-main-pkg=true\n');
+            process.exit(0);
+          }
+          const pkgXml = fs.readFileSync(pkgPath, 'utf8');
+          const RULE_TYPES = ['MatchingRule', 'DuplicateRule'];
+          const typeBlocks = pkgXml.match(/<types>[\s\S]*?<\/types>/g) || [];
+          const ruleBlocks = typeBlocks.filter(b => {
+            const m = b.match(/<name>([^<]+)<\/name>/);
+            return m && RULE_TYPES.includes(m[1].trim());
+          });
+          if (ruleBlocks.length === 0) {
+            fs.appendFileSync(process.env.GITHUB_OUTPUT, 'has-rules=false\nhas-main-pkg=true\n');
+            process.exit(0);
+          }
+          const mainBlocks = typeBlocks.filter(b => {
+            const m = b.match(/<name>([^<]+)<\/name>/);
+            return !(m && RULE_TYPES.includes(m[1].trim()));
+          });
+          const ver = (pkgXml.match(/<version>([^<]+)<\/version>/) || [null,'62.0'])[1];
+          const buildPkg = blocks =>
+            `<?xml version="1.0" encoding="UTF-8"?>\n<Package xmlns="http://soap.sforce.com/2006/04/metadata">\n${blocks.join('\n')}\n    <version>${ver}</version>\n</Package>`;
+          fs.writeFileSync(`${cs}/rules-pkg.xml`, buildPkg(ruleBlocks));
+          if (mainBlocks.length > 0) fs.writeFileSync(`${cs}/main-pkg.xml`, buildPkg(mainBlocks));
+          const deactivateSrc = `${cs}/deactivate-src`;
+          const findFiles = pattern => {
+            try { return execSync(`find ${cs}/${srcDir} -name "${pattern}" 2>/dev/null`).toString().trim().split('\n').filter(Boolean); }
+            catch { return []; }
+          };
+          const copyDeactivated = (files, replacements) => {
+            for (const file of files) {
+              const dest = path.join(deactivateSrc, file.slice(cs.length + 1));
+              fs.mkdirSync(path.dirname(dest), { recursive: true });
+              let content = fs.readFileSync(file, 'utf8');
+              for (const [from, to] of replacements) content = content.replace(from, to);
+              fs.writeFileSync(dest, content);
+            }
+          };
+          copyDeactivated(findFiles('*.matchingRule-meta.xml'),
+            [[/<ruleStatus>Active<\/ruleStatus>/g, '<ruleStatus>Inactive</ruleStatus>']]);
+          copyDeactivated(findFiles('*.duplicateRule-meta.xml'),
+            [[/<isActive>true<\/isActive>/gi, '<isActive>false</isActive>']]);
+          console.log(`Rule split complete. rules-pkg.xml written. deactivate-src created: ${fs.existsSync(deactivateSrc)}`);
+          fs.appendFileSync(process.env.GITHUB_OUTPUT,
+            `has-rules=true\nhas-main-pkg=${mainBlocks.length > 0 ? 'true' : 'false'}\n`);
+          EOF
+
+      - name: Check rule limits
+        if: steps.split-rules.outputs.has-rules == 'true'
+        shell: bash
+        run: |
+          node <<'EOF'
+          const { execSync } = require('child_process');
+          const query = soql => {
+            try {
+              const out = execSync(
+                `sf data query --query "${soql}" --use-tooling-api --target-org target-org --json`,
+                { encoding: 'utf8', stdio: ['pipe','pipe','pipe'] }
+              );
+              return JSON.parse(out).result?.records || [];
+            } catch { return []; }
+          };
+          const LIMIT = 5;
+          const mrRows = query("SELECT SobjectType, COUNT(Id) cnt FROM MatchingRule WHERE Status = 'Active' GROUP BY SobjectType");
+          for (const r of mrRows) {
+            if (r.cnt >= LIMIT) {
+              console.log(`::error::MatchingRule limit reached: ${r.SobjectType} already has ${r.cnt} active matching rules (max ${LIMIT}). Deactivate or remove a rule before deploying new ones.`);
+              process.exitCode = 1;
+            } else if (r.cnt >= LIMIT - 1) {
+              console.log(`::warning::MatchingRule limit approaching: ${r.SobjectType} has ${r.cnt}/${LIMIT} active matching rules.`);
+            }
+          }
+          const drRows = query("SELECT SobjectType, COUNT(Id) cnt FROM DuplicateRule WHERE IsActive = true GROUP BY SobjectType");
+          for (const r of drRows) {
+            if (r.cnt >= LIMIT) {
+              console.log(`::error::DuplicateRule limit reached: ${r.SobjectType} already has ${r.cnt} active duplicate rules (max ${LIMIT}). Deactivate or remove a rule before deploying new ones.`);
+              process.exitCode = 1;
+            } else if (r.cnt >= LIMIT - 1) {
+              console.log(`::warning::DuplicateRule limit approaching: ${r.SobjectType} has ${r.cnt}/${LIMIT} active duplicate rules.`);
+            }
+          }
+          if (!process.exitCode) console.log('Rule limits OK.');
+          EOF
+
+      - name: Deploy rules — Deactivate
+        if: steps.split-rules.outputs.has-rules == 'true'
+        shell: bash
+        env:
+          SRC_DIR: ${{ env.EFFECTIVE_SOURCE_DIR }}
+          WAIT: ${{ env.EFFECTIVE_WAIT }}
+        run: |
+          set -euo pipefail
+          echo "Deploying rule deactivation..."
+          sf project deploy start \
+            --source-dir "changed-sources/deactivate-src/${SRC_DIR}" \
+            --test-level NoTestRun \
+            --wait "$WAIT"
+
+      - name: Find a reusable validation job-id
+        id: lookup
+        if: steps.delta.outputs.has-changes == 'true'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          jobId=""
+          if command -v gh >/dev/null 2>&1; then
+            # Newest-first list of non-expired validation artifacts.
+            ids="$(gh api "repos/${GITHUB_REPOSITORY}/actions/artifacts?per_page=100" \
+              --jq '[.artifacts[] | select(.name|startswith("sf-validation-")) | select(.expired==false)] | sort_by(.created_at) | reverse | .[].id' 2>/dev/null || true)"
+            for id in $ids; do
+              if gh api "repos/${GITHUB_REPOSITORY}/actions/artifacts/${id}/zip" > art.zip 2>/dev/null && unzip -o art.zip >/dev/null 2>&1; then
+                sha="$(node -e 'try{process.stdout.write((require("./validation.json").sha)||"")}catch(e){}' 2>/dev/null || true)"
+                jid="$(node -e 'try{process.stdout.write((require("./validation.json").jobId)||"")}catch(e){}' 2>/dev/null || true)"
+                rm -f validation.json art.zip
+                # Only reuse when the validated commit is an ancestor of HEAD, so the
+                # exact validated changes are what we deploy (true for merge commits,
+                # false for squash/rebase -> safe full-deploy fallback).
+                if [ -n "$sha" ] && [ -n "$jid" ] && git merge-base --is-ancestor "$sha" HEAD 2>/dev/null; then
+                  jobId="$jid"
+                  echo "Reusing validation $jobId (validated commit $sha is an ancestor of HEAD)."
+                  break
+                fi
+              fi
+            done
+          else
+            echo "::notice::gh CLI not available on this runner — will run a full deploy."
+          fi
+          echo "job-id=$jobId" >> "$GITHUB_OUTPUT"
+
+      - name: Deploy (quick deploy, fallback to full)
+        id: deploy
+        if: steps.delta.outputs.has-changes == 'true' && (steps.split-rules.outputs.has-rules != 'true' || steps.split-rules.outputs.has-main-pkg == 'true')
+        shell: bash
+        env:
+          JOB_ID: ${{ steps.lookup.outputs.job-id }}
+          DEPLOY_DIR: ${{ steps.delta.outputs.deploy-dir }}
+          TEST_LEVEL: ${{ env.EFFECTIVE_TEST_LEVEL }}
+          TESTS: ${{ env.EFFECTIVE_TESTS }}
+          WAIT: ${{ env.EFFECTIVE_WAIT }}
+          EFFECTIVE_RULE_DEPLOY: ${{ env.EFFECTIVE_RULE_DEPLOY }}
+          HAS_RULES: ${{ steps.split-rules.outputs.has-rules }}
+        run: |
+          set -euo pipefail
+          # --post-destructive-changes requires --manifest. Redirect sfdx-project.json to
+          # the delta output dir so the CLI resolves source-backed components from there.
+          _use_delta_pkg_dir() {
+            node <<'NODE'
+            const fs=require('fs');
+            const p=JSON.parse(fs.readFileSync('sfdx-project.json','utf8'));
+            const dd=process.env.DEPLOY_DIR;
+            const sd=dd.replace(/^changed-sources\//,'');
+            let rep=false;
+            p.packageDirectories=p.packageDirectories.map(d=>{if(d.path===sd){rep=true;return{...d,path:dd};}return d;});
+            if(!rep){const di=p.packageDirectories.findIndex(d=>d.default);(di>=0?p.packageDirectories[di]:p.packageDirectories[0]).path=dd;}
+            fs.writeFileSync('sfdx-project.json',JSON.stringify(p,null,2));
+            console.log('Redirected packageDirectories to '+dd);
+          NODE
+          }
+          # Quick deploy is incompatible with the rule-split path (validated package differs in scope).
+          if [ "${EFFECTIVE_RULE_DEPLOY:-}" = "true" ] && [ "${HAS_RULES:-}" = "true" ]; then
+            JOB_ID=""
+            echo "Rule-deploy path active — skipping quick deploy, using full deploy with rule split."
+          fi
+
+          if [ -n "${JOB_ID// /}" ]; then
+            echo "Attempting quick deploy of job-id $JOB_ID"
+            if sf project deploy quick --job-id "$JOB_ID" --wait "$WAIT"; then
+              echo "Quick deploy succeeded."
+              exit 0
+            fi
+            echo "::warning::Quick deploy failed (expired or different org). Falling back to full deploy."
+          else
+            echo "No reusable validation — running a full deploy."
+          fi
+
+          if [ "${EFFECTIVE_RULE_DEPLOY:-}" = "true" ] && [ "${HAS_RULES:-}" = "true" ]; then
+            _use_delta_pkg_dir
+            args=(project deploy start --manifest changed-sources/main-pkg.xml \
+              --test-level "$TEST_LEVEL" --wait "$WAIT")
+          elif [ -f changed-sources/destructiveChanges/destructiveChanges.xml ]; then
+            _use_delta_pkg_dir
+            args=(project deploy start --manifest changed-sources/package/package.xml \
+              --post-destructive-changes changed-sources/destructiveChanges/destructiveChanges.xml \
+              --test-level "$TEST_LEVEL" --wait "$WAIT")
+          else
+            args=(project deploy start --source-dir "$DEPLOY_DIR" --test-level "$TEST_LEVEL" --wait "$WAIT")
+          fi
+          if [ "$TEST_LEVEL" = "RunSpecifiedTests" ]; then
+            for t in ${TESTS//,/ }; do args+=(--tests "$t"); done
+          fi
+          echo "Running: sf ${args[*]}"
+          sf "${args[@]}"
+
+      - name: Deploy rules — Activate
+        if: steps.split-rules.outputs.has-rules == 'true'
+        shell: bash
+        env:
+          WAIT: ${{ env.EFFECTIVE_WAIT }}
+          TEST_LEVEL: ${{ env.EFFECTIVE_TEST_LEVEL }}
+          TESTS: ${{ env.EFFECTIVE_TESTS }}
+        run: |
+          set -euo pipefail
+          echo "Deploying rules with final status..."
+          args=(project deploy start \
+            --manifest changed-sources/rules-pkg.xml \
+            --test-level "$TEST_LEVEL" \
+            --wait "$WAIT")
+          if [ "$TEST_LEVEL" = "RunSpecifiedTests" ]; then
+            for t in ${TESTS//,/ }; do args+=(--tests "$t"); done
+          fi
+          echo "Running: sf ${args[*]}"
+          sf "${args[@]}"
+
+      # Re-align git with the org when the deploy failed. The org auto-rolls-back
+      # a failed deploy, so the merged commits no longer match what's deployed.
+      # Runs ONLY for a genuine deploy failure (not setup/auth failures).
+      - name: Roll back merge on deploy failure
+        if: ${{ failure() && steps.deploy.outcome == 'failure' && env.EFFECTIVE_ROLLBACK_STRATEGY != 'none' }}
+        shell: bash
+        env:
+          STRATEGY: ${{ env.EFFECTIVE_ROLLBACK_STRATEGY }}
+          BRANCH: ${{ github.ref_name }}
+          BEFORE_SHA: ${{ github.event.before }}
+          HEAD_SHA: ${{ github.sha }}
+          ENVIRONMENT: ${{ inputs.environment }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # Build the revert commit(s) on whatever branch is currently checked out.
+          do_revert() {
+            # 3+ words from `--parents` => HEAD has 2+ parents => it's a merge commit.
+            local nwords
+            nwords="$(git rev-list --parents -n 1 HEAD | wc -w)"
+            if [ "$nwords" -ge 3 ]; then
+              echo "HEAD is a merge commit — reverting the merge (mainline = first parent)."
+              git revert --no-edit -m 1 HEAD
+            else
+              local from="$BEFORE_SHA"
+              if [ -z "$from" ] || [ "$from" = "0000000000000000000000000000000000000000" ]; then
+                from="HEAD^"
+              fi
+              echo "HEAD is linear — reverting range ${from}..HEAD (covers squash/rebase merges)."
+              git revert --no-edit "${from}..HEAD"
+            fi
+          }
+
+          case "$STRATEGY" in
+            revert-push)
+              do_revert
+              if git push origin "HEAD:${BRANCH}"; then
+                echo "::warning::Deploy failed — pushed a revert to '${BRANCH}' to match the org."
+              else
+                echo "::error::Could not push the revert to '${BRANCH}'. The branch likely blocks direct pushes; use rollback-strategy: revert-pr." >&2
+                exit 1
+              fi
+              ;;
+            revert-pr)
+              if ! command -v gh >/dev/null 2>&1; then
+                echo "::error::rollback-strategy 'revert-pr' needs the gh CLI, which is not available on this runner." >&2
+                exit 1
+              fi
+              rb="rollback/${HEAD_SHA}"
+              git checkout -b "$rb"
+              do_revert
+              git push --force origin "$rb"
+              gh pr create \
+                --base "$BRANCH" \
+                --head "$rb" \
+                --title "Rollback: deploy to ${ENVIRONMENT:-org} failed (${HEAD_SHA})" \
+                --body "The deploy to **${ENVIRONMENT:-the org}** failed, so the org was rolled back automatically but this branch was not. This PR reverts the merged change(s) to re-align \`${BRANCH}\` with the org. Review the failed deploy logs before merging." \
+                || echo "::warning::Revert branch pushed, but opening the PR failed (it may already exist)."
+              echo "::warning::Deploy failed — opened a revert PR for '${BRANCH}'."
+              ;;
+            *)
+              echo "Unknown rollback-strategy '${STRATEGY}' — skipping rollback."
+              ;;
+          esac

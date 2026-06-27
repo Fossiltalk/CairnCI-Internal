@@ -1,0 +1,23 @@
+# Dogfood caller: validate this repo's own metadata on every PR.
+# This is also the reference example for consumers (see examples/caller-validate.yml),
+# except a consumer would call the reusable workflow by full path + version tag:
+#   uses: Fossiltalk/CairnCI/.github/workflows/sf-validate.yml@v1
+name: CI Validate
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - "force-app/**"
+
+jobs:
+  validate:
+    uses: ./.github/workflows/sf-validate.yml
+    with:
+      environment: ${{ github.base_ref }}-validate
+      source-dir: force-app
+      test-level: RunLocalTests
+    secrets: inherit
+
+  # The optional field governance gate now lives in Fossiltalk/CairnCI-Extensions.
+  # See https://github.com/Fossiltalk/CairnCI-Extensions to add it as a PR check.

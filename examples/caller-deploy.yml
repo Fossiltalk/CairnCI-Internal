@@ -1,0 +1,27 @@
+# Drop this in your repo at .github/workflows/sf-deploy.yml
+# It deploys to the org mapped to each deployable branch on merge.
+#
+# Map each branch to a GitHub Environment of the same name (Settings >
+# Environments) and store that org's SFDX_AUTH_URL secret on the environment.
+# Only list branches that have a deployable org.
+name: Salesforce Deploy
+
+on:
+  push:
+    branches: [develop, uat, main]
+    paths:
+      - "force-app/**"
+
+jobs:
+  deploy:
+    uses: Fossiltalk/CairnCI/.github/workflows/sf-deploy.yml@v1
+    with:
+      environment: ${{ github.ref_name }} # branch name == environment name
+      source-dir: force-app
+      test-level: RunLocalTests
+      # Optional: if the deploy to the org fails, re-align git with the org.
+      # 'revert-pr' is safe for protected branches; 'revert-push' pushes directly.
+      # rollback-strategy: revert-pr
+    # Required for environment-scoped secrets: the SFDX_AUTH_URL stored on the
+    # GitHub Environment named above resolves inside the reusable workflow.
+    secrets: inherit

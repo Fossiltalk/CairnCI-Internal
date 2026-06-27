@@ -1,0 +1,40 @@
+# Self-test for CairnCI: lint the workflow YAML and the bash embedded in the
+# reusable workflows. Org-free, runs in seconds. (Optional extensions and their
+# unit tests live in Fossiltalk/CairnCI-Extensions.)
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  actionlint:
+    name: actionlint (YAML + embedded shellcheck)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Run actionlint
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Official installer script (pinned by tag); shellcheck ships on the
+          # runner, so actionlint also shellchecks every embedded `run:` block
+          # across sf-validate.yml, sf-deploy.yml, ci-validate.yml, ci-deploy.yml.
+          bash <(curl -sSfL https://raw.githubusercontent.com/rhysd/actionlint/v1.7.7/scripts/download-actionlint.bash) 1.7.7
+          ./actionlint -color
+
+  yamllint:
+    name: yamllint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install yamllint
+        shell: bash
+        run: pip install --user yamllint
+      - name: Run yamllint
+        shell: bash
+        run: yamllint -c .yamllint.yml .github/

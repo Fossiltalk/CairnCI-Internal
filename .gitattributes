@@ -1,0 +1,11 @@
+# Keep LF in the repo for everything text, so the bash scripts embedded in the
+# workflow `run:` blocks run correctly on Linux runners regardless of the
+# contributor's OS.
+* text=auto eol=lf
+
+# Binaries (let git detect; never normalize).
+*.png binary
+*.jpg binary
+*.gif binary
+*.zip binary
+*.jar binary
