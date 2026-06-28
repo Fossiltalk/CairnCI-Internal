@@ -1,0 +1,83 @@
+# Integration tests for all 4 permutations of allowDeltaDeploys × allowDestructiveChanges.
+#
+# Permutations:
+#   1. delta=true,  destructive=false  — delta package only, skip destructive cleanup
+#   2. delta=true,  destructive=true   — delta package + destructive changes file
+#   3. delta=false, destructive=false  — full branch deploy, skip destructive cleanup
+#   4. delta=false, destructive=true   — full branch deploy + destructive changes file
+#
+# Delta mode (permutations 1 & 2) requires pull_request context (github.base_ref must
+# be set). Full-branch permutations also run on workflow_dispatch.
+name: Integration (permutations)
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - .github/workflows/sf-validate.yml
+      - .github/workflows/sf-deploy.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  # --- Permutation 1: delta, no destructive ---
+  perm-delta-no-destructive:
+    name: "delta=true destructive=false"
+    if: >-
+      github.repository == 'Fossiltalk/CairnCI-Internal' &&
+      github.event_name == 'pull_request'
+    uses: ./.github/workflows/sf-validate.yml
+    with:
+      environment: main
+      source-dir: tests/fixtures/force-app
+      delta: "true"
+      allow-destructive-changes: "false"
+      test-level: RunLocalTests
+      min-coverage: "75"
+    secrets: inherit
+
+  # --- Permutation 2: delta + destructive ---
+  perm-delta-destructive:
+    name: "delta=true destructive=true"
+    if: >-
+      github.repository == 'Fossiltalk/CairnCI-Internal' &&
+      github.event_name == 'pull_request'
+    uses: ./.github/workflows/sf-validate.yml
+    with:
+      environment: main
+      source-dir: tests/fixtures/force-app
+      delta: "true"
+      allow-destructive-changes: "true"
+      test-level: RunLocalTests
+      min-coverage: "75"
+    secrets: inherit
+
+  # --- Permutation 3: full-branch, no destructive ---
+  perm-full-no-destructive:
+    name: "delta=false destructive=false"
+    if: github.repository == 'Fossiltalk/CairnCI-Internal'
+    uses: ./.github/workflows/sf-validate.yml
+    with:
+      environment: main
+      source-dir: tests/fixtures/force-app
+      delta: "false"
+      allow-destructive-changes: "false"
+      test-level: RunLocalTests
+      min-coverage: "75"
+    secrets: inherit
+
+  # --- Permutation 4: full-branch + destructive ---
+  perm-full-destructive:
+    name: "delta=false destructive=true"
+    if: github.repository == 'Fossiltalk/CairnCI-Internal'
+    uses: ./.github/workflows/sf-validate.yml
+    with:
+      environment: main
+      source-dir: tests/fixtures/force-app
+      delta: "false"
+      allow-destructive-changes: "true"
+      test-level: RunLocalTests
+      min-coverage: "75"
+    secrets: inherit

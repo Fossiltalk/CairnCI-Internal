@@ -78,6 +78,11 @@ on:
         required: false
         type: string
         default: ""
+      allow-destructive-changes:
+        description: "Overrides the 'allowDestructiveChanges' config file value. 'true' detects deleted metadata and includes it in the validation; 'false' skips destructive changes. Default: from config file (false if unset)."
+        required: false
+        type: string
+        default: ""
     # Callers must use `secrets: inherit` so `secrets.SFDX_AUTH_URL` resolves
     # (repo-level, or environment-scoped if the caller job is environment-bound).
     # See sf-deploy.yml for why we don't declare it explicitly.
@@ -120,6 +125,7 @@ jobs:
           IN_MIN_COVERAGE: ${{ inputs.min-coverage }}
           IN_ROLLBACK_STRATEGY: ""
           IN_RULE_DEPLOY: ${{ inputs.rule-deploy }}
+          IN_ALLOW_DESTRUCTIVE_CHANGES: ${{ inputs.allow-destructive-changes }}
         run: |
           node <<'EOF'
           const fs = require("fs");
@@ -135,7 +141,7 @@ jobs:
           const inputs = {
             sourceDir: process.env.IN_SOURCE_DIR,
             allowDeltaDeploys: process.env.IN_DELTA, // workflow `delta` input overrides config
-            allowDestructiveChanges: "",             // config-file only; no workflow input
+            allowDestructiveChanges: process.env.IN_ALLOW_DESTRUCTIVE_CHANGES, // workflow input overrides config
             testLevel: process.env.IN_TEST_LEVEL,
             tests: process.env.IN_TESTS,
             wait: process.env.IN_WAIT,
