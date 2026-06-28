@@ -38,9 +38,11 @@ jobs:
           EXT_VERSION="${TAG#*/}"
           MAJOR_TAG="${EXT_NAME}/$(echo "${EXT_VERSION}" | cut -d. -f1)"
 
-          echo "ext-name=${EXT_NAME}" >> "$GITHUB_OUTPUT"
-          echo "ext-version=${EXT_VERSION}" >> "$GITHUB_OUTPUT"
-          echo "major-tag=${MAJOR_TAG}" >> "$GITHUB_OUTPUT"
+          {
+            echo "ext-name=${EXT_NAME}"
+            echo "ext-version=${EXT_VERSION}"
+            echo "major-tag=${MAJOR_TAG}"
+          } >> "$GITHUB_OUTPUT"
 
           if [ ! -f ".github/actions/${EXT_NAME}/action.yml" ]; then
             echo "::error::No action.yml found at .github/actions/${EXT_NAME}/action.yml" >&2
