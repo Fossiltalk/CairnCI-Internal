@@ -13,15 +13,9 @@ name: Integration (permutations)
 on:
   pull_request:
     branches: [main]
-    paths:
-      - .github/workflows/sf-validate.yml
-      - .github/workflows/sf-deploy.yml
   push:
     branches: [main]
-    paths:
-      - .github/workflows/sf-validate.yml
-      - .github/workflows/sf-deploy.yml
-  merge_group: # paths filtering unsupported on merge_group — runs unconditionally
+  merge_group:
   workflow_dispatch:
 
 permissions:

@@ -247,8 +247,17 @@ jobs:
           DELTA: ${{ env.EFFECTIVE_DELTA }}
           ALLOW_DESTRUCTIVE: ${{ env.EFFECTIVE_ALLOW_DESTRUCTIVE_CHANGES }}
           BASE_REF: ${{ github.base_ref }}
+          BEFORE_SHA: ${{ github.event.before }}
         run: |
           set -euo pipefail
+          # Resolve the "from" ref: PR base branch, push predecessor, or HEAD^.
+          if [ -n "$BASE_REF" ]; then
+            from="origin/${BASE_REF}"
+          elif [ -n "$BEFORE_SHA" ] && [ "$BEFORE_SHA" != "0000000000000000000000000000000000000000" ]; then
+            from="$BEFORE_SHA"
+          else
+            from="$(git rev-parse HEAD^ 2>/dev/null || echo HEAD)"
+          fi
           if [ "$DELTA" != "true" ]; then
             echo "Full-branch mode: validating the entire '$SRC_DIR'."
             echo "deploy-dir=$SRC_DIR" >> "$GITHUB_OUTPUT"
@@ -257,7 +266,7 @@ jobs:
               echo "Detecting deleted metadata for destructive change validation..."
               mkdir -p changed-sources
               sf sgd source delta \
-                --from "origin/${BASE_REF}" \
+                --from "$from" \
                 --to "HEAD" \
                 --source-dir "$SRC_DIR" \
                 --output-dir changed-sources \
@@ -273,7 +282,7 @@ jobs:
           fi
           mkdir -p changed-sources
           sf sgd source delta \
-            --from "origin/${BASE_REF}" \
+            --from "$from" \
             --to "HEAD" \
             --source-dir "$SRC_DIR" \
             --output-dir changed-sources \
