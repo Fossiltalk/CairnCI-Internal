@@ -91,12 +91,12 @@ on:
         required: false
         type: string
         default: ""
-    # No `secrets:` declaration on purpose. Environment-scoped secrets only
-    # resolve inside this reusable workflow's environment-bound job, so callers
-    # MUST use `secrets: inherit` (a declared/explicitly-passed secret would be
-    # evaluated in the caller's context, which has no environment, and come back
-    # empty). With inherit, `secrets.SFDX_AUTH_URL` below resolves from the
-    # GitHub Environment named by `inputs.environment`.
+# No `secrets:` declaration on purpose. Environment-scoped secrets only
+# resolve inside this reusable workflow's environment-bound job, so callers
+# MUST use `secrets: inherit` (a declared/explicitly-passed secret would be
+# evaluated in the caller's context, which has no environment, and come back
+# empty). With inherit, `secrets.SFDX_AUTH_URL` below resolves from the
+# GitHub Environment named by `inputs.environment`.
 
 jobs:
   deploy:

@@ -30,8 +30,8 @@ jobs:
     with:
       environment: main
       source-dir: tests/fixtures/force-app
-      delta: "true"
-      allow-destructive-changes: "false"
+      delta: ${{ 'true' }}
+      allow-destructive-changes: ${{ 'false' }}
       test-level: RunLocalTests
       min-coverage: "75"
     secrets: inherit
@@ -44,8 +44,8 @@ jobs:
     with:
       environment: main
       source-dir: tests/fixtures/force-app
-      delta: "true"
-      allow-destructive-changes: "true"
+      delta: ${{ 'true' }}
+      allow-destructive-changes: ${{ 'true' }}
       test-level: RunLocalTests
       min-coverage: "75"
     secrets: inherit
@@ -58,8 +58,8 @@ jobs:
     with:
       environment: main
       source-dir: tests/fixtures/force-app
-      delta: "false"
-      allow-destructive-changes: "false"
+      delta: ${{ 'false' }}
+      allow-destructive-changes: ${{ 'false' }}
       test-level: RunLocalTests
       min-coverage: "75"
     secrets: inherit
@@ -72,8 +72,8 @@ jobs:
     with:
       environment: main
       source-dir: tests/fixtures/force-app
-      delta: "false"
-      allow-destructive-changes: "true"
+      delta: ${{ 'false' }}
+      allow-destructive-changes: ${{ 'true' }}
       test-level: RunLocalTests
       min-coverage: "75"
     secrets: inherit

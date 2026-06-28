@@ -19,6 +19,3 @@ jobs:
       source-dir: force-app
       test-level: RunLocalTests
     secrets: inherit
-
-  # The optional field governance gate now lives in Fossiltalk/CairnCI-Extensions.
-  # See https://github.com/Fossiltalk/CairnCI-Extensions to add it as a PR check.
