@@ -1,5 +1,9 @@
 # Drop this in your repo at .github/workflows/sf-validate.yml
 # It validates every pull request against your Salesforce org.
+#
+# Extensions (from CairnCI-Extensions or your own) are added as additional jobs
+# below the core validate job. Use `needs: validate` to gate them on a green
+# validation first. See the commented examples at the bottom of this file.
 name: Salesforce Validate
 
 on:
@@ -10,17 +14,36 @@ on:
 
 jobs:
   validate:
-    uses: Fossiltalk/CairnCI/.github/workflows/sf-validate.yml@v1
+    uses: Fossiltalk/CairnCI-Public/.github/workflows/sf-validate.yml@v1
     with:
       # All inputs are optional; defaults shown for reference.
       source-dir: force-app
       test-level: RunLocalTests # NoTestRun | RunSpecifiedTests | RunLocalTests | RunAllTestsInOrg
-      # Defaults: node-version "lts/*", sf-cli-version "latest", sgd-version "stable".
       # Pin the toolchain if you need reproducibility:
-      # node-version: "22"
-      # sf-cli-version: "2.136.8"
-      # sgd-version: "6.31.0"
+      # node-version: "20"
+      # sf-cli-version: "2.68.6"
+      # sgd-version: "4.21.3"
       # Use your own runners:
       # runs-on: '["self-hosted","linux"]'
     # Required: lets the reusable workflow read your SFDX_AUTH_URL secret.
     secrets: inherit
+
+  # ---------------------------------------------------------------------------
+  # Extensions — add any number of additional jobs here.
+  # Each extension runs after `validate` passes. Remove any you don't need.
+  # ---------------------------------------------------------------------------
+
+  # CairnCI-Extensions: field-level permission set governance gate.
+  # Fails the PR if field-level security is missing from any permission set.
+  # field-governance:
+  #   needs: validate
+  #   uses: Fossiltalk/CairnCI-Extensions/.github/actions/field-permset-gate@v1
+  #   with:
+  #     source-dir: force-app
+  #   secrets: inherit
+
+  # Custom extension: add your own reusable workflow or composite action.
+  # my-custom-gate:
+  #   needs: validate
+  #   uses: ./.github/workflows/my-custom-gate.yml
+  #   secrets: inherit
