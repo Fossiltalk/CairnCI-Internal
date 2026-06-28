@@ -1,0 +1,36 @@
+# Dogfood integration test. Runs CairnCI's own sf-validate workflow against a
+# small fixture whenever the reusable workflow files change on main, proving the
+# assembled pipeline actually authenticates, deploy-checks metadata, and runs
+# Apex tests against a real org.
+#
+# Uses the 'main' environment for SFDX_AUTH_URL. Runs full-branch (delta: false)
+# because there is no prior commit baseline to diff against in the fixture repo.
+name: Integration
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - .github/workflows/sf-validate.yml
+      - .github/workflows/sf-deploy.yml
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/sf-validate.yml
+      - .github/workflows/sf-deploy.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-fixture:
+    if: github.repository == 'Fossiltalk/CairnCI-Internal'
+    uses: ./.github/workflows/sf-validate.yml
+    with:
+      environment: main
+      source-dir: tests/fixtures/force-app
+      delta: ${{ 'false' }}
+      test-level: RunLocalTests
+      min-coverage: "75"
+    secrets: inherit

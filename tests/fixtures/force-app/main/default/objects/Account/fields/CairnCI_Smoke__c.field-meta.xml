@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CairnCI_Smoke__c</fullName>
+    <label>CairnCI Smoke</label>
+    <type>Text</type>
+    <length>50</length>
+    <required>false</required>
+    <description>Fixture field for CairnCI integration tests (deploy + field/permset wiring).</description>
+</CustomField>

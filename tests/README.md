@@ -7,25 +7,19 @@ reusable workflows actually work end-to-end against a real Salesforce org.
 ## How it works
 
 [`.github/workflows/integration.yml`](../.github/workflows/integration.yml) calls
-CairnCI's own [`sf-validate.yml`](../.github/workflows/sf-validate.yml) with
-`org-mode: scratch`. That mode auths a **Dev Hub**, spins up an **ephemeral
-scratch org**, validates the fixture below against it (deploy-check + Apex tests
-+ coverage gate), and deletes the org afterward — so each run is hermetic.
+CairnCI's own [`sf-validate.yml`](../.github/workflows/sf-validate.yml) against
+the fixture below whenever `sf-validate.yml` or `sf-deploy.yml` change on `main`.
+It performs a full-branch, check-only validation (deploy-check + Apex tests +
+coverage gate) against the org from `SFDX_AUTH_URL` — no metadata is actually
+committed to the org.
 
-It runs on `workflow_dispatch` and a weekly cron, and is gated to the canonical
-repo (forks have no secret).
+It also runs on `workflow_dispatch` for manual triggering, and is gated to the
+canonical repo (forks have no secret).
 
 ## Setup
 
-Add one repository secret: **`DEVHUB_SFDX_AUTH_URL`** — the Sfdx Auth URL of an
-org with Dev Hub enabled:
-
-```bash
-sf org login web --alias devhub
-sf org display --target-org devhub --verbose   # copy the "Sfdx Auth Url" (force://...)
-```
-
-Then **Actions → Integration (scratch org) → Run workflow**.
+The workflow uses the `main` GitHub environment for the `SFDX_AUTH_URL` secret.
+Set that secret in **Settings → Environments → main → Environment secrets**.
 
 ## The fixture (`fixtures/force-app/`)
 
@@ -47,6 +41,6 @@ ships no Salesforce source.
 ## Not covered here
 
 Quick-deploy **reuse** is inherently a PR→merge flow against a *stable* org (the
-merge deploy reuses the PR's validation), so a fresh-scratch-org-per-run can't
-exercise it. To smoke-test reuse and the cross-repo consumer reference path, run
-a thin consumer repo against a disposable stable org.
+merge deploy reuses the PR's validation job-id), so a single-branch check-only
+run can't exercise it. To smoke-test reuse and the cross-repo consumer reference
+path, run a thin consumer repo against a sandbox or developer org.
