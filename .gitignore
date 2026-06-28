@@ -20,6 +20,9 @@ node_modules/
 # Local environment variables
 .env
 
+# Editor configuration (personal workspace settings only; tasks and extensions are committed)
+.vscode/settings.json
+
 # macOS system files
 .DS_Store
 

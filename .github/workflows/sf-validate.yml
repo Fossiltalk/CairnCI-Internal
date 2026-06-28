@@ -472,4 +472,3 @@ jobs:
           name: sf-validation-${{ github.event.pull_request.head.sha }}
           path: validation.json
           retention-days: 10
-
