@@ -1,0 +1,93 @@
+# Publishes a composite action from .github/actions/<name>/ to
+# Fossiltalk/CairnCI-Extensions when a scoped version tag is pushed.
+#
+# Tag format: <extension-name>/v<semver>  e.g. field-permset-gate/v1.0.0
+#
+# The workflow syncs only the tagged extension's directory, commits any file
+# changes to CairnCI-Extensions main, then pushes two tags:
+#   field-permset-gate/v1.0.0  — exact version (immutable)
+#   field-permset-gate/v1      — floating major alias (consumers pin to this)
+#
+# Required: GitHub App installed on Fossiltalk/CairnCI-Extensions with
+# Contents: Read and write. Uses the same CAIRNCI_APP_ID /
+# CAIRNCI_APP_PRIVATE_KEY secrets already set at repo level.
+name: Publish Extension to CairnCI-Extensions
+
+on:
+  push:
+    tags:
+      - "*/v*"
+
+permissions:
+  contents: read
+
+jobs:
+  publish-extension:
+    name: Publish ${{ github.ref_name }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Parse tag and validate action path
+        id: tag
+        shell: bash
+        run: |
+          set -euo pipefail
+          TAG="${{ github.ref_name }}"
+          EXT_NAME="${TAG%%/*}"
+          EXT_VERSION="${TAG#*/}"
+          MAJOR_TAG="${EXT_NAME}/$(echo "${EXT_VERSION}" | cut -d. -f1)"
+
+          echo "ext-name=${EXT_NAME}" >> "$GITHUB_OUTPUT"
+          echo "ext-version=${EXT_VERSION}" >> "$GITHUB_OUTPUT"
+          echo "major-tag=${MAJOR_TAG}" >> "$GITHUB_OUTPUT"
+
+          if [ ! -f ".github/actions/${EXT_NAME}/action.yml" ]; then
+            echo "::error::No action.yml found at .github/actions/${EXT_NAME}/action.yml" >&2
+            exit 1
+          fi
+
+      - name: Generate GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v3
+        with:
+          app-id: ${{ secrets.CAIRNCI_APP_ID }}
+          private-key: ${{ secrets.CAIRNCI_APP_PRIVATE_KEY }}
+          repositories: CairnCI-Extensions
+
+      - name: Sync extension and push tags
+        shell: bash
+        env:
+          TOKEN: ${{ steps.app-token.outputs.token }}
+          EXT_NAME: ${{ steps.tag.outputs.ext-name }}
+          EXT_VERSION: ${{ steps.tag.outputs.ext-version }}
+          TAG: ${{ github.ref_name }}
+          MAJOR_TAG: ${{ steps.tag.outputs.major-tag }}
+        run: |
+          set -euo pipefail
+
+          git clone "https://x-access-token:${TOKEN}@github.com/Fossiltalk/CairnCI-Extensions.git" ext-repo
+
+          # Sync only this extension's directory — other extensions are untouched
+          mkdir -p "ext-repo/.github/actions/${EXT_NAME}"
+          rsync -a --delete ".github/actions/${EXT_NAME}/" "ext-repo/.github/actions/${EXT_NAME}/"
+
+          cd ext-repo
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add ".github/actions/${EXT_NAME}"
+          if git diff --cached --quiet; then
+            echo "No file changes — pushing tags to existing HEAD."
+          else
+            git commit -m "chore: publish ${EXT_NAME} ${EXT_VERSION}"
+            git push origin main
+          fi
+
+          # Exact semver tag (immutable — do not force)
+          git tag "${TAG}"
+          # Floating major alias (e.g. field-permset-gate/v1) — force-updated on each release
+          git tag "${MAJOR_TAG}" --force
+
+          git push origin "${TAG}"
+          git push origin "${MAJOR_TAG}" --force
