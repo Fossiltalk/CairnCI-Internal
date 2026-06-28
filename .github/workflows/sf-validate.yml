@@ -131,10 +131,11 @@ jobs:
           } else {
             console.log("No config file at '" + cfgPath + "' — using inputs/defaults.");
           }
-          const defaults = { sourceDir: "force-app", delta: "true", testLevel: "RunLocalTests", tests: "", wait: "60", minCoverage: "75", rollbackStrategy: "none", ruleDeploy: "false" };
+          const defaults = { sourceDir: "force-app", allowDeltaDeploys: "true", allowDestructiveChanges: "false", testLevel: "RunLocalTests", tests: "", wait: "60", minCoverage: "75", rollbackStrategy: "none", ruleDeploy: "false" };
           const inputs = {
             sourceDir: process.env.IN_SOURCE_DIR,
-            delta: process.env.IN_DELTA,
+            allowDeltaDeploys: process.env.IN_DELTA, // workflow `delta` input overrides config
+            allowDestructiveChanges: "",             // config-file only; no workflow input
             testLevel: process.env.IN_TEST_LEVEL,
             tests: process.env.IN_TESTS,
             wait: process.env.IN_WAIT,
@@ -150,7 +151,8 @@ jobs:
           };
           const map = {
             EFFECTIVE_SOURCE_DIR: "sourceDir",
-            EFFECTIVE_DELTA: "delta",
+            EFFECTIVE_DELTA: "allowDeltaDeploys",
+            EFFECTIVE_ALLOW_DESTRUCTIVE_CHANGES: "allowDestructiveChanges",
             EFFECTIVE_TEST_LEVEL: "testLevel",
             EFFECTIVE_TESTS: "tests",
             EFFECTIVE_WAIT: "wait",
@@ -182,6 +184,7 @@ jobs:
           SF_CLI_VERSION: ${{ inputs.sf-cli-version }}
           SGD_VERSION: ${{ inputs.sgd-version }}
           DELTA: ${{ env.EFFECTIVE_DELTA }}
+          ALLOW_DESTRUCTIVE: ${{ env.EFFECTIVE_ALLOW_DESTRUCTIVE_CHANGES }}
         run: |
           set -euo pipefail
           mkdir -p "$HOME/.npm-global"
@@ -198,9 +201,10 @@ jobs:
           fi
           sf version
 
-          # sfdx-git-delta is only needed for delta mode.
-          if [ "$DELTA" != "true" ]; then
-            echo "Full-branch mode (delta=false) — skipping sfdx-git-delta install."
+          # sfdx-git-delta is needed for delta mode and for full-branch validations
+          # that allow destructive changes (detection-only run).
+          if [ "$DELTA" != "true" ] && [ "${ALLOW_DESTRUCTIVE:-}" != "true" ]; then
+            echo "Full-branch mode without destructive changes — skipping sfdx-git-delta install."
           else
             # Trust the unsigned plugin via the allowlist instead of piping a 'y'
             # to the prompt. Merge so we don't clobber other allowlisted plugins.
@@ -235,6 +239,7 @@ jobs:
         env:
           SRC_DIR: ${{ env.EFFECTIVE_SOURCE_DIR }}
           DELTA: ${{ env.EFFECTIVE_DELTA }}
+          ALLOW_DESTRUCTIVE: ${{ env.EFFECTIVE_ALLOW_DESTRUCTIVE_CHANGES }}
           BASE_REF: ${{ github.base_ref }}
         run: |
           set -euo pipefail
@@ -242,6 +247,22 @@ jobs:
             echo "Full-branch mode: validating the entire '$SRC_DIR'."
             echo "deploy-dir=$SRC_DIR" >> "$GITHUB_OUTPUT"
             echo "has-changes=true" >> "$GITHUB_OUTPUT"
+            if [ "${ALLOW_DESTRUCTIVE:-}" = "true" ]; then
+              echo "Detecting deleted metadata for destructive change validation..."
+              mkdir -p changed-sources
+              sf sgd source delta \
+                --from "origin/${BASE_REF}" \
+                --to "HEAD" \
+                --source-dir "$SRC_DIR" \
+                --output-dir changed-sources \
+                --generate-delta
+              echo "----- destructive changes detected -----"
+              cat changed-sources/destructiveChanges/destructiveChanges.xml 2>/dev/null || echo "(none)"
+              sf project generate manifest \
+                --source-dir "$SRC_DIR" \
+                --output-dir changed-sources \
+                --name full-package
+            fi
             exit 0
           fi
           mkdir -p changed-sources
@@ -387,6 +408,8 @@ jobs:
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
           EFFECTIVE_RULE_DEPLOY: ${{ env.EFFECTIVE_RULE_DEPLOY }}
           HAS_RULES: ${{ steps.split-rules.outputs.has-rules }}
+          ALLOW_DESTRUCTIVE: ${{ env.EFFECTIVE_ALLOW_DESTRUCTIVE_CHANGES }}
+          DELTA: ${{ env.EFFECTIVE_DELTA }}
         run: |
           set -euo pipefail
           # --post-destructive-changes requires --manifest. Redirect sfdx-project.json to
@@ -408,11 +431,19 @@ jobs:
             _use_delta_pkg_dir
             args=(project deploy validate --manifest changed-sources/main-pkg.xml \
               --test-level "$TEST_LEVEL" --wait "$WAIT" --json)
-          elif [ -f changed-sources/destructiveChanges/destructiveChanges.xml ]; then
-            _use_delta_pkg_dir
-            args=(project deploy validate --manifest changed-sources/package/package.xml \
-              --post-destructive-changes changed-sources/destructiveChanges/destructiveChanges.xml \
-              --test-level "$TEST_LEVEL" --wait "$WAIT" --json)
+          elif [ "${ALLOW_DESTRUCTIVE:-}" = "true" ] && [ -f changed-sources/destructiveChanges/destructiveChanges.xml ]; then
+            if [ "${DELTA:-}" = "true" ]; then
+              # Delta mode: package.xml is already scoped to changed metadata
+              _use_delta_pkg_dir
+              args=(project deploy validate --manifest changed-sources/package/package.xml \
+                --post-destructive-changes changed-sources/destructiveChanges/destructiveChanges.xml \
+                --test-level "$TEST_LEVEL" --wait "$WAIT" --json)
+            else
+              # Full-branch mode: use the generated full manifest + destructive cleanup
+              args=(project deploy validate --manifest changed-sources/full-package.xml \
+                --post-destructive-changes changed-sources/destructiveChanges/destructiveChanges.xml \
+                --test-level "$TEST_LEVEL" --wait "$WAIT" --json)
+            fi
           else
             args=(project deploy validate --source-dir "$DEPLOY_DIR" --test-level "$TEST_LEVEL" --wait "$WAIT" --json)
           fi

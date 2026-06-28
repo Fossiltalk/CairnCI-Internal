@@ -18,6 +18,7 @@ on:
     paths:
       - .github/workflows/sf-validate.yml
       - .github/workflows/sf-deploy.yml
+  merge_group: # paths filtering unsupported on merge_group — runs unconditionally
   workflow_dispatch:
 
 permissions:
