@@ -73,34 +73,14 @@ on:
         required: false
         type: string
         default: ""
-      org-mode:
-        description: >-
-          How to obtain the org to validate against. 'auth-url' (default)
-          validates against the org from the SFDX_AUTH_URL secret. 'scratch'
-          creates an ephemeral scratch org from a Dev Hub (DEVHUB_SFDX_AUTH_URL
-          secret), validates against it, then deletes it — useful for
-          integration testing or validating against a clean org.
-        required: false
-        type: string
-        default: "auth-url"
-      scratch-def-file:
-        description: "Scratch org definition file (org-mode: scratch). Default: config/project-scratch-def.json."
-        required: false
-        type: string
-        default: "config/project-scratch-def.json"
-      scratch-duration-days:
-        description: "Scratch org lifetime in days (org-mode: scratch). Default: 1."
-        required: false
-        type: string
-        default: "1"
       rule-deploy:
         description: "When 'true', MatchingRule and DuplicateRule metadata is extracted into a separate 3-step path (deactivate → update → activate) to work around Salesforce's active-rule edit restriction. Only applies in delta mode. Default: false."
         required: false
         type: string
         default: ""
     # Callers must use `secrets: inherit` so `secrets.SFDX_AUTH_URL` resolves
-    # (repo-level for PR validation, or environment-scoped if the caller job is
-    # environment-bound). See sf-deploy.yml for why we don't declare it explicitly.
+    # (repo-level, or environment-scoped if the caller job is environment-bound).
+    # See sf-deploy.yml for why we don't declare it explicitly.
 
 jobs:
   validate:
@@ -116,16 +96,9 @@ jobs:
       - name: Pre-flight checks
         shell: bash
         env:
-          ORG_MODE: ${{ inputs.org-mode }}
           SFDX_AUTH_URL: ${{ secrets.SFDX_AUTH_URL }}
-          DEVHUB_SFDX_AUTH_URL: ${{ secrets.DEVHUB_SFDX_AUTH_URL }}
         run: |
-          if [ "$ORG_MODE" = "scratch" ]; then
-            if [ -z "${DEVHUB_SFDX_AUTH_URL:-}" ]; then
-              echo "::error::org-mode 'scratch' requires the DEVHUB_SFDX_AUTH_URL secret." >&2
-              exit 1
-            fi
-          elif [ -z "${SFDX_AUTH_URL:-}" ]; then
+          if [ -z "${SFDX_AUTH_URL:-}" ]; then
             echo "::error::SFDX_AUTH_URL secret is empty or not set." >&2
             exit 1
           fi
@@ -248,36 +221,13 @@ jobs:
       - name: Authenticate to target org
         shell: bash
         env:
-          ORG_MODE: ${{ inputs.org-mode }}
           SFDX_AUTH_URL: ${{ secrets.SFDX_AUTH_URL }}
-          DEVHUB_SFDX_AUTH_URL: ${{ secrets.DEVHUB_SFDX_AUTH_URL }}
-          SCRATCH_DEF_FILE: ${{ inputs.scratch-def-file }}
-          SCRATCH_DURATION: ${{ inputs.scratch-duration-days }}
         run: |
           set -euo pipefail
           authfile="$(mktemp)"
           trap 'rm -f "$authfile"' EXIT
-          if [ "$ORG_MODE" = "scratch" ]; then
-            if [ ! -f "$SCRATCH_DEF_FILE" ]; then
-              echo "::error::scratch definition file '$SCRATCH_DEF_FILE' not found." >&2
-              exit 1
-            fi
-            printf '%s' "$DEVHUB_SFDX_AUTH_URL" > "$authfile"
-            sf org login sfdx-url --sfdx-url-file "$authfile" --alias devhub --set-default-dev-hub
-            echo "Creating scratch org from '$SCRATCH_DEF_FILE' (duration ${SCRATCH_DURATION}d)..."
-            sf org create scratch \
-              --definition-file "$SCRATCH_DEF_FILE" \
-              --target-dev-hub devhub \
-              --alias target-org \
-              --set-default \
-              --duration-days "$SCRATCH_DURATION" \
-              --wait 30
-            # Signal the cleanup step to delete the org afterward.
-            echo "SF_SCRATCH_CREATED=true" >> "$GITHUB_ENV"
-          else
-            printf '%s' "$SFDX_AUTH_URL" > "$authfile"
-            sf org login sfdx-url --sfdx-url-file "$authfile" --alias target-org --set-default
-          fi
+          printf '%s' "$SFDX_AUTH_URL" > "$authfile"
+          sf org login sfdx-url --sfdx-url-file "$authfile" --alias target-org --set-default
 
       - name: Prepare sources (delta or full branch)
         id: delta
@@ -523,11 +473,3 @@ jobs:
           path: validation.json
           retention-days: 10
 
-      # Best-effort teardown of the scratch org created in org-mode: scratch.
-      # Runs even on failure; the org also auto-expires after its duration.
-      - name: Delete scratch org
-        if: ${{ always() && env.SF_SCRATCH_CREATED == 'true' }}
-        shell: bash
-        run: |
-          sf org delete scratch --target-org target-org --no-prompt \
-            || echo "::warning::Could not delete the scratch org (it will expire on its own)."
