@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help><!-- Describe the steps you are taking to ensure social distancing both inside and outside your location --></help>
+    <label>Jelaskan Rencana Pembatasan Sosial</label>
+    <name>PublicSector__SocialDistancingPlanDesc__c</name>
+</CustomFieldTranslation>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AssessmentQuestion xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assessmentQuestionVersion>
+        <isActive>true</isActive>
+        <name>HeadOfHouseholdAddress</name>
+        <optionSourceResponseValue>false</optionSourceResponseValue>
+        <questionText>Address</questionText>
+        <status>Active</status>
+        <versionNumber>1</versionNumber>
+    </assessmentQuestionVersion>
+    <dataType>TextArea</dataType>
+    <developerName>PSS_BM_v3_HeadOfHouseholdAddress</developerName>
+    <name>HeadOfHouseholdAddress</name>
+    <questionCategory>Demographic</questionCategory>
+</AssessmentQuestion>

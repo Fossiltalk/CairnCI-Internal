@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>UnitOfMeasureId</fullName>
+    <inlineHelpText>Leave the field blank for a service type of benefit to retrieve the default unit of measure from the associated benefit record.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+    <type>Lookup</type>
+</CustomField>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CommencementDateOffset</fullName>
+    <inlineHelpText>The offset applied to the milestone commencement trigger to determine the milestone achievement date for a date-based milestone.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

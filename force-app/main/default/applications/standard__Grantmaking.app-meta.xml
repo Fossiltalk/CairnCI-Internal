@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <formFactors>Small</formFactors>
+    <formFactors>Large</formFactors>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
+    <isOmniPinnedViewEnabled>false</isOmniPinnedViewEnabled>
+    <label>Grantmaking</label>
+    <navType>Standard</navType>
+    <tabs>standard-home</tabs>
+    <tabs>standard-Account</tabs>
+    <tabs>standard-Contact</tabs>
+    <tabs>standard-Program</tabs>
+    <tabs>standard-FundingAward</tabs>
+    <tabs>standard-FundingAwardRequirement</tabs>
+    <tabs>standard-FundingOpportunity</tabs>
+    <tabs>standard-IndividualApplication</tabs>
+    <tabs>standard-ApplicationReview</tabs>
+    <uiType>Lightning</uiType>
+</CustomApplication>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AssessmentQuestion xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assessmentQuestionVersion>
+        <isActive>true</isActive>
+        <name>Income Change Declaration</name>
+        <optionSourceResponseValue>false</optionSourceResponseValue>
+        <questionText>Income Change Declaration</questionText>
+        <status>Active</status>
+        <versionNumber>1</versionNumber>
+    </assessmentQuestionVersion>
+    <dataType>Formula</dataType>
+    <developerName>PSS_BM_v3_Income_Change_Declaration</developerName>
+    <formulaResponseDataType>Text</formulaResponseDataType>
+    <name>Income Change Declaration</name>
+    <questionCategory>Demographic</questionCategory>
+    <relatedQuestion>PSS_BM_v3_ExistingHouseholdIncomeDetails</relatedQuestion>
+</AssessmentQuestion>

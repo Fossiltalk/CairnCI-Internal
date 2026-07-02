@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Create_Referral</fullName>
+    <availability>online</availability>
+    <displayType>button</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <height>600</height>
+    <linkType>url</linkType>
+    <masterLabel>Create Referral</masterLabel>
+    <openType>sidebar</openType>
+    <protected>false</protected>
+    <url>https://pubseclearningna81.lightning.force.com/lightning/page/omnistudio/omniscript?omniscript__type=Referral&amp;omniscript__subType=OutboundReferral&amp;omniscript__language=English&amp;omniscript__theme=lightning&amp;omniscript__tabLabel=custom:custom18&amp;c__ContextId={!Case.Id}</url>
+</WebLink>

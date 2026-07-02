@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EndDate</fullName>
+    <inlineHelpText>Select an end date that&apos;s on or after the start date. If you don&apos;t select an end date, today&apos;s date is considered.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PublicSector__BusinessOrOccupationRole__c</fullName>
+    <deprecated>false</deprecated>
+    <description>Business or Occupation Role</description>
+    <label>Business or Occupation Role</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Airline Operations</fullName>
+                <default>false</default>
+                <label>Airline Operations</label>
+            </value>
+            <value>
+                <fullName>Border Protection and Transportation Security</fullName>
+                <default>false</default>
+                <label>Border Protection and Transportation Security</label>
+            </value>
+            <value>
+                <fullName>Business Traveler</fullName>
+                <default>false</default>
+                <label>Business Traveler</label>
+            </value>
+            <value>
+                <fullName>Construction</fullName>
+                <default>false</default>
+                <label>Construction</label>
+            </value>
+            <value>
+                <fullName>Correctional Facility Operations</fullName>
+                <default>false</default>
+                <label>Correctional Facility Operations</label>
+            </value>
+            <value>
+                <fullName>Dentistry</fullName>
+                <default>false</default>
+                <label>Dentistry</label>
+            </value>
+            <value>
+                <fullName>Emergency Response and Public Safety</fullName>
+                <default>false</default>
+                <label>Emergency Response and Public Safety</label>
+            </value>
+            <value>
+                <fullName>Environmental or Janitorial  Services</fullName>
+                <default>false</default>
+                <label>Environmental or Janitorial  Services</label>
+            </value>
+            <value>
+                <fullName>Farmworker</fullName>
+                <default>false</default>
+                <label>Farmworker</label>
+            </value>
+            <value>
+                <fullName>Food Preparation</fullName>
+                <default>false</default>
+                <label>Food Preparation</label>
+            </value>
+            <value>
+                <fullName>Healthcare</fullName>
+                <default>false</default>
+                <label>Healthcare</label>
+            </value>
+            <value>
+                <fullName>In-Home Repair Services</fullName>
+                <default>false</default>
+                <label>In-Home Repair Services</label>
+            </value>
+            <value>
+                <fullName>Laboratory</fullName>
+                <default>false</default>
+                <label>Laboratory</label>
+            </value>
+            <value>
+                <fullName>Manufacturing</fullName>
+                <default>false</default>
+                <label>Manufacturing</label>
+            </value>
+            <value>
+                <fullName>Meat and Poultry Processing</fullName>
+                <default>false</default>
+                <label>Meat and Poultry Processing</label>
+            </value>
+            <value>
+                <fullName>Office Worker</fullName>
+                <default>false</default>
+                <label>Office Worker</label>
+            </value>
+            <value>
+                <fullName>Postmortem Care</fullName>
+                <default>false</default>
+                <label>Postmortem Care</label>
+            </value>
+            <value>
+                <fullName>Retail Operations</fullName>
+                <default>false</default>
+                <label>Retail Operations</label>
+            </value>
+            <value>
+                <fullName>Solid Waste or Wastewater Management</fullName>
+                <default>false</default>
+                <label>Solid Waste or Wastewater Management</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

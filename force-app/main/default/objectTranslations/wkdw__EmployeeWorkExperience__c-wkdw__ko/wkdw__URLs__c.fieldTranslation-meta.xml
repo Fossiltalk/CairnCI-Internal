@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help><!-- Use line breaks to separate the URLs --></help>
+    <label>관련 URL</label>
+    <name>wkdw__URLs__c</name>
+</CustomFieldTranslation>

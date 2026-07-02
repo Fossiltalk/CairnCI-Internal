@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AssessmentQuestion xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assessmentQuestionVersion>
+        <isActive>true</isActive>
+        <name>ExistingIncomeProofDocumentName</name>
+        <optionSourceResponseValue>false</optionSourceResponseValue>
+        <questionText>Existing Income Proof Document Name</questionText>
+        <status>Active</status>
+        <versionNumber>1</versionNumber>
+    </assessmentQuestionVersion>
+    <dataType>Text</dataType>
+    <developerName>PSS_BM_v3_ExistingIncomeProofDocumentName</developerName>
+    <name>ExistingIncomeProofDocumentName</name>
+    <questionCategory>Demographic</questionCategory>
+    <relatedQuestion>PSS_BM_v3_ExistingHouseholdIncomeDetails</relatedQuestion>
+</AssessmentQuestion>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help><!-- When selected, the Case trigger is disabled and new cases aren’t automatically shared with the associated employee --></help>
+    <label><!-- Case Sharing Disabled --></label>
+    <name>wkdw__isCaseSharingDisabled__c</name>
+</CustomFieldTranslation>

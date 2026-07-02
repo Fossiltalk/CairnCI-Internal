@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AssessmentQuestion xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assessmentQuestionVersion>
+        <isActive>true</isActive>
+        <name>TotalHouseholdIncome</name>
+        <optionSourceResponseValue>false</optionSourceResponseValue>
+        <questionText>Total Household Income</questionText>
+        <status>Active</status>
+        <versionNumber>1</versionNumber>
+    </assessmentQuestionVersion>
+    <dataType>Formula</dataType>
+    <developerName>PSS_BM_v3_TotalHouseholdIncome</developerName>
+    <formulaResponseDataType>Currency</formulaResponseDataType>
+    <name>TotalHouseholdIncome</name>
+    <questionCategory>Demographic</questionCategory>
+</AssessmentQuestion>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AssessmentQuestion xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assessmentQuestionVersion>
+        <isActive>true</isActive>
+        <name>Relationship</name>
+        <optionSourceResponseValue>false</optionSourceResponseValue>
+        <questionText>Relationship</questionText>
+        <responseValues>Self
+Spouse
+Mother
+Father
+Son
+Daughter
+Grandmother
+Grandfather
+Aunt
+Uncle
+Cousin
+Brother
+Sister
+Stepmother
+Stepfather
+Stepson
+Stepdaughter
+Foster Child
+Foster Parent
+Niece
+Nephew
+Not Related</responseValues>
+        <status>Active</status>
+        <versionNumber>1</versionNumber>
+    </assessmentQuestionVersion>
+    <dataType>Select</dataType>
+    <developerName>PSS_BM_v3_Relationship</developerName>
+    <name>Relationship</name>
+    <questionCategory>Demographic</questionCategory>
+    <relatedQuestion>PSS_BM_v3_HouseholdMemberDetails</relatedQuestion>
+</AssessmentQuestion>

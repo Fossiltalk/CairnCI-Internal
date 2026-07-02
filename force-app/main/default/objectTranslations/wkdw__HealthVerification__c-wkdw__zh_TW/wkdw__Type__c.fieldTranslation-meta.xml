@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>健康證明方法</label>
+    <name>wkdw__Type__c</name>
+    <picklistValues>
+        <masterLabel>Documentation of COVID-19 Recovery</masterLabel>
+        <translation><!-- Documentation of COVID-19 Recovery --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Negative COVID-19 Test Results</masterLabel>
+        <translation><!-- Negative COVID-19 Test Results --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Proof of Vaccination</masterLabel>
+        <translation><!-- Proof of Vaccination --></translation>
+    </picklistValues>
+</CustomFieldTranslation>

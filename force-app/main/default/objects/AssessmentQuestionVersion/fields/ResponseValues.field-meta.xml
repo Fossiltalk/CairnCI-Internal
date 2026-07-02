@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ResponseValues</fullName>
+    <inlineHelpText>Response Values is a required field when the assessment question is of the data type Radio, Radio Group, Select, or Multiselect. Enter response values with each value separated by a new line. Alternatively, for Select, Multiselect, and Radio, you can also define the response values later as Option Source in the OmniStudio designer.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

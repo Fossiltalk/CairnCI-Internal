@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help><!-- In Days --></help>
+    <label>Synlighed af velkomstopgave, forskydning</label>
+    <name>wkdw__WelcomeTaskVisibilityOffset__c</name>
+</CustomFieldTranslation>

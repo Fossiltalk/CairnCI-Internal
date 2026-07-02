@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AssessmentQuestion xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assessmentQuestionVersion>
+        <isActive>true</isActive>
+        <name>ParticipantLastName</name>
+        <optionSourceResponseValue>false</optionSourceResponseValue>
+        <questionText>Last Name</questionText>
+        <status>Active</status>
+        <versionNumber>1</versionNumber>
+    </assessmentQuestionVersion>
+    <dataType>Text</dataType>
+    <developerName>PSS_CP_v1_ParticipantLastName</developerName>
+    <name>ParticipantLastName</name>
+    <questionCategory>Demographic</questionCategory>
+    <relatedQuestion>PSS_CP_v1_ParticipantDetailsEditBlock</relatedQuestion>
+</AssessmentQuestion>

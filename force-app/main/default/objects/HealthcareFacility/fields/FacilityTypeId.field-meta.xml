@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FacilityTypeId</fullName>
+    <inlineHelpText>The system-defined code that represents the type of this facility in the context of its function. For instance, a rehab center or a chronic care facility.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+    <type>Lookup</type>
+</CustomField>

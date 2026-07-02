@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FormulaResponseDataType</fullName>
+    <inlineHelpText>Specify the data type of the question response calculated by a formula.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

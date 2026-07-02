@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AdvancementGraduationDate</fullName>
+    <inlineHelpText>The date of the person&apos;s first graduation from your institution.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

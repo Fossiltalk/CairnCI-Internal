@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help>Εισαγάγετε όλους τους τύπους εγγραφών άρθρων της γνωσιακής βάσης που συσχετίζονται με την κατηγορία δελτίου.</help>
+    <label><!-- AssociatedKnowledgeArticleTypeMapping --></label>
+    <name>wkdw__AssociatedKnowledgeArticleTypeMapping__c</name>
+</CustomFieldTranslation>

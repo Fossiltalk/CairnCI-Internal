@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help><!-- Uncheck this if you don&apos;t want this mapping to be used when creating a Person Account record from an Employee record --></help>
+    <label>פעיל</label>
+    <name>wkdw__IsActive__c</name>
+</CustomFieldTranslation>

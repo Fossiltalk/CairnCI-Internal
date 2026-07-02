@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ApplicationCategory</fullName>
+    <inlineHelpText>Specifies the category of the application based on the admission decision period.</inlineHelpText>
+    <type>Picklist</type>
+</CustomField>

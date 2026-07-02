@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>포트폴리오 항목</value>
+    </caseValues>
+    <nameFieldLabel>이름</nameFieldLabel>
+    <validationRules>
+        <errorMessage>시작 일자 이후의 날짜로 종료 일자를 입력합니다.</errorMessage>
+        <name>wkdw__CompletionDate</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage>https:// 또는 file:/// 등 유효한 프로토콜로 시작하는 URL을 입력합니다.</errorMessage>
+        <name>wkdw__URLs</name>
+    </validationRules>
+</CustomObjectTranslation>

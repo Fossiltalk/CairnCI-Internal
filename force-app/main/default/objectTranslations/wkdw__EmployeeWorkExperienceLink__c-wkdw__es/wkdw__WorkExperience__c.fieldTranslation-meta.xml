@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>Elemento de cartera</label>
+    <name>wkdw__WorkExperience__c</name>
+    <relationshipLabel>Vínculos de elementos de cartera</relationshipLabel>
+</CustomFieldTranslation>

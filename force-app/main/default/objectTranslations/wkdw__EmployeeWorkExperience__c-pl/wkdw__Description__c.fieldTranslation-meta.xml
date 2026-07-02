@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help>Opisz swoje doświadczenia i wyszczególnij swoje ukończone zadania.</help>
+    <label><!-- Description --></label>
+    <name>wkdw__Description__c</name>
+</CustomFieldTranslation>

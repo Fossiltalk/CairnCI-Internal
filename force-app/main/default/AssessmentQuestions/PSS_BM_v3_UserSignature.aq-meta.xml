@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AssessmentQuestion xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assessmentQuestionVersion>
+        <isActive>true</isActive>
+        <name>UserSignature</name>
+        <optionSourceResponseValue>false</optionSourceResponseValue>
+        <questionText>Signature</questionText>
+        <status>Active</status>
+        <versionNumber>1</versionNumber>
+    </assessmentQuestionVersion>
+    <dataType>Text</dataType>
+    <developerName>PSS_BM_v3_UserSignature</developerName>
+    <name>UserSignature</name>
+    <questionCategory>Demographic</questionCategory>
+</AssessmentQuestion>

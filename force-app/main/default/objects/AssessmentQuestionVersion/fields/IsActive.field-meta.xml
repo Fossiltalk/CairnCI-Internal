@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsActive</fullName>
+    <inlineHelpText>If the assessment question version is associated with OmniScripts, the status changes to Archived when you deselect this checkbox. If the assessment question version isn&apos;t associated with OmniScripts, the status changes to Draft when you deselect this checkbox.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help><!-- API name of the Person Account field. Needs to include the __c if it is a custom field or __pc if it is a Person Account custom field --></help>
+    <label>Naam van doelveld</label>
+    <name>wkdw__TargetField__c</name>
+</CustomFieldTranslation>

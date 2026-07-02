@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LowestValidAge</fullName>
+    <inlineHelpText>The lowest age of patients that the practitioner sees at this facility.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

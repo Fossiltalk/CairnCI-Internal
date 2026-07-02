@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>wkdw__Assign_Onboarding_Tasks</fullName>
+    <availability>online</availability>
+    <description>Creates tasks from the selected onboarding templates and associates them with the selected employees.</description>
+    <displayType>massActionButton</displayType>
+    <height>600</height>
+    <linkType>page</linkType>
+    <masterLabel>Assign Onboarding Tasks</masterLabel>
+    <openType>sidebar</openType>
+    <page>wkdw__CallAssignOnboardingFlowVf</page>
+    <protected>false</protected>
+    <requireRowSelection>true</requireRowSelection>
+</WebLink>

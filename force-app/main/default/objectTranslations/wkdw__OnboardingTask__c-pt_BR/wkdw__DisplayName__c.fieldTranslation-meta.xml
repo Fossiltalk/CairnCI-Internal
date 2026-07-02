@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help>O nome da tarefa que os funcionários veem na lista de verificação de integração, Se ficar em branco, o Nome da tarefa será usado.</help>
+    <label><!-- Display Name --></label>
+    <name>wkdw__DisplayName__c</name>
+</CustomFieldTranslation>

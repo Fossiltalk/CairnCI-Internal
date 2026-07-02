@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Knowledge</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Knowledge</value>
+    </caseValues>
+    <gender>Feminine</gender>
+    <nameFieldLabel><!-- Knowledge Name --></nameFieldLabel>
+    <recordTypes>
+        <description>Articoli sui benefit del Centro di assistenza RU</description>
+        <label>RU - Benefit</label>
+        <name>HR_Benefits</name>
+    </recordTypes>
+    <recordTypes>
+        <description>Articoli sulle relazioni con i dipendenti del Centro di assistenza RU</description>
+        <label>RU - Relazioni con i dipendenti</label>
+        <name>HR_Employee_Relations</name>
+    </recordTypes>
+    <recordTypes>
+        <description>Articoli del Centro di assistenza RU di carattere generale</description>
+        <label>RU - Generale</label>
+        <name>HR_General</name>
+    </recordTypes>
+    <recordTypes>
+        <description>Articoli sui congedi/aspettative del Centro di assistenza RU</description>
+        <label>RU - Congedo/aspettativa</label>
+        <name>HR_Leave</name>
+    </recordTypes>
+    <recordTypes>
+        <description>Articoli sull&apos;orientamento del Centro di assistenza RU</description>
+        <label>RU - Orientamento</label>
+        <name>HR_Onboarding</name>
+    </recordTypes>
+    <recordTypes>
+        <description>Articoli sulle paghe del Centro di assistenza RU</description>
+        <label>RU - Paghe</label>
+        <name>HR_Payroll</name>
+    </recordTypes>
+    <recordTypes>
+        <description>Crea un articolo Knowledge per contenuti relativi alle tecnologie dell&apos;informazione, ad esempio apparecchiature, accesso o soluzioni per ottimizzare le prestazioni delle applicazioni</description>
+        <label>Articolo Knowledge IT</label>
+        <name>IT_Knowledge_Article</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

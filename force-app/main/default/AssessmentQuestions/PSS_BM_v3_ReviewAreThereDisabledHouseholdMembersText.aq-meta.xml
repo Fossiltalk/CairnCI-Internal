@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AssessmentQuestion xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assessmentQuestionVersion>
+        <isActive>true</isActive>
+        <name>ReviewAreThereDisabledHouseholdMembersText</name>
+        <optionSourceResponseValue>false</optionSourceResponseValue>
+        <questionText>Do you or any member of your household have a disability?</questionText>
+        <status>Active</status>
+        <versionNumber>1</versionNumber>
+    </assessmentQuestionVersion>
+    <dataType>Formula</dataType>
+    <developerName>PSS_BM_v3_ReviewAreThereDisabledHouseholdMembersText</developerName>
+    <formulaResponseDataType>Text</formulaResponseDataType>
+    <name>ReviewAreThereDisabledHouseholdMembersText</name>
+    <questionCategory>Demographic</questionCategory>
+</AssessmentQuestion>

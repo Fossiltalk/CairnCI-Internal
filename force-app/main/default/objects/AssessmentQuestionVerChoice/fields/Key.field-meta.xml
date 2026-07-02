@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Key</fullName>
+    <inlineHelpText>A unique code or identifier for a question choice that&apos;s mapped to an assessment question version.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

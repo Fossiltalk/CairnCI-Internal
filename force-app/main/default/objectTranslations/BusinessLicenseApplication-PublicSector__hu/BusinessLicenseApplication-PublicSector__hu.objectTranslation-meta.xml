@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <recordTypes>
+        <label><!-- Fire Permit --></label>
+        <name>Fire_Permit</name>
+    </recordTypes>
+    <recordTypes>
+        <label>Újranyitási engedélyre vonatkozó kérelem</label>
+        <name>PublicSector__Reopening_Permit_Request</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Salon Establishment License --></label>
+        <name>Salon_Establishment_License</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Sign Permit --></label>
+        <name>Sign_Permit</name>
+    </recordTypes>
+</CustomObjectTranslation>

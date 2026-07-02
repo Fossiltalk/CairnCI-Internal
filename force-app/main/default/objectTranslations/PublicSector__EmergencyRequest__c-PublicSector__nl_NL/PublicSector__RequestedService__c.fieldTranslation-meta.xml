@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>Verzochte dienst</label>
+    <name>PublicSector__RequestedService__c</name>
+    <picklistValues>
+        <masterLabel>Food Delivery</masterLabel>
+        <translation><!-- Food Delivery --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Medicine / Medical Supplies Delivery</masterLabel>
+        <translation><!-- Medicine / Medical Supplies Delivery --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Temporary Housing</masterLabel>
+        <translation><!-- Temporary Housing --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Well-Being Check</masterLabel>
+        <translation><!-- Well-Being Check --></translation>
+    </picklistValues>
+</CustomFieldTranslation>

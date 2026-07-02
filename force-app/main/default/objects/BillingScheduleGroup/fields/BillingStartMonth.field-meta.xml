@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BillingStartMonth</fullName>
+    <inlineHelpText>The number of the month when billing starts, when the billing term unit is Quarter, Semi-Annual, or Year. For example, “1” is January, “2” is February, etc.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

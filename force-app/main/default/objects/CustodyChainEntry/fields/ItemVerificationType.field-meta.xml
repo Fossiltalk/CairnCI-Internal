@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ItemVerificationType</fullName>
+    <inlineHelpText>Specifies the type of verification for the item.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

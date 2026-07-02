@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SequenceNumber</fullName>
+    <inlineHelpText>The sequence in which the Individual Application Task must be performed.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

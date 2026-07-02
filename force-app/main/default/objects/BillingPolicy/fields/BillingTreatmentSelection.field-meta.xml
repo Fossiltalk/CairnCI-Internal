@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BillingTreatmentSelection</fullName>
+    <inlineHelpText>Select whether you want to use the default Billing Treatment or the Billing Treatment that&apos;s applied to assets related to the Billing Policy.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

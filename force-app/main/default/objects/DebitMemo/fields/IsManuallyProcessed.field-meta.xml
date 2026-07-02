@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsManuallyProcessed</fullName>
+    <inlineHelpText>Select the checkbox if the Debit Memo was processed manually. You can’t deselect the checkbox after it’s selected.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

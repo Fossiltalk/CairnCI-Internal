@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PublicSector__Emergency_Request</fullName>
+    <active>true</active>
+    <label>Emergency Request</label>
+    <picklistValues>
+        <picklist>ApplicationCategory</picklist>
+        <values>
+            <fullName>Basic</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Special</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ApplicationType</picklist>
+        <values>
+            <fullName>New</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Renewal</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Category</picklist>
+        <values>
+            <fullName>License</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Permit</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PublicSector__AccessReason__c</picklist>
+        <values>
+            <fullName>Conference</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inspection</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meetings</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Shift Work</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Training</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PublicSector__BusinessOrOccupationRole__c</picklist>
+        <values>
+            <fullName>Airline Operations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Border Protection and Transportation Security</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Business Traveler</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Construction</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Correctional Facility Operations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dentistry</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Emergency Response and Public Safety</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Environmental or Janitorial  Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Farmworker</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Food Preparation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Healthcare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In-Home Repair Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Laboratory</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Manufacturing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meat and Poultry Processing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Office Worker</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Postmortem Care</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Retail Operations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Solid Waste or Wastewater Management</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PublicSector__FrequencyofAccess__c</picklist>
+        <values>
+            <fullName>Ongoing Shift Work</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Single Visit</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PublicSector__Role__c</picklist>
+        <values>
+            <fullName>Employee</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Visitor</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Status</picklist>
+        <values>
+            <fullName>Application Accepted</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Approved</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Review</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Submitted</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

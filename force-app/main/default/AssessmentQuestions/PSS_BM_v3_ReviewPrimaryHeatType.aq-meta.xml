@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AssessmentQuestion xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assessmentQuestionVersion>
+        <isActive>true</isActive>
+        <name>ReviewPrimaryHeatType</name>
+        <optionSourceResponseValue>false</optionSourceResponseValue>
+        <questionText>What is your primary type of heat?</questionText>
+        <status>Active</status>
+        <versionNumber>1</versionNumber>
+    </assessmentQuestionVersion>
+    <dataType>Formula</dataType>
+    <developerName>PSS_BM_v3_ReviewPrimaryHeatType</developerName>
+    <formulaResponseDataType>Text</formulaResponseDataType>
+    <name>ReviewPrimaryHeatType</name>
+    <questionCategory>Demographic</questionCategory>
+</AssessmentQuestion>

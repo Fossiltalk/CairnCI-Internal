@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AssessmentQuestion xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assessmentQuestionVersion>
+        <isActive>true</isActive>
+        <name>AreThereChildrenInTheHousehold</name>
+        <optionSourceResponseValue>false</optionSourceResponseValue>
+        <questionText>Are there children in the household?</questionText>
+        <status>Active</status>
+        <versionNumber>1</versionNumber>
+    </assessmentQuestionVersion>
+    <dataType>Formula</dataType>
+    <developerName>PSS_BM_v3_AreThereChildrenInTheHousehold</developerName>
+    <formulaResponseDataType>Boolean</formulaResponseDataType>
+    <name>AreThereChildrenInTheHousehold</name>
+    <questionCategory>Demographic</questionCategory>
+</AssessmentQuestion>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BulkMessageEmployees</fullName>
+    <columns>Name</columns>
+    <columns>FirstName</columns>
+    <columns>LastName</columns>
+    <columns>Location</columns>
+    <filterScope>Everything</filterScope>
+    <label>Bulk_SMS_Employees</label>
+</ListView>

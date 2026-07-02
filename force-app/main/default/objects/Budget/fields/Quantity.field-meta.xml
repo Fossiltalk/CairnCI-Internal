@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Quantity</fullName>
+    <inlineHelpText>The quantity used to track a Budget for non-currency projects. For example, this could be number of hours or number of resources.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

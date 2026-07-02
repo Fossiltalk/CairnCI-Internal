@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Npi</fullName>
+    <inlineHelpText>Ten-digit identifier for a provider from the National Plan and Provider Enumeration System.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

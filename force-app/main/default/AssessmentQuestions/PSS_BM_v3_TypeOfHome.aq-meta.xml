@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AssessmentQuestion xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assessmentQuestionVersion>
+        <isActive>true</isActive>
+        <name>TypeOfHome</name>
+        <optionSourceResponseValue>false</optionSourceResponseValue>
+        <questionText>Type of Home</questionText>
+        <responseValues>House
+Mobile Home
+Apartment Building (3 or more units)
+Duplex (2 units)</responseValues>
+        <status>Active</status>
+        <versionNumber>1</versionNumber>
+    </assessmentQuestionVersion>
+    <dataType>Select</dataType>
+    <developerName>PSS_BM_v3_TypeOfHome</developerName>
+    <name>TypeOfHome</name>
+    <questionCategory>Demographic</questionCategory>
+</AssessmentQuestion>

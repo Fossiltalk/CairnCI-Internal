@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>wkdw__UseTaskLabelsInChecklist__c</fullName>
+    <defaultValue>false</defaultValue>
+    <deprecated>false</deprecated>
+    <description>In the onboarding checklist of tasks, show the name and description set on the task record instead of the name and description set on the onboarding task record.</description>
+    <inlineHelpText>In the onboarding checklist of tasks, show the name and description set on the task record instead of the name and description set on the onboarding task record.</inlineHelpText>
+    <label>Use Task Labels in Onboarding Checklist</label>
+    <type>Checkbox</type>
+</CustomField>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VerifiedByOther</fullName>
+    <inlineHelpText>Specifies details of the verifier of the disability, such as title, name and position.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

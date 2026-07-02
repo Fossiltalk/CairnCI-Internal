@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>Typ povolenia na opätovné otvorenie</label>
+    <name>PublicSector__ReopeningPermitType__c</name>
+    <picklistValues>
+        <masterLabel>Curbside Service</masterLabel>
+        <translation><!-- Curbside Service --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Indoor Operation</masterLabel>
+        <translation><!-- Indoor Operation --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Outdoor Operation</masterLabel>
+        <translation><!-- Outdoor Operation --></translation>
+    </picklistValues>
+</CustomFieldTranslation>

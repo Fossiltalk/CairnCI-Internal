@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AdditionalInformation</fullName>
+    <inlineHelpText>Use this text field to capture any additional information for the question, for example, disclosure statement.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

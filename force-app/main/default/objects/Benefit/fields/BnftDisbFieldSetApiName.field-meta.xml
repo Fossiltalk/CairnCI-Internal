@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BnftDisbFieldSetApiName</fullName>
+    <inlineHelpText>Select the API name of the benefit disbursement field set that&apos;s created for your benefit.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

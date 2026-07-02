@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help><!-- Social distancing (measures to ensure physical distancing of at least six feet between workers and customers) --></help>
+    <label>Má plán sociálnych odstupov</label>
+    <name>PublicSector__HasSocialDistancingPlan__c</name>
+</CustomFieldTranslation>

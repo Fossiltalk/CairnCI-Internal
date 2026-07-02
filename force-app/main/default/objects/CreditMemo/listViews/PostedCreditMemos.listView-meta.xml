@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PostedCreditMemos</fullName>
+    <columns>Name</columns>
+    <columns>BillingAccount</columns>
+    <columns>Status</columns>
+    <columns>TotalAmount</columns>
+    <columns>TotalChargeAmount</columns>
+    <columns>TotalAdjustmentAmount</columns>
+    <columns>TotalTaxAmount</columns>
+    <columns>CreditDate</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Status</field>
+        <operation>equals</operation>
+        <value>PT</value>
+    </filters>
+    <filters>
+        <field>Balance</field>
+        <operation>greaterThan</operation>
+        <value>0</value>
+    </filters>
+    <label>Posted Credit Memos</label>
+</ListView>

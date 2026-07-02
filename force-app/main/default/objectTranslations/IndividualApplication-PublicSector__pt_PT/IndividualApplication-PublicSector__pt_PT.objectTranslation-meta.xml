@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <recordTypes>
+        <label><!-- BA --></label>
+        <name>BA</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Barber License --></label>
+        <name>Barber_License</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Grant --></label>
+        <name>Grant</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Physician License --></label>
+        <name>Physician_License</name>
+    </recordTypes>
+    <recordTypes>
+        <label>Pedido de emergência</label>
+        <name>PublicSector__Emergency_Request</name>
+    </recordTypes>
+    <recordTypes>
+        <label>Pedido de autorização de acesso ao local</label>
+        <name>PublicSector__Location_Access_Permit_Request</name>
+    </recordTypes>
+    <recordTypes>
+        <label>Certificado de formação</label>
+        <name>PublicSector__Training_Certificate</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Vehicle Registration --></label>
+        <name>Vehicle_Registration</name>
+    </recordTypes>
+</CustomObjectTranslation>

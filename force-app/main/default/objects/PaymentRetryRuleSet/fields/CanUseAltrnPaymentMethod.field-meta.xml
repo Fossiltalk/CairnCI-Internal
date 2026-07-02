@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CanUseAltrnPaymentMethod</fullName>
+    <inlineHelpText>Select the checkbox to use an alternate payment method on the failed payment schedule item, which is used on the last retry of the failed payment schedule item. For example, if the maximum retry count is 5, then the alternate payment method is used on the fifth retry.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

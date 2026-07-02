@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HR_Leave</fullName>
+    <active>true</active>
+    <description>HR Service Center leave articles</description>
+    <label>HR - Leave</label>
+</RecordType>

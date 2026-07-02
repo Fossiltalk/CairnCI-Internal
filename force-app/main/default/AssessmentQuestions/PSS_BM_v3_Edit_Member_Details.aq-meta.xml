@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AssessmentQuestion xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assessmentQuestionVersion>
+        <isActive>true</isActive>
+        <name>Edit Member Details</name>
+        <optionSourceResponseValue>false</optionSourceResponseValue>
+        <questionText>Edit Member Details</questionText>
+        <responseValues>Update details of this member
+Remove this member</responseValues>
+        <status>Active</status>
+        <versionNumber>2</versionNumber>
+    </assessmentQuestionVersion>
+    <dataType>Radio</dataType>
+    <developerName>PSS_BM_v3_Edit_Member_Details</developerName>
+    <name>Edit Member Details</name>
+    <questionCategory>Demographic</questionCategory>
+    <relatedQuestion>PSS_BM_v3_HouseholdMemberDetails</relatedQuestion>
+</AssessmentQuestion>

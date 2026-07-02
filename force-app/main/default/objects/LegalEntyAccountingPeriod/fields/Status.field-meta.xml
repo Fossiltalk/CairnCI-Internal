@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Status</fullName>
+    <inlineHelpText>Use the Close Legal Entity Accounting Period and Reopen Legal Entity Accounting Period actions to update the status. Manually updating the status in this field can result in inaccuracies.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

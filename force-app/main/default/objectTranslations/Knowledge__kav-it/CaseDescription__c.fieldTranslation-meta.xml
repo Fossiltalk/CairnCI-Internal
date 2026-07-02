@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help>Immetti il contenuto predefinito per gli utenti quando registrano un nuovo ticket correlato a questo articolo. Il campo può essere lasciato vuoto oppure contenere istruzioni, ad esempio &quot;Descrivi il tuo problema o la tua richiesta...&quot;</help>
+    <label>Descrizione caso</label>
+    <name>CaseDescription__c</name>
+</CustomFieldTranslation>

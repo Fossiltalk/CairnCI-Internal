@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>wkdw__TicketCategory__c</fullName>
+    <deprecated>false</deprecated>
+    <description>The type of ticket. Available on the new ticket form when more than one category exists. 
+        
+        The API name values of this field must match the values of the names on the custom metadata record (Name__c on TicketCategoryDefinition__mdt).</description>
+    <label>Ticket Category</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>IT</fullName>
+                <default>false</default>
+                <label>IT</label>
+            </value>
+            <value>
+                <fullName>HR - Employee Relations</fullName>
+                <default>false</default>
+                <label>HR - Employee Relations</label>
+            </value>
+            <value>
+                <fullName>HR - General</fullName>
+                <default>false</default>
+                <label>HR - General</label>
+            </value>
+            <value>
+                <fullName>HR - Payroll</fullName>
+                <default>false</default>
+                <label>HR - Payroll</label>
+            </value>
+            <value>
+                <fullName>HR - Benefits</fullName>
+                <default>false</default>
+                <label>HR - Benefits</label>
+            </value>
+            <value>
+                <fullName>HR - Leave</fullName>
+                <default>false</default>
+                <label>HR - Leave</label>
+            </value>
+            <value>
+                <fullName>HR - Onboarding</fullName>
+                <default>false</default>
+                <label>HR - Onboarding</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

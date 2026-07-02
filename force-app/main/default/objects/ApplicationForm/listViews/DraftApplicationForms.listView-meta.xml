@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DraftApplicationForms</fullName>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Stage</field>
+        <operation>equals</operation>
+        <value>Draft</value>
+    </filters>
+    <label>DraftFilter</label>
+</ListView>

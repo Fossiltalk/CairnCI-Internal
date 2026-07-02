@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PeriodName</fullName>
+    <inlineHelpText>The name of the time period to which the Budget applies.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AssessmentQuestion xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assessmentQuestionVersion>
+        <isActive>true</isActive>
+        <name>Select the programs that you&apos;ve applied for</name>
+        <optionSourceResponseValue>false</optionSourceResponseValue>
+        <questionText>Select the programs that you&apos;ve applied for</questionText>
+        <responseValues>Health Care/Medicaid
+Housing Assistance
+General Assistance
+Supplemental Nutrition Assistance Program (SNAP)
+Temporary Assistance for Needy Families (TANF)
+Child Care Assistance Program (CCAP)</responseValues>
+        <status>Active</status>
+        <versionNumber>1</versionNumber>
+    </assessmentQuestionVersion>
+    <dataType>Multiselect</dataType>
+    <developerName>PSS_BM_v3_Select_the_programs_that_you_ve_applied_for</developerName>
+    <name>Select the programs that you&apos;ve applied for</name>
+    <questionCategory>Demographic</questionCategory>
+</AssessmentQuestion>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AssessmentQuestion xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assessmentQuestionVersion>
+        <isActive>true</isActive>
+        <name>AttachExpensesProofs</name>
+        <optionSourceResponseValue>false</optionSourceResponseValue>
+        <questionText>Attach Expenses Proofs</questionText>
+        <status>Active</status>
+        <versionNumber>1</versionNumber>
+    </assessmentQuestionVersion>
+    <dataType>EditBlock</dataType>
+    <developerName>PSS_BM_v3_AttachExpensesProofs</developerName>
+    <name>AttachExpensesProofs</name>
+    <questionCategory>Demographic</questionCategory>
+</AssessmentQuestion>

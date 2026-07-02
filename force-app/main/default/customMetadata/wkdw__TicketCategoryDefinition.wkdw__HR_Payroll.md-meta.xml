@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>HR - Payroll</label>
+    <protected>false</protected>
+    <values>
+        <field>wkdw__AssociatedKnowledgeArticleTypeMapping__c</field>
+        <value xsi:type="xsd:string">HR_Payroll</value>
+    </values>
+    <values>
+        <field>wkdw__IsActive__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>wkdw__Name__c</field>
+        <value xsi:type="xsd:string">HR - Payroll</value>
+    </values>
+    <values>
+        <field>wkdw__QuickAction__c</field>
+        <value xsi:type="xsd:string">Contact.wkdw__HR_Payroll</value>
+    </values>
+</CustomMetadata>

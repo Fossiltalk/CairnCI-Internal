@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help><!-- Enter all knowledge article record types associated with the ticket category. --></help>
+    <label>AssociatedKnowledgeArticleTypeMapping</label>
+    <name>wkdw__AssociatedKnowledgeArticleTypeMapping__c</name>
+</CustomFieldTranslation>

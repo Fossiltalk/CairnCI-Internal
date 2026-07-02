@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ActionPlanTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionPlanType>Retail</actionPlanType>
+    <description>Salon Establishment Inspection</description>
+    <isAdHocItemCreationEnabled>false</isAdHocItemCreationEnabled>
+    <name>Salon Establishment Inspection</name>
+    <status>Draft</status>
+    <targetEntityType>Visit</targetEntityType>
+    <uniqueName>Salon_Establishment_Inspection_bd9fba81_da29_11ee_adf5_a1f90702f190</uniqueName>
+</ActionPlanTemplate>

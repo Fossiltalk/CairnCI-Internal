@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AssessmentQuestion xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assessmentQuestionVersion>
+        <isActive>true</isActive>
+        <name>RentStatus</name>
+        <optionSourceResponseValue>false</optionSourceResponseValue>
+        <questionText>Do you own or rent your home?</questionText>
+        <responseValues>Own
+Rent</responseValues>
+        <status>Active</status>
+        <versionNumber>1</versionNumber>
+    </assessmentQuestionVersion>
+    <dataType>Radio</dataType>
+    <developerName>PSS_BM_v3_RentStatus</developerName>
+    <name>RentStatus</name>
+    <questionCategory>Demographic</questionCategory>
+</AssessmentQuestion>

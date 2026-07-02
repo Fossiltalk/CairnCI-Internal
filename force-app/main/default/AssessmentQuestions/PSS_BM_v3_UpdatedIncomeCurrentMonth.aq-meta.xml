@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AssessmentQuestion xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assessmentQuestionVersion>
+        <isActive>true</isActive>
+        <name>UpdatedIncomeCurrentMonth</name>
+        <optionSourceResponseValue>false</optionSourceResponseValue>
+        <questionText>Updated Income Current Month</questionText>
+        <status>Active</status>
+        <versionNumber>1</versionNumber>
+    </assessmentQuestionVersion>
+    <dataType>Currency</dataType>
+    <developerName>PSS_BM_v3_UpdatedIncomeCurrentMonth</developerName>
+    <name>UpdatedIncomeCurrentMonth</name>
+    <questionCategory>Demographic</questionCategory>
+    <relatedQuestion>PSS_BM_v3_ExistingHouseholdIncomeDetails</relatedQuestion>
+</AssessmentQuestion>

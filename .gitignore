@@ -7,6 +7,9 @@
 .localdevserver/
 deploy-options.json
 
+# Output of scripts/org-metadata-export (org metadata indexes + retrieved source)
+.metadata-export/
+
 # Logs
 logs
 *.log

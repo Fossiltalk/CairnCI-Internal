@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>InvoiceGroupType</fullName>
+    <inlineHelpText>Select the group that you want to generate an invoice for. To generate an invoice for a group of account, bill-to-contact, currency, payment term, tax engine, and legal entity, select Default. To combine the default group with the custom invoice group key, select Custom. To generate an invoice for this billing schedule, select Billing Schedule.</inlineHelpText>
+</CustomField>

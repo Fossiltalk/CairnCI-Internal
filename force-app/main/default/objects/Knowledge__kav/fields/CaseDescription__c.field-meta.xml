@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CaseDescription__c</fullName>
+    <description>Set default text for the Description field on a new ticket.</description>
+    <inlineHelpText>Enter default content for users when they log a new ticket related to this article. The field can be blank, or instructional, such as “Describe your issue or request...</inlineHelpText>
+    <label>Case Description</label>
+    <length>32768</length>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>

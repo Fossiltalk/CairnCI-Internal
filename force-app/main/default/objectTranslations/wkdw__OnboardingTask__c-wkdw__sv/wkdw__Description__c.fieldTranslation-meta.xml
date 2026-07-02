@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help><!-- A custom task description that employees see in the onboarding checklist. If left blank, the text in the Task Description field is shown. --></help>
+    <label>Beskrivning</label>
+    <name>wkdw__Description__c</name>
+</CustomFieldTranslation>

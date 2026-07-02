@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AssessmentQuestion xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assessmentQuestionVersion>
+        <isActive>true</isActive>
+        <name>ReviewExtraUseOfPrimaryHeat</name>
+        <optionSourceResponseValue>false</optionSourceResponseValue>
+        <questionText>Besides providing heat for your house, does this source provide fuel and/or power for any other buildings, machinery, vehicles or any other uses?</questionText>
+        <status>Active</status>
+        <versionNumber>1</versionNumber>
+    </assessmentQuestionVersion>
+    <dataType>Formula</dataType>
+    <developerName>PSS_BM_v3_ReviewExtraUseOfPrimaryHeat</developerName>
+    <formulaResponseDataType>Text</formulaResponseDataType>
+    <name>ReviewExtraUseOfPrimaryHeat</name>
+    <questionCategory>Demographic</questionCategory>
+</AssessmentQuestion>

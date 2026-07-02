@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AssessmentQuestion xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assessmentQuestionVersion>
+        <isActive>true</isActive>
+        <name>ApplicationSubmissionConfirmationText</name>
+        <optionSourceResponseValue>false</optionSourceResponseValue>
+        <questionText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong&gt;&lt;span style=&quot;color: #2dc26b;&quot;&gt;Your benefit application has been submitted successfully&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;</questionText>
+        <status>Active</status>
+        <versionNumber>1</versionNumber>
+    </assessmentQuestionVersion>
+    <dataType>TextBlock</dataType>
+    <developerName>PSS_BM_v3_ApplicationSubmissionConfirmationText</developerName>
+    <name>ApplicationSubmissionConfirmationText</name>
+    <questionCategory>Demographic</questionCategory>
+</AssessmentQuestion>

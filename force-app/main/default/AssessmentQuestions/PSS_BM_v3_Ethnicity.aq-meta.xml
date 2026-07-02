@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AssessmentQuestion xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assessmentQuestionVersion>
+        <isActive>true</isActive>
+        <name>Ethnicity</name>
+        <optionSourceResponseValue>true</optionSourceResponseValue>
+        <questionText>Ethnicity</questionText>
+        <status>Active</status>
+        <versionNumber>2</versionNumber>
+    </assessmentQuestionVersion>
+    <dataType>Select</dataType>
+    <developerName>PSS_BM_v3_Ethnicity</developerName>
+    <name>Ethnicity</name>
+    <questionCategory>Demographic</questionCategory>
+    <relatedQuestion>PSS_BM_v3_HouseholdMemberDetails</relatedQuestion>
+</AssessmentQuestion>

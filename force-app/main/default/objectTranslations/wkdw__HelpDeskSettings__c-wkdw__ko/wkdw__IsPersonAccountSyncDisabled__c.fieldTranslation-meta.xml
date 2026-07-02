@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help><!-- When this checkbox is selected, Employee Apex triggers do not create or synchronize Person Accounts records automatically for each new Employee record. --></help>
+    <label>직원 개인 계정 동기화 비활성화됨</label>
+    <name>wkdw__IsPersonAccountSyncDisabled__c</name>
+</CustomFieldTranslation>

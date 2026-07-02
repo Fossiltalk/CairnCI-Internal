@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Business_Regulatory_Authorization_Type__c</fullName>
+    <externalId>false</externalId>
+    <formula>BusinessTypeIdentifier.Name &amp; &quot; : &quot; &amp; RegAuthTypeIdentifier.Name</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Business Regulatory Authorization Type</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

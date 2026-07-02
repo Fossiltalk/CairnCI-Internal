@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>UserId</fullName>
+    <inlineHelpText>An Employee User has a license that’s compatible with the Employee object, such as the Unified Employee license.</inlineHelpText>
+    <type>Lookup</type>
+</CustomField>

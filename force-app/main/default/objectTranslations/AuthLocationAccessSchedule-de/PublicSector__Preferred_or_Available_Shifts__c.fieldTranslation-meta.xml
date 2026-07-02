@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label><!-- Preferred or Available Shifts --></label>
+    <name>PublicSector__Preferred_or_Available_Shifts__c</name>
+    <picklistValues>
+        <masterLabel>10 PM - 4:00 AM</masterLabel>
+        <translation>22:00–4:00 Uhr</translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>2:00 PM - 8:00 PM</masterLabel>
+        <translation>14:00–20:00 Uhr</translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>6:00 AM - 12:00 PM</masterLabel>
+        <translation>6:00–12:00 Uhr</translation>
+    </picklistValues>
+</CustomFieldTranslation>

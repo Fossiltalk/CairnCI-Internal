@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AuraDefinitionBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>52.0</apiVersion>
+    <description>This lightning component is responsible for calling &apos;Assign onboarding&apos; flow and to display it in a modal popup. This component is being rendered by vf page through &apos;callAssignOnboadingFlowApp&apos;</description>
+</AuraDefinitionBundle>

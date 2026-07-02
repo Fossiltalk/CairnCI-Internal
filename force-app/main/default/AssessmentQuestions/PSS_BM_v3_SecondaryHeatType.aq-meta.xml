@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AssessmentQuestion xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assessmentQuestionVersion>
+        <isActive>true</isActive>
+        <name>SecondaryHeatType</name>
+        <optionSourceResponseValue>false</optionSourceResponseValue>
+        <questionText>What is your secondary type of heat?</questionText>
+        <responseValues>Natural Gas
+Electricity
+Propane
+Fuel Oil
+Coal
+Other</responseValues>
+        <status>Active</status>
+        <versionNumber>1</versionNumber>
+    </assessmentQuestionVersion>
+    <dataType>Select</dataType>
+    <developerName>PSS_BM_v3_SecondaryHeatType</developerName>
+    <name>SecondaryHeatType</name>
+    <questionCategory>Demographic</questionCategory>
+</AssessmentQuestion>

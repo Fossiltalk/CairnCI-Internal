@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AssessmentQuestion xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assessmentQuestionVersion>
+        <isActive>true</isActive>
+        <name>Select reason for member removal</name>
+        <optionSourceResponseValue>true</optionSourceResponseValue>
+        <questionText>Select reason for member removal</questionText>
+        <status>Active</status>
+        <versionNumber>1</versionNumber>
+    </assessmentQuestionVersion>
+    <dataType>Select</dataType>
+    <developerName>PSS_BM_v3_Select_reason_for_member_removal</developerName>
+    <name>Select reason for member removal</name>
+    <questionCategory>Demographic</questionCategory>
+    <relatedQuestion>PSS_BM_v3_HouseholdMemberDetails</relatedQuestion>
+</AssessmentQuestion>

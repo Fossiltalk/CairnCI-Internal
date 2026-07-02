@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EnrollmentCount</fullName>
+    <inlineHelpText>Enter the total quantity for a benefit. For example, for a service provided at a workshop for 50 hours, enter 50.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

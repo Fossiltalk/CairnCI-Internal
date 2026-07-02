@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AssessmentQuestion xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assessmentQuestionVersion>
+        <isActive>true</isActive>
+        <name>ReviewChildCareAssistanceNegativeText</name>
+        <optionSourceResponseValue>false</optionSourceResponseValue>
+        <questionText>&lt;p&gt;&lt;strong&gt;&lt;span role = &quot;img&quot; aria-label =&quot;Unchecked&quot; style=&quot;color: #e03e2d;&quot;&gt;✓&lt;/span&gt;&lt;/strong&gt; Child Care Assistance Program (CCAP)&lt;/p&gt;</questionText>
+        <status>Active</status>
+        <versionNumber>1</versionNumber>
+    </assessmentQuestionVersion>
+    <dataType>TextBlock</dataType>
+    <developerName>PSS_BM_v3_ReviewChildCareAssistanceNegativeText</developerName>
+    <name>ReviewChildCareAssistanceNegativeText</name>
+    <questionCategory>Demographic</questionCategory>
+</AssessmentQuestion>

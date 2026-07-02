@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <recordTypes>
+        <description>Type d&apos;enregistrement des bénévoles attribués à des postes</description>
+        <label>Poste de bénévole</label>
+        <name>PublicSector__Volunteer_Shift</name>
+    </recordTypes>
+</CustomObjectTranslation>

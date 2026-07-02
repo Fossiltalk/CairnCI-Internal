@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FieldSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>wkdw__Employee_Profile_Card_Tertiary_Region</fullName>
+    <description>Employee fields displayed in Employee Workspace Profile page (tertiary region)</description>
+    <displayedFields>
+        <field>Email</field>
+        <isFieldManaged>true</isFieldManaged>
+        <isRequired>false</isRequired>
+    </displayedFields>
+    <displayedFields>
+        <field>WorkPhone</field>
+        <isFieldManaged>true</isFieldManaged>
+        <isRequired>false</isRequired>
+    </displayedFields>
+    <label>Employee Profile Card Tertiary Region</label>
+</FieldSet>

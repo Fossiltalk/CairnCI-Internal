@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PublicSector__HasPersonalProtectiveEquipment__c</fullName>
+    <defaultValue>false</defaultValue>
+    <deprecated>false</deprecated>
+    <inlineHelpText>Personal protective equipment (PPE) for employees (face coverings and all required protective equipment, including eye protection and gloves, where necessary)</inlineHelpText>
+    <label>Has Personal Protective Equipment</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

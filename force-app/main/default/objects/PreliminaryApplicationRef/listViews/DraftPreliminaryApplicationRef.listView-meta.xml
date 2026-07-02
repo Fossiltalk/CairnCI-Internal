@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DraftPreliminaryApplicationRef</fullName>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>IsSubmitted</field>
+        <operation>equals</operation>
+        <value>0</value>
+    </filters>
+    <label>Draft Preliminary Application References</label>
+</ListView>

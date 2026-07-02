@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EmployeesWithoutUser</fullName>
+    <columns>Name</columns>
+    <columns>Email</columns>
+    <columns>EmployeeNumber</columns>
+    <columns>Location</columns>
+    <columns>EmployeeStatus</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>User</field>
+        <operation>equals</operation>
+    </filters>
+    <label>EmployeesWithoutUser</label>
+</ListView>

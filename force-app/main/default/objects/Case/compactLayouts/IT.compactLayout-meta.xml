@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IT</fullName>
+    <fields>Subject</fields>
+    <fields>CaseNumber</fields>
+    <fields>RecordTypeId</fields>
+    <fields>Priority</fields>
+    <fields>AccountId</fields>
+    <fields>OwnerId</fields>
+    <label>IT</label>
+</CompactLayout>

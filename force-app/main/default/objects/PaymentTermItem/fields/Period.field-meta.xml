@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Period</fullName>
+    <inlineHelpText>Period when the payment term item is applied.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

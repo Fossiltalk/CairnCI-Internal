@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help><!-- Vulnerable population accommodations such as special hours for seniors or medically vulnerable individuals --></help>
+    <label>Má plán ochrany zraniteľných skupín</label>
+    <name>PublicSector__HasVulnerablePopulationPlan__c</name>
+</CustomFieldTranslation>

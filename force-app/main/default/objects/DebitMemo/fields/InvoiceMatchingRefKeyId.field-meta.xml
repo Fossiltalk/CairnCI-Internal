@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>InvoiceMatchingRefKeyId</fullName>
+    <inlineHelpText>Enter a product ID or asset ID that’s related to the Debit Memo. This value, along with the account, currency, and legal entity of the Debit Memo, is used to identify an invoice with the same details. The Debit Memo Line is then added as an invoice line to the invoice. For example, for a Debit Memo that&apos;s created to collect a late payment fee for a subscription, enter the product ID or asset ID of the subscription.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+    <type>Lookup</type>
+</CustomField>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AssessmentQuestion xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assessmentQuestionVersion>
+        <isActive>true</isActive>
+        <name>ApplicationReviewText</name>
+        <optionSourceResponseValue>false</optionSourceResponseValue>
+        <questionText>Please review the application before submitting. Once you submit the application you won&apos;t be able to edit the application any further.</questionText>
+        <status>Active</status>
+        <versionNumber>1</versionNumber>
+    </assessmentQuestionVersion>
+    <dataType>TextBlock</dataType>
+    <developerName>PSS_BM_v3_ApplicationReviewText</developerName>
+    <name>ApplicationReviewText</name>
+    <questionCategory>Demographic</questionCategory>
+</AssessmentQuestion>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AssessmentQuestion xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assessmentQuestionVersion>
+        <isActive>true</isActive>
+        <name>ReviewChildCareExpensesText</name>
+        <optionSourceResponseValue>false</optionSourceResponseValue>
+        <questionText>&lt;p&gt;&lt;strong&gt;Child Care:&lt;/strong&gt;&lt;/p&gt;</questionText>
+        <status>Active</status>
+        <versionNumber>1</versionNumber>
+    </assessmentQuestionVersion>
+    <dataType>TextBlock</dataType>
+    <developerName>PSS_BM_v3_ReviewChildCareExpensesText</developerName>
+    <name>ReviewChildCareExpensesText</name>
+    <questionCategory>Demographic</questionCategory>
+</AssessmentQuestion>

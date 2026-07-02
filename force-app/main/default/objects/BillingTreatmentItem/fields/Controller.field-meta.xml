@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Controller</fullName>
+    <inlineHelpText>Specify whether to use the field value of the billing schedule group or the billing schedule when they have a shared field that has different values.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

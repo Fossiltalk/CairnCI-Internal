@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AvailabilityExceptions</fullName>
+    <inlineHelpText>The non-standard days off for this facility, like public holidays and emergency time off. For instance, if your facility isn&apos;t available on election day, you can specify that here, but you don&apos;t need to list down weekend days off.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

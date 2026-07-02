@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CustomInvoiceGroupKey</fullName>
+    <inlineHelpText>Enter a key when the invoice group type is Custom. For example, to generate a single invoice for multiple billing schedules and the default group, enter the same group key for all those billing schedules. Enter a value that’s up to 100 characters.</inlineHelpText>
+</CustomField>
