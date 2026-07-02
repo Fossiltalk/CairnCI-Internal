@@ -1,0 +1,703 @@
+{
+  "version" : "59.0",
+  "nodes" : {
+    "OUTPUT0" : {
+      "action" : "save",
+      "sources" : [ "APPEND2" ],
+      "parameters" : {
+        "fields" : [ ],
+        "dataset" : {
+          "type" : "analyticsDataset",
+          "label" : "PSS Case Status Trending",
+          "name" : "PSS_Case_Status_Trendingq",
+          "folderName" : "PSS_WL_Benefits_Analytics"
+        },
+        "measuresToCurrencies" : [ ]
+      }
+    },
+    "FORMULA0" : {
+      "action" : "formula",
+      "sources" : [ "FILTER5" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "TEXT",
+          "name" : "isLatest",
+          "label" : "Latest?",
+          "formulaExpression" : "case Status\n    when \"trending.Status\" \n    then \n     'true'\n    else\n     'false'\nend",
+          "precision" : 255,
+          "defaultValue" : ""
+        } ]
+      }
+    },
+    "FORMULA9" : {
+      "action" : "formula",
+      "sources" : [ "FORMULA0" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "NUMBER",
+          "name" : "statusAge",
+          "label" : "Status Age",
+          "formulaExpression" : "datediff(current_date(), \"trending.snapshotDate\")",
+          "precision" : 10,
+          "scale" : 0,
+          "defaultValue" : ""
+        } ]
+      }
+    },
+    "EDIT_ATTRIBUTES0" : {
+      "action" : "schema",
+      "sources" : [ "FORMULA9" ],
+      "parameters" : {
+        "fields" : [ {
+          "name" : "trending.snapshotDate",
+          "newProperties" : {
+            "label" : "Snapshot Date",
+            "name" : "snapshotDate"
+          }
+        } ]
+      }
+    },
+    "DROP_FIELDS3" : {
+      "action" : "schema",
+      "sources" : [ "EDIT_ATTRIBUTES0" ],
+      "parameters" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ "trending.Id" ]
+        }
+      }
+    },
+    "FILTER1" : {
+      "action" : "filter",
+      "sources" : [ "DROP_FIELDS3" ],
+      "parameters" : {
+        "filterExpressions" : [ {
+          "type" : "TEXT",
+          "field" : "isLatest",
+          "operator" : "EQUAL",
+          "operands" : [ "false" ]
+        } ]
+      }
+    },
+    "FILTER2" : {
+      "action" : "filter",
+      "sources" : [ "JOIN0" ],
+      "parameters" : {
+        "filterExpressions" : [ {
+          "type" : "TEXT",
+          "field" : "trending.Id",
+          "operator" : "IS_NULL",
+          "operands" : [ ]
+        } ]
+      }
+    },
+    "FORMULA3" : {
+      "action" : "formula",
+      "sources" : [ "FILTER2" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "NUMBER",
+          "name" : "statusAge",
+          "label" : "Status Age",
+          "formulaExpression" : "0",
+          "precision" : 10,
+          "scale" : 0,
+          "defaultValue" : ""
+        } ]
+      }
+    },
+    "FORMULA4" : {
+      "action" : "formula",
+      "sources" : [ "FORMULA3" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "DATETIME",
+          "name" : "snapshotDate",
+          "label" : "Snapshot Date",
+          "formulaExpression" : "now()",
+          "format" : "MM/dd/yyyy",
+          "defaultValue" : ""
+        } ]
+      }
+    },
+    "FORMULA5" : {
+      "action" : "formula",
+      "sources" : [ "FORMULA4" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "TEXT",
+          "name" : "isLatest",
+          "label" : "Latest?",
+          "formulaExpression" : "'true'",
+          "precision" : 255,
+          "defaultValue" : ""
+        } ]
+      }
+    },
+    "DROP_FIELDS1" : {
+      "action" : "schema",
+      "sources" : [ "FORMULA5" ],
+      "parameters" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ "trending.Status", "trending.isLatest", "trending.snapshotDate", "trending.Id" ]
+        }
+      }
+    },
+    "DROP_FIELDS0" : {
+      "action" : "schema",
+      "sources" : [ "FILTER1" ],
+      "parameters" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ "trending.Status", "snapshotDate", "isLatest", "statusAge" ]
+        }
+      }
+    },
+    "FORMULA6" : {
+      "action" : "formula",
+      "sources" : [ "DROP_FIELDS0" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "NUMBER",
+          "name" : "statusAge",
+          "label" : "Status Age",
+          "formulaExpression" : "0",
+          "precision" : 10,
+          "scale" : 0,
+          "defaultValue" : ""
+        } ]
+      }
+    },
+    "FORMULA7" : {
+      "action" : "formula",
+      "sources" : [ "FORMULA6" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "TEXT",
+          "name" : "isLatest",
+          "label" : "Latest?",
+          "formulaExpression" : "'true'",
+          "precision" : 255,
+          "defaultValue" : ""
+        } ]
+      }
+    },
+    "FORMULA8" : {
+      "action" : "formula",
+      "sources" : [ "FORMULA7" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "DATETIME",
+          "name" : "snapshotDate",
+          "label" : "Snapshot Date",
+          "formulaExpression" : "now()",
+          "format" : "MM/dd/yyyy",
+          "defaultValue" : ""
+        } ]
+      }
+    },
+    "APPEND0" : {
+      "action" : "appendV2",
+      "sources" : [ "DROP_FIELDS1", "FORMULA8" ],
+      "parameters" : {
+        "fieldMappings" : [ ],
+        "allowImplicitDisjointSchema" : true
+      }
+    },
+    "APPEND1" : {
+      "action" : "appendV2",
+      "sources" : [ "APPEND0", "EDIT_ATTRIBUTES1" ],
+      "parameters" : {
+        "fieldMappings" : [ ],
+        "allowImplicitDisjointSchema" : true
+      }
+    },
+    "LOAD_DATASET2" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Reason", "CaseNumber", "Account.BillingPostalCode", "Status", "User.Name", "Priority", "User.Id", "User.Role.Id_flatten_multiField", "CreatedDate", "Id", "Account.OwnerId" ],
+        "dataset" : {
+          "type" : "analyticsDataset",
+          "label" : "PSS Workload Management",
+          "name" : "PSS_Workload_Management"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "LOAD_DATASET3" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ ],
+        "dataset" : {
+          "type" : "analyticsDataset",
+          "label" : "PSS Case Status Trending",
+          "name" : "PSS_Case_Status_Trendingq"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "JOIN0" : {
+      "action" : "join",
+      "sources" : [ "LOAD_DATASET2", "FILTER4" ],
+      "schema" : {
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ "trending.User.Name", "trending.User.UserRoleId_flatten_multiField", "trending.Priority", "trending.User.Id", "trending.Reason", "trending.User.Role.Id_flatten_multiField", "trending.isLatest", "trending.Account.OwnerId", "trending.CaseNumber", "trending.Account.BillingPostalCode", "trending.statusAge", "trending.CreatedDate" ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LEFT_OUTER",
+        "leftKeys" : [ "Id" ],
+        "rightQualifier" : "trending",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "FILTER4" : {
+      "action" : "filter",
+      "sources" : [ "FILTER7" ],
+      "parameters" : {
+        "filterExpressions" : [ {
+          "type" : "TEXT",
+          "field" : "isLatest",
+          "operator" : "EQUAL",
+          "operands" : [ "true" ]
+        } ]
+      }
+    },
+    "FILTER5" : {
+      "action" : "filter",
+      "sources" : [ "JOIN0" ],
+      "parameters" : {
+        "filterExpressions" : [ {
+          "type" : "TEXT",
+          "field" : "trending.Id",
+          "operator" : "IS_NOT_NULL",
+          "operands" : [ ]
+        } ]
+      }
+    },
+    "FILTER6" : {
+      "action" : "filter",
+      "sources" : [ "LOAD_DATASET3" ],
+      "parameters" : {
+        "filterExpressions" : [ {
+          "type" : "TEXT",
+          "field" : "isLatest",
+          "operator" : "EQUAL",
+          "operands" : [ "false" ]
+        } ]
+      }
+    },
+    "APPEND2" : {
+      "action" : "appendV2",
+      "sources" : [ "APPEND1", "JOIN1" ],
+      "parameters" : {
+        "fieldMappings" : [ ],
+        "allowImplicitDisjointSchema" : true
+      }
+    },
+    "FILTER7" : {
+      "action" : "filter",
+      "sources" : [ "LOAD_DATASET3" ],
+      "parameters" : {
+        "filterExpressions" : [ {
+          "type" : "DATETIME",
+          "field" : "CreatedDate",
+          "operator" : "IN_RANGE",
+          "operands" : [ {
+            "argument" : -36,
+            "type" : "N_MONTHS"
+          }, {
+            "argument" : 0,
+            "type" : "N_MONTHS"
+          } ]
+        }, {
+          "type" : "TEXT",
+          "field" : "isLatest",
+          "operator" : "EQUAL",
+          "operands" : [ "true" ]
+        }, {
+          "type" : "TEXT",
+          "field" : "Status",
+          "operator" : "NOT",
+          "operands" : [ "Closed" ]
+        } ],
+        "filterBooleanLogic" : "1 OR (2 AND 3)"
+      }
+    },
+    "JOIN1" : {
+      "action" : "join",
+      "sources" : [ "FILTER6", "FILTER7" ],
+      "schema" : {
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ "FilterRNC.Status", "FilterRNC.User.Name", "FilterRNC.User.UserRoleId_flatten_multiField", "FilterRNC.Priority", "FilterRNC.User.Id", "FilterRNC.Reason", "FilterRNC.User.Role.Id_flatten_multiField", "FilterRNC.isLatest", "FilterRNC.Account.OwnerId", "FilterRNC.CaseNumber", "FilterRNC.Id", "FilterRNC.Account.BillingPostalCode", "FilterRNC.statusAge", "FilterRNC.snapshotDate", "FilterRNC.CreatedDate" ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "INNER",
+        "leftKeys" : [ "Id" ],
+        "rightQualifier" : "FilterRNC",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "DROP_FIELDS2" : {
+      "action" : "schema",
+      "sources" : [ "DROP_FIELDS3" ],
+      "parameters" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ "Status" ]
+        }
+      }
+    },
+    "EDIT_ATTRIBUTES1" : {
+      "action" : "schema",
+      "sources" : [ "DROP_FIELDS2" ],
+      "parameters" : {
+        "fields" : [ {
+          "name" : "trending.Status",
+          "newProperties" : {
+            "label" : "Status",
+            "name" : "Status"
+          }
+        } ]
+      }
+    }
+  },
+  "ui" : {
+    "nodes" : {
+      "OUTPUT0" : {
+        "label" : "Output - PSS Case Status Trending",
+        "description" : "",
+        "type" : "OUTPUT",
+        "top" : 250.3,
+        "left" : 1792
+      },
+      "TRANSFORM0" : {
+        "label" : "Transform - Status changed? Age",
+        "description" : "",
+        "type" : "TRANSFORM",
+        "top" : 250.3,
+        "left" : 952,
+        "graph" : {
+          "FORMULA0" : {
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            },
+            "label" : "Formula"
+          },
+          "FORMULA9" : {
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            },
+            "label" : "Formula"
+          },
+          "EDIT_ATTRIBUTES0" : {
+            "label" : "Edit Attributes"
+          },
+          "DROP_FIELDS3" : {
+            "label" : "Drop Columns"
+          }
+        },
+        "connectors" : [ {
+          "source" : "FORMULA0",
+          "target" : "FORMULA9"
+        }, {
+          "source" : "FORMULA9",
+          "target" : "EDIT_ATTRIBUTES0"
+        }, {
+          "source" : "EDIT_ATTRIBUTES0",
+          "target" : "DROP_FIELDS3"
+        } ]
+      },
+      "FILTER1" : {
+        "label" : "Filter changed records",
+        "description" : "",
+        "type" : "FILTER",
+        "top" : 250.2,
+        "left" : 1092
+      },
+      "FILTER2" : {
+        "label" : "Filter non matching records",
+        "description" : "",
+        "type" : "FILTER",
+        "top" : 390.3,
+        "left" : 672
+      },
+      "TRANSFORM1" : {
+        "label" : "Transform 3 - Age, Snapshot Date",
+        "description" : "",
+        "type" : "TRANSFORM",
+        "top" : 390.3,
+        "left" : 812,
+        "graph" : {
+          "FORMULA3" : {
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            },
+            "label" : "Formula"
+          },
+          "FORMULA4" : {
+            "parameters" : {
+              "type" : "DATE_NOW_UI"
+            },
+            "label" : "Formula Now"
+          },
+          "FORMULA5" : {
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            },
+            "label" : "Formula"
+          },
+          "DROP_FIELDS1" : {
+            "label" : "Drop Columns"
+          }
+        },
+        "connectors" : [ {
+          "source" : "FORMULA3",
+          "target" : "FORMULA4"
+        }, {
+          "source" : "FORMULA4",
+          "target" : "FORMULA5"
+        }, {
+          "source" : "FORMULA5",
+          "target" : "DROP_FIELDS1"
+        } ]
+      },
+      "TRANSFORM2" : {
+        "label" : "Transform 2 - Age, Snapshot Date",
+        "description" : "",
+        "type" : "TRANSFORM",
+        "top" : 250.2,
+        "left" : 1232,
+        "graph" : {
+          "DROP_FIELDS0" : {
+            "label" : "Drop Columns"
+          },
+          "FORMULA6" : {
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            },
+            "label" : "Formula"
+          },
+          "FORMULA7" : {
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            },
+            "label" : "Formula"
+          },
+          "FORMULA8" : {
+            "parameters" : {
+              "type" : "DATE_NOW_UI"
+            },
+            "label" : "Formula Now"
+          }
+        },
+        "connectors" : [ {
+          "source" : "DROP_FIELDS0",
+          "target" : "FORMULA6"
+        }, {
+          "source" : "FORMULA6",
+          "target" : "FORMULA7"
+        }, {
+          "source" : "FORMULA7",
+          "target" : "FORMULA8"
+        } ]
+      },
+      "APPEND0" : {
+        "label" : "Append changed with non matching",
+        "description" : "",
+        "type" : "APPEND",
+        "top" : 250.3,
+        "left" : 1372
+      },
+      "APPEND1" : {
+        "label" : "Append changed records",
+        "description" : "",
+        "type" : "APPEND",
+        "top" : 250.3,
+        "left" : 1512
+      },
+      "LOAD_DATASET2" : {
+        "label" : "PSS Workload Management",
+        "type" : "LOAD_DATASET",
+        "top" : 250.3,
+        "left" : 112,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "LOAD_DATASET3" : {
+        "label" : "PSS Case Status Trending",
+        "type" : "LOAD_DATASET",
+        "top" : 390.3,
+        "left" : 252,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "JOIN0" : {
+        "label" : "Join Trending data with current data",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 250.3,
+        "left" : 672
+      },
+      "FILTER4" : {
+        "label" : "Filter latest records",
+        "description" : "",
+        "type" : "FILTER",
+        "top" : 390.3,
+        "left" : 532
+      },
+      "FILTER5" : {
+        "label" : "Filter matching records",
+        "description" : "",
+        "type" : "FILTER",
+        "top" : 250.3,
+        "left" : 812
+      },
+      "FILTER6" : {
+        "label" : "Filter existing non latest records",
+        "description" : "",
+        "type" : "FILTER",
+        "top" : 530.3,
+        "left" : 392
+      },
+      "APPEND2" : {
+        "label" : "Append existing records",
+        "description" : "",
+        "type" : "APPEND",
+        "top" : 250.3,
+        "left" : 1652
+      },
+      "FILTER7" : {
+        "label" : "Filter Rolling 36 Months record or Non closed cases",
+        "description" : "",
+        "type" : "FILTER",
+        "top" : 390.3,
+        "left" : 392
+      },
+      "JOIN1" : {
+        "label" : "Join to filter Rolling 36 Months or Non closed cases",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 530.3,
+        "left" : 532
+      },
+      "TRANSFORM3" : {
+        "label" : "Transform - Drop new Status and keep old",
+        "description" : "",
+        "type" : "TRANSFORM",
+        "top" : 110.19999999999999,
+        "left" : 1092,
+        "graph" : {
+          "DROP_FIELDS2" : {
+            "label" : "Drop Columns"
+          },
+          "EDIT_ATTRIBUTES1" : {
+            "label" : "Edit Attributes"
+          }
+        },
+        "connectors" : [ {
+          "source" : "DROP_FIELDS2",
+          "target" : "EDIT_ATTRIBUTES1"
+        } ]
+      }
+    },
+    "connectors" : [ {
+      "source" : "LOAD_DATASET2",
+      "target" : "JOIN0"
+    }, {
+      "source" : "APPEND2",
+      "target" : "OUTPUT0"
+    }, {
+      "source" : "TRANSFORM0",
+      "target" : "FILTER1"
+    }, {
+      "source" : "FILTER2",
+      "target" : "TRANSFORM1"
+    }, {
+      "source" : "FILTER1",
+      "target" : "TRANSFORM2"
+    }, {
+      "source" : "TRANSFORM1",
+      "target" : "APPEND0"
+    }, {
+      "source" : "TRANSFORM2",
+      "target" : "APPEND0"
+    }, {
+      "source" : "APPEND0",
+      "target" : "APPEND1"
+    }, {
+      "source" : "JOIN0",
+      "target" : "FILTER2"
+    }, {
+      "source" : "FILTER4",
+      "target" : "JOIN0"
+    }, {
+      "source" : "FILTER5",
+      "target" : "TRANSFORM0"
+    }, {
+      "source" : "JOIN0",
+      "target" : "FILTER5"
+    }, {
+      "source" : "FILTER7",
+      "target" : "FILTER4"
+    }, {
+      "source" : "LOAD_DATASET3",
+      "target" : "FILTER6"
+    }, {
+      "source" : "APPEND1",
+      "target" : "APPEND2"
+    }, {
+      "source" : "JOIN1",
+      "target" : "APPEND2"
+    }, {
+      "source" : "LOAD_DATASET3",
+      "target" : "FILTER7"
+    }, {
+      "source" : "FILTER6",
+      "target" : "JOIN1"
+    }, {
+      "source" : "FILTER7",
+      "target" : "JOIN1"
+    }, {
+      "source" : "TRANSFORM3",
+      "target" : "APPEND1"
+    }, {
+      "source" : "TRANSFORM0",
+      "target" : "TRANSFORM3"
+    } ],
+    "hiddenColumns" : [ ]
+  },
+  "runMode" : "full"
+}

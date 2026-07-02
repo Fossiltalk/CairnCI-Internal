@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<env:Envelope
+	xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
+	<env:Body>
+		<wd:Get_Payees_Response wd:version="v36.0"
+			xmlns:wd="urn:com.workday/bsvc">
+			<wd:Request_Criteria>
+				<wd:Payee_Reference>
+					<wd:ID wd:type="WID">3aa5550b7fe348b98d7b5741afc65534</wd:ID>
+					<wd:ID wd:type="Employee_ID">21001</wd:ID>
+				</wd:Payee_Reference>
+			</wd:Request_Criteria>
+			<wd:Response_Group>
+				<wd:Include_Reference>1</wd:Include_Reference>
+				<wd:Include_Payment_Election_Data>1</wd:Include_Payment_Election_Data>
+			</wd:Response_Group>
+			<wd:Response_Results>
+				<wd:Total_Results>1</wd:Total_Results>
+				<wd:Total_Pages>1</wd:Total_Pages>
+				<wd:Page_Results>1</wd:Page_Results>
+				<wd:Page>1</wd:Page>
+			</wd:Response_Results>
+			<wd:Response_Data>
+				<wd:Payee>
+					<wd:Payee_Reference>
+						<wd:ID wd:type="WID">3aa5550b7fe348b98d7b5741afc65534</wd:ID>
+						<wd:ID wd:type="Employee_ID">21001</wd:ID>
+					</wd:Payee_Reference>
+					<wd:Payee_Payment_Election_Data>
+						<wd:Payment_Election_Enrollment_Data>
+							<wd:Country_Reference>
+								<wd:ID wd:type="WID">bc33aa3152ec42d4995f4791a106ed09</wd:ID>
+								<wd:ID wd:type="ISO_3166-1_Alpha-2_Code">US</wd:ID>
+								<wd:ID wd:type="ISO_3166-1_Alpha-3_Code">USA</wd:ID>
+								<wd:ID wd:type="ISO_3166-1_Numeric-3_Code">840</wd:ID>
+							</wd:Country_Reference>
+							<wd:Currency_Reference>
+								<wd:ID wd:type="WID">9e996ffdd3e14da0ba7275d5400bafd4</wd:ID>
+								<wd:ID wd:type="Currency_ID">USD</wd:ID>
+								<wd:ID wd:type="Currency_Numeric_Code">840</wd:ID>
+							</wd:Currency_Reference>
+							<wd:Payment_Election_Data>
+								<wd:Order>1</wd:Order>
+								<wd:Payment_Election_Rule_Reference>
+									<wd:ID wd:type="WID">5aa4ba1b521d46229709ea7c18d33baa</wd:ID>
+									<wd:ID wd:type="Payment_Election_Rule_ID">REGULAR_PAYMENTS</wd:ID>
+								</wd:Payment_Election_Rule_Reference>
+								<wd:Country_Reference>
+									<wd:ID wd:type="WID">bc33aa3152ec42d4995f4791a106ed09</wd:ID>
+									<wd:ID wd:type="ISO_3166-1_Alpha-2_Code">US</wd:ID>
+									<wd:ID wd:type="ISO_3166-1_Alpha-3_Code">USA</wd:ID>
+									<wd:ID wd:type="ISO_3166-1_Numeric-3_Code">840</wd:ID>
+								</wd:Country_Reference>
+								<wd:Currency_Reference>
+									<wd:ID wd:type="WID">9e996ffdd3e14da0ba7275d5400bafd4</wd:ID>
+									<wd:ID wd:type="Currency_ID">USD</wd:ID>
+									<wd:ID wd:type="Currency_Numeric_Code">840</wd:ID>
+								</wd:Currency_Reference>
+								<wd:Payment_Type_Reference>
+									<wd:ID wd:type="WID">c5fab61ba6894f9ea98d7dc81a3c075f</wd:ID>
+									<wd:ID wd:type="Payment_Type_ID">DIRECT_DEPOSIT</wd:ID>
+								</wd:Payment_Type_Reference>
+								<wd:Worker_Bank_Account_Data>
+									<wd:Country_Reference>
+										<wd:ID wd:type="WID">bc33aa3152ec42d4995f4791a106ed09</wd:ID>
+										<wd:ID wd:type="ISO_3166-1_Alpha-2_Code">US</wd:ID>
+										<wd:ID wd:type="ISO_3166-1_Alpha-3_Code">USA</wd:ID>
+										<wd:ID wd:type="ISO_3166-1_Numeric-3_Code">840</wd:ID>
+									</wd:Country_Reference>
+									<wd:Currency_Reference>
+										<wd:ID wd:type="WID">9e996ffdd3e14da0ba7275d5400bafd4</wd:ID>
+										<wd:ID wd:type="Currency_ID">USD</wd:ID>
+										<wd:ID wd:type="Currency_Numeric_Code">840</wd:ID>
+									</wd:Currency_Reference>
+									<wd:Bank_Account_Nickname>Test Save 1234</wd:Bank_Account_Nickname>
+									<wd:Account_Number>12442344</wd:Account_Number>
+									<wd:Account_Type_Code>SA</wd:Account_Type_Code>
+									<wd:Account_Type_Reference>
+										<wd:ID wd:type="WID">dbe46562446c11de98360015c5e6daf6</wd:ID>
+										<wd:ID wd:type="Bank_Account_Type_Code">SA</wd:ID>
+									</wd:Account_Type_Reference>
+									<wd:Bank_Name>Bank of America</wd:Bank_Name>
+									<wd:Bank_ID_Number>121000358</wd:Bank_ID_Number>
+									<wd:BIC>CHASUS33</wd:BIC>
+								</wd:Worker_Bank_Account_Data>
+								<wd:Distribution_Balance>1</wd:Distribution_Balance>
+							</wd:Payment_Election_Data>
+						</wd:Payment_Election_Enrollment_Data>
+					</wd:Payee_Payment_Election_Data>
+				</wd:Payee>
+			</wd:Response_Data>
+		</wd:Get_Payees_Response>
+	</env:Body>
+</env:Envelope>

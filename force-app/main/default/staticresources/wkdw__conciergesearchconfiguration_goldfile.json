@@ -1,0 +1,201 @@
+{
+  "searchEntityConfigs" : [ {
+    "iconName" : "utility:case",
+    "fieldConfigMap" : {
+      "IsClosed" : {
+        "supportTranslations" : false,
+        "secondaryPosition" : null,
+        "prefixLabel" : null,
+        "mustTruncateContent" : false,
+        "mustRemoveHTMLContent" : false,
+        "mustEscapeHTMLContent" : false,
+        "isTitleField" : false,
+        "isSecondaryField" : false,
+        "isImageUrlField" : false,
+        "fieldName" : "IsClosed"
+      },
+      "Id" : {
+        "supportTranslations" : false,
+        "secondaryPosition" : null,
+        "prefixLabel" : null,
+        "mustTruncateContent" : false,
+        "mustRemoveHTMLContent" : false,
+        "mustEscapeHTMLContent" : false,
+        "isTitleField" : false,
+        "isSecondaryField" : false,
+        "isImageUrlField" : false,
+        "fieldName" : "Id"
+      },
+      "Description" : {
+        "supportTranslations" : false,
+        "secondaryPosition" : 2,
+        "prefixLabel" : null,
+        "mustTruncateContent" : true,
+        "mustRemoveHTMLContent" : false,
+        "mustEscapeHTMLContent" : true,
+        "isTitleField" : false,
+        "isSecondaryField" : true,
+        "isImageUrlField" : false,
+        "fieldName" : "Description"
+      },
+      "Subject" : {
+        "supportTranslations" : false,
+        "secondaryPosition" : null,
+        "prefixLabel" : null,
+        "mustTruncateContent" : true,
+        "mustRemoveHTMLContent" : false,
+        "mustEscapeHTMLContent" : true,
+        "isTitleField" : true,
+        "isSecondaryField" : false,
+        "isImageUrlField" : false,
+        "fieldName" : "Subject"
+      },
+      "Status" : {
+        "supportTranslations" : true,
+        "secondaryPosition" : null,
+        "prefixLabel" : null,
+        "mustTruncateContent" : false,
+        "mustRemoveHTMLContent" : false,
+        "mustEscapeHTMLContent" : false,
+        "isTitleField" : false,
+        "isSecondaryField" : false,
+        "isImageUrlField" : false,
+        "fieldName" : "Status"
+      },
+      "CaseNumber" : {
+        "supportTranslations" : false,
+        "secondaryPosition" : 1,
+        "prefixLabel" : "#",
+        "mustTruncateContent" : false,
+        "mustRemoveHTMLContent" : false,
+        "mustEscapeHTMLContent" : false,
+        "isTitleField" : false,
+        "isSecondaryField" : true,
+        "isImageUrlField" : false,
+        "fieldName" : "CaseNumber"
+      }
+    },
+    "entityPluralLabel" : "Cases",
+    "entityApiName" : "Case"
+  }, {
+    "iconName" : "utility:knowledge_base",
+    "fieldConfigMap" : {
+      "UrlName" : {
+        "supportTranslations" : false,
+        "secondaryPosition" : null,
+        "prefixLabel" : null,
+        "mustTruncateContent" : false,
+        "mustRemoveHTMLContent" : false,
+        "mustEscapeHTMLContent" : false,
+        "isTitleField" : false,
+        "isSecondaryField" : false,
+        "isImageUrlField" : false,
+        "fieldName" : "UrlName"
+      },
+      "Id" : {
+        "supportTranslations" : false,
+        "secondaryPosition" : null,
+        "prefixLabel" : null,
+        "mustTruncateContent" : false,
+        "mustRemoveHTMLContent" : false,
+        "mustEscapeHTMLContent" : false,
+        "isTitleField" : false,
+        "isSecondaryField" : false,
+        "isImageUrlField" : false,
+        "fieldName" : "Id"
+      },
+      "wkdw__Body__c" : {
+        "supportTranslations" : false,
+        "secondaryPosition" : 1,
+        "prefixLabel" : null,
+        "mustTruncateContent" : true,
+        "mustRemoveHTMLContent" : true,
+        "mustEscapeHTMLContent" : true,
+        "isTitleField" : false,
+        "isSecondaryField" : true,
+        "isImageUrlField" : false,
+        "fieldName" : "wkdw__Body__c"
+      },
+      "Title" : {
+        "supportTranslations" : false,
+        "secondaryPosition" : null,
+        "prefixLabel" : null,
+        "mustTruncateContent" : true,
+        "mustRemoveHTMLContent" : false,
+        "mustEscapeHTMLContent" : true,
+        "isTitleField" : true,
+        "isSecondaryField" : false,
+        "isImageUrlField" : false,
+        "fieldName" : "Title"
+      }
+    },
+    "entityPluralLabel" : "Knowledge",
+    "entityApiName" : "wkdw__Knowledge__kav"
+  }, {
+    "iconName" : "standard:product_request",
+    "fieldConfigMap" : {
+      "Id" : {
+        "supportTranslations" : false,
+        "secondaryPosition" : null,
+        "prefixLabel" : null,
+        "mustTruncateContent" : false,
+        "mustRemoveHTMLContent" : false,
+        "mustEscapeHTMLContent" : false,
+        "isTitleField" : false,
+        "isSecondaryField" : false,
+        "isImageUrlField" : false,
+        "fieldName" : "Id"
+      },
+      "MasterLabel" : {
+        "supportTranslations" : false,
+        "secondaryPosition" : null,
+        "prefixLabel" : null,
+        "mustTruncateContent" : true,
+        "mustRemoveHTMLContent" : false,
+        "mustEscapeHTMLContent" : true,
+        "isTitleField" : true,
+        "isSecondaryField" : false,
+        "isImageUrlField" : false,
+        "fieldName" : "MasterLabel"
+      },
+      "NamespacePrefix" : {
+        "supportTranslations" : false,
+        "secondaryPosition" : null,
+        "prefixLabel" : null,
+        "mustTruncateContent" : true,
+        "mustRemoveHTMLContent" : false,
+        "mustEscapeHTMLContent" : true,
+        "isTitleField" : false,
+        "isSecondaryField" : false,
+        "isImageUrlField" : false,
+        "fieldName" : "NamespacePrefix"
+      },
+      "DeveloperName" : {
+        "supportTranslations" : false,
+        "secondaryPosition" : null,
+        "prefixLabel" : null,
+        "mustTruncateContent" : true,
+        "mustRemoveHTMLContent" : false,
+        "mustEscapeHTMLContent" : true,
+        "isTitleField" : false,
+        "isSecondaryField" : false,
+        "isImageUrlField" : false,
+        "fieldName" : "DeveloperName"
+      },
+      "Description" : {
+        "supportTranslations" : false,
+        "secondaryPosition" : 1,
+        "prefixLabel" : null,
+        "mustTruncateContent" : true,
+        "mustRemoveHTMLContent" : true,
+        "mustEscapeHTMLContent" : true,
+        "isTitleField" : false,
+        "isSecondaryField" : true,
+        "isImageUrlField" : false,
+        "fieldName" : "Description"
+      }
+    },
+    "entityPluralLabel" : "Service Catalog Item Definitions",
+    "entityApiName" : "SvcCatalogItemDef"
+  } ]
+}

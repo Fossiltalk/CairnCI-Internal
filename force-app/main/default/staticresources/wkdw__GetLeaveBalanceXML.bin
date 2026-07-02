@@ -1,0 +1,71 @@
+<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
+   <env:Body>
+      <wd:Get_Time_Off_Plan_Balances_Response wd:version="v36.0" xmlns:wd="urn:com.workday/bsvc">
+         <wd:Request_Criteria>
+            <wd:Employee_Reference wd:Descriptor="Amit Patel">
+               <wd:ID wd:type="WID">4fb62658a7e34f29a0df7d933deabcd8</wd:ID>
+               <wd:ID wd:type="Employee_ID">21201</wd:ID>
+            </wd:Employee_Reference>
+         </wd:Request_Criteria>
+         <wd:Response_Group>
+            <wd:Include_Reference>1</wd:Include_Reference>
+            <wd:Include_Time_Off_Plan_Balance_Data>1</wd:Include_Time_Off_Plan_Balance_Data>
+         </wd:Response_Group>
+         <wd:Response_Results>
+            <wd:Total_Results>1</wd:Total_Results>
+            <wd:Total_Pages>1</wd:Total_Pages>
+            <wd:Page_Results>1</wd:Page_Results>
+            <wd:Page>1</wd:Page>
+         </wd:Response_Results>
+         <wd:Response_Data>
+            <wd:Time_Off_Plan_Balance>
+               <wd:Employee_Reference wd:Descriptor="Amit Patel">
+                  <wd:ID wd:type="WID">4fb62658a7e34f29a0df7d933deabcd8</wd:ID>
+                  <wd:ID wd:type="Employee_ID">21201</wd:ID>
+               </wd:Employee_Reference>
+               <wd:Time_Off_Plan_Balance_Data>
+                  <wd:Time_Off_Plan_Balance_Record>
+                     <wd:Time_Off_Plan_Reference wd:Descriptor="USA Paid Time Off  (GMS - Salaried)">
+                        <wd:ID wd:type="WID">b6e85821e919444dbebadcd445390646</wd:ID>
+                        <wd:ID wd:type="Absence_Plan_ID">PTO_USA</wd:ID>
+                     </wd:Time_Off_Plan_Reference>
+                     <wd:Unit_of_Time_Reference wd:Descriptor="Hours">
+                        <wd:ID wd:type="WID">c4dacbd56bca4a9a8950e8d3ed21bbdb</wd:ID>
+                        <wd:ID wd:type="Unit_of_Time_ID">HOURS</wd:ID>
+                     </wd:Unit_of_Time_Reference>
+                     <wd:Time_Off_Plan_Balance_Position_Record>
+                        <wd:Time_Off_Plan_Balance>146.7</wd:Time_Off_Plan_Balance>
+                     </wd:Time_Off_Plan_Balance_Position_Record>
+                  </wd:Time_Off_Plan_Balance_Record>
+                  <wd:Time_Off_Plan_Balance_Record>
+                     <wd:Time_Off_Plan_Reference wd:Descriptor="Floating Holiday Plan">
+                        <wd:ID wd:type="WID">555f46d5f3134d88aed52bcb009d4406</wd:ID>
+                        <wd:ID wd:type="Absence_Plan_ID">FH_USA</wd:ID>
+                     </wd:Time_Off_Plan_Reference>
+                     <wd:Unit_of_Time_Reference wd:Descriptor="Hours">
+                        <wd:ID wd:type="WID">c4dacbd56bca4a9a8950e8d3ed21bbdb</wd:ID>
+                        <wd:ID wd:type="Unit_of_Time_ID">HOURS</wd:ID>
+                     </wd:Unit_of_Time_Reference>
+                     <wd:Time_Off_Plan_Balance_Position_Record>
+                        <wd:Time_Off_Plan_Balance>16</wd:Time_Off_Plan_Balance>
+                     </wd:Time_Off_Plan_Balance_Position_Record>
+                  </wd:Time_Off_Plan_Balance_Record>
+                  <wd:Time_Off_Plan_Balance_Record>
+                     <wd:Time_Off_Plan_Reference wd:Descriptor="USA Vacation Plan (GPS)">
+                        <wd:ID wd:type="WID">33f0294e00c344dbb4c006d9c4c4db6c</wd:ID>
+                        <wd:ID wd:type="Absence_Plan_ID">VACATION_USA</wd:ID>
+                     </wd:Time_Off_Plan_Reference>
+                     <wd:Unit_of_Time_Reference wd:Descriptor="Hours">
+                        <wd:ID wd:type="WID">c4dacbd56bca4a9a8950e8d3ed21bbdb</wd:ID>
+                        <wd:ID wd:type="Unit_of_Time_ID">HOURS</wd:ID>
+                     </wd:Unit_of_Time_Reference>
+                     <wd:Time_Off_Plan_Balance_Position_Record>
+                        <wd:Time_Off_Plan_Balance>0</wd:Time_Off_Plan_Balance>
+                     </wd:Time_Off_Plan_Balance_Position_Record>
+                  </wd:Time_Off_Plan_Balance_Record>
+               </wd:Time_Off_Plan_Balance_Data>
+            </wd:Time_Off_Plan_Balance>
+         </wd:Response_Data>
+      </wd:Get_Time_Off_Plan_Balances_Response>
+   </env:Body>
+</env:Envelope>

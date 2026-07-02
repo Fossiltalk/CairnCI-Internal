@@ -1,0 +1,1004 @@
+{
+  "version" : "59.0",
+  "nodes" : {
+    "LOAD_DATASET1" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "Name", "CaseId", "StartDate", "Status", "EndDate" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "CarePlan",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "CarePlan"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "LOAD_DATASET2" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "Name", "IsActive", "StartDateTime", "BenefitStatus", "EnrollmentCount", "Description", "ProgramId", "PayoutFrequency", "EndDateTime" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "Benefit",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "Benefit"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "LOAD_DATASET3" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "Name", "BillingPostalCode", "OwnerId", "IsPersonAccount" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "Account",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "Account"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "LOAD_DATASET4" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Priority", "Id", "OwnerId", "Name", "EnrolleeId", "BenefitId", "StartDateTime", "EndDateTime", "Status", "MinimumBenefitAmount", "MaximumBenefitAmount", "ParentRecordId", "PayoutFrequency" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "BenefitAssignment",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "BenefitAssignment"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "LOAD_DATASET5" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "Name", "BenefitAssignmentId", "ActualCompletionDate", "BenefitCategory", "PayoutAmount", "DisbursedQuantity", "DisbursementStatus", "ProgramEnrollmentId", "UnitOfMeasureId" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "BenefitDisbursement",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "BenefitDisbursement"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "LOAD_DATASET6" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "CaseNumber", "AccountId", "ParentId", "Status", "Reason", "Origin", "Subject", "Priority", "IsClosed", "ClosedDate", "OwnerId", "CreatedDate", "LastModifiedDate" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "Case",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "Case"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "JOIN5" : {
+      "action" : "join",
+      "sources" : [ "LOAD_DATASET6", "LOAD_DATASET3" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LEFT_OUTER",
+        "leftKeys" : [ "AccountId" ],
+        "rightQualifier" : "Account",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "OUTPUT0" : {
+      "action" : "save",
+      "sources" : [ "FORMULA3" ],
+      "parameters" : {
+        "fields" : [ ],
+        "dataset" : {
+          "type" : "analyticsDataset",
+          "label" : "PSS  Benefit Management",
+          "name" : "PSS_Benefit_Management",
+          "rowLevelSecurityFilter" : "'Agent.Role.Id_flatten_multiField' == \"$User.UserRoleId\" || 'Account.OwnerId' == \"$User.Id\"",
+          "folderName" : "PSS_WL_Benefits_Analytics"
+        },
+        "measuresToCurrencies" : [ ]
+      }
+    },
+    "OUTPUT1" : {
+      "action" : "save",
+      "sources" : [ "FORMULA1" ],
+      "parameters" : {
+        "fields" : [ ],
+        "dataset" : {
+          "type" : "analyticsDataset",
+          "label" : "PSS Workload Management",
+          "name" : "PSS_Workload_Management",
+          "rowLevelSecurityFilter" : "'User.Role.Id_flatten_multiField' == \"$User.UserRoleId\" || 'Account.OwnerId' == \"$User.Id\"",
+          "folderName" : "PSS_WL_Benefits_Analytics"
+        },
+        "measuresToCurrencies" : [ ]
+      }
+    },
+    "JOIN15" : {
+      "action" : "join",
+      "sources" : [ "JOIN20", "JOIN26" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LEFT_OUTER",
+        "leftKeys" : [ "Id" ],
+        "rightQualifier" : "BenefitAssignment",
+        "rightKeys" : [ "BenefitId" ]
+      }
+    },
+    "JOIN16" : {
+      "action" : "join",
+      "sources" : [ "JOIN32", "LOAD_DATASET5" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ "BenefitAssignment.BenefitId" ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LEFT_OUTER",
+        "leftKeys" : [ "BenefitAssignment.Id" ],
+        "rightQualifier" : "BenefitDis",
+        "rightKeys" : [ "BenefitAssignmentId" ]
+      }
+    },
+    "FORMULA0" : {
+      "action" : "formula",
+      "sources" : [ "JOIN31" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "NUMBER",
+          "name" : "Case_Processing_Time",
+          "label" : "Case Processing Time",
+          "formulaExpression" : "round(datediff(coalesce(\"ClosedDate\", current_timestamp()), \"CreatedDate\"),0)",
+          "precision" : 10,
+          "scale" : 0,
+          "defaultValue" : ""
+        } ]
+      }
+    },
+    "FORMULA1" : {
+      "action" : "formula",
+      "sources" : [ "FORMULA0" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "NUMBER",
+          "name" : "Case_Days",
+          "label" : "Case Days",
+          "formulaExpression" : "datediff(now(), CreatedDate)",
+          "precision" : 10,
+          "scale" : 0,
+          "defaultValue" : ""
+        } ]
+      }
+    },
+    "JOIN19" : {
+      "action" : "join",
+      "sources" : [ "JOIN15", "LOAD_DATASET3" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LEFT_OUTER",
+        "leftKeys" : [ "BenefitAssignment.EnrolleeId" ],
+        "rightQualifier" : "Account",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "LOAD_DATASET8" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "Name", "Status" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "Program",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "Program"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "JOIN20" : {
+      "action" : "join",
+      "sources" : [ "LOAD_DATASET2", "LOAD_DATASET8" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LEFT_OUTER",
+        "leftKeys" : [ "ProgramId" ],
+        "rightQualifier" : "Program",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "JOIN21" : {
+      "action" : "join",
+      "sources" : [ "JOIN5", "LOAD_DATASET10" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LEFT_OUTER",
+        "leftKeys" : [ "Id" ],
+        "rightQualifier" : "Individual",
+        "rightKeys" : [ "ApplicationCaseId" ]
+      }
+    },
+    "LOAD_DATASET10" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "OwnerId", "Name", "ApplicationCaseId", "Category" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "IndividualApplication",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "IndividualApplication"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "LOAD_DATASET11" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "Name", "PublicComplaintId", "CaseId" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "ComplaintCase",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "ComplaintCase"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "LOAD_DATASET12" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "Name", "CaseId" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "Referral",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "Referral"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "JOIN23" : {
+      "action" : "join",
+      "sources" : [ "JOIN29", "LOAD_DATASET12" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LEFT_OUTER",
+        "leftKeys" : [ "Id" ],
+        "rightQualifier" : "Referral",
+        "rightKeys" : [ "CaseId" ]
+      }
+    },
+    "LOAD_DATASET13" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "CreatedDate", "ParentRecordId", "GoalDefinitionId", "CompletionDate", "CompletionPercentage", "GoalAssigneeId" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "GoalAssignment",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "GoalAssignment"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "JOIN24" : {
+      "action" : "join",
+      "sources" : [ "LOAD_DATASET6", "LOAD_DATASET1" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LEFT_OUTER",
+        "leftKeys" : [ "Id" ],
+        "rightQualifier" : "CarePlan",
+        "rightKeys" : [ "CaseId" ]
+      }
+    },
+    "JOIN25" : {
+      "action" : "join",
+      "sources" : [ "JOIN24", "JOIN27" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LEFT_OUTER",
+        "leftKeys" : [ "CarePlan.Id" ],
+        "rightQualifier" : "GoalAssignment",
+        "rightKeys" : [ "ParentRecordId" ]
+      }
+    },
+    "JOIN26" : {
+      "action" : "join",
+      "sources" : [ "LOAD_DATASET4", "JOIN25" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LOOKUP",
+        "leftKeys" : [ "ParentRecordId" ],
+        "rightQualifier" : "Case",
+        "rightKeys" : [ "CarePlan.Id" ]
+      }
+    },
+    "FORMULA2" : {
+      "action" : "formula",
+      "sources" : [ "JOIN33" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "NUMBER",
+          "name" : "Case_Days",
+          "label" : "Case Days",
+          "formulaExpression" : "datediff(now(), \"BenefitAssignment.Case.CreatedDate\")",
+          "precision" : 10,
+          "scale" : 0,
+          "defaultValue" : ""
+        } ]
+      }
+    },
+    "FORMULA3" : {
+      "action" : "formula",
+      "sources" : [ "FORMULA2" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "TEXT",
+          "name" : "Is_CarePlan",
+          "label" : "Active CarePlan ",
+          "formulaExpression" : "case when (\"BenefitAssignment.Case.CarePlan.CaseId\") = (\"BenefitAssignment.Case.Id\") then 'True' else 'False' end",
+          "precision" : 255,
+          "defaultValue" : ""
+        } ]
+      }
+    },
+    "LOAD_DATASET14" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "Status", "Description", "Category", "Type", "Name" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "GoalDefinition",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "GoalDefinition"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        }
+      }
+    },
+    "JOIN27" : {
+      "action" : "join",
+      "sources" : [ "LOAD_DATASET13", "LOAD_DATASET14" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LEFT_OUTER",
+        "leftKeys" : [ "GoalDefinitionId" ],
+        "rightQualifier" : "GoalDefinition",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "JOIN29" : {
+      "action" : "join",
+      "sources" : [ "JOIN21", "LOAD_DATASET11" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ "PublicComp.Name", "PublicComp.ComplaintCaseId", "PublicComp.Complaint.PublicComplaintId", "PublicComp.Complaint.CaseId" ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LEFT_OUTER",
+        "leftKeys" : [ "Id" ],
+        "rightQualifier" : "PublicComp",
+        "rightKeys" : [ "CaseId" ]
+      }
+    },
+    "JOIN31" : {
+      "action" : "join",
+      "sources" : [ "JOIN23", "LOAD_DATASET15" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LEFT_OUTER",
+        "leftKeys" : [ "OwnerId" ],
+        "rightQualifier" : "User",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "JOIN32" : {
+      "action" : "join",
+      "sources" : [ "JOIN19", "LOAD_DATASET15" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LEFT_OUTER",
+        "leftKeys" : [ "BenefitAssignment.OwnerId" ],
+        "rightQualifier" : "Agent",
+        "rightKeys" : [ "Id" ]
+      }
+    },
+    "LOAD_DATASET15" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ ],
+        "dataset" : {
+          "type" : "analyticsDataset",
+          "label" : "PSS User",
+          "name" : "PSS_User"
+        },
+        "sampleDetails" : {
+          "type" : "TopN"
+        }
+      }
+    },
+    "LOAD_DATASET16" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "Name" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "UnitOfMeasure",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "UnitOfMeasure"
+        },
+        "sampleDetails" : {
+          "type" : "TopN"
+        }
+      }
+    },
+    "JOIN33" : {
+      "action" : "join",
+      "sources" : [ "JOIN16", "LOAD_DATASET16" ],
+      "schema" : {
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ "BenefitDis.UnitOfMeasureId" ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LEFT_OUTER",
+        "leftKeys" : [ "BenefitDis.UnitOfMeasureId" ],
+        "rightQualifier" : "UnitOfMeas",
+        "rightKeys" : [ "Id" ]
+      }
+    }
+  },
+  "ui" : {
+    "nodes" : {
+      "LOAD_DATASET1" : {
+        "label" : "CarePlan",
+        "type" : "LOAD_DATASET",
+        "top" : 952,
+        "left" : 112,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "LOAD_DATASET2" : {
+        "label" : "Benefit",
+        "type" : "LOAD_DATASET",
+        "top" : 672,
+        "left" : 112,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "LOAD_DATASET3" : {
+        "label" : "Account",
+        "type" : "LOAD_DATASET",
+        "top" : 1232,
+        "left" : 112.80000000000001,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "LOAD_DATASET4" : {
+        "label" : "BenefitAssignment",
+        "type" : "LOAD_DATASET",
+        "top" : 252,
+        "left" : 111.9,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "LOAD_DATASET5" : {
+        "label" : "BenefitDisbursement",
+        "type" : "LOAD_DATASET",
+        "top" : 112,
+        "left" : 112.1,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "LOAD_DATASET6" : {
+        "label" : "Case",
+        "type" : "LOAD_DATASET",
+        "top" : 1092,
+        "left" : 112.1,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "JOIN5" : {
+        "label" : "Join Account to Case",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 1092,
+        "left" : 252
+      },
+      "OUTPUT0" : {
+        "label" : "Output:PSS Benefit Management",
+        "description" : "",
+        "type" : "OUTPUT",
+        "top" : 112.4,
+        "left" : 1090.2
+      },
+      "OUTPUT1" : {
+        "label" : "Output PSS Workload Management",
+        "description" : "",
+        "type" : "OUTPUT",
+        "top" : 1091.5,
+        "left" : 1092
+      },
+      "JOIN15" : {
+        "label" : "Join Benefit to BenefitAssignment",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 252,
+        "left" : 531.4
+      },
+      "JOIN16" : {
+        "label" : "Join BenefitAssignment to BenefitDisbursment",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 111.9,
+        "left" : 811.9
+      },
+      "TRANSFORM0" : {
+        "label" : "Transform 0",
+        "type" : "TRANSFORM",
+        "top" : 1091.8,
+        "left" : 952.1,
+        "graph" : {
+          "FORMULA0" : {
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            },
+            "label" : "Case Processing Time"
+          },
+          "FORMULA1" : {
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            },
+            "label" : "Formula for Days"
+          }
+        },
+        "connectors" : [ {
+          "source" : "FORMULA0",
+          "target" : "FORMULA1"
+        } ]
+      },
+      "JOIN19" : {
+        "label" : "Join BenefitAssignment to Account",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 252.10000000000002,
+        "left" : 672
+      },
+      "LOAD_DATASET8" : {
+        "label" : "Program",
+        "type" : "LOAD_DATASET",
+        "top" : 811.7,
+        "left" : 112.1,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "JOIN20" : {
+        "label" : "Join Program to Benefit",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 672.2,
+        "left" : 531.2
+      },
+      "JOIN21" : {
+        "label" : "Join Case to IndividualApplication",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 1091.5,
+        "left" : 392.1
+      },
+      "LOAD_DATASET10" : {
+        "label" : "IndividualApplication",
+        "type" : "LOAD_DATASET",
+        "top" : 1372,
+        "left" : 112.4,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "LOAD_DATASET11" : {
+        "label" : "ComplaintCase",
+        "type" : "LOAD_DATASET",
+        "top" : 1512.3,
+        "left" : 112.4,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "LOAD_DATASET12" : {
+        "label" : "Referral",
+        "type" : "LOAD_DATASET",
+        "top" : 1651.9,
+        "left" : 112.5,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "JOIN23" : {
+        "label" : "Join Case to Referral",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 1091.9,
+        "left" : 672.1
+      },
+      "LOAD_DATASET13" : {
+        "label" : "GoalAssignment",
+        "type" : "LOAD_DATASET",
+        "top" : 392,
+        "left" : 112,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "JOIN24" : {
+        "label" : "Join Case to CarePlan",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 812.3,
+        "left" : 392
+      },
+      "JOIN25" : {
+        "label" : "Join CarePlan to GA",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 392,
+        "left" : 391.9
+      },
+      "JOIN26" : {
+        "label" : "Join GA to BA",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 252,
+        "left" : 391.9
+      },
+      "TRANSFORM1" : {
+        "label" : "Transform 1",
+        "type" : "TRANSFORM",
+        "top" : 111.6,
+        "left" : 951.9,
+        "graph" : {
+          "FORMULA2" : {
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            },
+            "label" : "Formula Days"
+          },
+          "FORMULA3" : {
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            },
+            "label" : "Formula Active CarePlan"
+          }
+        },
+        "connectors" : [ {
+          "source" : "FORMULA2",
+          "target" : "FORMULA3"
+        } ]
+      },
+      "LOAD_DATASET14" : {
+        "label" : "GoalDefinition",
+        "type" : "LOAD_DATASET",
+        "top" : 532,
+        "left" : 111.9,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "JOIN27" : {
+        "label" : "Join GoalAssignment to GoalDefinition",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 391.9,
+        "left" : 252
+      },
+      "JOIN29" : {
+        "label" : "Join Case to Complaint",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 1092,
+        "left" : 532
+      },
+      "JOIN31" : {
+        "label" : "Join User to Case",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 1092,
+        "left" : 812
+      },
+      "JOIN32" : {
+        "label" : "Join User to BenefitAssign",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 252.3,
+        "left" : 812
+      },
+      "LOAD_DATASET15" : {
+        "label" : "PSS User",
+        "type" : "LOAD_DATASET",
+        "top" : 1792,
+        "left" : 112.69999999999999,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "LOAD_DATASET16" : {
+        "label" : "UnitOfMeasure",
+        "type" : "LOAD_DATASET",
+        "top" : 252.3,
+        "left" : 952.2,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "JOIN33" : {
+        "label" : "Join BenefitDisbursment to UnitofMeasure",
+        "description" : "",
+        "type" : "JOIN",
+        "top" : 112,
+        "left" : 952
+      }
+    },
+    "connectors" : [ {
+      "source" : "JOIN32",
+      "target" : "JOIN16"
+    }, {
+      "source" : "JOIN29",
+      "target" : "JOIN23"
+    }, {
+      "source" : "LOAD_DATASET6",
+      "target" : "JOIN5"
+    }, {
+      "source" : "TRANSFORM0",
+      "target" : "OUTPUT1"
+    }, {
+      "source" : "JOIN20",
+      "target" : "JOIN15"
+    }, {
+      "source" : "JOIN26",
+      "target" : "JOIN15"
+    }, {
+      "source" : "LOAD_DATASET5",
+      "target" : "JOIN16"
+    }, {
+      "source" : "TRANSFORM1",
+      "target" : "OUTPUT0"
+    }, {
+      "source" : "LOAD_DATASET3",
+      "target" : "JOIN5"
+    }, {
+      "source" : "JOIN15",
+      "target" : "JOIN19"
+    }, {
+      "source" : "LOAD_DATASET3",
+      "target" : "JOIN19"
+    }, {
+      "source" : "LOAD_DATASET2",
+      "target" : "JOIN20"
+    }, {
+      "source" : "LOAD_DATASET8",
+      "target" : "JOIN20"
+    }, {
+      "source" : "JOIN5",
+      "target" : "JOIN21"
+    }, {
+      "source" : "LOAD_DATASET6",
+      "target" : "JOIN24"
+    }, {
+      "source" : "LOAD_DATASET1",
+      "target" : "JOIN24"
+    }, {
+      "source" : "JOIN24",
+      "target" : "JOIN25"
+    }, {
+      "source" : "JOIN27",
+      "target" : "JOIN25"
+    }, {
+      "source" : "LOAD_DATASET4",
+      "target" : "JOIN26"
+    }, {
+      "source" : "JOIN25",
+      "target" : "JOIN26"
+    }, {
+      "source" : "JOIN33",
+      "target" : "TRANSFORM1"
+    }, {
+      "source" : "LOAD_DATASET13",
+      "target" : "JOIN27"
+    }, {
+      "source" : "LOAD_DATASET14",
+      "target" : "JOIN27"
+    }, {
+      "source" : "LOAD_DATASET10",
+      "target" : "JOIN21"
+    }, {
+      "source" : "LOAD_DATASET12",
+      "target" : "JOIN23"
+    }, {
+      "source" : "JOIN21",
+      "target" : "JOIN29"
+    }, {
+      "source" : "LOAD_DATASET11",
+      "target" : "JOIN29"
+    }, {
+      "source" : "JOIN23",
+      "target" : "JOIN31"
+    }, {
+      "source" : "JOIN31",
+      "target" : "TRANSFORM0"
+    }, {
+      "source" : "JOIN19",
+      "target" : "JOIN32"
+    }, {
+      "source" : "LOAD_DATASET15",
+      "target" : "JOIN31"
+    }, {
+      "source" : "LOAD_DATASET15",
+      "target" : "JOIN32"
+    }, {
+      "source" : "JOIN16",
+      "target" : "JOIN33"
+    }, {
+      "source" : "LOAD_DATASET16",
+      "target" : "JOIN33"
+    } ],
+    "hiddenColumns" : [ ]
+  },
+  "runMode" : "full"
+}

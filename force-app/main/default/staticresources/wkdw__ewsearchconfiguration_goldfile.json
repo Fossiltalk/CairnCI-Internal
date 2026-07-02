@@ -1,0 +1,237 @@
+{
+  "searchEntityConfigs" : [ {
+    "iconName" : "utility:apps",
+    "fieldConfigMap" : {
+      "Label" : {
+        "supportTranslations" : false,
+        "secondaryPosition" : null,
+        "prefixLabel" : null,
+        "mustTruncateContent" : true,
+        "mustRemoveHTMLContent" : false,
+        "mustEscapeHTMLContent" : true,
+        "isTitleField" : true,
+        "isSecondaryField" : false,
+        "isImageUrlField" : false,
+        "fieldName" : "Label"
+      },
+      "Name" : {
+        "supportTranslations" : false,
+        "secondaryPosition" : null,
+        "prefixLabel" : null,
+        "mustTruncateContent" : true,
+        "mustRemoveHTMLContent" : false,
+        "mustEscapeHTMLContent" : true,
+        "isTitleField" : false,
+        "isSecondaryField" : false,
+        "isImageUrlField" : false,
+        "fieldName" : "Name"
+      },
+      "Description" : {
+        "supportTranslations" : false,
+        "secondaryPosition" : 1,
+        "prefixLabel" : null,
+        "mustTruncateContent" : true,
+        "mustRemoveHTMLContent" : false,
+        "mustEscapeHTMLContent" : true,
+        "isTitleField" : false,
+        "isSecondaryField" : true,
+        "isImageUrlField" : false,
+        "fieldName" : "Description"
+      },
+      "LogoUrl" : {
+        "supportTranslations" : false,
+        "secondaryPosition" : null,
+        "prefixLabel" : null,
+        "mustTruncateContent" : false,
+        "mustRemoveHTMLContent" : false,
+        "mustEscapeHTMLContent" : false,
+        "isTitleField" : false,
+        "isSecondaryField" : false,
+        "isImageUrlField" : false,
+        "fieldName" : "LogoUrl"
+      },
+      "StartUrl" : {
+        "supportTranslations" : false,
+        "secondaryPosition" : null,
+        "prefixLabel" : null,
+        "mustTruncateContent" : false,
+        "mustRemoveHTMLContent" : false,
+        "mustEscapeHTMLContent" : false,
+        "isTitleField" : false,
+        "isSecondaryField" : false,
+        "isImageUrlField" : false,
+        "fieldName" : "StartUrl"
+      },
+      "Id" : {
+        "supportTranslations" : false,
+        "secondaryPosition" : null,
+        "prefixLabel" : null,
+        "mustTruncateContent" : false,
+        "mustRemoveHTMLContent" : false,
+        "mustEscapeHTMLContent" : false,
+        "isTitleField" : false,
+        "isSecondaryField" : false,
+        "isImageUrlField" : false,
+        "fieldName" : "Id"
+      },
+      "ApplicationId" : {
+        "supportTranslations" : false,
+        "secondaryPosition" : null,
+        "prefixLabel" : null,
+        "mustTruncateContent" : false,
+        "mustRemoveHTMLContent" : false,
+        "mustEscapeHTMLContent" : false,
+        "isTitleField" : false,
+        "isSecondaryField" : false,
+        "isImageUrlField" : false,
+        "fieldName" : "ApplicationId"
+      }
+    },
+    "entityPluralLabel" : "AppMenuItems",
+    "entityApiName" : "AppMenuItem"
+  }, {
+    "iconName" : "utility:user",
+    "fieldConfigMap" : {
+      "JobProfile" : {
+        "supportTranslations" : false,
+        "secondaryPosition" : 1,
+        "prefixLabel" : null,
+        "mustTruncateContent" : true,
+        "mustRemoveHTMLContent" : false,
+        "mustEscapeHTMLContent" : true,
+        "isTitleField" : false,
+        "isSecondaryField" : true,
+        "isImageUrlField" : false,
+        "fieldName" : "JobProfile"
+      },
+      "User.MediumPhotoUrl" : {
+        "supportTranslations" : false,
+        "secondaryPosition" : null,
+        "prefixLabel" : null,
+        "mustTruncateContent" : false,
+        "mustRemoveHTMLContent" : false,
+        "mustEscapeHTMLContent" : false,
+        "isTitleField" : false,
+        "isSecondaryField" : false,
+        "isImageUrlField" : true,
+        "fieldName" : "User.MediumPhotoUrl"
+      },
+      "WorkPhone" : {
+        "supportTranslations" : false,
+        "secondaryPosition" : 2,
+        "prefixLabel" : null,
+        "mustTruncateContent" : true,
+        "mustRemoveHTMLContent" : false,
+        "mustEscapeHTMLContent" : true,
+        "isTitleField" : false,
+        "isSecondaryField" : true,
+        "isImageUrlField" : false,
+        "fieldName" : "WorkPhone"
+      },
+      "Id" : {
+        "supportTranslations" : false,
+        "secondaryPosition" : null,
+        "prefixLabel" : null,
+        "mustTruncateContent" : false,
+        "mustRemoveHTMLContent" : false,
+        "mustEscapeHTMLContent" : false,
+        "isTitleField" : false,
+        "isSecondaryField" : false,
+        "isImageUrlField" : false,
+        "fieldName" : "Id"
+      },
+      "wkdw__DisplayName__c" : {
+        "supportTranslations" : false,
+        "secondaryPosition" : null,
+        "prefixLabel" : null,
+        "mustTruncateContent" : true,
+        "mustRemoveHTMLContent" : false,
+        "mustEscapeHTMLContent" : true,
+        "isTitleField" : true,
+        "isSecondaryField" : false,
+        "isImageUrlField" : false,
+        "fieldName" : "wkdw__DisplayName__c"
+      },
+      "Email" : {
+        "supportTranslations" : false,
+        "secondaryPosition" : 3,
+        "prefixLabel" : null,
+        "mustTruncateContent" : true,
+        "mustRemoveHTMLContent" : false,
+        "mustEscapeHTMLContent" : true,
+        "isTitleField" : false,
+        "isSecondaryField" : true,
+        "isImageUrlField" : false,
+        "fieldName" : "Email"
+      }
+    },
+    "entityPluralLabel" : "Employees",
+    "entityApiName" : "Employee"
+  }, {
+    "iconName" : "standard:work_type_group",
+    "fieldConfigMap" : {
+      "Id" : {
+        "supportTranslations" : false,
+        "secondaryPosition" : null,
+        "prefixLabel" : null,
+        "mustTruncateContent" : false,
+        "mustRemoveHTMLContent" : false,
+        "mustEscapeHTMLContent" : false,
+        "isTitleField" : false,
+        "isSecondaryField" : false,
+        "isImageUrlField" : false,
+        "fieldName" : "Id"
+      },
+      "wkdw__Description__c" : {
+        "supportTranslations" : false,
+        "secondaryPosition" : 4,
+        "prefixLabel" : null,
+        "mustTruncateContent" : false,
+        "mustRemoveHTMLContent" : false,
+        "mustEscapeHTMLContent" : true,
+        "isTitleField" : false,
+        "isSecondaryField" : true,
+        "isImageUrlField" : false,
+        "fieldName" : "wkdw__Description__c"
+      },
+      "wkdw__CompletionDate__c" : {
+        "supportTranslations" : false,
+        "secondaryPosition" : 3,
+        "prefixLabel" : null,
+        "mustTruncateContent" : false,
+        "mustRemoveHTMLContent" : false,
+        "mustEscapeHTMLContent" : false,
+        "isTitleField" : false,
+        "isSecondaryField" : true,
+        "isImageUrlField" : false,
+        "fieldName" : "wkdw__CompletionDate__c"
+      },
+      "wkdw__StartDate__c" : {
+        "supportTranslations" : false,
+        "secondaryPosition" : 2,
+        "prefixLabel" : null,
+        "mustTruncateContent" : false,
+        "mustRemoveHTMLContent" : false,
+        "mustEscapeHTMLContent" : false,
+        "isTitleField" : false,
+        "isSecondaryField" : true,
+        "isImageUrlField" : false,
+        "fieldName" : "wkdw__StartDate__c"
+      },
+      "Name" : {
+        "supportTranslations" : false,
+        "secondaryPosition" : null,
+        "prefixLabel" : null,
+        "mustTruncateContent" : false,
+        "mustRemoveHTMLContent" : false,
+        "mustEscapeHTMLContent" : true,
+        "isTitleField" : true,
+        "isSecondaryField" : false,
+        "isImageUrlField" : false,
+        "fieldName" : "Name"
+      }
+    },
+    "entityPluralLabel" : "Portfolio Items",
+    "entityApiName" : "wkdw__EmployeeWorkExperience__c"
+  } ]
+}
