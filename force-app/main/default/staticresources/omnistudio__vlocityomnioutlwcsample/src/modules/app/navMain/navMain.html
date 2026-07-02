@@ -1,0 +1,37 @@
+<template>
+  <div class="slds-grid slds-grid_vertical-align-center"
+       onroutechange={updateNav}>
+    <!-- Example showing using manual creation of a navigate action. -->
+    <c-navigate-action target-type="Component"
+                       target-name="view/homePage"
+                       use-href
+                       class="slds-col slds-no-flex">
+      <c-icon icon-name="utility:home"
+              class="slds-icon_container slds-icon-utility-home slds-current-color"></c-icon>
+    </c-navigate-action>
+
+    <ul class="slds-list_horizontal slds-has-dividers_left slds-has-block-links_space slds-col slds-col_padded">
+      <!-- Example showing creation of navigate actions using typed constructors. -->
+      <li for:each={navBarItems}
+          for:item="item"
+          key={item.label}>
+        <app-nav-item label={item.label}
+                      name={item.name}
+                      key={item.label}></app-nav-item>
+      </li>
+    </ul>
+
+    <div class="slds-no-flex">
+      <c-button if:false={authenticated}
+                variant="brand"
+                label="Login"
+                onclick={login}></c-button>
+      <c-button if:true={authenticated}
+                variant="brand"
+                label="Logout"
+                onclick={logout}
+                icon-position="right"
+                icon-name="utility:logout"></c-button>
+    </div>
+  </div>
+</template>

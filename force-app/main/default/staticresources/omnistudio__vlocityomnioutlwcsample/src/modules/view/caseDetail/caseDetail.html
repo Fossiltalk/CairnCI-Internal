@@ -1,0 +1,64 @@
+<template>
+  <div class="slds-grid slds-grid_pull-padded"
+       if:true={isLoaded}>
+    <div class="slds-col slds-col_padded slds-small-order_2 slds-medium-order_1">
+      <div class="slds-page-header">
+        <div class="slds-page-header__row">
+          <div class="slds-page-header__col-title">
+            <div class="slds-media">
+              <div class="slds-media__figure">
+                <span class="slds-icon_container slds-icon-standard-case"
+                      title="Case">
+                  <c-icon icon-name="standard:case"
+                          variant="standard"></c-icon>
+                  <span class="slds-assistive-text">Case</span>
+                </span>
+              </div>
+              <div class="slds-media__body">
+                <div class="slds-page-header__name">
+                  <div class="slds-page-header__name-title">
+                    <h1>
+                      <span class="slds-page-header__title slds-truncate"
+                            title={Subject}>{number} - {subject}</span>
+                    </h1>
+                  </div>
+                </div>
+                <p class="slds-page-header__name-meta">{status} - {createdDate}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <p>{description}</p>
+      <hr />
+      <lightning-card title="Comments">
+        <illustration-open-road if:false={comments.length}></illustration-open-road>
+        <table if:true={comments.length}
+               class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+          <tr for:each={comments}
+              for:item="comment"
+              key={comment.Id}>
+            <td key={comment.Id}
+                class="slds-cell-wrap">
+              <strong>
+                {comment.CreatedById}<br />
+              </strong>
+              <p>{comment.ComentBody}</p>
+              <p class="slds-text-color_weak">{comment.CreatedDate}</p>
+            </td>
+          </tr>
+        </table>
+      </lightning-card>
+    </div>
+    <div if:false={isClosed}
+         class="slds-col slds-col_padded slds-no-flex slds-small-size_1-of-1 slds-medium-size_4-of-12 slds-small-order_1 slds-medium-order_2 slds-m-bottom_large">
+      <vlocityomniscript-example-close-case-english inline
+                                                    inline-variant="brand"
+                                                    inline-label="Close"
+                                                    run-mode="localScriptDef"
+                                                    prefill={prefill}>
+      </vlocityomniscript-example-close-case-english>
+    </div>
+  </div>
+</template>

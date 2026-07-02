@@ -1,0 +1,32 @@
+<template>
+
+  <!-- By adding this onroutechange binding, the vlocityBaseApp
+         will send routechange events to the router! -->
+  <header onroutechange={routeChange}>
+    <nav class="slds-container_large slds-p-vertical_x-small">
+      <app-nav-main authenticated={authenticated}
+                    onlogin={login}
+                    onlogout={logout}></app-nav-main>
+    </nav>
+  </header>
+
+  <!-- Listen to the routechange event here to keep the nav updated. -->
+  <main class="slds-container_large slds-p-vertical_medium"
+        onroutechange={updateNav}>
+
+    <!-- At a minimum you must include a c-router component to utilize routing functionality. -->
+    <view-router data-component-router
+                 route-config={routeConfig}
+                 authenticated={authenticated}
+                 connection={connection}
+                 redirects={redirects}></view-router>
+  </main>
+
+  <footer class="slds-container_large"
+          onroutechange={routeChange}>
+    <slot name="footer"></slot>
+  </footer>
+
+  <c-spinner if:true={showSpinner}></c-spinner>
+
+</template>

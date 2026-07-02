@@ -1,0 +1,26 @@
+{
+  "modules": [
+    {
+      "npm": "@omnistudio/sdk"
+    },
+    {
+      "npm": "@omnistudio/resources"
+    },
+    {
+      "npm": "@omnistudio/platform"
+    },
+    {
+      "npm": "@omnistudio/components"
+    },
+    {
+      "npm": "@omnistudio/cards"
+    },
+    {
+      "npm": "@omnistudio/oui"
+    },
+    {
+      "dir": "src/modules"
+    }
+  ],
+  "expose": []
+}

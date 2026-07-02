@@ -1,0 +1,12 @@
+.slds-container_large {
+  margin: 0 auto;
+}
+
+header {
+  background-color: var(--my-colorBackgroundBrand, rgb(211, 220, 233));
+}
+
+header>nav,
+main {
+  margin: 0 auto;
+}

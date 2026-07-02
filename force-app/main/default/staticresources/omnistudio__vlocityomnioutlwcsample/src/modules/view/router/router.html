@@ -1,0 +1,14 @@
+<template>
+  <div onroutechange={routeChange}
+       if:false={isLoading}>
+    <dynamic-component lwc:dynamic={dynamicComponent}
+                       authenticated={authenticated}
+                       connection={connection}></dynamic-component>
+  </div>
+
+  <div if:true={isErrorState}>
+    <c-alert variation="error"
+             message={errorMessage}
+             dismissible></c-alert>
+  </div>
+</template>

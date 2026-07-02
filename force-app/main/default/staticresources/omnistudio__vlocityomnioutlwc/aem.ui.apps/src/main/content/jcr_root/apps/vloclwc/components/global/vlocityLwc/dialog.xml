@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+    jcr:primaryType="cq:Dialog"
+    title="Configure SalesForce Cloud Services connection"
+    xtype="dialog">
+    <items jcr:primaryType="cq:WidgetCollection">
+        <tab1
+            jcr:primaryType="cq:Widget"
+            anchor="100%"
+            title="Salesforce Connect"
+            xtype="panel">
+            <items jcr:primaryType="cq:WidgetCollection">
+                <cloudConfig
+                    jcr:primaryType="cq:Widget"
+                    allowBlank="{Boolean}false"
+                    fieldLabel="Configuration"
+                    name="./cloudserviceconfig"
+                    rootPath="/etc/cloudservices/salesforce"
+                    fieldDescription="The cloud configuration used to connect to Salesforce"
+                    xtype="cloudservicescombo"/>
+                <sNSOverride
+                    jcr:primaryType="cq:Widget"
+                    allowBlank="{Boolean}true"
+                    fieldLabel="Namespace"
+                    name="./sNSOverride"
+                    fieldDescription="The namespace of your installed package"
+                    xtype="textfield"/>
+                <omniscriptElement
+                    jcr:primaryType="cq:Widget"
+                    allowBlank="{Boolean}false"
+                    fieldLabel="LWC Element Name"
+                    name="./omniscriptElement"
+                    fieldDescription="The tag of your OmniScript LWC component"
+                    xtype="textfield"/>
+                <layout
+                    jcr:primaryType="cq:Widget"
+                    xtype="selection"
+                    allowBlank="{Boolean}false"
+                    type="select"
+                    fieldLabel="Layout"
+                    defaultValue="lightning"
+                    fieldDescription="The layout for your OmniScript"
+                    name="./layout">
+                    <options jcr:primaryType="cq:WidgetCollection">
+                        <option1
+                            jcr:primaryType="nt:unstructured"
+                            text="lightning"
+                            value="lightning"/>
+                        <option2
+                            jcr:primaryType="nt:unstructured"
+                            text="newport"
+                            value="newport"/>
+                    </options>
+                </layout>
+                <prefill
+                    jcr:primaryType="cq:Widget"
+                    allowBlank="{Boolean}true"
+                    fieldLabel="Prefill Attribute"
+                    name="./prefill"
+                    fieldDescription="Prefill data for your OmniScript"
+                    xtype="textfield"/>
+                <googleMapsApiKey
+                    jcr:primaryType="cq:Widget"
+                    allowBlank="{Boolean}true"
+                    fieldLabel="Google Maps API Key"
+                    name="./googleMapsApiKey"
+                    fieldDescription="Your Google Maps API key. Required if OmniScript has maps autocomplete typeahead"
+                    xtype="textfield"/>
+                <useProxy
+                    jcr:primaryType="cq:Widget"
+                    boxLabel="Use Proxy"
+                    inputValue="true"
+                    name="./useProxy"
+                    fieldDescription="Use a proxy to forward your requests to Salesforce"
+                    type="checkbox"
+                    xtype="selection"/>
+                <proxyURL
+                    jcr:primaryType="cq:Widget"
+                    allowBlank="{Boolean}true"
+                    defaultValue="https://ooproxy.herokuapp.com"
+                    fieldLabel="Proxy URL"
+                    name="./proxyURL"
+                    fieldDescription="The URL for the proxy used to forward your requests to Salesforce"
+                    xtype="textfield"/>
+                <useLocalDef
+                    jcr:primaryType="cq:Widget"
+                    boxLabel="Use Local Definition"
+                    inputValue="true"
+                    name="./useLocalDef"
+                    type="checkbox"
+                    fieldDescription="Loads the component definition from the local cache"
+                    xtype="selection"/>
+                <loadSldsResources
+                    jcr:primaryType="cq:Widget"
+                    boxLabel="Load SLDS Resources"
+                    inputValue="true"
+                    name="./loadSldsResources"
+                    type="checkbox"
+                    fieldDescription="Load the SLDS resources in the webpage. Required if File or Image upload is enabled"
+                    xtype="selection"/>
+                <loadNewportResources
+                    jcr:primaryType="cq:Widget"
+                    boxLabel="Load Newport Resources"
+                    inputValue="true"
+                    name="./loadNewportResources"
+                    type="checkbox"
+                    fieldDescription="Load the Newport resources in the webpage"
+                    xtype="selection"/>
+                <loadVlocityPdf
+                    jcr:primaryType="cq:Widget"
+                    boxLabel="Load PDF Resources"
+                    inputValue="true"
+                    name="./loadVlocityPdf"
+                    type="checkbox"
+                    fieldDescription="Load the PDF resources in the webpage. Required if your OmniScript has PDF Action"
+                    xtype="selection"/>
+            </items>
+        </tab1>
+    </items>
+</jcr:root>

@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "baseUrl": "./",
+    "paths": {
+      "app/main": ["./app/main/main.js"],
+      "app/constants": ["./app/constants/constants.js"],
+      "app/navMain": ["./app/navMain/navMain.js"],
+      "app/navItem": ["./app/navItem/navItem.js"]
+    }
+  },
+  "typeAcquisition": {
+    "include": ["jest"]
+  }
+}

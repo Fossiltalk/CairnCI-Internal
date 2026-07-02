@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta http-equiv="X-UA-Compatible"
+              content="IE=edge" />
+        <meta http-equiv="Content-Type"
+              content="text/html;charset=utf-8">
+        <style>
+            html,
+            body {
+                overflow: hidden;
+                padding: 0;
+                margin: 0;
+                border: 0;
+                background: transparent;
+            }
+
+            textarea {
+                visibility: hidden;
+            }
+        </style>
+        <script src="tinymce.min.js"></script>
+    </head>
+
+    <body>
+
+        <textarea id="mytextarea"></textarea>
+
+
+        <script>
+            let _initialized;
+            let _config;
+            let _rteId;
+
+            window.addEventListener("message", receiveMessage, false);
+
+            function receiveMessage() {
+                switch (event.data.message) {
+                    case "render":
+                        _rteId = event.data.elementid;
+                        renderEditor(event.data.value, event.data.config);
+                        return;
+                    case "value-changed":
+                        updateValue(event.data.value);
+                        return;
+                    case "append-changed":
+                        appendValue(event.data.value);
+                        return;
+                    case "config-changed":
+                        updateEditor(event.data.value, event.data.config);
+                        return;
+                    case "set-mode":
+                        tinymce.activeEditor.setMode(event.data.value);
+                        return;
+                }
+            }
+
+
+            function renderEditor(value, config) {
+                config = setConfigDefaults(config);
+                document.getElementById("mytextarea").value = value;
+                if (_initialized) {
+                    tinymce.remove("#mytextarea");
+                }
+                tinymce.init(config);
+            }
+
+            function setConfigDefaults(config) {
+                config['selector'] = "#mytextarea";
+                config['height'] = config['height'] || 300;
+                config['init_instance_callback'] = function (editor) {
+                    editor.on('Change undo redo', function (e) {
+                        window.parent.postMessage({
+                            message: _rteId + "-change",
+                            value: editor.getContent()
+                        }, "*");
+                    });
+                }
+                config['setup'] = function (editor) {
+                    editor.on('init', function (e) {
+                        _initialized = true;
+                        window.parent.postMessage({
+                            message: _rteId + "-initialized",
+                            value: editor.getContent()
+                        }, "*");
+                    });
+
+                    if (config.setupConfig && config.setupConfig.length > 0) {
+                        config.setupConfig.forEach(config => {
+                            if (config.type === "addMenuButton") {
+                                if (config.menufn === "insertHtml") {
+                                    editor.ui.registry.addMenuButton(config.name, {
+                                        text: config.text,
+                                        fetch: function (callback) {
+                                            let items = [];
+                                            config.items.forEach(item => {
+                                                items.push({
+                                                    type: item.type,
+                                                    text: item.text,
+                                                    onAction: function () {
+                                                        editor.insertContent(item.html);
+                                                    }
+                                                })
+                                            });
+                                            callback(items);
+                                        },
+                                        onSetup(api) {
+                                            api.setDisabled(config.items.length <= 0);
+                                        }
+                                    });
+                                } else if(config.menufn === "classtoggle") {
+                                    editor.ui.registry.addMenuButton(config.name, {
+                                        text: config.text,
+                                        fetch: function (callback) {
+                                          let items = [];
+                                          config.items.forEach(mainItem => {
+                                            let item = {
+                                               type: mainItem.type,
+                                               text: mainItem.text,
+                                               getSubmenuItems: function () {
+                                                let submenuItems = [];
+                                                 let classes = mainItem.subitems.map(s => s.class);
+                                                 mainItem.subitems.forEach(sbItem => {
+                                                    let submenu = {
+                                                      type: sbItem.type,
+                                                      text: sbItem.text,
+                                                      onAction: function (e) {
+                                                        let group = classes;
+                                                        let node = tinymce.activeEditor.selection.getNode();
+                                                        if(node) {
+                                                            let classList = node.classList;
+                                                            let hasClass = classList.contains(sbItem.class);
+                                                            if(!hasClass) {
+                                                                classList.remove(...group);
+                                                                classList.add(sbItem.class);
+                                                            } else {
+                                                                classList.remove(sbItem.class);
+                                                            }
+                                                            tinyMCE.activeEditor.fire("change",{});
+                                                        }
+                                                      },
+                                                      onSetup: function (api) {
+                                                        let node = tinymce.activeEditor.selection.getNode();
+                                                        if(node) {
+                                                            let classList = node.classList;
+                                                            let hasClass =  classList.contains(sbItem.class);
+                                                            api.setActive(hasClass);
+                                                        }
+                                                      }
+                                                    }
+                                                    submenuItems.push(submenu);
+                                                 });
+                                                return submenuItems;
+                                               }
+                                            }
+                                            items.push(item);
+                                          });
+                                          callback(items);
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    }
+
+                }
+                return config;
+            }
+
+            function updateValue(value) {
+                tinymce.activeEditor.setContent(value);
+            }
+
+            function appendValue(value) {
+                tinymce.activeEditor.setContent(tinymce.activeEditor.getContent() + value);
+            }
+        </script>
+    </body>
+
+</html>

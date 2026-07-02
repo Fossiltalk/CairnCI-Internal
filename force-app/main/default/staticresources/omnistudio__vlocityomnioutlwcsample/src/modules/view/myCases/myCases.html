@@ -1,0 +1,109 @@
+<template>
+  <div class="slds-grid slds-grid_pull-padded slds-wrap">
+    <div class="slds-col slds-col_padded slds-no-flex slds-small-size_1-of-1">
+
+      <lightning-card title="My Cases"
+                      icon-name="standard:case">
+
+        <c-navigate-action slot="actions"
+                           target-type="Component"
+                           target-name="vlocityomniscript/exampleCreateCaseEnglish">
+          <c-button label="Add new +"
+                    variant="brand"></c-button>
+        </c-navigate-action>
+        <div if:false={cases}
+             class="slds-is-relative"
+             style="height: 5rem">
+          <c-spinner></c-spinner>
+        </div>
+        <template if:true={cases}>
+          <illustration-open-road if:false={cases.length}></illustration-open-road>
+          <table if:true={cases.length}
+                 class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+            <thead>
+              <tr class="slds-line-height_reset">
+                <th>
+                  <div class="slds-truncate"></div>
+                </th>
+                <th>
+                  <div class="slds-truncate">Status</div>
+                </th>
+                <th>
+                  <div class="slds-truncate">Subject</div>
+                </th>
+                <th>
+                  <div class="slds-truncate">Created</div>
+                </th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody for:each={cases}
+                   for:item="caseItem"
+                   for:index="index"
+                   key={caseItem.Id}>
+              <tr key={caseItem.Id}
+                  onclick={selectCase}
+                  data-index={index}>
+                <td key={caseItem.Id}>
+                  <div class="slds-truncate slds-text-align_center"
+                       key={caseItem.Id}>
+                    <c-icon icon-name="action:priority"
+                            if:true={caseItem.isHot}
+                            class="slds-icon_container slds-icon-action-bug"
+                            variant="standard"
+                            size="x-small"></c-icon>
+                    <c-icon icon-name="standard:task2"
+                            if:true={caseItem.isClosed}
+                            class="slds-icon_container slds-icon-standard-task"
+                            variant="standard"
+                            size="small"></c-icon>
+                  </div>
+                </td>
+                <td key={caseItem.Id}>
+                  <div class="slds-truncate"
+                       key={caseItem.Id}>{caseItem.Status}</div>
+                </td>
+                <td key={caseItem.Id}>
+                  <div class="slds-truncate"
+                       key={caseItem.Id}>{caseItem.Subject}</div>
+                </td>
+                <td key={caseItem.Id}>
+                  <div class="slds-truncate"
+                       key={caseItem.Id}>{caseItem.CreatedDate}
+                  </div>
+                </td>
+                <td>
+                  <div class="slds-truncate"
+                       key={caseItem.Id}>
+                    <c-navigate-action key={caseItem.Id}
+                                       target-type="Record"
+                                       target-name="Case"
+                                       target-id={caseItem.Id}
+                                       use-href>
+                      view
+                    </c-navigate-action>
+                  </div>
+
+                </td>
+              </tr>
+              <!-- <tr key={caseItem.Id}
+                  if:true={caseItem.isSelected}>
+                <td key={caseItem.Id}
+                    class="slds-cell-wrap"
+                    colspan="4">
+                  <div key={caseItem.Id}>
+                    <vlocityomniscript-example-close-case-english prefill={selectedCase}
+                                                                  run-mode="localScriptDef"
+                                                                  key={caseItem.Id}>
+                    </vlocityomniscript-example-close-case-english>
+                  </d
+                  
+              </tr> -->
+            </tbody>
+          </table>
+        </template>
+      </lightning-card>
+
+    </div>
+  </div>
+</template>
