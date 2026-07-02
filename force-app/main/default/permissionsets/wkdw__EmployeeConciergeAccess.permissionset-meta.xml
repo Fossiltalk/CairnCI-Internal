@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>wkdw__ConciergeFeaturesAccess</name>
+    </customPermissions>
+    <description>Provides access to Employee Concierge features.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Employee Concierge Access</label>
+    <license>Employee360.EmployeeConciergePsl</license>
+</PermissionSet>

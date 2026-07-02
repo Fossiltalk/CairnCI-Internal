@@ -1,0 +1,38 @@
+<template>
+    <lightning-card footer="" title="">
+        <h1 class="slds-text-heading_medium">{welcome_text}</h1> 
+        <div class="c-footer" >
+            <a href="/lightning/n/Talent_Recruitment_Home">Return to Talent Recruitment Home</a>
+        </div>
+        <div class="c-container"> 
+            <lightning-layout>
+                <lightning-layout-item flexibility="auto" padding="around-small"> 
+
+                    <c-feature-child
+                    heading="Create and progress recruitment requisitions" 
+                    image-name="/resource/PSS_Learning_org_Icons/Compliance_Officer_Icon.png"
+                    app-text="Work with recruitment requisitions, conducting tasks such as gaining approvals from hiring managers and converting requisitons into job postings" 
+                    link-in-new-tab={pass_true}
+                    object-name="RecruitmentRequisition"
+                    filter-name="Recent"
+                    app="standard__RecruitmentManagement"
+                    link-reference="standard__objectPage"></c-feature-child>
+
+                    <template if:false={no_account}>
+                        <c-feature-child 
+                            heading="View Applicant Profile"  
+                            app-text="Screen and Evaluate Applicants"
+                            image-name="/resource/PSS_Learning_org_Icons/Admin_Icon_Square_2Color_RGB.png"
+                            app="standard__RecruitmentManagement"
+                            link-in-new-tab={pass_true}
+                            object-name="ApplicationForm"
+                            object-id={appFormId}
+                            link-reference="standard__recordPage">
+                        </c-feature-child>
+                    </template>
+
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+    </lightning-card>
+</template>

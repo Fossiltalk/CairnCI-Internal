@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OmniDataTransform xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>false</active>
+    <assignmentRulesUsed>false</assignmentRulesUsed>
+    <deletedOnSuccess>false</deletedOnSuccess>
+    <errorIgnored>false</errorIgnored>
+    <fieldLevelSecurityEnabled>false</fieldLevelSecurityEnabled>
+    <inputType>JSON</inputType>
+    <isManagedUsingStdDesigner>false</isManagedUsingStdDesigner>
+    <name>PSSCoCUpdatePartyIncomeRecords</name>
+    <nullInputsIncludedInOutput>false</nullInputsIncludedInOutput>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <formulaConverted>| var:HouseholdIncomeDetails:StartDate &quot;*-*&quot; LIKE var:StartDate | var:StartDate UNIXTODATETIME IF</formulaConverted>
+        <formulaSequence>1.0</formulaSequence>
+        <globalKey>PSSCoCUpdatePartyIncomeRecordsCustom9805</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCUpdatePartyIncomeRecords</name>
+        <omniDataTransformation>0kdhk0000001dTn</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dTn</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Formula</outputFieldName>
+        <outputObjectName>Formula</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCUpdatePartyIncomeRecordsCustom8758</globalKey>
+        <inputFieldName>HouseholdIncomeDetails:PartyIncomeId</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCUpdatePartyIncomeRecords</name>
+        <omniDataTransformation>0kdhk0000001dTm</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dTm</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Id</outputFieldName>
+        <outputObjectName>PartyIncome</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCUpdatePartyIncomeRecordsCustom4428</globalKey>
+        <inputFieldName>HouseholdIncomeDetails:IncomeCurrentMonth</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCUpdatePartyIncomeRecords</name>
+        <omniDataTransformation>0kdhk0000001dTp</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dTp</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>IncomeAmount</outputFieldName>
+        <outputObjectName>PartyIncome</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>true</disabled>
+        <filterGroup>0.0</filterGroup>
+        <filterOperator>=</filterOperator>
+        <globalKey>PSSCoCUpdatePartyIncomeRecordsCustom4150</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <migrationValue>FAKEMAPPING</migrationValue>
+        <name>PSSCoCUpdatePartyIncomeRecords</name>
+        <omniDataTransformation>0kdhk0000001dTo</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dTo</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Id</outputFieldName>
+        <outputObjectName>PartyIncome</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCUpdatePartyIncomeRecordsCustom3033</globalKey>
+        <inputFieldName>HouseholdIncomeDetails:StartDate</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCUpdatePartyIncomeRecords</name>
+        <omniDataTransformation>0kdhk0000001dTr</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dTr</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>StartDate</outputFieldName>
+        <outputObjectName>PartyIncome</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCUpdatePartyIncomeRecordsCustom326</globalKey>
+        <inputFieldName>CalendarYear</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCUpdatePartyIncomeRecords</name>
+        <omniDataTransformation>0kdhk0000001dTq</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dTq</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>CalendarYear</outputFieldName>
+        <outputObjectName>PartyIncome</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <outputType>SObject</outputType>
+    <previewJsonData>{
+  &quot;CalendarYear&quot; : &quot;2023&quot;,
+  &quot;HouseholdIncomeDetails&quot; : {
+    &quot;IncomeFrequency&quot; : &quot;Monthly&quot;,
+    &quot;IncomeCurrentMonth&quot; : 15,
+    &quot;IncomeHouseholdMemberName&quot; : &quot;Wife Person&quot;,
+    &quot;Employer&quot; : &quot;employer&quot;,
+    &quot;ActionType&quot; : &quot;Update&quot;,
+    &quot;PartyIncomeId&quot; : &quot;2m3SB000003rDGmYAM&quot;,
+    &quot;StartDate&quot; : &quot;2023-11-01&quot;
+  }
+}</previewJsonData>
+    <processSuperBulk>false</processSuperBulk>
+    <responseCacheTtlMinutes>0.0</responseCacheTtlMinutes>
+    <rollbackOnError>false</rollbackOnError>
+    <sourceObject>json</sourceObject>
+    <sourceObjectDefault>false</sourceObjectDefault>
+    <synchronousProcessThreshold>0.0</synchronousProcessThreshold>
+    <type>Load</type>
+    <uniqueName>PSSCoCUpdatePartyIncomeRecords_1</uniqueName>
+    <versionNumber>1.0</versionNumber>
+    <xmlDeclarationRemoved>false</xmlDeclarationRemoved>
+</OmniDataTransform>

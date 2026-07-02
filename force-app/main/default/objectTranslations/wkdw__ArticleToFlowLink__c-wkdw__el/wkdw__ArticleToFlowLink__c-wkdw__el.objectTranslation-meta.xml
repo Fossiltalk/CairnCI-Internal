@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <caseType>Nominative</caseType>
+        <plural>false</plural>
+        <value>Σύνδεσμος άρθρου με ροή</value>
+    </caseValues>
+    <caseValues>
+        <caseType>Nominative</caseType>
+        <plural>true</plural>
+        <value>Σύνδεσμοι άρθρων με ροή</value>
+    </caseValues>
+    <caseValues>
+        <caseType>Accusative</caseType>
+        <plural>false</plural>
+        <value>Σύνδεσμο άρθρου με ροή</value>
+    </caseValues>
+    <caseValues>
+        <caseType>Accusative</caseType>
+        <plural>true</plural>
+        <value>Συνδέσμους άρθρων με ροή</value>
+    </caseValues>
+    <caseValues>
+        <caseType>Genitive</caseType>
+        <plural>false</plural>
+        <value>Συνδέσμου άρθρου με ροή</value>
+    </caseValues>
+    <caseValues>
+        <caseType>Genitive</caseType>
+        <plural>true</plural>
+        <value>Συνδέσμων άρθρων με ροή</value>
+    </caseValues>
+    <gender>Masculine</gender>
+    <nameFieldLabel>Όνομα συνδέσμου άρθρου με ροή</nameFieldLabel>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

@@ -1,0 +1,21 @@
+<apex:page standardController="Employee"
+    recordSetVar="Emp"
+    extensions="wkdw.PassSelectedIDsToAssignOnboardingFlow"
+    lightningStylesheets="true"
+>
+    <apex:includeLightning />
+    <div id="displayAura" />
+    <script>
+        $Lightning.use("wkdw:callAssignOnboardingFlowApp", function () {
+            $Lightning.createComponent(
+                "wkdw:callAssignOnboardingFlowCmp",
+                {
+                    employeeids: "{!selectedEmployeeIDs}",
+                    retURL: "{!retURL}",
+                    numberOfEmployeesSelected: "{!numberOfEmployeesSelected}"
+                },
+                "displayAura"
+            );
+        });
+    </script>
+</apex:page>

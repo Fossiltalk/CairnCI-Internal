@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Настройка на поток за посещение за заявка за спешна помощ --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Настройки на поток за посещение за заявка за спешна помощ --></value>
+    </caseValues>
+    <gender><!-- Feminine --></gender>
+</CustomObjectTranslation>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>HRServiceWorkspaceUserPSG</label>
+    <permissionSets>force__AdvancedCsvDataImport</permissionSets>
+    <permissionSets>force__ContextServiceRuntimePsl</permissionSets>
+    <permissionSets>force__EmpEnablementPgmAdmin</permissionSets>
+    <permissionSets>force__IndustriesServiceExcellence</permissionSets>
+    <permissionSets>force__ProductCatalogManagementViewer</permissionSets>
+    <permissionSets>force__ProductDiscoveryUser</permissionSets>
+    <permissionSets>force__SimpleCsvDataImport</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

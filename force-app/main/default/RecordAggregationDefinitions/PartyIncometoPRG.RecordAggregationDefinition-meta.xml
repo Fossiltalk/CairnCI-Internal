@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordAggregationDefinition xmlns="http://soap.sforce.com/2006/04/metadata">
+    <aggregateFromObject>PartyIncome</aggregateFromObject>
+    <aggregateToObject>PartyRelationshipGroup</aggregateToObject>
+    <aggregationType>Record</aggregationType>
+    <batchProcessingDefinition>RECORD_AGGREGATION_DEFINITION</batchProcessingDefinition>
+    <description>Record roll up configuration for PartyIncome to PRG</description>
+    <displayName>PartyIncome to PRG</displayName>
+    <recordAggregationObject>
+        <associatedObject>PartyIncome</associatedObject>
+        <developerName>PartyIncomeObject</developerName>
+        <masterLabel>PartyIncome Object</masterLabel>
+        <recordAggregationObjectFilter>
+            <associatedObjectField>IncomeStatus</associatedObjectField>
+            <operator>Equals</operator>
+            <sequenceNumber>1</sequenceNumber>
+            <value>Active</value>
+        </recordAggregationObjectFilter>
+    </recordAggregationObject>
+    <recordAggregationObject>
+        <associatedObject>PartyRelationshipGroup</associatedObject>
+        <developerName>PartyRelationshipGroupObject</developerName>
+        <masterLabel>PartyRelationshipGroup Object</masterLabel>
+        <recordAggregationJoinCondition>
+            <joinField>Account</joinField>
+            <navigationSequenceNumber>1</navigationSequenceNumber>
+            <relatedJoinField>Account</relatedJoinField>
+            <relatedRecordAggregationObject>AccountContactRelationObject</relatedRecordAggregationObject>
+            <type>Intermediate</type>
+        </recordAggregationJoinCondition>
+        <recordAggregationObjectFilter>
+            <associatedObjectField>Type</associatedObjectField>
+            <operator>Equals</operator>
+            <sequenceNumber>1</sequenceNumber>
+            <value>Household</value>
+        </recordAggregationObjectFilter>
+    </recordAggregationObject>
+    <recordAggregationObject>
+        <associatedObject>AccountContactRelation</associatedObject>
+        <developerName>AccountContactRelationObject</developerName>
+        <masterLabel>AccountContactRelation Object</masterLabel>
+        <recordAggregationJoinCondition>
+            <joinField>Contact</joinField>
+            <navigationSequenceNumber>2</navigationSequenceNumber>
+            <relatedJoinField>Id</relatedJoinField>
+            <relatedRecordAggregationObject>ContactObject</relatedRecordAggregationObject>
+            <type>Intermediate</type>
+        </recordAggregationJoinCondition>
+    </recordAggregationObject>
+    <recordAggregationObject>
+        <associatedObject>Contact</associatedObject>
+        <developerName>ContactObject</developerName>
+        <masterLabel>Contact Object</masterLabel>
+        <recordAggregationJoinCondition>
+            <joinField>Account</joinField>
+            <navigationSequenceNumber>3</navigationSequenceNumber>
+            <relatedJoinField>Party</relatedJoinField>
+            <relatedRecordAggregationObject>PartyIncomeObject</relatedRecordAggregationObject>
+            <type>Intermediate</type>
+        </recordAggregationJoinCondition>
+    </recordAggregationObject>
+    <status>Active</status>
+</RecordAggregationDefinition>

@@ -1,0 +1,22 @@
+<template>
+    <lightning-card>
+        <lightning-layout>
+            <template if:true={_showResults}>
+                <lightning-layout-item padding="around-small">
+                    <c-custom-datatable
+                        key-field="id"
+                        data={_records}
+                        columns={_columns}
+                        onrowselection={handleSelectedRows}
+                        onpicklistchanged={picklistChanged}>
+                    </c-custom-datatable>
+                </lightning-layout-item>
+            </template>
+            <template if:false={_showResults}>
+                <div style="text-align:center">
+                    <h2>No Complaint Participants found for the Public Complaint</h2>
+                </div>
+            </template>
+        </lightning-layout>
+    </lightning-card>
+</template>

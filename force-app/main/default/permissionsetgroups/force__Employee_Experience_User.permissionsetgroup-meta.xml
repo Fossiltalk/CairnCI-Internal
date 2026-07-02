@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Employee_Experience_User</label>
+    <permissionSets>force__ActionPlans</permissionSets>
+    <permissionSets>force__AsmtForEmployeeCommunity</permissionSets>
+    <permissionSets>force__BRERuntime</permissionSets>
+    <permissionSets>force__BenCrPlnForEmployeeCommunity</permissionSets>
+    <permissionSets>force__CaseMgmtForEmployeeCommunity</permissionSets>
+    <permissionSets>force__CasePrcdForEmployeeCommunity</permissionSets>
+    <permissionSets>force__CriteriaBasedSearchFilterExpCloudPsl</permissionSets>
+    <permissionSets>force__DocumentChecklist</permissionSets>
+    <permissionSets>force__DynamicAssessmentPsl</permissionSets>
+    <permissionSets>force__EmployeeAccsForCoCmty</permissionSets>
+    <permissionSets>force__EvidMgmtForEmployeeCommunity</permissionSets>
+    <permissionSets>force__ExperienceCloudForGrantmaking</permissionSets>
+    <permissionSets>force__ExplainabilityServicePSL</permissionSets>
+    <permissionSets>force__GrantmakingExternalReviewer</permissionSets>
+    <permissionSets>force__IndustriesAssessmentPermissionSet</permissionSets>
+    <permissionSets>force__IndustriesVisit</permissionSets>
+    <permissionSets>force__OmniStudioUser</permissionSets>
+    <permissionSets>force__PublicSectorForEmployeeCmtyPSL</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

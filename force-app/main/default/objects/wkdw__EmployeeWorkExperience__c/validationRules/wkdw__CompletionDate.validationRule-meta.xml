@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>wkdw__CompletionDate</fullName>
+    <active>true</active>
+    <description>Validates that the end date comes after the start date.</description>
+    <errorConditionFormula>AND(NOT(wkdw__Ongoing__c ),wkdw__StartDate__c  &gt; wkdw__CompletionDate__c)</errorConditionFormula>
+    <errorDisplayField>wkdw__CompletionDate__c</errorDisplayField>
+    <errorMessage>Enter an end date that occurs after the start date.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Provides access to Onboarding UI components</description>
+    <isLicensed>true</isLicensed>
+    <label>Employee Productivity Plus Features Access</label>
+</CustomPermission>

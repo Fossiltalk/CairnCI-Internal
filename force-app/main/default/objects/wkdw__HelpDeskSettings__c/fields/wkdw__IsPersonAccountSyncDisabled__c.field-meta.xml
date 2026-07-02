@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>wkdw__IsPersonAccountSyncDisabled__c</fullName>
+    <defaultValue>false</defaultValue>
+    <deprecated>false</deprecated>
+    <description>Stop the synchronization of Person Accounts in Employee Apex triggers.</description>
+    <inlineHelpText>When this checkbox is selected, Employee Apex triggers do not create or synchronize Person Accounts records automatically for each new Employee record.</inlineHelpText>
+    <label>Employee Person Account Sync Disabled</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

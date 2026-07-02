@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Impostazione flusso della visita per richiesta di emergenza --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Impostazioni flusso della visita per richiesta di emergenza --></value>
+    </caseValues>
+    <gender><!-- Feminine --></gender>
+    <startsWith><!-- Vowel --></startsWith>
+</CustomObjectTranslation>

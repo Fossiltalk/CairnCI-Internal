@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>49.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <description>Check if Action Plan Template Exists</description>
+        <name>DoesActionPlanTemplateExist</name>
+        <label>Does Action Plan Template Exist?</label>
+        <locationX>956</locationX>
+        <locationY>649</locationY>
+        <defaultConnectorLabel>Exit Flow (Default)</defaultConnectorLabel>
+        <rules>
+            <name>ActionPlanTemplateExists</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ActionPlanTemplateId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GetActionPlanTemplateVersion</targetReference>
+            </connector>
+            <label>Action Plan Template Exists</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if the Action Plan Template Name retrieved from Emergency Action Plan Setting Exists</description>
+        <name>DoesActionPlanTemplateNameExist</name>
+        <label>Does Action Plan Template Name Exist?</label>
+        <locationX>1090</locationX>
+        <locationY>427</locationY>
+        <defaultConnectorLabel>Exit Flow (Default)</defaultConnectorLabel>
+        <rules>
+            <name>ActionPlanTemplateNameExists</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ActionPlanTemplateName</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GetActionPlanTemplate</targetReference>
+            </connector>
+            <label>Name Exists</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if Action Plan Template Version Exists</description>
+        <name>DoesActionPlanTemplateVersionExist</name>
+        <label>Does Action Plan Template Version Exist?</label>
+        <locationX>457</locationX>
+        <locationY>647</locationY>
+        <defaultConnectorLabel>Exit Flow (Default)</defaultConnectorLabel>
+        <rules>
+            <name>ActionPlanTemplateVersionExists</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ActionPlanTemplateVersionId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>CreateActionPlanForScheduledVisit</targetReference>
+            </connector>
+            <label>Version Exists</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if the Address of the Emergency Request Exists</description>
+        <name>DoesAddressExist</name>
+        <label>Does Address Exist?</label>
+        <locationX>849</locationX>
+        <locationY>43</locationY>
+        <defaultConnectorLabel>Exit Flow (Default)</defaultConnectorLabel>
+        <rules>
+            <name>AddressExists</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>AddressId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>CreateVisit</targetReference>
+            </connector>
+            <label>Address Exists</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks if the Event Type matches the one specified in Emergency Request Action Plan Settings</description>
+        <name>IsEmergencyRequestEvent</name>
+        <label>Is the Event for Emergency Request?</label>
+        <locationX>378</locationX>
+        <locationY>40</locationY>
+        <defaultConnectorLabel>Exit Flow (Default)</defaultConnectorLabel>
+        <rules>
+            <name>EventIsForEmergencyRequest</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>SfmapEvent.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>EventTypeValue</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GetEmergencyRequest</targetReference>
+            </connector>
+            <label>Event is for Emergency Request</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if the scheduled visit is created</description>
+        <name>IsVisitCreated</name>
+        <label>Is Visit created?</label>
+        <locationX>1093</locationX>
+        <locationY>212</locationY>
+        <defaultConnectorLabel>Exit Flow (Default)</defaultConnectorLabel>
+        <rules>
+            <name>VisitCreated</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ScheduledVisit.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>DoesActionPlanTemplateNameExist</targetReference>
+            </connector>
+            <label>Visit Created</label>
+        </rules>
+    </decisions>
+    <description>Create an emergency visit from an Emergency Request triggered process.</description>
+    <interviewLabel>Create a Visit for Emergency Request Event {!$Flow.CurrentDateTime}</interviewLabel>
+    <isTemplate>true</isTemplate>
+    <label>Create a Visit for Emergency Request Event</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <description>Create an action plan for the scheduled visit based on the current version of the action plan template.</description>
+        <name>CreateActionPlanForScheduledVisit</name>
+        <label>Create Action Plan for Scheduled Visit</label>
+        <locationX>173</locationX>
+        <locationY>523</locationY>
+        <assignRecordIdToReference>ActionPlanId</assignRecordIdToReference>
+        <inputAssignments>
+            <field>ActionPlanTemplateVersionId</field>
+            <value>
+                <elementReference>ActionPlanTemplateVersionId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ActionPlanType</field>
+            <value>
+                <stringValue>Retail</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>ActionPlanTemplateName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>SfmapEvent.OwnerId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>StartDate</field>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>TargetId</field>
+            <value>
+                <elementReference>ScheduledVisit.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>ActionPlan</object>
+    </recordCreates>
+    <recordCreates>
+        <description>Create a visit with the specified location, account, instructions, context, the specified start date and time, the specified end date and time, a priority of Medium, and the end user&apos;s ID.</description>
+        <name>CreateVisit</name>
+        <label>Create Visit</label>
+        <locationX>1101</locationX>
+        <locationY>42</locationY>
+        <assignRecordIdToReference>ScheduledVisit.Id</assignRecordIdToReference>
+        <connector>
+            <targetReference>IsVisitCreated</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>AccountId</field>
+            <value>
+                <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ContextId</field>
+            <value>
+                <elementReference>IndividualApplicationId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>InstructionDescription</field>
+            <value>
+                <elementReference>VisitInstructions</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PlaceId</field>
+            <value>
+                <elementReference>AddressId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PlannedVisitEndTime</field>
+            <value>
+                <elementReference>SfmapEvent.EndDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PlannedVisitStartTime</field>
+            <value>
+                <elementReference>SfmapEvent.StartDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>VisitPriority</field>
+            <value>
+                <stringValue>Medium</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>VisitorId</field>
+            <value>
+                <elementReference>SfmapEvent.OwnerId</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Visit</object>
+    </recordCreates>
+    <recordLookups>
+        <description>Get the action plan template to use to create an action plan for the scheduled visit and store its ID in the ActionPlanTemplateId variable.</description>
+        <name>GetActionPlanTemplate</name>
+        <label>Get Action Plan Template</label>
+        <locationX>1098</locationX>
+        <locationY>647</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>DoesActionPlanTemplateExist</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>ActionPlanTemplateName</elementReference>
+            </value>
+        </filters>
+        <object>ActionPlanTemplate</object>
+        <outputAssignments>
+            <assignToReference>ActionPlanTemplateId</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
+        <description>Get the latest version of the action plan template and store its ID in the ActionPlanTemplateVersionId variable.</description>
+        <name>GetActionPlanTemplateVersion</name>
+        <label>Get Action Plan Template Version</label>
+        <locationX>636</locationX>
+        <locationY>645</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>DoesActionPlanTemplateVersionExist</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>ActionPlanTemplateId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>ActionPlanTemplateId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Status</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Final</stringValue>
+            </value>
+        </filters>
+        <object>ActionPlanTemplateVersion</object>
+        <outputAssignments>
+            <assignToReference>ActionPlanTemplateVersionId</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
+        <description>Get the emergency request and store its account, address, intructions and individual application</description>
+        <name>GetEmergencyRequest</name>
+        <label>Get Emergency Request</label>
+        <locationX>679</locationX>
+        <locationY>39</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>DoesAddressExist</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>SfmapEvent.WhatId</elementReference>
+            </value>
+        </filters>
+        <object>PublicSector__EmergencyRequest__c</object>
+        <outputAssignments>
+            <assignToReference>AccountId</assignToReference>
+            <field>PublicSector__Account__c</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>AddressId</assignToReference>
+            <field>PublicSector__Address__c</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>VisitInstructions</assignToReference>
+            <field>PublicSector__DeliveryInstructions__c</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>IndividualApplicationId</assignToReference>
+            <field>PublicSector__IndividualApplication__c</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
+        <description>Get the name of the Action Plan Template and Event Type associated with the Default Emergency Request Visit Flow Settings</description>
+        <name>GetEmergencyRequestVisitFlowSettings</name>
+        <label>Get Emergency Request Visit Flow Settings</label>
+        <locationX>186</locationX>
+        <locationY>37</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>IsEmergencyRequestEvent</targetReference>
+        </connector>
+        <object>PublicSector__EmergencyRequestVisitFlowSetting__mdt</object>
+        <outputAssignments>
+            <assignToReference>ActionPlanTemplateName</assignToReference>
+            <field>PublicSector__ActionPlanTemplateName__c</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>EventTypeValue</assignToReference>
+            <field>PublicSector__Event_Type__c</field>
+        </outputAssignments>
+        <sortField>Id</sortField>
+        <sortOrder>Asc</sortOrder>
+    </recordLookups>
+    <start>
+        <locationX>58</locationX>
+        <locationY>37</locationY>
+        <connector>
+            <targetReference>GetEmergencyRequestVisitFlowSettings</targetReference>
+        </connector>
+    </start>
+    <status>Draft</status>
+    <variables>
+        <description>Store the ID of the account for the scheduled visit.</description>
+        <name>AccountId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Stores the ID of the action plan created for the scheduled visit.</description>
+        <name>ActionPlanId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Stores the ID of the action plan template used to create the scheduled visit action plan.</description>
+        <name>ActionPlanTemplateId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Stores the name of the action plan template from Custom Metadata type Emergency Action Plan Template</description>
+        <name>ActionPlanTemplateName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Stores the ID of the action plan template version used to create the scheduled visit action plan.</description>
+        <name>ActionPlanTemplateVersionId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Store the ID of the address for the scheduled visit.</description>
+        <name>AddressId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Stored the value of the Type Field of Event</description>
+        <name>EventTypeValue</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Stores the ID of the Individual Application Context for the scheduled visit.</description>
+        <name>IndividualApplicationId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Stores the scheduled visit for the emergency request.</description>
+        <name>ScheduledVisit</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Visit</objectType>
+    </variables>
+    <variables>
+        <description>Stores the calendar event related to the emergency request.</description>
+        <name>SfmapEvent</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <objectType>Event</objectType>
+    </variables>
+    <variables>
+        <description>Store the instructions for the scheduled visit.</description>
+        <name>VisitInstructions</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

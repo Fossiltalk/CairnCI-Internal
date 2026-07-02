@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Incident$Name</field>
+    </columns>
+    <columns>
+        <field>Incident.EntityMilestones$Name</field>
+    </columns>
+    <columns>
+        <field>CDF1</field>
+    </columns>
+    <customDetailFormulas>
+        <calculatedFormula>&quot;Overdue by &quot; &amp; IF((NOW() - EntityMilestone_Incident.TargetDate) &lt; 1, IF((NOW() - EntityMilestone_Incident.TargetDate)*24 &lt; 1, TEXT(FLOOR((NOW() - EntityMilestone_Incident.TargetDate)*24*60)) &amp; &quot; minutes&quot;,TEXT(FLOOR((NOW() - EntityMilestone_Incident.TargetDate)*24)) &amp; &quot; hours&quot;), TEXT(FLOOR(NOW() - EntityMilestone_Incident.TargetDate)) &amp; &quot; days&quot;)</calculatedFormula>
+        <dataType>Text</dataType>
+        <description>Shows overdue status</description>
+        <developerName>CDF1</developerName>
+        <label>SLA Status</label>
+        <scale>2</scale>
+    </customDetailFormulas>
+    <description>Shows status of milestones breaching SLA</description>
+    <filter>
+        <criteriaItems>
+            <column>Incident.EntityMilestones$IsViolated</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>1</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Incident.EntityMilestones$IsCompleted</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>0</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>Milestones Breaching SLA</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>ITSM_Incident_Milestones__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>Incident$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

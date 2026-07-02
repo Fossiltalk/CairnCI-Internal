@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OmniDataTransform xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>false</active>
+    <assignmentRulesUsed>false</assignmentRulesUsed>
+    <deletedOnSuccess>false</deletedOnSuccess>
+    <errorIgnored>false</errorIgnored>
+    <expectedInputJson>{
+  &quot;PublicComplaintID&quot; : &quot;&quot;,
+  &quot;Case Details&quot; : {
+    &quot;NewCaseDetails&quot; : {
+      &quot;Subject&quot; : &quot;Some isue&quot;,
+      &quot;Account-Block&quot; : {
+        &quot;Account&quot; : &quot;PizzaHut License No. 1&quot;,
+        &quot;Name&quot; : &quot;PizzaHut License No. 1&quot;,
+        &quot;Id&quot; : &quot;001RO000002yGl4YAE&quot;
+      },
+      &quot;Reason&quot; : &quot;Installation&quot;,
+      &quot;Priority&quot; : &quot;High&quot;,
+      &quot;Origin&quot; : &quot;Phone&quot;,
+      &quot;Status&quot; : &quot;New&quot;,
+      &quot;Description&quot; : &quot;soe description&quot;
+    },
+    &quot;NewOrExistingCase&quot; : &quot;StartANewCase&quot;
+  },
+  &quot;Participants&quot; : {
+    &quot;addNewParticipants&quot; : {
+      &quot;firstName&quot; : &quot;first&quot;,
+      &quot;lastName&quot; : &quot;last&quot;,
+      &quot;city&quot; : &quot;city&quot;,
+      &quot;selectAndBuildList&quot; : {
+        &quot;selectedIdList&quot; : {
+          &quot;selectedIds&quot; : [ {
+            &quot;id&quot; : &quot;003RO000002IUe4YAG&quot;,
+            &quot;role&quot; : &quot;Victim&quot;,
+            &quot;status&quot; : &quot;Active&quot;,
+            &quot;caseId&quot; : &quot;500RO000001X14rYAC&quot;
+          } ]
+        }
+      }
+    }
+  }
+}</expectedInputJson>
+    <fieldLevelSecurityEnabled>false</fieldLevelSecurityEnabled>
+    <inputType>JSON</inputType>
+    <isManagedUsingStdDesigner>false</isManagedUsingStdDesigner>
+    <name>CreateCaseAndComplaintCase</name>
+    <nullInputsIncludedInOutput>true</nullInputsIncludedInOutput>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>CreateCaseAndComplaintCase01799849482317062</globalKey>
+        <inputFieldName>Case Details:NewCaseDetails:Description</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>CreateCaseAndComplaintCase</name>
+        <omniDataTransformation>0kdhk0000001dPZ</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dPZ</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Description</outputFieldName>
+        <outputObjectName>Case</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>CreateCaseAndComplaintCase4360969418035412</globalKey>
+        <inputFieldName>Case Details:NewCaseDetails:Subject</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>CreateCaseAndComplaintCase</name>
+        <omniDataTransformation>0kdhk0000001dPj</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dPj</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Subject</outputFieldName>
+        <outputObjectName>Case</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <transformValuesMappings>{ }</transformValuesMappings>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <defaultValue>Medium</defaultValue>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>CreateCaseAndComplaintCase4187964220166356</globalKey>
+        <inputFieldName>Case Details:NewCaseDetails:Priority</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>CreateCaseAndComplaintCase</name>
+        <omniDataTransformation>0kdhk0000001dPY</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dPY</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Priority</outputFieldName>
+        <outputObjectName>Case</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>CreateCaseAndComplaintCase09800387211702644</globalKey>
+        <inputFieldName>Case Details:NewCaseDetails:Status</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>CreateCaseAndComplaintCase</name>
+        <omniDataTransformation>0kdhk0000001dPi</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dPi</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Status</outputFieldName>
+        <outputObjectName>Case</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>CreateCaseAndComplaintCase9544743760186984</globalKey>
+        <inputFieldName>Case Details:NewCaseDetails:Reason</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>CreateCaseAndComplaintCase</name>
+        <omniDataTransformation>0kdhk0000001dPb</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dPb</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Reason</outputFieldName>
+        <outputObjectName>Case</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>CreateCaseAndComplaintCase990257092833362</globalKey>
+        <inputFieldName>Case Details:NewCaseDetails:Origin</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>CreateCaseAndComplaintCase</name>
+        <omniDataTransformation>0kdhk0000001dPa</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dPa</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Origin</outputFieldName>
+        <outputObjectName>Case</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <filterOperator>=</filterOperator>
+        <globalKey>CreateCaseAndComplaintCase30561743415530285</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedFieldName>Id</linkedFieldName>
+        <linkedObjectSequence>1.0</linkedObjectSequence>
+        <migrationValue>FAKEMAPPING</migrationValue>
+        <name>CreateCaseAndComplaintCase</name>
+        <omniDataTransformation>0kdhk0000001dPd</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dPd</omniDataTransformationId>
+        <outputCreationSequence>2.0</outputCreationSequence>
+        <outputFieldName>CaseId</outputFieldName>
+        <outputObjectName>ComplaintCase</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>true</disabled>
+        <filterGroup>0.0</filterGroup>
+        <filterOperator>=</filterOperator>
+        <globalKey>CreateCaseAndComplaintCase7276908817257293</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <migrationValue>FAKEMAPPING</migrationValue>
+        <name>CreateCaseAndComplaintCase</name>
+        <omniDataTransformation>0kdhk0000001dPc</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dPc</omniDataTransformationId>
+        <outputCreationSequence>2.0</outputCreationSequence>
+        <outputFieldName>Id</outputFieldName>
+        <outputObjectName>ComplaintCase</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>CreateCaseAndComplaintCase17994889774116807</globalKey>
+        <inputFieldName>Case Details:NewCaseDetails:Type</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>CreateCaseAndComplaintCase</name>
+        <omniDataTransformation>0kdhk0000001dPf</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dPf</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Type</outputFieldName>
+        <outputObjectName>Case</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>CreateCaseAndComplaintCase9503766683737163</globalKey>
+        <inputFieldName>PublicComplaintID</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>CreateCaseAndComplaintCase</name>
+        <omniDataTransformation>0kdhk0000001dPe</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dPe</omniDataTransformationId>
+        <outputCreationSequence>2.0</outputCreationSequence>
+        <outputFieldName>PublicComplaintId</outputFieldName>
+        <outputObjectName>ComplaintCase</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>true</disabled>
+        <filterGroup>0.0</filterGroup>
+        <filterOperator>=</filterOperator>
+        <globalKey>CreateCaseAndComplaintCase244068459878499</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <migrationValue>FAKEMAPPING</migrationValue>
+        <name>CreateCaseAndComplaintCase</name>
+        <omniDataTransformation>0kdhk0000001dPX</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dPX</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Id</outputFieldName>
+        <outputObjectName>Case</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>CreateCaseAndComplaintCase420694736032198</globalKey>
+        <inputFieldName>Case Details:NewCaseDetails:Account-Block:Id</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>CreateCaseAndComplaintCase</name>
+        <omniDataTransformation>0kdhk0000001dPg</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dPg</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>AccountId</outputFieldName>
+        <outputObjectName>Case</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <outputType>SObject</outputType>
+    <previewJsonData>{
+  &quot;PublicComplaintID&quot; : &quot;0fhRO00000000EZYAY&quot;,
+  &quot;Case Details&quot; : {
+    &quot;NewCaseDetails&quot; : {
+      &quot;Subject&quot; : &quot;Some isue&quot;,
+      &quot;Reason&quot; : &quot;Installation&quot;,
+      &quot;Priority&quot; : &quot;High&quot;,
+      &quot;Origin&quot; : &quot;Phone&quot;,
+      &quot;Status&quot; : &quot;New&quot;,
+      &quot;Description&quot; : &quot;soe description&quot;
+    },
+    &quot;NewOrExistingCase&quot; : &quot;StartANewCase&quot;
+  },
+  &quot;Participants&quot; : {
+    &quot;addNewParticipants&quot; : {
+      &quot;firstName&quot; : &quot;first&quot;,
+      &quot;lastName&quot; : &quot;last&quot;,
+      &quot;city&quot; : &quot;city&quot;,
+      &quot;selectAndBuildList&quot; : {
+        &quot;selectedIdList&quot; : {
+          &quot;selectedIds&quot; : [ {
+            &quot;id&quot; : &quot;003RO000002IUe4YAG&quot;,
+            &quot;role&quot; : &quot;Victim&quot;,
+            &quot;status&quot; : &quot;Active&quot;
+          } ]
+        }
+      }
+    }
+  }
+}</previewJsonData>
+    <processSuperBulk>false</processSuperBulk>
+    <responseCacheTtlMinutes>0.0</responseCacheTtlMinutes>
+    <rollbackOnError>true</rollbackOnError>
+    <sourceObject>json</sourceObject>
+    <sourceObjectDefault>false</sourceObjectDefault>
+    <synchronousProcessThreshold>0.0</synchronousProcessThreshold>
+    <type>Load</type>
+    <uniqueName>CreateCaseAndComplaintCase_1</uniqueName>
+    <versionNumber>1.0</versionNumber>
+    <xmlDeclarationRemoved>false</xmlDeclarationRemoved>
+</OmniDataTransform>

@@ -1,0 +1,26 @@
+<template>
+    <div class="container">
+        <template if:true={_showResults}>
+            <lightning-card  title="Added Case Participants">
+                <div class="slds-align_absolute-center slds-box">
+                    <div class="slds-col">
+                        <template for:each={recorddataarr} for:item="addedrecord">
+                            <div class="slds-col slds-var-p-around_xxx-small" key={addedrecord.id}>
+                                <c-selected-record 
+                                    recordid={addedrecord.id}
+                                    rolepicklist={rolePickListValues}
+                                    statuspicklist={statusPicklistValues}
+                                    recordname={addedrecord.name}
+                                    rolevalue={addedrecord.role}
+                                    statusvalue={addedrecord.status}
+                                    onrecordchanged={handleRecordChanged}
+                                    ondeleterecord={handleDeleteRecord}>
+                                </c-selected-record>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </lightning-card>
+        </template>
+    </div>
+</template>

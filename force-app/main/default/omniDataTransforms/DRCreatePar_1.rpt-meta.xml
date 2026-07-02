@@ -1,0 +1,526 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OmniDataTransform xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>false</active>
+    <assignmentRulesUsed>false</assignmentRulesUsed>
+    <deletedOnSuccess>false</deletedOnSuccess>
+    <errorIgnored>false</errorIgnored>
+    <expectedInputJson>{
+  &quot;ContextId&quot; : &quot;&quot;,
+  &quot;timeStamp&quot; : &quot;2020-04-28T10:38:12.253Z&quot;,
+  &quot;userId&quot; : &quot;005B0000006j7GuIAåI&quot;,
+  &quot;userName&quot; : &quot;lpi_226release@lpi.org&quot;,
+  &quot;userProfile&quot; : &quot;System Administrator&quot;,
+  &quot;userTimeZone&quot; : -420,
+  &quot;userCurrencyCode&quot; : &quot;USD&quot;,
+  &quot;sfdcIFrameOrigin&quot; : &quot;https://lpi226release--vlocity-ins.visualforce.com&quot;,
+  &quot;sfdcIFrameHost&quot; : &quot;web&quot;,
+  &quot;layout&quot; : &quot;lightning&quot;,
+  &quot;isdtp&quot; : &quot;p1&quot;,
+  &quot;id&quot; : &quot;a3LB0000000U8kqMAC&quot;,
+  &quot;vlcPersistentComponent&quot; : { },
+  &quot;vlcTimeTracking&quot; : {
+    &quot;OmniScriptSessionToken&quot; : &quot;fbc7fc49-d3d6-4a9b-9063-f5fc6def9ce1&quot;,
+    &quot;SetContext&quot; : 652,
+    &quot;DRContactForUser&quot; : 8898,
+    &quot;DRPersonAccountForContact&quot; : 3834,
+    &quot;SetStatus&quot; : 34,
+    &quot;SetIsOlaSubmitted1&quot; : 72,
+    &quot;SetPreviewModeOff&quot; : 79,
+    &quot;IntroScreen&quot; : 7164,
+    &quot;DRGetWasOlaReturned&quot; : 2846,
+    &quot;TypeOfApplication&quot; : 5679,
+    &quot;LICENCETYPE_AND_FEES&quot; : 29017,
+    &quot;APPLICANT_INFORMATION&quot; : 34758,
+    &quot;DRGetIdsToSetOla&quot; : 1580,
+    &quot;OtherNamesUsed&quot; : 5756,
+    &quot;ImpMesgOnUpdatingContactInfo&quot; : 2847,
+    &quot;MailingAddress&quot; : 20472,
+    &quot;MEDICAL_SCHOOLS_ATTENDED&quot; : 33484,
+    &quot;DRPostActionCreatePersonEducation&quot; : 618,
+    &quot;PgMedTrainings&quot; : 51806,
+    &quot;DRPostActionTrainingCourseParticipant&quot; : 816,
+    &quot;WORK_EXPERIENCE&quot; : 409457,
+    &quot;OTHER_MEDICAL_LICENSES&quot; : 23962,
+    &quot;PRACTICE_SPECIALTIES_AND_BOARD_CERTS&quot; : 26711,
+    &quot;REQUIRED_SCREENING_QUESTIONS&quot; : 3702,
+    &quot;APPLICANT_AFFIDAVIT&quot; : 20976,
+    &quot;DRCreateOccupationLicenseApplication&quot; : 1314,
+    &quot;DRPostActionUpdateOla&quot; : 715,
+    &quot;DRGetOlaName&quot; : 616,
+    &quot;SetPreviewModeOn&quot; : 16,
+    &quot;Confirmation&quot; : 9466
+  },
+  &quot;LICENCETYPE_AND_FEES&quot; : {
+    &quot;ProfessionalDesignation&quot; : &quot;Osteopathy &amp; Surgery (DO)&quot;,
+    &quot;GraduateType&quot; : &quot;U.S./Canada&quot;,
+    &quot;ApplicationType&quot; : &quot;License by Examination ($805.00)&quot;,
+    &quot;Industries&quot; : &quot;Healthcare&quot;,
+    &quot;isIndustriesFilled&quot; : true,
+    &quot;isBusinessActivityFilled&quot; : true,
+    &quot;BusinessActivity&quot; : &quot;Medical Practitioner / Physician&quot;,
+    &quot;AuthorizationCategory&quot; : &quot;License&quot;,
+    &quot;AuthorizationType&quot; : &quot;Physician License&quot;
+  },
+  &quot;APPLICANT_INFORMATION&quot; : {
+    &quot;Telephone1&quot; : &quot;1231231231&quot;,
+    &quot;PersonAccountDob&quot; : &quot;2020-04-21&quot;,
+    &quot;GenderOfPersonAccount&quot; : &quot;Male&quot;,
+    &quot;SSN&quot; : null,
+    &quot;DegreesHeld&quot; : &quot;MD_Degree&quot;,
+    &quot;RaceEthnicity&quot; : &quot;Caucasian/White&quot;,
+    &quot;RaceEthnicityHasChooseNotToDisclose&quot; : false,
+    &quot;RaceEthnicitySelCountGtOne&quot; : false,
+    &quot;BothNotToDiscloseAndRaceEthnicityChosen&quot; : false,
+    &quot;RaceEthnicityValidate&quot; : true,
+    &quot;LanguagesSpoken&quot; : &quot;Other&quot;,
+    &quot;IsLanguagesSpokenOther&quot; : true,
+    &quot;OtherLanguage&quot; : null
+  },
+  &quot;OtherNamesUsed&quot; : {
+    &quot;OtherName&quot; : {
+      &quot;FirstNameOther&quot; : null,
+      &quot;LastNameOther&quot; : null
+    }
+  },
+  &quot;MailingAddress&quot; : {
+    &quot;MailingAddrSelect&quot; : &quot;HomeAddress&quot;,
+    &quot;IsHomeAddrSelected&quot; : true,
+    &quot;IsBizAddrSelected&quot; : false,
+    &quot;EnsureOnlyOneOfHomeBizAddrIsSelected&quot; : true,
+    &quot;HomeAddress&quot; : {
+      &quot;CHA&quot; : &quot;Gachiwad Road&quot;,
+      &quot;HomeCity&quot; : &quot;Valsad&quot;,
+      &quot;HomeState&quot; : &quot;GJ&quot;,
+      &quot;ZipCode&quot; : 396001,
+      &quot;HomePhone&quot; : &quot;&quot;,
+      &quot;HomeEmail&quot; : null
+    },
+    &quot;BusinessAddress&quot; : null
+  },
+  &quot;MEDICAL_SCHOOLS_ATTENDED&quot; : {
+    &quot;MedicalSchoolAttended&quot; : {
+      &quot;MedSchoolName&quot; : &quot;John Hopkins&quot;,
+      &quot;GraduationDate&quot; : &quot;2013-04-11&quot;,
+      &quot;DegreeCertAwarded&quot; : &quot;MBBS&quot;,
+      &quot;GradCity&quot; : &quot;Valsad&quot;,
+      &quot;GradState&quot; : &quot;GJ&quot;,
+      &quot;GradCountry&quot; : &quot;India&quot;
+    }
+  },
+  &quot;PgMedTrainings&quot; : {
+    &quot;PgMedicalTraining&quot; : {
+      &quot;ProgramName&quot; : &quot;Certificate in Emergency Medicine&quot;,
+      &quot;ProgramStartDate&quot; : &quot;2012-04-04&quot;,
+      &quot;ProgramEndDate&quot; : &quot;2020-04-03&quot;,
+      &quot;ProgramTypeofPosition&quot; : &quot;Fellowship&quot;,
+      &quot;ProgramCity&quot; : &quot;Valsad&quot;,
+      &quot;ProgramState&quot; : &quot;GJ&quot;,
+      &quot;ProgramCountry&quot; : &quot;India&quot;
+    }
+  },
+  &quot;WORK_EXPERIENCE&quot; : {
+    &quot;Employer&quot; : {
+      &quot;EmployerName&quot; : &quot;John Hopkins&quot;,
+      &quot;EmploymentStartDate&quot; : &quot;2018-04-11&quot;,
+      &quot;EmploymentEndDate&quot; : &quot;2020-04-28&quot;,
+      &quot;ReasonForLeaving&quot; : &quot;Higher Studies&quot;,
+      &quot;EmploymentCity&quot; : &quot;Valsad&quot;,
+      &quot;EmploymentState&quot; : &quot;GJ&quot;,
+      &quot;EmploymentCountry&quot; : &quot;India&quot;
+    }
+  },
+  &quot;OTHER_MEDICAL_LICENSES&quot; : {
+    &quot;MedicalLicense&quot; : {
+      &quot;Jurisdiction&quot; : &quot;CA&quot;,
+      &quot;IssueDate&quot; : &quot;2019-04-23&quot;,
+      &quot;ExpiryDate&quot; : &quot;2020-04-01&quot;,
+      &quot;LicenseNumber&quot; : &quot;A12390B&quot;
+    }
+  },
+  &quot;PRACTICE_SPECIALTIES_AND_BOARD_CERTS&quot; : {
+    &quot;PracticeSpecialityList&quot; : &quot;EM&quot;,
+    &quot;PracticeSpeciality&quot; : &quot;ABC&quot;,
+    &quot;BoardCertifiedInfo&quot; : {
+      &quot;CertifyingBoard&quot; : &quot;CE&quot;,
+      &quot;CertifyingAgency&quot; : &quot;CCRA&quot;
+    }
+  },
+  &quot;REQUIRED_SCREENING_QUESTIONS&quot; : {
+    &quot;ScreenQuestion1&quot; : false,
+    &quot;ScreenQuestion2&quot; : false,
+    &quot;ScreenQuestion3&quot; : false,
+    &quot;ScreenQuestion4&quot; : false,
+    &quot;ScreenQuestion5&quot; : false,
+    &quot;ScreenQuestion6&quot; : false,
+    &quot;ScreenQuestion7&quot; : false
+  },
+  &quot;APPLICANT_AFFIDAVIT&quot; : {
+    &quot;ApplicantSign&quot; : &quot;Isaac Newton&quot;,
+    &quot;Submission Date&quot; : &quot;2020-04-28&quot;
+  },
+  &quot;SamplePersonUser&quot; : &quot;005B0000006jnYhIAI&quot;,
+  &quot;ContactId&quot; : &quot;003B000000HKbXdIAL&quot;,
+  &quot;ContactEmail&quot; : &quot;isaac.newton@johnhopkins.com&quot;,
+  &quot;ContactName&quot; : &quot;Isaac Newton&quot;,
+  &quot;AssociatedPersonAccountEmail&quot; : &quot;isaac.newton@johnhopkins.com&quot;,
+  &quot;AssociatedPersonAccountLastName&quot; : &quot;Newton&quot;,
+  &quot;AssociatedPersonAccountFirstName&quot; : &quot;Isaac&quot;,
+  &quot;AssociatedPersonAccountId&quot; : &quot;001B000001KGdjDIAT&quot;,
+  &quot;ApplicationStatus&quot; : &quot;Submitted&quot;,
+  &quot;IsOlaSubmitted&quot; : false,
+  &quot;IsPreviewMode&quot; : true,
+  &quot;IntroScreen&quot; : {
+    &quot;IsExistingApplication&quot; : false
+  },
+  &quot;vlcKnowledge&quot; : {
+    &quot;knowledgeItems&quot; : [ ]
+  },
+  &quot;error&quot; : &quot;OK&quot;,
+  &quot;TypeOfApplication&quot; : {
+    &quot;IsSubmittedOlaEditable&quot; : true
+  },
+  &quot;ApplicationType&quot; : &quot;Individual&quot;,
+  &quot;sInstanceId&quot; : &quot;a3KB0000003aUexMAE&quot;,
+  &quot;AuthorizationTypeId&quot; : &quot;0ehB00000004C9DIAU&quot;,
+  &quot;BusinessActivityId&quot; : &quot;2gFB00000004C94MAE&quot;,
+  &quot;DRId_OccupationLicenseApplication&quot; : &quot;0f2B00000000001IAA&quot;,
+  &quot;DRId_Case&quot; : &quot;500B0000005KoCXIA0&quot;,
+  &quot;CreatedOlaName&quot; : &quot;OLA-0000000001&quot;
+}</expectedInputJson>
+    <fieldLevelSecurityEnabled>false</fieldLevelSecurityEnabled>
+    <inputType>JSON</inputType>
+    <isManagedUsingStdDesigner>false</isManagedUsingStdDesigner>
+    <name>DRCreatePar</name>
+    <nullInputsIncludedInOutput>false</nullInputsIncludedInOutput>
+    <omniDataTransformItem>
+        <disabled>true</disabled>
+        <filterGroup>0.0</filterGroup>
+        <filterOperator>=</filterOperator>
+        <globalKey>c849c66b-5ee6-41dd-898c-c6a1d95f097f</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <migrationValue>FAKEMAPPING</migrationValue>
+        <name>DRCreatePar</name>
+        <omniDataTransformation>0kdhk0000001djd</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001djd</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Id</outputFieldName>
+        <outputObjectName>PreliminaryApplicationRef</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <formulaConverted>var:AssociatedPersonAccountFirstName &quot;-&quot; + var:AssociatedPersonAccountLastName + &quot;-&quot; + var:LICENCETYPE_AND_FEES:AuthorizationType + &quot;-&quot; + var:timeStamp +</formulaConverted>
+        <formulaExpression>AssociatedPersonAccountFirstName+&quot;-&quot; + AssociatedPersonAccountLastName+&quot;-&quot;+ LICENCETYPE_AND_FEES:AuthorizationType +&quot;-&quot;+timeStamp</formulaExpression>
+        <formulaResultPath>ApplicationName</formulaResultPath>
+        <formulaSequence>2.0</formulaSequence>
+        <globalKey>4ee97088-14f5-41ef-841a-c74ec211e779</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRCreatePar</name>
+        <omniDataTransformation>0kdhk0000001djc</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001djc</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Formula</outputFieldName>
+        <outputObjectName>Formula</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <defaultValue>IndividualApplication</defaultValue>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>cc049779-9b0f-4ace-83be-b4ac3141425a</globalKey>
+        <inputFieldName>ApplicationType</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRCreatePar</name>
+        <omniDataTransformation>0kdhk0000001dje</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dje</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldFormat>String</outputFieldFormat>
+        <outputFieldName>ApplicationType</outputFieldName>
+        <outputObjectName>PreliminaryApplicationRef</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <formulaConverted>&quot;/resume-application-ia?OmniScriptInstanceId=&quot; var:sInstanceId +</formulaConverted>
+        <formulaExpression>&quot;/resume-application-ia?OmniScriptInstanceId=&quot;+sInstanceId</formulaExpression>
+        <formulaResultPath>savedOmniApplicationUrl</formulaResultPath>
+        <formulaSequence>1.0</formulaSequence>
+        <globalKey>6f4bd676-eedc-4da1-9f35-0f3985f14942</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRCreatePar</name>
+        <omniDataTransformation>0kdhk0000001djX</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001djX</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Formula</outputFieldName>
+        <outputObjectName>Formula</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>4443900f-a8e3-4f1a-af28-fb35fd781c01</globalKey>
+        <inputFieldName>ApplicationName</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRCreatePar</name>
+        <omniDataTransformation>0kdhk0000001djZ</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001djZ</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>ApplicationName</outputFieldName>
+        <outputObjectName>PreliminaryApplicationRef</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>b36a6d5a-c275-485d-834b-8ea1f4396f8d</globalKey>
+        <inputFieldName>AssociatedPersonAccountId</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRCreatePar</name>
+        <omniDataTransformation>0kdhk0000001djY</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001djY</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>BusinessAccountNameId</outputFieldName>
+        <outputObjectName>PreliminaryApplicationRef</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>c2e05dfc-66da-41c1-b180-908554faccdf</globalKey>
+        <inputFieldName>DRId_PreliminaryApplicationRef</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRCreatePar</name>
+        <omniDataTransformation>0kdhk0000001djb</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001djb</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Id</outputFieldName>
+        <outputObjectName>PreliminaryApplicationRef</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>true</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>a366f7ee-38fb-436b-bf1a-66102a32f0bc</globalKey>
+        <inputFieldName>savedOmniApplicationUrl</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRCreatePar</name>
+        <omniDataTransformation>0kdhk0000001dja</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dja</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>SavedApplicationUrl</outputFieldName>
+        <outputObjectName>PreliminaryApplicationRef</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <outputType>SObject</outputType>
+    <previewJsonData>{
+  &quot;ContextId&quot; : &quot;&quot;,
+  &quot;timeStamp&quot; : &quot;2020-04-28T10:38:12.253Z&quot;,
+  &quot;userId&quot; : &quot;005B0000006j7GuIAåI&quot;,
+  &quot;userName&quot; : &quot;lpi_226release@lpi.org&quot;,
+  &quot;userProfile&quot; : &quot;System Administrator&quot;,
+  &quot;userTimeZone&quot; : -420,
+  &quot;userCurrencyCode&quot; : &quot;USD&quot;,
+  &quot;sfdcIFrameOrigin&quot; : &quot;https://lpi226release--vlocity-ins.visualforce.com&quot;,
+  &quot;sfdcIFrameHost&quot; : &quot;web&quot;,
+  &quot;layout&quot; : &quot;lightning&quot;,
+  &quot;isdtp&quot; : &quot;p1&quot;,
+  &quot;id&quot; : &quot;a3LB0000000U8kqMAC&quot;,
+  &quot;vlcPersistentComponent&quot; : { },
+  &quot;vlcTimeTracking&quot; : {
+    &quot;OmniScriptSessionToken&quot; : &quot;fbc7fc49-d3d6-4a9b-9063-f5fc6def9ce1&quot;,
+    &quot;SetContext&quot; : 652,
+    &quot;DRContactForUser&quot; : 8898,
+    &quot;DRPersonAccountForContact&quot; : 3834,
+    &quot;SetStatus&quot; : 34,
+    &quot;SetIsOlaSubmitted1&quot; : 72,
+    &quot;SetPreviewModeOff&quot; : 79,
+    &quot;IntroScreen&quot; : 7164,
+    &quot;DRGetWasOlaReturned&quot; : 2846,
+    &quot;TypeOfApplication&quot; : 5679,
+    &quot;LICENCETYPE_AND_FEES&quot; : 29017,
+    &quot;APPLICANT_INFORMATION&quot; : 34758,
+    &quot;DRGetIdsToSetOla&quot; : 1580,
+    &quot;OtherNamesUsed&quot; : 5756,
+    &quot;ImpMesgOnUpdatingContactInfo&quot; : 2847,
+    &quot;MailingAddress&quot; : 20472,
+    &quot;MEDICAL_SCHOOLS_ATTENDED&quot; : 33484,
+    &quot;DRPostActionCreatePersonEducation&quot; : 618,
+    &quot;PgMedTrainings&quot; : 51806,
+    &quot;DRPostActionTrainingCourseParticipant&quot; : 816,
+    &quot;WORK_EXPERIENCE&quot; : 409457,
+    &quot;OTHER_MEDICAL_LICENSES&quot; : 23962,
+    &quot;PRACTICE_SPECIALTIES_AND_BOARD_CERTS&quot; : 26711,
+    &quot;REQUIRED_SCREENING_QUESTIONS&quot; : 3702,
+    &quot;APPLICANT_AFFIDAVIT&quot; : 20976,
+    &quot;DRCreateOccupationLicenseApplication&quot; : 1314,
+    &quot;DRPostActionUpdateOla&quot; : 715,
+    &quot;DRGetOlaName&quot; : 616,
+    &quot;SetPreviewModeOn&quot; : 16,
+    &quot;Confirmation&quot; : 9466
+  },
+  &quot;LICENCETYPE_AND_FEES&quot; : {
+    &quot;ProfessionalDesignation&quot; : &quot;Osteopathy &amp; Surgery (DO)&quot;,
+    &quot;GraduateType&quot; : &quot;U.S./Canada&quot;,
+    &quot;ApplicationType&quot; : &quot;License by Examination ($805.00)&quot;,
+    &quot;Industries&quot; : &quot;Healthcare&quot;,
+    &quot;isIndustriesFilled&quot; : true,
+    &quot;isBusinessActivityFilled&quot; : true,
+    &quot;BusinessActivity&quot; : &quot;Medical Practitioner / Physician&quot;,
+    &quot;AuthorizationCategory&quot; : &quot;License&quot;,
+    &quot;AuthorizationType&quot; : &quot;Physician License&quot;
+  },
+  &quot;APPLICANT_INFORMATION&quot; : {
+    &quot;Telephone1&quot; : &quot;1231231231&quot;,
+    &quot;PersonAccountDob&quot; : &quot;2020-04-21&quot;,
+    &quot;GenderOfPersonAccount&quot; : &quot;Male&quot;,
+    &quot;SSN&quot; : null,
+    &quot;DegreesHeld&quot; : &quot;MD_Degree&quot;,
+    &quot;RaceEthnicity&quot; : &quot;Caucasian/White&quot;,
+    &quot;RaceEthnicityHasChooseNotToDisclose&quot; : false,
+    &quot;RaceEthnicitySelCountGtOne&quot; : false,
+    &quot;BothNotToDiscloseAndRaceEthnicityChosen&quot; : false,
+    &quot;RaceEthnicityValidate&quot; : true,
+    &quot;LanguagesSpoken&quot; : &quot;Other&quot;,
+    &quot;IsLanguagesSpokenOther&quot; : true,
+    &quot;OtherLanguage&quot; : null
+  },
+  &quot;OtherNamesUsed&quot; : {
+    &quot;OtherName&quot; : {
+      &quot;FirstNameOther&quot; : null,
+      &quot;LastNameOther&quot; : null
+    }
+  },
+  &quot;MailingAddress&quot; : {
+    &quot;MailingAddrSelect&quot; : &quot;HomeAddress&quot;,
+    &quot;IsHomeAddrSelected&quot; : true,
+    &quot;IsBizAddrSelected&quot; : false,
+    &quot;EnsureOnlyOneOfHomeBizAddrIsSelected&quot; : true,
+    &quot;HomeAddress&quot; : {
+      &quot;CHA&quot; : &quot;Gachiwad Road&quot;,
+      &quot;HomeCity&quot; : &quot;Valsad&quot;,
+      &quot;HomeState&quot; : &quot;GJ&quot;,
+      &quot;ZipCode&quot; : 396001,
+      &quot;HomePhone&quot; : &quot;&quot;,
+      &quot;HomeEmail&quot; : null
+    },
+    &quot;BusinessAddress&quot; : null
+  },
+  &quot;MEDICAL_SCHOOLS_ATTENDED&quot; : {
+    &quot;MedicalSchoolAttended&quot; : {
+      &quot;MedSchoolName&quot; : &quot;John Hopkins&quot;,
+      &quot;GraduationDate&quot; : &quot;2013-04-11&quot;,
+      &quot;DegreeCertAwarded&quot; : &quot;MBBS&quot;,
+      &quot;GradCity&quot; : &quot;Valsad&quot;,
+      &quot;GradState&quot; : &quot;GJ&quot;,
+      &quot;GradCountry&quot; : &quot;India&quot;
+    }
+  },
+  &quot;PgMedTrainings&quot; : {
+    &quot;PgMedicalTraining&quot; : {
+      &quot;ProgramName&quot; : &quot;Certificate in Emergency Medicine&quot;,
+      &quot;ProgramStartDate&quot; : &quot;2012-04-04&quot;,
+      &quot;ProgramEndDate&quot; : &quot;2020-04-03&quot;,
+      &quot;ProgramTypeofPosition&quot; : &quot;Fellowship&quot;,
+      &quot;ProgramCity&quot; : &quot;Valsad&quot;,
+      &quot;ProgramState&quot; : &quot;GJ&quot;,
+      &quot;ProgramCountry&quot; : &quot;India&quot;
+    }
+  },
+  &quot;WORK_EXPERIENCE&quot; : {
+    &quot;Employer&quot; : {
+      &quot;EmployerName&quot; : &quot;John Hopkins&quot;,
+      &quot;EmploymentStartDate&quot; : &quot;2018-04-11&quot;,
+      &quot;EmploymentEndDate&quot; : &quot;2020-04-28&quot;,
+      &quot;ReasonForLeaving&quot; : &quot;Higher Studies&quot;,
+      &quot;EmploymentCity&quot; : &quot;Valsad&quot;,
+      &quot;EmploymentState&quot; : &quot;GJ&quot;,
+      &quot;EmploymentCountry&quot; : &quot;India&quot;
+    }
+  },
+  &quot;OTHER_MEDICAL_LICENSES&quot; : {
+    &quot;MedicalLicense&quot; : {
+      &quot;Jurisdiction&quot; : &quot;CA&quot;,
+      &quot;IssueDate&quot; : &quot;2019-04-23&quot;,
+      &quot;ExpiryDate&quot; : &quot;2020-04-01&quot;,
+      &quot;LicenseNumber&quot; : &quot;A12390B&quot;
+    }
+  },
+  &quot;PRACTICE_SPECIALTIES_AND_BOARD_CERTS&quot; : {
+    &quot;PracticeSpecialityList&quot; : &quot;EM&quot;,
+    &quot;PracticeSpeciality&quot; : &quot;ABC&quot;,
+    &quot;BoardCertifiedInfo&quot; : {
+      &quot;CertifyingBoard&quot; : &quot;CE&quot;,
+      &quot;CertifyingAgency&quot; : &quot;CCRA&quot;
+    }
+  },
+  &quot;REQUIRED_SCREENING_QUESTIONS&quot; : {
+    &quot;ScreenQuestion1&quot; : false,
+    &quot;ScreenQuestion2&quot; : false,
+    &quot;ScreenQuestion3&quot; : false,
+    &quot;ScreenQuestion4&quot; : false,
+    &quot;ScreenQuestion5&quot; : false,
+    &quot;ScreenQuestion6&quot; : false,
+    &quot;ScreenQuestion7&quot; : false
+  },
+  &quot;APPLICANT_AFFIDAVIT&quot; : {
+    &quot;ApplicantSign&quot; : &quot;Isaac Newton&quot;,
+    &quot;Submission Date&quot; : &quot;2020-04-28&quot;
+  },
+  &quot;SamplePersonUser&quot; : &quot;005B0000006jnYhIAI&quot;,
+  &quot;ContactId&quot; : &quot;003B000000HKbXdIAL&quot;,
+  &quot;ContactEmail&quot; : &quot;isaac.newton@johnhopkins.com&quot;,
+  &quot;ContactName&quot; : &quot;Isaac Newton&quot;,
+  &quot;AssociatedPersonAccountEmail&quot; : &quot;isaac.newton@johnhopkins.com&quot;,
+  &quot;AssociatedPersonAccountLastName&quot; : &quot;Newton&quot;,
+  &quot;AssociatedPersonAccountFirstName&quot; : &quot;Isaac&quot;,
+  &quot;AssociatedPersonAccountId&quot; : &quot;001B000001KGdjDIAT&quot;,
+  &quot;ApplicationStatus&quot; : &quot;Submitted&quot;,
+  &quot;IsOlaSubmitted&quot; : false,
+  &quot;IsPreviewMode&quot; : true,
+  &quot;IntroScreen&quot; : {
+    &quot;IsExistingApplication&quot; : false
+  },
+  &quot;vlcKnowledge&quot; : {
+    &quot;knowledgeItems&quot; : [ ]
+  },
+  &quot;error&quot; : &quot;OK&quot;,
+  &quot;TypeOfApplication&quot; : {
+    &quot;IsSubmittedOlaEditable&quot; : true
+  },
+  &quot;ApplicationType&quot; : &quot;Individual&quot;,
+  &quot;sInstanceId&quot; : &quot;a3KB0000003aUexMAE&quot;,
+  &quot;AuthorizationTypeId&quot; : &quot;0ehB00000004C9DIAU&quot;,
+  &quot;BusinessActivityId&quot; : &quot;2gFB00000004C94MAE&quot;,
+  &quot;DRId_OccupationLicenseApplication&quot; : &quot;0f2B00000000001IAA&quot;,
+  &quot;DRId_Case&quot; : &quot;500B0000005KoCXIA0&quot;,
+  &quot;CreatedOlaName&quot; : &quot;OLA-0000000001&quot;
+}</previewJsonData>
+    <processSuperBulk>false</processSuperBulk>
+    <responseCacheTtlMinutes>0.0</responseCacheTtlMinutes>
+    <rollbackOnError>false</rollbackOnError>
+    <sourceObject>json</sourceObject>
+    <sourceObjectDefault>false</sourceObjectDefault>
+    <synchronousProcessThreshold>-1.0</synchronousProcessThreshold>
+    <type>Load</type>
+    <uniqueName>DRCreatePar_1</uniqueName>
+    <versionNumber>1.0</versionNumber>
+    <xmlDeclarationRemoved>false</xmlDeclarationRemoved>
+</OmniDataTransform>

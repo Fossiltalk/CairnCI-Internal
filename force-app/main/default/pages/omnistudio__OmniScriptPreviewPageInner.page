@@ -1,0 +1,40 @@
+<apex:page standardStylesheets="false"
+           showHeader="false" applyHtmlTag="false" applyBodyTag="false"
+           sidebar="false" controller="omnistudio.OmniScriptDesignerController" docType="html-5.0"
+           language="{!$CurrentPage.parameters.LanguageCode}"
+           action="{!checkIfOmniPreviewPageThisIsIndustryPackage}"
+           rendered="{!showLegacyOmniStudioUi}">
+    <apex:outputPanel rendered="{!showLegacyOmniStudioUi}">
+    <html>
+        <apex:includeScript value="/soap/ajax/56.0/connection.js"/>
+        <apex:includeScript value="/support/console/56.0/integration.js"/>
+
+        <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+        </head>
+
+        <body>
+            <div ng-app="OmniScriptPreview" class='vlocity via-slds' xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <a ng-if="!isPreviewEmbedded && (!isSforce || (isSforce && !sforce.one)) && !isInConsole" href="{!URLFOR($Page.OmniScriptHome)}"><i class="omni-preview icon icon-v-left-caret"></i>{!$Label.OmniGoback}</a>
+                <a ng-if="!isPreviewEmbedded && !isInConsole && isSforce && sforce.one " href="javascript:sforce.one.navigateToURL('/{!JSENCODE($CurrentPage.parameters.id)}')"><i class="omni-preview icon icon-v-left-caret"></i>{!$Label.OmniGoback}</a>
+                <hr ng-if="!isPreviewEmbedded && !isInConsole" />
+                <c:BusinessProcessComponent strNamespacePrefixList="{!namespace}"
+                                            strOmniScriptId="{!JSENCODE($CurrentPage.parameters.id)}"
+                                            previewMode="true"
+                                            JSONTreeHTMLTemplateName="JSONApplicationReviewHTMLTemplate.html"/>
+            </div>
+
+            <script type="text/javascript">
+                var modules = ['vlocity-business-process'];
+                var myModule = angular.module('OmniScriptPreview', modules);
+            </script>
+
+            <c:VFActionFunction />
+
+        </body>
+
+    </html>
+    </apex:outputPanel>
+    <c:VFPageDeprecatedMessage rendered="{!NOT(showLegacyOmniStudioUi)}"/>
+
+</apex:page>

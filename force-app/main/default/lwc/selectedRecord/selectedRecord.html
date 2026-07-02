@@ -1,0 +1,35 @@
+<template>
+    <div class="container">
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_4-of-12">
+                <lightning-input type="text" label="Participant" class="slds-m-left_xx-small" value={recordname} disabled></lightning-input>
+            </div>
+            <div class="slds-col slds-size_4-of-12">
+                <lightning-combobox
+                    name="progress"
+                    label="Role"
+                    value={rolevalue}
+                    placeholder="--Select--"
+                    options={rolepicklist}
+                    onchange={handleRoleChange}
+                    required
+                ></lightning-combobox>
+            </div>
+            <div class="slds-col slds-size_3-of-12">
+                <lightning-combobox
+                    name="active"
+                    label="Status"
+                    value={statusvalue}
+                    placeholder="--Select--"
+                    options={statuspicklist}
+                    onchange={handleStatusChange}
+                    required
+                ></lightning-combobox>
+            </div>
+            <div class="slds-col slds-size_1-of-12 slds-p-top_large">
+                <lightning-button-icon icon-name="utility:delete" alternative-text="Delete" title="Delete" onclick={onDeleteClick}>
+                </lightning-button-icon>
+            </div>
+          </div>
+    </div>
+</template>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>流程連結文章</value>
+    </caseValues>
+    <nameFieldLabel>流程連結文章名稱</nameFieldLabel>
+</CustomObjectTranslation>

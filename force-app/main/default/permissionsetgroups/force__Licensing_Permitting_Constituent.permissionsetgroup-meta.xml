@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Licensing_Permitting_Constituent</label>
+    <permissionSets>force__BRERuntime</permissionSets>
+    <permissionSets>force__DecisionExplainerCCPSL</permissionSets>
+    <permissionSets>force__DocGenRuntimeCC</permissionSets>
+    <permissionSets>force__DocumentChecklist</permissionSets>
+    <permissionSets>force__IndustriesVisit</permissionSets>
+    <permissionSets>force__LicensingPermittingInspectionsCmnyUser</permissionSets>
+    <permissionSets>force__OmnistudioExperienceCloudUser</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

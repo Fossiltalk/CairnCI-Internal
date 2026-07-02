@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ReportType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <baseObject></baseObject>
+    <category>other</category>
+    <deployed>true</deployed>
+    <description>Report on the progress of each program. The overall program progress isn’t captured in this report.</description>
+    <label>Employee Enablement Program Progress</label>
+    <sections>
+        <masterLabel>Employee Enablement Learning Item Assignments</masterLabel>
+    </sections>
+</ReportType>

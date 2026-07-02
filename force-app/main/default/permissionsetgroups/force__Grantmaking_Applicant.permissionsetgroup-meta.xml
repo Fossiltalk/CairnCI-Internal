@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Grantmaking_Applicant</label>
+    <permissionSets>force__BRECmtyRuntime</permissionSets>
+    <permissionSets>force__DecisionExplainerCCPSL</permissionSets>
+    <permissionSets>force__DocGenRuntimeCC</permissionSets>
+    <permissionSets>force__DocumentChecklist</permissionSets>
+    <permissionSets>force__ExperienceCloudForGrantmaking</permissionSets>
+    <permissionSets>force__OmnistudioExperienceCloudUser</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

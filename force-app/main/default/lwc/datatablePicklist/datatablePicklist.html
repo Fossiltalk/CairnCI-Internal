@@ -1,0 +1,17 @@
+<!--
+  ~ Copyright 2022 salesforce.com, inc.
+  ~ All Rights Reserved
+  ~ Company Confidential
+  -->
+  <template>
+    <div class="picklist-container slds-p-around_medium">
+      <lightning-combobox label={label}
+                            options={options}
+                            value={value}
+                            disabled={isdisabled}
+                            placeholder="Select Progress"
+                            class="datatablePicklist"
+                            onchange={handleChange}>
+      </lightning-combobox>
+    </div>
+  </template>

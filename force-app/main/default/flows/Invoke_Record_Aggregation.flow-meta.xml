@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Record_Aggregation</name>
+        <label>Record Aggregation</label>
+        <locationX>176</locationX>
+        <locationY>134</locationY>
+        <actionName>runRecordAggrBatchProcDef</actionName>
+        <actionType>runRecordAggrBatchProcDef</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>executionReferenceId</name>
+            <value>
+                <stringValue>9N1hk0000000iDxCAI</stringValue>
+            </value>
+        </inputParameters>
+        <nameSegment>runRecordAggrBatchProcDef</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <environments>Default</environments>
+    <interviewLabel>Invoke Record Aggregation {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Invoke Record Aggregation</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Record_Aggregation</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+</Flow>

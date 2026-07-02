@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>wkdw__QuickAction__c</fullName>
+    <deprecated>false</deprecated>
+    <description>The set of fields associated with the ticket category. Available on the new ticket form when the related ticket category is selected.
+        
+        Specify the full API name of the quick action, including the org namespace prefix (if exists) and the object api name.</description>
+    <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <label>Quick Action Name</label>
+    <length>80</length>
+    <required>true</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

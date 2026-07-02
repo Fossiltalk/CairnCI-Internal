@@ -1,0 +1,22 @@
+{
+  "required" : [ "applicationFormStage", "recruitmentPostingNameOrId" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "applicationFormStage" : {
+      "title" : "Application Form Stage",
+      "description" : "The stage of the relevant application forms that the user requested.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "recruitmentPostingNameOrId" : {
+      "title" : "Recruitment Posting Name or ID",
+      "description" : "The name or Salesforce ID of a recruitment posting record.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType",
+  "lightning:textIndexed" : true
+}

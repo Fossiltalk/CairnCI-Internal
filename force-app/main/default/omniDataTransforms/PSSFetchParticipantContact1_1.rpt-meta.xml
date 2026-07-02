@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OmniDataTransform xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>false</active>
+    <assignmentRulesUsed>false</assignmentRulesUsed>
+    <deletedOnSuccess>false</deletedOnSuccess>
+    <description>Fetches the contact record associated with a public application participant&apos;s person account.</description>
+    <errorIgnored>false</errorIgnored>
+    <expectedInputJson>{
+  &quot;PublicApplicationParticipant&quot; : [ {
+    &quot;ApplicantId&quot; : &quot;1apRO000000000zYAA&quot;,
+    &quot;Role&quot; : &quot;Applicant&quot;
+  }, {
+    &quot;ApplicantId&quot; : &quot;1apRO000000001OYAQ&quot;,
+    &quot;Role&quot; : &quot;Applicant&quot;
+  }, {
+    &quot;ApplicantId&quot; : &quot;1apRO000000000pYAA&quot;,
+    &quot;Role&quot; : &quot;Applicant&quot;
+  }, {
+    &quot;ApplicantId&quot; : &quot;1apRO000000000uYAA&quot;,
+    &quot;Role&quot; : &quot;Applicant&quot;
+  }, {
+    &quot;ApplicantId&quot; : &quot;1apRO000000000vYAA&quot;,
+    &quot;Role&quot; : &quot;Applicant&quot;
+  }, {
+    &quot;ApplicantId&quot; : &quot;1apRO000000000fYAA&quot;,
+    &quot;Role&quot; : &quot;Applicant&quot;
+  }, {
+    &quot;ApplicantId&quot; : &quot;1apRO000000001EYAQ&quot;,
+    &quot;Role&quot; : &quot;Applicant&quot;
+  }, {
+    &quot;ApplicantId&quot; : &quot;1apRO0000000014YAA&quot;,
+    &quot;Role&quot; : &quot;Applicant&quot;
+  }, {
+    &quot;ApplicantId&quot; : &quot;1apRO0000000019YAA&quot;,
+    &quot;Role&quot; : &quot;Applicant&quot;
+  }, {
+    &quot;ApplicantId&quot; : &quot;1apRO000000000kYAA&quot;,
+    &quot;Role&quot; : &quot;Applicant&quot;
+  }, {
+    &quot;ApplicantId&quot; : &quot;1apRO000000001JYAQ&quot;,
+    &quot;Role&quot; : &quot;Applicant&quot;
+  }, {
+    &quot;ApplicantId&quot; : &quot;1apRO000000001dYAA&quot;,
+    &quot;Role&quot; : &quot;Applicant&quot;
+  }, {
+    &quot;ApplicantId&quot; : &quot;1apRO000000001TYAQ&quot;,
+    &quot;Role&quot; : &quot;Applicant&quot;
+  }, {
+    &quot;ApplicantId&quot; : &quot;1apRO000000001YYAQ&quot;,
+    &quot;Role&quot; : &quot;Applicant&quot;
+  }, {
+    &quot;ApplicantId&quot; : &quot;1apRO000000001iYAA&quot;,
+    &quot;Role&quot; : &quot;Applicant&quot;
+  }, {
+    &quot;ApplicantId&quot; : &quot;1apRO0000000022YAA&quot;,
+    &quot;Role&quot; : &quot;Applicant&quot;
+  }, {
+    &quot;ApplicantId&quot; : &quot;1apRO000000001nYAA&quot;,
+    &quot;Role&quot; : &quot;Applicant&quot;
+  }, {
+    &quot;ApplicantId&quot; : &quot;1apRO000000001sYAA&quot;,
+    &quot;Role&quot; : &quot;Applicant&quot;
+  }, {
+    &quot;ApplicantId&quot; : &quot;1apRO000000001xYAA&quot;,
+    &quot;Role&quot; : &quot;Applicant&quot;
+  }, {
+    &quot;ApplicantId&quot; : &quot;1apRO000000004rYAA&quot;,
+    &quot;Role&quot; : &quot;Co-applicant&quot;
+  } ]
+}</expectedInputJson>
+    <fieldLevelSecurityEnabled>false</fieldLevelSecurityEnabled>
+    <inputType>JSON</inputType>
+    <isManagedUsingStdDesigner>false</isManagedUsingStdDesigner>
+    <name>PSSFetchParticipantContact1</name>
+    <nullInputsIncludedInOutput>false</nullInputsIncludedInOutput>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSFetchParticipantContact4516994318018068</globalKey>
+        <inputFieldName>Account:PersonContactId</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSFetchParticipantContact1</name>
+        <omniDataTransformation>0kdhk0000001de5</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001de5</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>ContactId</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <filterOperator>=</filterOperator>
+        <filterValue>PublicApplicationParticipant:ApplicantId</filterValue>
+        <globalKey>PSSFetchParticipantContact6604597595092208</globalKey>
+        <inputFieldName>Id</inputFieldName>
+        <inputObjectName>PublicApplicationParticipant</inputObjectName>
+        <inputObjectQuerySequence>1.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSFetchParticipantContact1</name>
+        <omniDataTransformation>0kdhk0000001de7</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001de7</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>PAP</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <filterOperator>=</filterOperator>
+        <filterValue>PAP:ParticipantId</filterValue>
+        <globalKey>PSSFetchParticipantContact6764454711214869</globalKey>
+        <inputFieldName>Id</inputFieldName>
+        <inputObjectName>Account</inputObjectName>
+        <inputObjectQuerySequence>2.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSFetchParticipantContact1</name>
+        <omniDataTransformation>0kdhk0000001de6</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001de6</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Account</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <outputType>JSON</outputType>
+    <previewJsonData>{
+  &quot;PublicApplicationParticipant&quot; : [ {
+    &quot;ApplicantId&quot; : &quot;1apRO000000005gYAA&quot;,
+    &quot;&quot; : &quot;&quot;,
+    &quot;Role&quot; : &quot;Co-applicant&quot;
+  }, {
+    &quot;ApplicantId&quot; : &quot;1apRO000000005fYAA&quot;,
+    &quot;&quot; : &quot;&quot;,
+    &quot;Role&quot; : &quot;Applicant&quot;
+  } ]
+}</previewJsonData>
+    <processSuperBulk>false</processSuperBulk>
+    <responseCacheTtlMinutes>0.0</responseCacheTtlMinutes>
+    <rollbackOnError>false</rollbackOnError>
+    <sourceObject>json</sourceObject>
+    <sourceObjectDefault>false</sourceObjectDefault>
+    <synchronousProcessThreshold>0.0</synchronousProcessThreshold>
+    <type>Extract</type>
+    <uniqueName>PSSFetchParticipantContact1_1</uniqueName>
+    <versionNumber>1.0</versionNumber>
+    <xmlDeclarationRemoved>false</xmlDeclarationRemoved>
+</OmniDataTransform>

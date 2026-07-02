@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>ProblemFulfillerPSG</label>
+    <permissionSets>force__ItSrvcCnfgItmReadPermissionSet</permissionSets>
+    <permissionSets>force__ItSrvcIncProbAssocPermSet</permissionSets>
+    <permissionSets>force__ItSrvcProbChgAssocPermSet</permissionSets>
+    <permissionSets>force__ItSrvcProbRelAssocPermSet</permissionSets>
+    <permissionSets>force__ProblemFulfillerPermSet</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

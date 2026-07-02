@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Social_Program_Management_Constituent</label>
+    <permissionSets>force__BRECmtyRuntime</permissionSets>
+    <permissionSets>force__ComposableCaseManagementForCmtyPsl</permissionSets>
+    <permissionSets>force__CriteriaBasedSearchFilterExpCloudPsl</permissionSets>
+    <permissionSets>force__DecisionExplainerCCPSL</permissionSets>
+    <permissionSets>force__DocGenRuntimeCC</permissionSets>
+    <permissionSets>force__DocumentChecklist</permissionSets>
+    <permissionSets>force__IndustriesVisit</permissionSets>
+    <permissionSets>force__LicensingPermittingInspectionsCmnyUser</permissionSets>
+    <permissionSets>force__OmnistudioExperienceCloudUser</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

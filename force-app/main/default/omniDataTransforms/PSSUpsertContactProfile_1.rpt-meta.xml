@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OmniDataTransform xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <assignmentRulesUsed>false</assignmentRulesUsed>
+    <deletedOnSuccess>false</deletedOnSuccess>
+    <description>Creates or updates a contact profile.</description>
+    <errorIgnored>false</errorIgnored>
+    <expectedInputJson>{
+  &quot;ContactId&quot; : &quot;12345&quot;,
+  &quot;HouseholdMemberDetails&quot; : {
+    &quot;DateOfBirth&quot; : &quot;1997-01-28&quot;,
+    &quot;GradeCompleted&quot; : &quot;btech&quot;,
+    &quot;Race&quot; : &quot;American Indian/Alaska Native&quot;,
+    &quot;Ethnicity&quot; : &quot;Non-Hispanic/Latino&quot;,
+    &quot;Gender&quot; : &quot;Male&quot;,
+    &quot;Age&quot; : 26,
+    &quot;HouseholdMemberFirstName&quot; : &quot;firstH&quot;,
+    &quot;Relationship&quot; : &quot;Spouse&quot;,
+    &quot;HouseholdMemberLastName&quot; : &quot;lastH&quot;,
+    &quot;USCitizen&quot; : &quot;Yes&quot;,
+    &quot;IsDisabled&quot; : &quot;Yes&quot;
+  }
+}</expectedInputJson>
+    <fieldLevelSecurityEnabled>false</fieldLevelSecurityEnabled>
+    <inputType>JSON</inputType>
+    <isManagedUsingStdDesigner>false</isManagedUsingStdDesigner>
+    <name>PSSUpsertContactProfile</name>
+    <nullInputsIncludedInOutput>false</nullInputsIncludedInOutput>
+    <omniDataTransformItem>
+        <defaultValue>Other</defaultValue>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSUpsertContactProfile7719529289100342</globalKey>
+        <inputFieldName>HouseholdMemberDetails:USCitizen</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSUpsertContactProfile</name>
+        <omniDataTransformation>0kdhk0000001dOM</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dOM</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>PrimaryCitizenshipType</outputFieldName>
+        <outputObjectName>ContactProfile</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <transformValuesMappings>{
+  &quot;Yes&quot; : &quot;USNational&quot;,
+  &quot;No&quot; : &quot;Other&quot;
+}</transformValuesMappings>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSUpsertContactProfile5791550794973239</globalKey>
+        <inputFieldName>ContactId</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSUpsertContactProfile</name>
+        <omniDataTransformation>0kdhk0000001dOO</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dOO</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>ContactId</outputFieldName>
+        <outputObjectName>ContactProfile</outputObjectName>
+        <requiredForUpsert>true</requiredForUpsert>
+        <upsertKey>true</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <filterOperator>=</filterOperator>
+        <globalKey>PSSUpsertContactProfile02964409097873877</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <migrationValue>FAKEMAPPING</migrationValue>
+        <name>PSSUpsertContactProfile</name>
+        <omniDataTransformation>0kdhk0000001dON</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dON</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Id</outputFieldName>
+        <outputObjectName>ContactProfile</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSUpsertContactProfile8203314849310441</globalKey>
+        <inputFieldName>HouseholdMemberDetails:Race</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSUpsertContactProfile</name>
+        <omniDataTransformation>0kdhk0000001dOQ</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dOQ</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Race</outputFieldName>
+        <outputObjectName>ContactProfile</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <transformValuesMappings>{
+  &quot;WH&quot; : &quot;White&quot;,
+  &quot;HP&quot; : &quot;Native Hawaiian Or Other Pacific Islander&quot;,
+  &quot;BL&quot; : &quot;Black Or African American&quot;,
+  &quot;AP&quot; : &quot;Asian&quot;,
+  &quot;AI&quot; : &quot;American Indian&quot;,
+  &quot;AN&quot; : &quot;Alaska Native&quot;
+}</transformValuesMappings>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <defaultValue>Not Selected</defaultValue>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSUpsertContactProfile4144529688748442</globalKey>
+        <inputFieldName>HouseholdMemberDetails:Ethnicity</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSUpsertContactProfile</name>
+        <omniDataTransformation>0kdhk0000001dOP</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dOP</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Ethnicity</outputFieldName>
+        <outputObjectName>ContactProfile</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <transformValuesMappings>{
+  &quot;NH&quot; : &quot;Not Hispanic or Latino&quot;,
+  &quot;NS&quot; : &quot;Not Selected&quot;,
+  &quot;HL&quot; : &quot;Hispanic or Latino&quot;
+}</transformValuesMappings>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <outputType>SObject</outputType>
+    <previewJsonData>{
+  &quot;ContactId&quot; : &quot;003RO000003RpSlYAK&quot;,
+  &quot;HouseholdMemberDetails&quot; : {
+    &quot;DateOfBirth&quot; : &quot;1997-01-28&quot;,
+    &quot;GradeCompleted&quot; : &quot;btech&quot;,
+    &quot;Race&quot; : &quot;WH&quot;,
+    &quot;Ethnicity&quot; : &quot;NS&quot;,
+    &quot;Gender&quot; : &quot;Male&quot;,
+    &quot;Age&quot; : 26,
+    &quot;HouseholdMemberFirstName&quot; : &quot;firstH&quot;,
+    &quot;Relationship&quot; : &quot;Spouse&quot;,
+    &quot;HouseholdMemberLastName&quot; : &quot;lastH&quot;,
+    &quot;USCitizen&quot; : &quot;&quot;,
+    &quot;PersonDisable&quot; : &quot;Yes&quot;
+  }
+}</previewJsonData>
+    <processSuperBulk>false</processSuperBulk>
+    <responseCacheTtlMinutes>0.0</responseCacheTtlMinutes>
+    <rollbackOnError>false</rollbackOnError>
+    <sourceObject>json</sourceObject>
+    <sourceObjectDefault>false</sourceObjectDefault>
+    <synchronousProcessThreshold>0.0</synchronousProcessThreshold>
+    <type>Load</type>
+    <uniqueName>PSSUpsertContactProfile_1</uniqueName>
+    <versionNumber>1.0</versionNumber>
+    <xmlDeclarationRemoved>false</xmlDeclarationRemoved>
+</OmniDataTransform>

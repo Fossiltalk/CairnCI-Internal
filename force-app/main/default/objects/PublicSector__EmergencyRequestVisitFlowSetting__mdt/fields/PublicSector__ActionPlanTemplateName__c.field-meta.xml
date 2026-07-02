@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PublicSector__ActionPlanTemplateName__c</fullName>
+    <caseSensitive>false</caseSensitive>
+    <defaultValue>&quot;Emergency Supplies Delivery&quot;</defaultValue>
+    <deprecated>false</deprecated>
+    <description>Name of the Action Plan Template</description>
+    <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <inlineHelpText>Holds the value of the Action Plan Template used for creating emergency visit</inlineHelpText>
+    <label>Action Plan Template Name</label>
+    <length>100</length>
+    <required>true</required>
+    <type>Text</type>
+    <unique>true</unique>
+</CustomField>

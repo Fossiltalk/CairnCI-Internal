@@ -1,0 +1,58 @@
+<template>
+    <lightning-card footer="" title="">
+        <h1 class="slds-text-heading_medium">{welcome_text}</h1> 
+        <div class="c-footer" >
+            <a href="/lightning/n/PSS_Learning_Home">Return to Learning Home</a>
+        </div>
+        <div class="c-container"> 
+            <lightning-layout>
+                <lightning-layout-item flexibility="auto" padding="around-small"> 
+
+                    <c-in-app-landing-child 
+                        heading="Admin" 
+                        image-name="/resource/PSS_Learning_org_Icons/Admin_Icon_Square_2Color_RGB.png"
+                        app="c__Public_Sector_Learning_App"
+                        page="pSCLPIAdminHome"
+                        link-in-new-tab={pass_false}
+                        link-reference="standard__navItemPage"></c-in-app-landing-child>
+
+                    <c-in-app-landing-child
+                        heading="Intake Officer"
+                        image-name="/resource/PSS_Learning_org_Icons/Inspector_Icon.png"
+                        app="c__Public_Sector_Learning_App"
+                        page="Intake_Officers"
+                        link-in-new-tab={pass_false}
+                        link-reference="standard__navItemPage"></c-in-app-landing-child>
+
+                       
+                    <c-in-app-landing-child
+                        heading="Inspections Manager" 
+                        image-name="/resource/PSS_Learning_org_Icons/Inspections_Manager_Icon.png"
+                        app="c__Public_Sector_Learning_App"
+                        page="Inspection_Manager"
+                        link-in-new-tab={pass_false}
+                        link-reference="standard__navItemPage"></c-in-app-landing-child>
+
+
+                        <c-in-app-landing-child
+                        heading="Inspector" 
+                        image-name="/resource/PSS_Learning_org_Icons/Inspector_Icon.png"
+                        app="c__Public_Sector_Learning_App"
+                        page="Inspectors"
+                        link-in-new-tab={pass_false}
+                        link-reference="standard__navItemPage"></c-in-app-landing-child>
+
+                        <c-in-app-landing-child
+                        heading="Compliance Officer" 
+                        image-name="/resource/PSS_Learning_org_Icons/Compliance_Officer_Icon.png"
+                        app="c__Public_Sector_Learning_App"
+                        page="Compliance_Officer"
+                        link-in-new-tab={pass_false}
+                        link-reference="standard__navItemPage"></c-in-app-landing-child>
+
+                       
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+    </lightning-card>
+</template>

@@ -1,0 +1,15 @@
+{
+  "required" : [ "recruitmentPostingNameOrId" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "recruitmentPostingNameOrId" : {
+      "title" : "Recruitment Posting Name Or Id",
+      "description" : "The name or Salesforce ID of a recruitment posting record.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType",
+  "lightning:textIndexed" : true
+}

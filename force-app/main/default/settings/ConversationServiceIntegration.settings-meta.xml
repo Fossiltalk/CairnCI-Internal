@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ConversationServiceIntegrationSettings xmlns="http://soap.sforce.com/2006/04/metadata">
+    <enableConvoCatchUpForAgents>false</enableConvoCatchUpForAgents>
+    <enableConvoCatchUpForServiceAssistant>false</enableConvoCatchUpForServiceAssistant>
+    <enableConvoCatchUpForSupervisors>false</enableConvoCatchUpForSupervisors>
+    <enableTranslationForAgents>false</enableTranslationForAgents>
+    <enableWriteWithAiForAgents>false</enableWriteWithAiForAgents>
+</ConversationServiceIntegrationSettings>

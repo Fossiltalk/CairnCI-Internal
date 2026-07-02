@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Talent_Recruitment_Management_Hiring_Manager</label>
+    <permissionSets>force__ActionPlans</permissionSets>
+    <permissionSets>force__AgentforceForPublicSectorCoCmtyAccess</permissionSets>
+    <permissionSets>force__AsmtForEmployeeCommunity</permissionSets>
+    <permissionSets>force__BRERuntime</permissionSets>
+    <permissionSets>force__CriteriaBasedSearchFilterExpCloudPsl</permissionSets>
+    <permissionSets>force__DocumentChecklist</permissionSets>
+    <permissionSets>force__DynamicAssessmentPsl</permissionSets>
+    <permissionSets>force__EinsteinGPTPromptTemplateUser</permissionSets>
+    <permissionSets>force__EinsteinServiceInnovations</permissionSets>
+    <permissionSets>force__ExplainabilityServicePSL</permissionSets>
+    <permissionSets>force__IndustriesAssessmentPermissionSet</permissionSets>
+    <permissionSets>force__IndustriesVisit</permissionSets>
+    <permissionSets>force__OmniStudioUser</permissionSets>
+    <permissionSets>force__PublicSectorForEmployeeCmtyPSL</permissionSets>
+    <permissionSets>force__TlntRcrtMgmtHiringMgrAccess</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

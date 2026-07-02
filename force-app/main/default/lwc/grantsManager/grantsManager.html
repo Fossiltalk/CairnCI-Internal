@@ -1,0 +1,35 @@
+<template>
+    <lightning-card footer="" title="">
+        <h1 class="slds-text-heading_medium">{welcome_text}</h1> 
+        <div class="c-footer" >
+            <a href="/lightning/n/Public_Sector_Grantmaking">Return to Grantmaking Home</a>
+        </div>
+        <div class="c-container"> 
+            <lightning-layout>
+                <lightning-layout-item flexibility="auto" padding="around-small"> 
+
+                    <c-feature-child
+                        heading="View Application" 
+                        image-name="/resource/PSS_Learning_org_Icons/Admin_Icon_Square_2Color_RGB.png"
+                        object-name="IndividualApplication"
+                        app="standard__PublicSector"
+                        filter-name="Recent"
+                        link-in-new-tab={pass_true}
+                        link-reference="standard__objectPage"></c-feature-child>
+
+                    <template if:false={no_individual_app}>
+                        <c-feature-child
+                            heading="Manage an application (Monitoring, compliance, risk and financial monitoring)"
+                            image-name="/resource/PSS_Learning_org_Icons/Inspector_Icon.png"
+                            app="standard__PublicSector"
+                            link-in-new-tab={pass_true}
+                            object-name="IndividualApplication"
+                            object-id={individualAppId}
+                            link-reference="standard__recordPage"></c-feature-child>
+                    </template>     
+
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+    </lightning-card>
+</template>

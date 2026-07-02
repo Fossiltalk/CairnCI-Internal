@@ -1,0 +1,41 @@
+<template>
+    <lightning-card footer="" title="">
+        <h1 class="slds-text-heading_medium">{welcome_text}</h1> 
+        <div class="c-footer" >
+            <a href="/lightning/n/PSS_Learning_Home">Return to Learning Home</a>
+        </div>
+        <div class="c-container"> 
+            <lightning-layout>
+                <lightning-layout-item flexibility="auto" padding="around-small"> 
+
+                    <c-feature-child
+                        heading="Admin" 
+                        image-name="/resource/PSS_Learning_org_Icons/Admin_Icon_Square_2Color_RGB.png"
+                        app-text="Salesforce admins work with stakeholders to define processes and tailor Public Sector Solutions. They help their organization's users get the most out of Salesforce by making the platform work for specific user needs." 
+                        url="/lightning/n/Grantmaking_Admin"
+                        link-in-new-tab={pass_false}
+                        link-reference="standard__webPage"></c-feature-child>
+
+                    <c-feature-child
+                        heading="Grantseeker [External User]"
+                        image-name="/resource/PSS_Learning_org_Icons/Inspector_Icon.png"
+                        url="/lightning/n/GrantSeeker"
+                        app-text="On experience cloud, grantseeker can view the list of funding opportunities and apply to an opportunity."
+                        link-in-new-tab={pass_false}
+                        link-reference="standard__webPage"></c-feature-child>
+
+
+                    <c-feature-child
+                        heading="Grants Manager" 
+                        image-name="/resource/PSS_Learning_org_Icons/Inspections_Manager_Icon.png"
+                        app-text="Reviews an application."
+                        url="/lightning/n/GrantsManager"
+                        link-in-new-tab={pass_false}
+                        link-reference="standard__webPage"></c-feature-child>
+
+
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+    </lightning-card>
+</template>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>billing</fullName>
+    <columns>RTEL.NAME</columns>
+    <columns>RTEL.PRIMARY_RECORD</columns>
+    <columns>RTEL.RELATED_RECORD</columns>
+    <columns>RTEL.PRIMARY_RECORD_2</columns>
+    <columns>RTEL.RELATED_RECORD_2</columns>
+    <columns>RTEL.ERROR_CODE</columns>
+    <columns>RTEL.ERROR_MESSAGE</columns>
+    <columns>RTEL.CATEGORY</columns>
+    <columns>RTEL.REQUEST_IDENTIFIER</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>RTEL.CATEGORY</field>
+        <operation>equals</operation>
+        <value>IA,IBRSS,IBRPP,IBREHDS,IBRIG,IBRSIG,IBRTP,IBRPOP,IBRS,IBRR,IRF,IBDTPR,IBDTPRSS,IBDPRTPP,IBRCA,IBRRBCAPA,IBRDC,ANILC,SCA,CI,VPI,VPCM,IGF,CNILTC,IDP,CMDP,CM_RECOVERY,IETC,SOAG,GENERAL_LEDGER_ACCOUNTING_PERIOD_SUMMARY,BCC</value>
+    </filters>
+    <label>Billing Revenue Transaction Error Logs</label>
+</ListView>

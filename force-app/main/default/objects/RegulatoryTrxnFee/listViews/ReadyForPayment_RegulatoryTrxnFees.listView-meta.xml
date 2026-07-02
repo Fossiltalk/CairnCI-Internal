@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ReadyForPayment_RegulatoryTrxnFees</fullName>
+    <columns>Name</columns>
+    <columns>Description</columns>
+    <columns>Status</columns>
+    <columns>TotalFeeAmount</columns>
+    <columns>DueAmount</columns>
+    <columns>PaidAmount</columns>
+    <columns>DueDate</columns>
+    <columns>ParentRecord</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>DueAmount</field>
+        <operation>greaterThan</operation>
+        <value>0</value>
+    </filters>
+    <filters>
+        <field>Status</field>
+        <operation>equals</operation>
+        <value>1,4</value>
+    </filters>
+    <filters>
+        <field>InvoicingStatus</field>
+        <operation>equals</operation>
+        <value>1</value>
+    </filters>
+    <label>Eligible Regulatory Transaction Fee</label>
+</ListView>

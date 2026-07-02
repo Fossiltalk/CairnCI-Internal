@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Defines the field mapping required when creating person account records from employee records.</description>
+    <label>Employee To Person Account Field Mapping</label>
+    <pluralLabel>Employee To Person Account Field Mapping</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

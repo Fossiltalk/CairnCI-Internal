@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>wkdw__Priority__c</fullName>
+    <deprecated>false</deprecated>
+    <description>Prioritizes the order of the onboarding task for the specified due date.</description>
+    <externalId>false</externalId>
+    <label>Priority of Onboarding Task</label>
+    <precision>3</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

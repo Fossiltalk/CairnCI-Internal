@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>wkdw__URLs</fullName>
+    <active>true</active>
+    <description>Validates the format of the URL.</description>
+    <errorConditionFormula>IF(LEN(TRIM(wkdw__URLs__c)) &gt; 0, NOT(REGEX( wkdw__URLs__c , &quot;^((([a-zA-Z]+:)?\\/\\/.*)\\r?\\n?)*$&quot;)), false)</errorConditionFormula>
+    <errorDisplayField>wkdw__URLs__c</errorDisplayField>
+    <errorMessage>Enter a URL that starts with a valid protocol such as https:// or file:///.</errorMessage>
+</ValidationRule>

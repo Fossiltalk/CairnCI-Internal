@@ -1,0 +1,35 @@
+<template>
+    <div class="c-container">
+        <template if:true={_showResults}>
+            <div class="slds-p-around_x-small">
+                <div class="">
+                    <lightning-datatable
+                            key-field="id"
+                            data={_recordList}
+                            columns={columns}
+                            onrowselection={handleSelectedRows}>
+                    </lightning-datatable>
+                </div>
+                <div class="slds-grid slds-grid_align-end slds-p-around_x-small">
+                    <div class="slds-col">
+                        <lightning-button label="Add Selected" onclick={handleAddSelected}>
+                        </lightning-button>
+                    </div>
+                </div>
+                
+            </div> 
+        </template>
+        <template if:false={_showResults}>
+            <div style="text-align:center">
+                <h2>No matching records found or Invalid Search Criteria</h2>
+            </div>
+        </template>
+        <div class="slds-p-around_x-small">
+            <c-selected-list
+            recorddata={_selectedData}
+            ondatachanged={handleDataChange}
+            onrowdeleted={handleRowDeleted}>
+            </c-selected-list>
+        </div>
+    </div>
+</template>

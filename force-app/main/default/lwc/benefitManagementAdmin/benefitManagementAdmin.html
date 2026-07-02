@@ -1,0 +1,62 @@
+<template>
+    <lightning-card footer="" title="">
+        <h1 class="slds-text-heading_medium">{welcome_text}</h1> 
+        <div class="c-container"> 
+            <lightning-layout>
+                <lightning-layout-item flexibility="auto" padding="around-small"> 
+                    <p class="c-description">{app_description}</p>
+                    <c-feature-child
+                        heading="Initial Public Sector Solutions Set Up" 
+                        image="custom:custom16"
+                        url="/lightning/setup/PSSFoundationSetupAssistant/home"
+                        link-in-new-tab={pass_false}
+                        link-reference="standard__webPage"></c-feature-child>
+
+                    <c-feature-child
+                        heading="Verify Setup Benefit Management (New)"
+                        image="standard:partner_fund_request"
+                        url="/lightning/setup/EnhancedProfiles/home"
+                        app-text="Verify PSLs assigned to Profile."
+                        inside-link-present = {pass_true}
+                        inside-link-before-text ="Verify discovery: "
+                        inside-link-text =" here"
+                        inside-link="/lightning/setup/DiscoveryFrameworkSampleTemplates/home"
+                        inside-link2-present = {pass_true}
+                        inside-link2-before-text ="Verify IP, DR, Omni: "
+                        inside-link2-text =" here"
+                        inside-link2="/lightning/n/omnistudio__OmniScriptHome"
+                        link-in-new-tab={pass_false}
+                        link-reference="standard__webPage"></c-feature-child>
+
+                    <c-feature-child
+                        heading="Verify Setup of Experience Cloud" 
+                        image="custom:custom68"
+                        url="/lightning/setup/PSSDigitalExperienceSetupAssistant/home"
+                        link-in-new-tab={pass_false}
+                        link-reference="standard__webPage"></c-feature-child>
+
+                    <c-feature-child
+                        heading="Verify Set Up Business Rules Engine and Decision Explainer" 
+                        image="standard:filter_criteria_rule"
+                        url="/lightning/setup/PSSBusinessRulesEngineSetupAssistant/home"
+                        link-in-new-tab={pass_false}
+                        link-reference="standard__webPage"></c-feature-child>
+
+                    <c-feature-child
+                        heading="Verify Set Up Case Management" 
+                        image="standard:case_milestone"
+                        url="/lightning/setup/PSSCaseManagementSetupAssistant/home"
+                        link-in-new-tab={pass_false}
+                        link-reference="standard__webPage"></c-feature-child>
+
+                    <c-feature-child
+                        heading="Verify Configure Additional Capabilities (Optional)"
+                        image="standard:user_role"
+                        url="/lightning/setup/PSSConfigureAdditionalCapabilitiesSetupAssistant/home"
+                        link-in-new-tab={pass_false}
+                        link-reference="standard__webPage"></c-feature-child>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+    </lightning-card>
+</template>

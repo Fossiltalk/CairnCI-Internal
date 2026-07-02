@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DecisionMatrixDefinition xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>CMResidenceFee</label>
+    <processType>Bre</processType>
+    <type>Standard</type>
+    <versions>
+        <fullName>CMResidenceFee_V1</fullName>
+        <columns>
+            <columnType>Input</columnType>
+            <dataType>Text</dataType>
+            <displaySequence>1</displaySequence>
+            <isWildcardColumn>false</isWildcardColumn>
+            <name>SalonInAResidence</name>
+        </columns>
+        <columns>
+            <columnType>Output</columnType>
+            <dataType>Currency</dataType>
+            <displaySequence>2</displaySequence>
+            <isWildcardColumn>false</isWildcardColumn>
+            <name>Fee</name>
+        </columns>
+        <decisionMatrixDefinition>CMResidenceFee</decisionMatrixDefinition>
+        <label>CMResidenceFee V1</label>
+        <rank>1</rank>
+        <startDate>2024-03-05T09:54:10.000Z</startDate>
+        <status>Active</status>
+        <versionNumber>1</versionNumber>
+    </versions>
+</DecisionMatrixDefinition>

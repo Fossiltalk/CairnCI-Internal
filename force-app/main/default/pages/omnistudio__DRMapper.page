@@ -1,0 +1,255 @@
+<apex:page controller="omnistudio.DRMapperControllerFoundation" extensions="omnistudio.DRDataPackRunnerController" showHeader="true"
+  sidebar="false" standardStylesheets="false" docType="html-5.0" applyBodyTag="false" action="{!redirectIfOldPage}">
+
+  <head>
+    <apex:includeScript value="{!URLFOR($Resource.omnistudio__vlocity_core_assets, '/latest/vlocity_core_assets.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.omnistudio__vk_beautify, '/vkBeautify-master/vkbeautify.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.omnistudio__angular_drag_drop_lists, '/angular-drag-and-drop-lists.min.js')}" />
+    <apex:stylesheet value="{!IF(isLanguageRTL, URLFOR($Resource.omnistudio__slds, '/assets/styles/salesforce-lightning-design-system-vf.rtl.min.css'), URLFOR($Resource.omnistudio__slds, '/assets/styles/salesforce-lightning-design-system-vf.min.css'))}"
+    />
+    <apex:stylesheet value="{!$Resource.omnistudio__DRMapperCss}" />
+    <apex:includeScript value="/support/console/42.0/integration.js" />
+    <script src="{!$Resource.MonacoEditor}"></script>
+    <script src="{!$Resource.VlocityPdf}"></script>
+    <script src="{!$Resource.DRMapper}"></script>
+    <script src="{!$Resource.SldsAngular}"></script>
+    <script src="{!$Resource.DRVComp}"></script>
+    <script src="{!URLFOR($Resource.monaco, '/min/vs/loader.js')}"></script>
+    <script>
+      require.config({
+        baseUrl: "{!URLFOR($Resource.monaco, '/min')}"
+      });
+    </script>
+    <script type="text/javascript">
+      window.industryPkgNSPrefix = '{!industryPkgNSPrefix}';
+    </script>
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 9000;
+            padding: 1rem;
+        }
+        
+        .modal.open {
+            display: block;
+        }
+        
+        .modal-container {
+            position: relative;
+            background: white;
+            border-radius: 0.25rem;
+            max-width: 70rem;
+            max-width: 79%; 
+            margin: 0 auto;
+            margin-top: 5%;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+        
+        .modal-header {
+            padding: 1rem;
+            border-bottom: 1px solid #dddbda;
+            background-color: #f3f3f3;
+            text-align: center; 
+        }
+        
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin: 0; 
+        }
+        
+        .modal-content {
+            padding: 1rem;
+        }
+        
+        .content-section {
+            margin: 1rem;
+            line-height: 1.5;
+        }
+        
+        .modal-footer {
+            padding: 0.75rem;
+            border-top: 1px solid #dddbda;
+            text-align: right;
+            background-color: #f3f3f3; 
+        }
+        
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            border: 1px solid transparent;
+            font-size: 0.875rem;
+            cursor: pointer;
+        }
+        
+        .btn-brand {
+            background-color: #0070d2;
+            color: white;
+        }
+        
+        .btn-brand:hover {
+            background-color: #005fb2;
+        }
+        
+        .backdrop {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 8000;
+            display: none;
+        }
+        
+        .backdrop.open {
+            display: block;
+        }
+    </style>
+    <div id="modal" class="modal">
+        <div class="modal-container">
+            <header class="modal-header">
+                <h1 class="modal-title">
+                    Managed Package Designer Disabled
+                </h1>
+            </header>
+            <div class="modal-content">
+                <div class="content-section" style="white-space: nowrap;">
+                    {!$label.RedirectMessageCoreUpdatedComponent}
+                    <a href="#" id="redirectLink">{!$label.StandardDesigner}</a>
+                </div>
+                <div class="content-section" style="white-space: nowrap;">
+                    {!$label.PostLinkCoreUpdatedComponent}
+                </div>
+                <div class="content-section" style="white-space: nowrap;">
+                    {!$label.NoteCoreUpdatedComponent}
+                </div>
+            </div>
+            <footer class="modal-footer">
+                <button class="btn btn-brand" onclick="closeModal()">Close tab</button>
+            </footer>
+        </div>
+    </div>
+    <div id="backdrop" class="backdrop"></div>
+    <script type="text/javascript">
+        var isCoreEnabled = {!coreEnabled};
+        var IsManagedUsingStdDesigner = {!managedUsingStdDesigner};
+
+        if (isCoreEnabled || IsManagedUsingStdDesigner) {
+            showModal();
+        }
+
+        function showModal() {
+            var isCoreEnabledcc = {!coreEnabled};
+            document.addEventListener("DOMContentLoaded", function () {
+                var showPackageDesignerDiv = document.getElementById("showPackageDesigner");
+                if (showPackageDesignerDiv) {
+                    showPackageDesignerDiv.style.display = isCoreEnabledcc ? "none" : "block";
+                }
+            });
+            
+            document.getElementById('modal').classList.add('open');
+            document.getElementById('backdrop').classList.add('open');
+            document.getElementById("redirectLink").href = getRedirectUrl();
+        }
+
+        function getRedirectUrl() {
+            var key = "{!key}";
+            var isFileBased = {!isFileBased};
+            var type = "DataRaptor";
+            return isFileBased
+                ? "/builder_omnistudio/omnistudioBuilder.app?type=dataraptor&name=" + encodeURIComponent(key)
+                : "/builder_omnistudio/omnistudioBuilder.app?type=dataraptor&id=" + encodeURIComponent(key);
+        }
+
+        function closeModal() {
+            if (typeof sforce !== 'undefined' && sforce.console && sforce.console.isInConsole()) {
+                sforce.console.getEnclosingTabId(function(result) {
+                    sforce.console.closeTab(result.id);
+                });
+            } else {
+                document.getElementById('modal').classList.remove('open');
+                document.getElementById('backdrop').classList.remove('open');
+            }
+        }
+    </script>
+
+  </head>
+  <style>
+    body {
+      margin: 0;
+      overflow-x: hidden;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    .slds-grid--frame {
+      min-width: auto !important;
+      max-width: 100% !important;
+      overflow: auto !important;
+      min-height: 100vh !important;
+    }
+
+    .outerNoSidebar {
+      padding: 0 !important;
+    }
+
+    .Theme3 .hasMotif .slds-grid--frame {
+      max-width: calc(100vw - 35px) !important;
+    }
+  </style>
+  <script>
+    (function () {
+      document.documentElement.classList.add('{!$User.UIThemeDisplayed}');
+    })();
+  </script>
+
+  <body xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <div class="via-slds {!$User.UIThemeDisplayed}" id="showPackageDesigner">
+      <div class="slds-grid slds-grid--frame">
+        <div ng-app="drmapper" class="slds-col slds-grid slds-grid--vertical slds-grid--vertical-stretch" ng-controller="drmapper as vm"
+          style="max-width: 100%;">
+          <slds-record-home-header sprite="standard" icon="environment_hub" icon-bg-class="slds-icon-standard-feed" object-type="'{!sObjectType}'"
+            object-type-label="'Omnistudio Data Mapper'" instance="vm.bundle" fields="vm.visibleFields" hide-default-name="true"
+            buttons="vm.buttons" field-metadata="vm.fields"></slds-record-home-header>
+          <extract-tabs bundle="vm.bundle" ng-if="vm.bundle.Id && (vm.bundle['Type'] == 'Extract' || vm.bundle['Type'] == 'Turbo Extract') && !vm.reloadRequired"
+            class="slds-col slds-grid slds-grid--vertical slds-grid--vertical-stretch" is-readonly='vm.isReadonly'>
+          </extract-tabs>
+          <load-tabs bundle="vm.bundle" ng-if="vm.bundle.Id && vm.bundle['Type'] == 'Load' && !vm.reloadRequired" 
+            class="slds-col slds-grid slds-grid--vertical slds-grid--vertical-stretch" is-readonly='vm.isReadonly'>
+          </load-tabs>
+          <transform-tabs bundle="vm.bundle" ng-if="vm.bundle.Id && vm.bundle['Type'] == 'Transform' && !vm.reloadRequired"
+            class="slds-col slds-grid slds-grid--vertical slds-grid--vertical-stretch" is-readonly='vm.isReadonly'>
+          </transform-tabs>
+          <div class="slds-spinner_container" ng-if="vm.saving" id="drmapper-loading-spinner">
+            <div class="slds-spinner--brand slds-spinner slds-spinner--medium" role="alert">
+              <span class="slds-assistive-text">Saving</span>
+              <div class="slds-spinner__dot-a"></div>
+              <div class="slds-spinner__dot-b"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      angular.module('drmapper.core')
+        .value('DRBundle', JSON.parse("{!JSENCODE(bundleJson)}"))
+        .value('$$mappings', JSON.parse("{!JSENCODE(mappingsJson)}"))
+        .value('fieldMetadata', JSON.parse("{!JSENCODE(fieldMetadata)}"))
+        .value('fieldSetMetadata', JSON.parse("{!JSENCODE(fieldSetMetadata)}"))
+        .value('IsFoundation', {!JSENCODE(IF(isFoundation, "true", "false"))})
+        .value('IsFileBased', {!JSENCODE(IF(isFileBased, "true", "false"))})
+        .value('isOmniMetadataApiEnabled', {!JSENCODE(IF(isOmniMetadataApiEnabled, "true", "false"))})
+        .value('isDataRaptorVersioningEnabled', {!JSENCODE(IF(isDataRaptorVersioningEnabled, "true", "false"))})
+        .value('attributesJson', JSON.parse("{!JSENCODE(attributesJson)}"));
+    </script>
+  </body>
+</apex:page>

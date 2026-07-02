@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Operazione modello di orientamento</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Operazioni modello di orientamento</value>
+    </caseValues>
+    <gender>Feminine</gender>
+    <nameFieldLabel>Nome operazione modello</nameFieldLabel>
+    <startsWith>Vowel</startsWith>
+</CustomObjectTranslation>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Statut d&apos;annulation du poste de bénévole --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Statuts d&apos;annulation de poste de bénévole --></value>
+    </caseValues>
+    <gender><!-- Masculine --></gender>
+    <startsWith><!-- Consonant --></startsWith>
+</CustomObjectTranslation>

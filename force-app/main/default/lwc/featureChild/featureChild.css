@@ -1,0 +1,39 @@
+.c-container {
+    border: 1px solid #d8dde6;
+    margin: 10px 0 20px 0;
+}
+.custom-box {
+    text-align: left;
+    padding: 1rem;
+    background-color: white;
+    border: 1px solid #d8dde6;
+    font-size: 18px;
+}
+.c-description {
+    padding: 5px 0px 10px;;
+    font-size: 18px;
+}
+.c-heading {
+    padding: 5px 10px 10px;
+}
+.c-feature-desc {
+    padding: 15px 0px 5px ;
+}
+.c-feature-desc-second {
+    padding: 1px 0px 5px ;
+}
+.c-no-record {
+    padding: 0px 40px 0px ;
+    color: grey ;
+}
+.c-button {
+    font-size: 13.5px;
+}
+.c-sec-heading {
+    font-size: 14px;
+    font-weight: bold;
+    padding: 5px 0px 0px;
+}
+ol.list {
+    list-style-type: none;
+}

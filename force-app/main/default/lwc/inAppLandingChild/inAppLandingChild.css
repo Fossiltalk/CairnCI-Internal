@@ -1,0 +1,29 @@
+.c-container {
+    border: 1px solid #d8dde6;
+    margin: 10px 0 20px 0;
+}
+.custom-box {
+    text-align: left;
+    padding: 1rem;
+    background-color: white;
+    border: 1px solid #d8dde6;
+    font-size: 18px;
+}
+.c-description {
+    padding: 5px 0px 10px;;
+    font-size: 18px;
+}
+.c-heading {
+    padding: 5px 10px 10px;
+}
+.c-feature-desc {
+    padding: 4px 28px 5px ;
+    line-height: 1.5;
+}
+.c-feature-desc-second {
+    padding: 1px 28px 5px ;
+}
+.c-no-record {
+    padding: 0px 25px 0px ;
+    color: grey ;
+}

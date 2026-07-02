@@ -1,0 +1,1087 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OmniDataTransform xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>false</active>
+    <assignmentRulesUsed>false</assignmentRulesUsed>
+    <deletedOnSuccess>false</deletedOnSuccess>
+    <description>Assigns a generic name to an assessment question response node so that the node can be referenced in other OmniStudio components.</description>
+    <errorIgnored>false</errorIgnored>
+    <expectedInputJson>{
+  &quot;PSS_BM_v3_ReviewSecondaryHeatingBillAmount&quot; : 100,
+  &quot;PSS_BM_v3_ReviewSecondaryHeatingSupplierCity&quot; : &quot;city&quot;,
+  &quot;PSS_BM_v3_ReviewSecondaryHeatingSupplierName&quot; : &quot;abc&quot;,
+  &quot;PSS_BM_v3_ReviewSecondaryHeatType&quot; : &quot;test&quot;,
+  &quot;PSS_BM_v3_ReviewExtraUseOfPrimaryHeatReason&quot; : &quot;test&quot;,
+  &quot;PSS_BM_v3_ReviewRentIncludesCostOfHeating&quot; : &quot;No&quot;,
+  &quot;PSS_BM_v3_DefaultSecondaryHeatingBillAmount&quot; : 100,
+  &quot;PSS_BM_v3_SecondaryHeatingBillFile&quot; : &quot;069DD0000000U6lYAE&quot;,
+  &quot;PSS_BM_v3_ExtraUseOfPrimaryHeatReason&quot; : &quot;test&quot;,
+  &quot;PSS_BM_v3_LatestRentReceipt&quot; : &quot;069DD0000000U6lYAE&quot;,
+  &quot;PSS_BM_v3_LeaseDocument&quot; : &quot;069DD0000000U6lYAE&quot;,
+  &quot;PSS_BM_v3_ReviewSignatureDate&quot; : &quot;2023-09-18&quot;,
+  &quot;PSS_BM_v3_ReviewerUserSignature&quot; : &quot;test&quot;,
+  &quot;PSS_BM_v3_ReviewIsThereASecondaryHeatingSupplier&quot; : &quot;Yes&quot;,
+  &quot;PSS_BM_v3_ReviewPrimaryHeatingBillAmount&quot; : 100,
+  &quot;PSS_BM_v3_ReviewPrimaryHeatingSupplierCity&quot; : &quot;abc&quot;,
+  &quot;PSS_BM_v3_ReviewPrimaryHeatingSupplierName&quot; : &quot;test&quot;,
+  &quot;PSS_BM_v3_ReviewExtraUseOfPrimaryHeat&quot; : &quot;No&quot;,
+  &quot;PSS_BM_v3_ReviewPrimaryHeatType&quot; : &quot;Electricity&quot;,
+  &quot;PSS_BM_v3_ReviewRentStatus&quot; : &quot;Own&quot;,
+  &quot;PSS_BM_v3_ReviewTypeOfHome&quot; : &quot;House&quot;,
+  &quot;PSS_BM_v3_ReviewRepresentativePayeeFees&quot; : 100,
+  &quot;PSS_BM_v3_ReviewGarnishmentsAmount&quot; : 100,
+  &quot;PSS_BM_v3_ReviewChildSupportAmount&quot; : 100,
+  &quot;PSS_BM_v3_ReviewSpousalSupportAmount&quot; : 100,
+  &quot;PSS_BM_v3_ReviewChildCareAmount&quot; : 100,
+  &quot;PSS_BM_v3_ReviewReimbursementAmount&quot; : 100,
+  &quot;PSS_BM_v3_ReviewInsurancePremiumAmount&quot; : 100,
+  &quot;PSS_BM_v3_ReviewMedicalExpensesAmount&quot; : 100,
+  &quot;PSS_BM_v3_ReviewAreThereDisabledHouseholdMembersText&quot; : &quot;no&quot;,
+  &quot;PSS_BM_v3_ReviewHeadOfHouseholdCountry&quot; : &quot;India&quot;,
+  &quot;PSS_BM_v3_ReviewHeadOfHouseholdZipCode&quot; : &quot;123456&quot;,
+  &quot;PSS_BM_v3_ReviewHeadHouseholdState&quot; : &quot;delhi&quot;,
+  &quot;PSS_BM_v3_ReviewHeadOfHouseholdCity&quot; : &quot;delhi&quot;,
+  &quot;PSS_BM_v3_ReviewHeadOfHouseholdAddress&quot; : &quot;abc&quot;,
+  &quot;PSS_BM_v3_ReviewHeadOfHouseholdCellNumber&quot; : &quot;123456&quot;,
+  &quot;PSS_BM_v3_ReviewHeadOfHouseholdPhoneNumber&quot; : &quot;1234567890&quot;,
+  &quot;PSS_BM_v3_ReviewHeadOfHouseholdEmail&quot; : &quot;abc@test.com&quot;,
+  &quot;PSS_BM_v3_ReviewHeadOfHouseholdLastName&quot; : &quot;abc&quot;,
+  &quot;PSS_BM_v3_ReviewHeadOfHouseholdFirstName&quot; : &quot;abc&quot;,
+  &quot;PSS_BM_v3_SignatureDate&quot; : &quot;2000-02-10&quot;,
+  &quot;PSS_BM_v3_PrimaryHeatingBillFile&quot; : &quot;069DD0000000U5sYAE&quot;,
+  &quot;PSS_BM_v3_ExpenseProofDocument&quot; : &quot;069DD0000000U5nYAE&quot;,
+  &quot;PSS_BM_v3_ExpenseProofDocumentName&quot; : &quot;Expense Proof&quot;,
+  &quot;PSS_BM_v3_AreMultipleProofsOfExpensesSubmitted&quot; : &quot;true&quot;,
+  &quot;PSS_BM_v3_AreMultipleProofsOfIncomeSubmitted&quot; : &quot;true&quot;,
+  &quot;PSS_BM_v3_TotalHouseholdIncome&quot; : 100,
+  &quot;PSS_BM_v3_HouseholdIncomeRecordsCount&quot; : 2,
+  &quot;PSS_BM_v3_HouseholdMemberName&quot; : &quot;First Last&quot;,
+  &quot;PSS_BM_v3_AreThereDisabledHouseholdMembers&quot; : &quot;yes&quot;,
+  &quot;PSS_BM_v3_HouseholdSize&quot; : 2,
+  &quot;PSS_BM_v3_AreThereChildrenInTheHousehold&quot; : &quot;false&quot;,
+  &quot;PSS_BM_v3_AreThereElderlyHouseholdMembers&quot; : &quot;false&quot;,
+  &quot;PSS_BM_v3_MedicalExpensesAmount&quot; : 120,
+  &quot;PSS_BM_v3_SecondaryHeatType&quot; : &quot;Fuel Oil&quot;,
+  &quot;PSS_BM_v3_IsThereASecondaryHeatingSupplier&quot; : &quot;Yes&quot;,
+  &quot;PSS_BM_v3_PrimaryHeatingBillAmount&quot; : 8,
+  &quot;PSS_BM_v3_SecondaryHeatingSupplierName&quot; : &quot;Sup1&quot;,
+  &quot;PSS_BM_v3_HeadOfHouseholdCity&quot; : &quot;New York&quot;,
+  &quot;PSS_BM_v3_HeadOfHouseholdState&quot; : &quot;New York&quot;,
+  &quot;PSS_BM_v3_SecondaryHeatingSupplierCity&quot; : &quot;New York&quot;,
+  &quot;PSS_BM_v3_PrimaryHeatType&quot; : &quot;Electricity&quot;,
+  &quot;PSS_BM_v3_RentStatus&quot; : &quot;Rent&quot;,
+  &quot;PSS_BM_v3_HeadOfHouseholdFirstName&quot; : &quot;abc&quot;,
+  &quot;PSS_BM_v3_GarnishmentsAmount&quot; : 0,
+  &quot;PSS_BM_v3_RepresentativePayeeFees&quot; : 0,
+  &quot;PSS_BM_v3_HouseholdIncomeDetails&quot; : [ {
+    &quot;PSS_BM_v3_IncomeLastMonth&quot; : 10,
+    &quot;PSS_BM_v3_IncomeNextMonth&quot; : 10,
+    &quot;PSS_BM_v3_IncomeFrequency&quot; : &quot;M&quot;,
+    &quot;PSS_BM_v3_IncomeCurrentMonth&quot; : 10,
+    &quot;PSS_BM_v3_Employer&quot; : &quot;govt&quot;,
+    &quot;PSS_BM_v3_IncomeHouseholdMemberName&quot; : &quot;abc&quot;,
+    &quot;PSS_BM_v3_IncomeProofDocument&quot; : &quot;069DD0000000U5dYAE&quot;
+  } ],
+  &quot;PSS_BM_v3_PrimaryHeatingSupplierCity&quot; : &quot;New York&quot;,
+  &quot;PSS_BM_v3_UserSignature&quot; : &quot;Is&quot;,
+  &quot;PSS_BM_v3_RentIncludesCostOfHeating&quot; : &quot;No&quot;,
+  &quot;PSS_BM_v3_ChildSupportAmount&quot; : 0,
+  &quot;PSS_BM_v3_SecondaryHeatingBillAmount&quot; : 4,
+  &quot;PSS_BM_v3_HeadOfHouseholdZipCode&quot; : &quot;333333&quot;,
+  &quot;PSS_BM_v3_HeadOfHouseholdLastName&quot; : &quot;abc&quot;,
+  &quot;PSS_BM_v3_HouseholdMemberDetails&quot; : [ {
+    &quot;PSS_BM_v3_Age&quot; : 23,
+    &quot;PSS_BM_v3_Gender&quot; : &quot;M&quot;,
+    &quot;PSS_BM_v3_GradeCompleted&quot; : &quot;Graduated&quot;,
+    &quot;PSS_BM_v3_HouseholdMemberLastName&quot; : &quot;abc&quot;,
+    &quot;PSS_BM_v3_Relationship&quot; : &quot;Grandfather&quot;,
+    &quot;PSS_BM_v3_Race&quot; : &quot;AL&quot;,
+    &quot;PSS_BM_v3_USCitizen&quot; : &quot;Yes&quot;,
+    &quot;PSS_BM_v3_Ethnicity&quot; : &quot;O&quot;,
+    &quot;PSS_BM_v3_HouseholdMemberFirstName&quot; : &quot;abc Grand son&quot;,
+    &quot;PSS_BM_v3_DateOfBirth&quot; : &quot;2000-02-10&quot;,
+    &quot;PSS_BM_v3_HouseholdMemberName&quot; : &quot;abc abc&quot;,
+    &quot;PSS_BM_v3_IsDisabled&quot; : &quot;No&quot;
+  } ],
+  &quot;PSS_BM_v3_InsurancePremiumAmount&quot; : 20,
+  &quot;PSS_BM_v3_ReimbursementAmount&quot; : 20,
+  &quot;PSS_BM_v3_HeadOfHouseholdEmail&quot; : &quot;abc@gmail.com&quot;,
+  &quot;PSS_BM_v3_SpousalSupportAmount&quot; : 0,
+  &quot;PSS_BM_v3_PrimaryHeatingSupplierName&quot; : &quot;Govt&quot;,
+  &quot;PSS_BM_v3_HeadOfHouseholdCellNumber&quot; : &quot;2222222222&quot;,
+  &quot;PSS_BM_v3_HeadOfHouseholdAddress&quot; : &quot;New York City, USA&quot;,
+  &quot;PSS_BM_v3_TypeOfHome&quot; : &quot;House&quot;,
+  &quot;PSS_BM_v3_ChildCareAmount&quot; : 10,
+  &quot;PSS_BM_v3_HeadOfHouseholdCounty&quot; : &quot;USA&quot;,
+  &quot;PSS_BM_v3_ExtraUseOfPrimaryHeat&quot; : &quot;No&quot;,
+  &quot;PSS_BM_v3_HeadOfHouseholdPhoneNumber&quot; : &quot;1111111111&quot;,
+  &quot;PSS_BM_v3_ProgramList&quot; : &quot;Health Care/Medicaid;General Assistance&quot;
+}</expectedInputJson>
+    <expectedOutputJson>{
+  &quot;ReviewSecondaryHeatingBillAmount&quot; : 100,
+  &quot;ReviewSecondaryHeatingSupplierCity&quot; : &quot;city&quot;,
+  &quot;ReviewSecondaryHeatingSupplierName&quot; : &quot;abc&quot;,
+  &quot;ReviewSecondaryHeatType&quot; : &quot;test&quot;,
+  &quot;ReviewExtraUseOfPrimaryHeatReason&quot; : &quot;test&quot;,
+  &quot;ReviewRentIncludesCostOfHeating&quot; : &quot;No&quot;,
+  &quot;DefaultSecondaryHeatingBillAmount&quot; : 100,
+  &quot;SecondaryHeatingBillFile&quot; : &quot;069DD0000000U6lYAE&quot;,
+  &quot;ExtraUseOfPrimaryHeatReason&quot; : &quot;test&quot;,
+  &quot;LatestRentReceipt&quot; : &quot;069DD0000000U6lYAE&quot;,
+  &quot;LeaseDocument&quot; : &quot;069DD0000000U6lYAE&quot;,
+  &quot;ReviewSignatureDate&quot; : &quot;2023-09-18&quot;,
+  &quot;ReviewerUserSignature&quot; : &quot;test&quot;,
+  &quot;ReviewIsThereASecondaryHeatingSupplier&quot; : &quot;Yes&quot;,
+  &quot;ReviewPrimaryHeatingBillAmount&quot; : 100,
+  &quot;ReviewPrimaryHeatingSupplierCity&quot; : &quot;abc&quot;,
+  &quot;ReviewPrimaryHeatingSupplierName&quot; : &quot;test&quot;,
+  &quot;ReviewExtraUseOfPrimaryHeat&quot; : &quot;No&quot;,
+  &quot;ReviewPrimaryHeatType&quot; : &quot;Electricity&quot;,
+  &quot;ReviewRentStatus&quot; : &quot;Own&quot;,
+  &quot;ReviewTypeOfHome&quot; : &quot;House&quot;,
+  &quot;ReviewRepresentativePayeeFees&quot; : 100,
+  &quot;ReviewGarnishmentsAmount&quot; : 100,
+  &quot;ReviewChildSupportAmount&quot; : 100,
+  &quot;ReviewSpousalSupportAmount&quot; : 100,
+  &quot;ReviewChildCareAmount&quot; : 100,
+  &quot;ReviewReimbursementAmount&quot; : 100,
+  &quot;ReviewInsurancePremiumAmount&quot; : 100,
+  &quot;ReviewMedicalExpensesAmount&quot; : 100,
+  &quot;ReviewAreThereDisabledHouseholdMembersText&quot; : &quot;no&quot;,
+  &quot;ReviewHeadOfHouseholdCountry&quot; : &quot;India&quot;,
+  &quot;ReviewHeadOfHouseholdZipCode&quot; : &quot;123456&quot;,
+  &quot;ReviewHeadHouseholdState&quot; : &quot;delhi&quot;,
+  &quot;ReviewHeadOfHouseholdCity&quot; : &quot;delhi&quot;,
+  &quot;ReviewHeadOfHouseholdAddress&quot; : &quot;abc&quot;,
+  &quot;ReviewHeadOfHouseholdCellNumber&quot; : &quot;123456&quot;,
+  &quot;ReviewHeadOfHouseholdPhoneNumber&quot; : &quot;1234567890&quot;,
+  &quot;ReviewHeadOfHouseholdEmail&quot; : &quot;abc@test.com&quot;,
+  &quot;ReviewHeadOfHouseholdLastName&quot; : &quot;abc&quot;,
+  &quot;ReviewHeadOfHouseholdFirstName&quot; : &quot;abc&quot;,
+  &quot;SignatureDate&quot; : &quot;2000-02-10&quot;,
+  &quot;PrimaryHeatingBillFile&quot; : &quot;069DD0000000U5sYAE&quot;,
+  &quot;ExpenseProofDocument&quot; : &quot;069DD0000000U5nYAE&quot;,
+  &quot;ExpenseProofDocumentName&quot; : &quot;Expense Proof&quot;,
+  &quot;AreMultipleProofsOfExpensesSubmitted&quot; : &quot;true&quot;,
+  &quot;AreMultipleProofsOfIncomeSubmitted&quot; : &quot;true&quot;,
+  &quot;TotalHouseholdIncome&quot; : 100,
+  &quot;HouseholdIncomeRecordsCount&quot; : 2,
+  &quot;HouseholdMemberName&quot; : &quot;First Last&quot;,
+  &quot;AreThereDisabledHouseholdMembers&quot; : &quot;yes&quot;,
+  &quot;HouseholdSize&quot; : 2,
+  &quot;AreThereElderlyHouseholdMembers&quot; : &quot;false&quot;,
+  &quot;AreThereChildrenInTheHousehold&quot; : &quot;false&quot;,
+  &quot;MedicalExpensesAmount&quot; : 120,
+  &quot;SecondaryHeatType&quot; : &quot;Fuel Oil&quot;,
+  &quot;IsThereASecondaryHeatingSupplier&quot; : &quot;Yes&quot;,
+  &quot;PrimaryHeatingBillAmount&quot; : 8,
+  &quot;SecondaryHeatingSupplierName&quot; : &quot;Sup1&quot;,
+  &quot;HeadOfHouseholdCity&quot; : &quot;New York&quot;,
+  &quot;HeadOfHouseholdState&quot; : &quot;New York&quot;,
+  &quot;SecondaryHeatingSupplierCity&quot; : &quot;New York&quot;,
+  &quot;PrimaryHeatType&quot; : &quot;Electricity&quot;,
+  &quot;RentStatus&quot; : &quot;Rent&quot;,
+  &quot;HeadOfHouseholdFirstName&quot; : &quot;abc&quot;,
+  &quot;GarnishmentsAmount&quot; : 0,
+  &quot;RepresentativePayeeFees&quot; : 0,
+  &quot;HouseholdIncomeDetails&quot; : [ {
+    &quot;IncomeLastMonth&quot; : 10,
+    &quot;IncomeNextMonth&quot; : 10,
+    &quot;IncomeFrequency&quot; : &quot;M&quot;,
+    &quot;IncomeCurrentMonth&quot; : 10,
+    &quot;Employer&quot; : &quot;govt&quot;,
+    &quot;IncomeHouseholdMemberName&quot; : &quot;abc&quot;,
+    &quot;IncomeProofDocument&quot; : &quot;069DD0000000U5dYAE&quot;
+  } ],
+  &quot;PrimaryHeatingSupplierCity&quot; : &quot;New York&quot;,
+  &quot;UserSignature&quot; : &quot;Is&quot;,
+  &quot;RentIncludesCostOfHeating&quot; : &quot;No&quot;,
+  &quot;ChildSupportAmount&quot; : 0,
+  &quot;SecondaryHeatingBillAmount&quot; : 4,
+  &quot;HeadOfHouseholdZipCode&quot; : &quot;333333&quot;,
+  &quot;HeadOfHouseholdLastName&quot; : &quot;abc&quot;,
+  &quot;HouseholdMemberDetails&quot; : [ {
+    &quot;Age&quot; : 23,
+    &quot;Gender&quot; : &quot;M&quot;,
+    &quot;GradeCompleted&quot; : &quot;Graduated&quot;,
+    &quot;HouseholdMemberLastName&quot; : &quot;abc&quot;,
+    &quot;Relationship&quot; : &quot;Grandfather&quot;,
+    &quot;Race&quot; : &quot;AL&quot;,
+    &quot;USCitizen&quot; : &quot;Yes&quot;,
+    &quot;Ethnicity&quot; : &quot;O&quot;,
+    &quot;HouseholdMemberFirstName&quot; : &quot;abc Grand son&quot;,
+    &quot;DateOfBirth&quot; : &quot;2000-02-10&quot;,
+    &quot;HouseholdMemberName&quot; : &quot;abc abc&quot;,
+    &quot;IsDisabled&quot; : &quot;No&quot;
+  } ],
+  &quot;InsurancePremiumAmount&quot; : 20,
+  &quot;ReimbursementAmount&quot; : 20,
+  &quot;HeadOfHouseholdEmail&quot; : &quot;abc@gmail.com&quot;,
+  &quot;SpousalSupportAmount&quot; : 0,
+  &quot;PrimaryHeatingSupplierName&quot; : &quot;Govt&quot;,
+  &quot;HeadOfHouseholdCellNumber&quot; : &quot;2222222222&quot;,
+  &quot;HeadOfHouseholdAddress&quot; : &quot;New York City, USA&quot;,
+  &quot;TypeOfHome&quot; : &quot;House&quot;,
+  &quot;ChildCareAmount&quot; : 10,
+  &quot;HeadOfHouseholdCounty&quot; : &quot;USA&quot;,
+  &quot;ExtraUseOfPrimaryHeat&quot; : &quot;No&quot;,
+  &quot;HeadOfHouseholdPhoneNumber&quot; : &quot;1111111111&quot;,
+  &quot;ProgramList&quot; : &quot;Health Care/Medicaid;General Assistance&quot;
+}</expectedOutputJson>
+    <fieldLevelSecurityEnabled>false</fieldLevelSecurityEnabled>
+    <inputType>JSON</inputType>
+    <isManagedUsingStdDesigner>false</isManagedUsingStdDesigner>
+    <name>PSSCoCAssignGenericNamesToResponseNode</name>
+    <nullInputsIncludedInOutput>false</nullInputsIncludedInOutput>
+    <omniDataTransformItem>
+        <defaultValue>Add</defaultValue>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom8067</globalKey>
+        <inputFieldName>PSS_BM_v3_ExistingHouseholdIncomeDetails:PSS_BM_v3_PartyIncomeId</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dSu</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dSu</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:HouseholdIncomeDetails:PartyIncomeId</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom0jIxx00000000PpEAIItem34</globalKey>
+        <inputFieldName>PSS_BM_v3_HouseholdSize</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dSt</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dSt</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:HouseholdSize</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom0jIxx00000000PpEAIItem85</globalKey>
+        <inputFieldName>PSS_BM_v3_RentStatus</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dSw</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dSw</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:RentStatus</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom0jIxx00000000PpEAIItem4</globalKey>
+        <inputFieldName>PSS_BM_v3_HouseholdMemberDetails:PSS_BM_v3_HouseholdMemberLastName</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dSv</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dSv</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:HouseholdMemberDetails:HouseholdMemberLastName</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom0jIxx00000000PpEAIItem36</globalKey>
+        <inputFieldName>PSS_BM_v3_ExistingHouseholdIncomeDetails:PSS_BM_v3_IncomeProofDocument</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dSy</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dSy</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:HouseholdIncomeDetails:IncomeProofDocument</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom0jIxx00000000PpEAIItem45</globalKey>
+        <inputFieldName>PSS_BM_v3_HouseholdMemberDetails:PSS_BM_v3_Race</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dSx</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dSx</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:HouseholdMemberDetails:Race</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom0jIxx00000000PpEAIItem30</globalKey>
+        <inputFieldName>PSS_BM_v3_HouseholdMemberDetails:PSS_BM_v3_USCitizen</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dSz</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dSz</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:HouseholdMemberDetails:USCitizen</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom0jIxx00000000PpEAIItem96</globalKey>
+        <inputFieldName>PSS_BM_v3_TotalHouseholdIncome</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dSM</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dSM</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:TotalHouseholdIncome</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom0jIxx00000000PpEAIItem101</globalKey>
+        <inputFieldName>PSS_BM_v3_ExistingHouseholdIncomeDetails:PSS_BM_v3_ExistingEmployer</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dSO</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dSO</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:HouseholdIncomeDetails:Employer</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <defaultValue>None</defaultValue>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom5933</globalKey>
+        <inputFieldName>PSS_BM_v3_ExistingHouseholdIncomeDetails:PSS_BM_v3_IncomeChange</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dT0</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dT0</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldFormat>String</outputFieldFormat>
+        <outputFieldName>GenericData:HouseholdIncomeDetails:ActionType</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <transformValuesMappings>{
+  &quot;Update income details&quot; : &quot;Update&quot;,
+  &quot;Remove income&quot; : &quot;Remove&quot;,
+  &quot;Add income&quot; : &quot;Add&quot;,
+  &quot;No change&quot; : &quot;None&quot;,
+  &quot;No Change&quot; : &quot;None&quot;
+}</transformValuesMappings>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom0jIxx00000000PpEAIItem17</globalKey>
+        <inputFieldName>PSS_BM_v3_HouseholdMemberDetails:PSS_BM_v3_GradeCompleted</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dSN</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dSN</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:HouseholdMemberDetails:GradeCompleted</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom0jIxx00000000PpEAIItem15</globalKey>
+        <inputFieldName>PSS_BM_v3_HouseholdMemberDetails:PSS_BM_v3_DateOfBirth</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dSQ</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dSQ</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:HouseholdMemberDetails:DateOfBirth</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom0jIxx00000000PpEAIItem84</globalKey>
+        <inputFieldName>PSS_BM_v3_ExtraUseOfPrimaryHeat</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dT2</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dT2</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:ExtraUseOfPrimaryHeat</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom0jIxx00000000PpEAIItem70</globalKey>
+        <inputFieldName>PSS_BM_v3_SignatureDate</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dSP</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dSP</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:SignatureDate</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom0jIxx00000000PpEAIItem67</globalKey>
+        <inputFieldName>PSS_BM_v3_HouseholdMemberDetails:PSS_BM_v3_HouseholdMemberFirstName</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dT1</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dT1</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:HouseholdMemberDetails:HouseholdMemberFirstName</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom251</globalKey>
+        <inputFieldName>PSS_BM_v3_ChangeOfCircumstancesReportChangeIncome</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dSS</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dSS</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:ChangeOfCircumstancesReportChangeIncome</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom0jIxx00000000PpEAIItem23</globalKey>
+        <inputFieldName>PSS_BM_v3_ExistingHouseholdIncomeDetails:PSS_BM_v3_ExistingIncomeHouseholdMemberName</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dT4</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dT4</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:HouseholdIncomeDetails:IncomeHouseholdMemberName</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom0jIxx00000000PpEAIItem74</globalKey>
+        <inputFieldName>PSS_BM_v3_HouseholdMemberDetails:PSS_BM_v3_IsDisabled</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dSR</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dSR</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:HouseholdMemberDetails:IsDisabled</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom0jIxx00000000PpEAIItem93</globalKey>
+        <inputFieldName>PSS_BM_v3_AreThereChildrenInTheHousehold</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dT3</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dT3</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:AreThereChildrenInTheHousehold</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom0jIxx00000000PpEAIItem40</globalKey>
+        <inputFieldName>PSS_BM_v3_ProgramList</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dSa</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dSa</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:ProgramList</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom0jIxx00000000PpEAIItem87</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dSc</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dSc</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldFormat>List&lt;Map&gt;</outputFieldFormat>
+        <outputFieldName>GenericData:HouseholdMemberDetails</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom0jIxx00000000PpEAIItem20</globalKey>
+        <inputFieldName>PSS_BM_v3_HouseholdMemberDetails:PSS_BM_v3_Ethnicity</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dSb</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dSb</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:HouseholdMemberDetails:Ethnicity</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom0jIxx00000000PpEAIItem25</globalKey>
+        <inputFieldName>PSS_BM_v3_UserSignature</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dSU</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dSU</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:UserSignature</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom0jIxx00000000PpEAIItem22</globalKey>
+        <inputFieldName>PSS_BM_v3_DefaultSecondaryHeatingBillAmount</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dT6</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dT6</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:DefaultSecondaryHeatingBillAmount</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom0jIxx00000000PpEAIItem13</globalKey>
+        <inputFieldName>PSS_BM_v3_ExpenseProofDocument</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dST</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dST</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:ExpenseProofDocument</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom0jIxx00000000PpEAIItem54</globalKey>
+        <inputFieldName>PSS_BM_v3_AreMultipleProofsOfIncomeSubmitted</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dT5</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dT5</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:AreMultipleProofsOfIncomeSubmitted</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom6820</globalKey>
+        <inputFieldName>PSS_BM_v3_HouseholdMemberDetails:PSS_BM_v3_AccountId</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dSW</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dSW</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:HouseholdMemberDetails:AccountId</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom7947</globalKey>
+        <inputFieldName>PSS_BM_v3_ExistingHouseholdIncomeDetails:PSS_BM_v3_ExistingIncomeProofDocumentId</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dSV</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dSV</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:HouseholdIncomeDetails:IncomeProofDocumentId</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom0jIxx00000000PpEAIItem95</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dT7</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dT7</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:HouseholdMemberDetails:Relationship</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom0jIxx00000000PpEAIItem75</globalKey>
+        <inputFieldName>PSS_BM_v3_ExpenseProofDocumentName</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dSY</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dSY</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:ExpenseProofDocumentName</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom0jIxx00000000PpEAIItem77</globalKey>
+        <inputFieldName>PSS_BM_v3_HouseholdMemberDetails:PSS_BM_v3_Age</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dSX</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dSX</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:HouseholdMemberDetails:Age</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom0jIxx00000000PpEAIItem28</globalKey>
+        <inputFieldName>PSS_BM_v3_ReviewAreThereDisabledHouseholdMembersText</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dSZ</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dSZ</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:ReviewAreThereDisabledHouseholdMembersText</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom5168</globalKey>
+        <inputFieldName>PSS_BM_v3_ExistingHouseholdIncomeDetails:PSS_BM_v3_ExistingIncomeProofDocumentName</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dSm</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dSm</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:HouseholdIncomeDetails:IncomeProofDocumentName</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom0jIxx00000000PpEAIItem27</globalKey>
+        <inputFieldName>PSS_BM_v3_AreThereDisabledHouseholdMembers</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dSl</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dSl</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:AreThereDisabledHouseholdMembers</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom9510</globalKey>
+        <inputFieldName>PSS_BM_v3_ChangeOfCircumstancesReportChangeMember</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dSo</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dSo</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:ChangeOfCircumstancesReportChangeMember</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom8930</globalKey>
+        <inputFieldName>PSS_BM_v3_ExistingHouseholdIncomeDetails:PSS_BM_v3_StartDate</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dSn</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dSn</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:HouseholdIncomeDetails:StartDate</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom0jIxx00000000PpEAIItem97</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dSq</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dSq</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldFormat>List&lt;Map&gt;</outputFieldFormat>
+        <outputFieldName>GenericData:HouseholdIncomeDetails</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom0jIxx00000000PpEAIItem41</globalKey>
+        <inputFieldName>PSS_BM_v3_ReviewSignatureDate</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dSp</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dSp</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:ReviewSignatureDate</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom3788</globalKey>
+        <inputFieldName>PSS_BM_v3_HouseholdMemberDetails:PSS_BM_v3_Relationship</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dSs</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dSs</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:HouseholdMemberDetails:Relationship</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom0jIxx00000000PpEAIItem6</globalKey>
+        <inputFieldName>PSS_BM_v3_HouseholdMemberDetails:PSS_BM_v3_Gender</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dSr</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dSr</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:HouseholdMemberDetails:Gender</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom0jIxx00000000PpEAIItem100</globalKey>
+        <inputFieldName>PSS_BM_v3_HouseholdIncomeRecordsCount</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dSe</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dSe</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:HouseholdIncomeRecordsCount</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom0jIxx00000000PpEAIItem71</globalKey>
+        <inputFieldName>PSS_BM_v3_ExistingHouseholdIncomeDetails:PSS_BM_v3_ExistingIncomeFrequency</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dSd</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dSd</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:HouseholdIncomeDetails:IncomeFrequency</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom0jIxx00000000PpEAIItem66</globalKey>
+        <inputFieldName>PSS_BM_v3_InsurancePremiumAmount</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dSg</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dSg</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:InsurancePremiumAmount</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom0jIxx00000000PpEAIItem69</globalKey>
+        <inputFieldName>PSS_BM_v3_ExistingHouseholdIncomeDetails:PSS_BM_v3_UpdatedIncomeCurrentMonth</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dSf</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dSf</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:HouseholdIncomeDetails:IncomeCurrentMonth</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom0jIxx00000000PpEAIItem29</globalKey>
+        <inputFieldName>PSS_BM_v3_HouseholdMemberDetails:PSS_BM_v3_HouseholdMemberName</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dSi</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dSi</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:HouseholdMemberDetails:HouseholdMemberName</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <defaultValue>None</defaultValue>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom3453</globalKey>
+        <inputFieldName>PSS_BM_v3_HouseholdMemberDetails:PSS_BM_v3_MemberSectionActionPersisted</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dSh</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dSh</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:HouseholdMemberDetails:ActionType</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <transformValuesMappings>{
+  &quot;Update member details&quot; : &quot;Update&quot;,
+  &quot;Remove member&quot; : &quot;Remove&quot;,
+  &quot;Add member&quot; : &quot;Add&quot;,
+  &quot;Update details of this member&quot; : &quot;Update&quot;,
+  &quot;No change&quot; : &quot;None&quot;,
+  &quot;No Change&quot; : &quot;None&quot;
+}</transformValuesMappings>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom0jIxx00000000PpEAIItem64</globalKey>
+        <inputFieldName>PSS_BM_v3_AreThereElderlyHouseholdMembers</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dSk</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dSk</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:AreThereElderlyHouseholdMembers</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCAssignGenericNamesToResponseNodeCustom0jIxx00000000PpEAIItem80</globalKey>
+        <inputFieldName>PSS_BM_v3_AreMultipleProofsOfExpensesSubmitted</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCAssignGenericNamesToResponseNode</name>
+        <omniDataTransformation>0kdhk0000001dSj</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dSj</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>GenericData:AreMultipleProofsOfExpensesSubmitted</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <outputType>JSON</outputType>
+    <previewJsonData>{
+  &quot;PSS_BM_v3_HouseholdMemberDetails&quot; : [ {
+    &quot;PSS_BM_v3_Relationship&quot; : &quot;Spouse&quot;,
+    &quot;PSS_BM_v3_USCitizen&quot; : &quot;No&quot;,
+    &quot;PSS_BM_v3_Gender&quot; : &quot;F&quot;,
+    &quot;PSS_BM_v3_IsDisabled&quot; : &quot;Yes&quot;,
+    &quot;PSS_BM_v3_HouseholdMemberLastName&quot; : &quot;Person&quot;,
+    &quot;PSS_BM_v3_DateOfBirth&quot; : &quot;2000-01-01&quot;,
+    &quot;PSS_BM_v3_HouseholdMemberFirstName&quot; : &quot;Demo&quot;
+  }, {
+    &quot;PSS_BM_v3_Relationship&quot; : &quot;Spouse&quot;,
+    &quot;PSS_BM_v3_MemberSectionActionPersisted&quot; : &quot;Update member details&quot;,
+    &quot;PSS_BM_v3_Edit_Member_Details&quot; : &quot;Update member details&quot;,
+    &quot;PSS_BM_v3_USCitizen&quot; : &quot;No&quot;,
+    &quot;PSS_BM_v3_Gender&quot; : &quot;F&quot;,
+    &quot;PSS_BM_v3_IsDisabled&quot; : &quot;Yes&quot;,
+    &quot;PSS_BM_v3_HouseholdMemberLastName&quot; : &quot;Person&quot;,
+    &quot;PSS_BM_v3_DateOfBirth&quot; : &quot;2000-01-01&quot;,
+    &quot;PSS_BM_v3_Ethnicity&quot; : &quot;NH&quot;,
+    &quot;PSS_BM_v3_Race&quot; : &quot;AL&quot;,
+    &quot;PSS_BM_v3_HouseholdMemberFirstName&quot; : &quot;Wife&quot;,
+    &quot;PSS_BM_v3_GradeCompleted&quot; : &quot;test&quot;
+  } ],
+  &quot;Income&quot; : {
+    &quot;HouseholdIncomeRecordsCount&quot; : 0,
+    &quot;TotalHouseholdIncome&quot; : 0,
+    &quot;MaximumIncomeDetailsValidation&quot; : true,
+    &quot;AreMultipleProofsOfIncomeSubmitted&quot; : false,
+    &quot;PSS_BM_v3_ExistingHouseholdIncomeDetails&quot; : [ {
+      &quot;PSS_BM_v3_ExistingIncomeCurrentMonth&quot; : 125,
+      &quot;PSS_BM_v3_PartyIncomeId&quot; : &quot;2m3xx00000000EXAAY&quot;,
+      &quot;IncomeAdded&quot; : null,
+      &quot;PSS_BM_UpdateIncomeChangeSelected&quot; : false,
+      &quot;PSS_BM_RemoveIncomeChangeSelected&quot; : false,
+      &quot;PSS_BM_v3_NewMember&quot; : false,
+      &quot;PSS_BM_v3_StartDate&quot; : &quot;2023-09-07&quot;,
+      &quot;PSS_BM_v3_IncomeFrequency&quot; : &quot;Monthly&quot;,
+      &quot;PSS_BM_v3_Employer&quot; : &quot;Salesforce&quot;,
+      &quot;PSS_BM_v3_IncomeCurrentMonth&quot; : 125,
+      &quot;PSS_BM_v3_IncomeHouseholdMemberName&quot; : &quot;Integration Demo PA&quot;
+    }, {
+      &quot;IncomeAdded&quot; : null,
+      &quot;PSS_BM_UpdateIncomeChangeSelected&quot; : false,
+      &quot;PSS_BM_RemoveIncomeChangeSelected&quot; : false,
+      &quot;PSS_BM_v3_NewMember&quot; : true,
+      &quot;MemberAdded&quot; : &quot;Yes&quot;,
+      &quot;PSS_BM_v3_IncomeHouseholdMemberName&quot; : &quot;Ashish Gulati&quot;,
+      &quot;PSS_BM_v3_IncomeCurrentMonth&quot; : 0
+    } ]
+  },
+  &quot;PSS_BM_v3_Check_if_any_household_member_has_a_disability&quot; : &quot;Yes&quot;,
+  &quot;PSS_BM_v3_ChangeOfCircumstancesReportChangeMember&quot; : true,
+  &quot;PSS_BM_v3_Select_the_programs_that_you_ve_applied_for&quot; : &quot;Housing Assistance;General Assistance&quot;,
+  &quot;PSS_BM_v3_ChangeOfCircumstancesReportChangeIncome&quot; : true
+}</previewJsonData>
+    <processSuperBulk>false</processSuperBulk>
+    <responseCacheTtlMinutes>0.0</responseCacheTtlMinutes>
+    <rollbackOnError>false</rollbackOnError>
+    <sourceObject>json</sourceObject>
+    <sourceObjectDefault>false</sourceObjectDefault>
+    <synchronousProcessThreshold>0.0</synchronousProcessThreshold>
+    <type>Transform</type>
+    <uniqueName>PSSCoCAssignGenericNamesToResponseNode_1</uniqueName>
+    <versionNumber>1.0</versionNumber>
+    <xmlDeclarationRemoved>false</xmlDeclarationRemoved>
+</OmniDataTransform>

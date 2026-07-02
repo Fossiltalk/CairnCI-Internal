@@ -1,0 +1,14 @@
+<apex:page standardStylesheets="true"
+           showHeader="true"
+           sidebar="false"
+           docType="html-5.0"
+           tabStyle="OmniScriptHome__tab"
+           controller="omnistudio.VFLegacyAccessController"
+           language="{!$CurrentPage.parameters.LanguageCode}"
+           action="{!checkOmniScriptDesignerAccess}">
+    <apex:outputPanel rendered="{!showLegacyOmniStudioUi}">
+        <apex:include pageName="omnistudio__OmniScriptDesignerInner"/>
+    </apex:outputPanel>
+    <c:VFPageDeprecatedMessage rendered="{!NOT(showLegacyOmniStudioUi)}"/>
+    <c:VFActionFunction rendered="{!showLegacyOmniStudioUi}" />
+</apex:page>

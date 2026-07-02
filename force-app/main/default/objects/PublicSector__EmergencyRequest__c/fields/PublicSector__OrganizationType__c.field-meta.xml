@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PublicSector__OrganizationType__c</fullName>
+    <deprecated>false</deprecated>
+    <label>Organization Type</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Acute Psychiatric Hospital (APH)</fullName>
+                <default>false</default>
+                <label>Acute Psychiatric Hospital (APH)</label>
+            </value>
+            <value>
+                <fullName>Adult Day Health Care (ADHC)</fullName>
+                <default>false</default>
+                <label>Adult Day Health Care (ADHC)</label>
+            </value>
+            <value>
+                <fullName>Ambulatory Surgical Center (ASC)</fullName>
+                <default>false</default>
+                <label>Ambulatory Surgical Center (ASC)</label>
+            </value>
+            <value>
+                <fullName>Chemical Dependency Recovery Hospital (CDRH)</fullName>
+                <default>false</default>
+                <label>Chemical Dependency Recovery Hospital (CDRH)</label>
+            </value>
+            <value>
+                <fullName>Chronic Dialysis Clinic (CDC)</fullName>
+                <default>false</default>
+                <label>Chronic Dialysis Clinic (CDC)</label>
+            </value>
+            <value>
+                <fullName>Congregate Living Health Facility (CLHF)</fullName>
+                <default>false</default>
+                <label>Congregate Living Health Facility (CLHF)</label>
+            </value>
+            <value>
+                <fullName>End Stage Renal Dialysis (CDC/ESRD)</fullName>
+                <default>false</default>
+                <label>End Stage Renal Dialysis (CDC/ESRD)</label>
+            </value>
+            <value>
+                <fullName>General Acute Care Hospital (GACH)</fullName>
+                <default>false</default>
+                <label>General Acute Care Hospital (GACH)</label>
+            </value>
+            <value>
+                <fullName>Home Health Agency (HHA)</fullName>
+                <default>false</default>
+                <label>Home Health Agency (HHA)</label>
+            </value>
+            <value>
+                <fullName>Hospice Facility (HOFA)</fullName>
+                <default>false</default>
+                <label>Hospice Facility (HOFA)</label>
+            </value>
+            <value>
+                <fullName>Intermediate Care Facility (ICF)</fullName>
+                <default>false</default>
+                <label>Intermediate Care Facility (ICF)</label>
+            </value>
+            <value>
+                <fullName>Pediatric Day Health &amp; Respite Care Facility (PDHRC)</fullName>
+                <default>false</default>
+                <label>Pediatric Day Health &amp; Respite Care Facility (PDHRC)</label>
+            </value>
+            <value>
+                <fullName>Primary Care Clinic (PCC)</fullName>
+                <default>false</default>
+                <label>Primary Care Clinic (PCC)</label>
+            </value>
+            <value>
+                <fullName>Skilled Nursing Facility (SNF)</fullName>
+                <default>false</default>
+                <label>Skilled Nursing Facility (SNF)</label>
+            </value>
+            <value>
+                <fullName>Surgical Clinic (SURGC)</fullName>
+                <default>false</default>
+                <label>Surgical Clinic (SURGC)</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

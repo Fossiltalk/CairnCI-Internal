@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <caseType>Nominative</caseType>
+        <plural>false</plural>
+        <value>Αίτημα έκτακτης ανάγκης</value>
+    </caseValues>
+    <caseValues>
+        <caseType>Nominative</caseType>
+        <plural>true</plural>
+        <value>Αιτήματα έκτακτης ανάγκης</value>
+    </caseValues>
+    <caseValues>
+        <caseType>Accusative</caseType>
+        <plural>false</plural>
+        <value>Αίτημα έκτακτης ανάγκης</value>
+    </caseValues>
+    <caseValues>
+        <caseType>Accusative</caseType>
+        <plural>true</plural>
+        <value>Αιτήματα έκτακτης ανάγκης</value>
+    </caseValues>
+    <caseValues>
+        <caseType>Genitive</caseType>
+        <plural>false</plural>
+        <value>Αιτήματος έκτακτης ανάγκης</value>
+    </caseValues>
+    <caseValues>
+        <caseType>Genitive</caseType>
+        <plural>true</plural>
+        <value>Αιτημάτων έκτακτης ανάγκης</value>
+    </caseValues>
+    <gender>Neuter</gender>
+    <nameFieldLabel>Αίτημα έκτακτης ανάγκης</nameFieldLabel>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

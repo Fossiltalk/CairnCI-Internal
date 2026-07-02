@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PublicSector__VolunteersRegistered__c</fullName>
+    <defaultValue>0</defaultValue>
+    <deprecated>false</deprecated>
+    <description>Number of volunteers that have registered for this volunteer project. This is an auto-calculated field.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Number of volunteers that have registered for this volunteer project. This is an auto-calculated field.</inlineHelpText>
+    <label>Volunteers Registered</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

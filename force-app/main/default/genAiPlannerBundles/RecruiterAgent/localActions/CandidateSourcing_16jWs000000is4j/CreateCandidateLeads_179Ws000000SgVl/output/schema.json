@@ -1,0 +1,45 @@
+{
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "existingLeads" : {
+      "title" : "Existing Leads",
+      "description" : "A list of existing lead records for potential candidates.",
+      "items" : {
+        "lightning:type" : "lightning__recordInfoType",
+        "lightning:sObjectInfo" : {
+          "apiName" : "Lead"
+        }
+      },
+      "lightning:type" : "lightning__listType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : false
+    },
+    "haveExistingLeadRecords" : {
+      "title" : "Have Existing Lead Records?",
+      "description" : "Indicates whether the vacancy has previously-created lead records (true) or not (false).",
+      "lightning:type" : "lightning__booleanType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true
+    },
+    "responseMessage" : {
+      "title" : "Response Message",
+      "description" : "A message that tells the user that leads were created for potential candidates.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : true,
+      "copilotAction:isUsedByPlanner" : true
+    },
+    "errorMessage" : {
+      "title" : "Error Message",
+      "description" : "A message that lets the user know why the action failed.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : true,
+      "copilotAction:isUsedByPlanner" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType",
+  "lightning:textIndexed" : true
+}

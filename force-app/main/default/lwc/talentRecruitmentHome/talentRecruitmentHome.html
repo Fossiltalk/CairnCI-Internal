@@ -1,0 +1,50 @@
+<template>
+    <lightning-card footer="" title="">
+        <h1 class="slds-text-heading_medium">{welcome_text}</h1> 
+        <div class="c-footer" >
+            <a href="/lightning/n/PSS_Learning_Home">Return to Learning Home</a>
+        </div>
+        <div class="c-container"> 
+            <lightning-layout>
+                <lightning-layout-item flexibility="auto" padding="around-small"> 
+
+                    <c-feature-child
+                        heading="Admin" 
+                        image-name="/resource/PSS_Learning_org_Icons/Admin_Icon_Square_2Color_RGB.png"
+                        url=""
+                        app-text="Set up the system to enable the Goverment Agency to engage with prospective employees and contract personnel. " 
+                        inside-link-present = {pass_true}
+                        inside-link-before-text ="Please refer to this setup"
+                        inside-link-text =" document"
+                        inside-link="https://help.salesforce.com/s/articleView?language=en_US&amp;id=sf.psc_recruitment_prerequisites.htm&amp;type=5"
+                        link-reference="standard__webPage"></c-feature-child>
+
+                    <c-feature-child
+                        heading="HR Specialists and Recruiters"  
+                        image-name="/resource/PSS_Learning_org_Icons/Compliance_Officer_Icon.png"
+                        app-text="Creates Job Position Requistions and Postings, enables evaluation of applicant and take their candidature to closure."
+                        url="/lightning/n/HR_Specialist"
+                        link-in-new-tab={pass_false}
+                        link-reference="standard__webPage"></c-feature-child>
+
+                    <c-feature-child
+                        heading="Hiring Manager" 
+                        image-name="/resource/PSS_Learning_org_Icons/Inspections_Manager_Icon.png"
+                        app-text="On experience cloud (employee community), Reviews and approves job postings, maintains assessments of applicants and provides requisite approvals."
+                        url="/lightning/n/Hiring_Manager"
+                        link-in-new-tab={pass_false}
+                        link-reference="standard__webPage"></c-feature-child>
+
+                    <c-feature-child
+                        heading="Applicant (Constituent)" 
+                        image-name="/resource/PSS_Learning_org_Icons/Inspector_Icon.png"
+                        app-text="On experience cloud (customer community), an applicant can easily search for and apply for a job role."
+                        url="/lightning/n/Talent_Applicant"
+                        link-in-new-tab={pass_false}
+                        link-reference="standard__webPage"></c-feature-child>
+
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+    </lightning-card>
+</template>

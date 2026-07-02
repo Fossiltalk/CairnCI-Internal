@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MyCatalogRequestsEmployeePortal</fullName>
+    <columns>CatalogItemName</columns>
+    <columns>CatalogItemDescription</columns>
+    <columns>Status</columns>
+    <filterScope>Mine</filterScope>
+    <label>My Catalog Requests</label>
+</ListView>

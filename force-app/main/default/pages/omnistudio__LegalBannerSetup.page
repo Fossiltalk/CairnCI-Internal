@@ -1,0 +1,171 @@
+<apex:page controller="omnistudio.LegalBannerController">
+    <apex:includeLightning />
+    <apex:slds />
+    <html xmlns:ng="http://angularjs.org" lang="en">
+        <head>
+            <meta charset="utf-8"/>
+            <apex:stylesheet value="{!URLFOR($Resource.omnistudio__slds, '/assets/styles/salesforce-lightning-design-system-vf.min.css')}"/>
+        </head>
+        <style>
+            .hide {
+                display: none !important;
+            }    
+            .show {
+                display: block;
+            }    
+        </style>
+        <script type="text/javascript">
+
+            function openModal() {
+                document.getElementById('termsAndCondition').style.display = 'block';
+                document.getElementById('backdrop').style.display = 'block';
+                document.addEventListener('keydown', closeOnEsc);
+                trapFocus(document.getElementById('termsAndCondition'));
+            }
+    
+            function closeModal() {
+                document.getElementById('termsAndCondition').style.display = 'none';
+                document.getElementById('backdrop').style.display = 'none';
+            }
+    
+            function closeOnEsc(event) {
+                if (event.key === 'Escape' || event.keyCode === 27) {
+                    closeModal();
+                }
+            }
+            function closeOnEscConfirmModal(event) {
+                if (event.key === 'Escape' || event.keyCode === 27) {
+                    closeDeclineConfirmModal();
+                }
+            }
+      
+            //Trap the focus to the top most open modal
+            function trapFocus(modal) {
+                const focusableElements = modal.querySelectorAll('button');
+                const firstElement = focusableElements[0];
+                const lastElement = focusableElements[focusableElements.length - 1];
+
+                modal.addEventListener('keydown', function(e) {
+                    if (e.key === 'Tab') {
+                        if (e.shiftKey) {
+                            // Shift+Tab
+                            if (document.activeElement === firstElement) {
+                                e.preventDefault();
+                                lastElement.focus();
+                            }
+                        } else {
+                            // Tab
+                            if (document.activeElement === lastElement) {
+                                e.preventDefault();
+                                firstElement.focus();
+                            }
+                        }
+                    }
+                });
+            // Set focus to the modal when it opens
+            firstElement.focus();
+        }
+
+        function closeServerSideNotice() {
+            closeModal();
+        }
+    
+        </script>
+            <apex:outputPanel rendered="{!isSystemAdmin}">
+                <apex:outputPanel rendered="{!isDocgenEnabled}">
+                    <div class="bPageTitle">
+                        <div class="ptBody secondaryPalette brandSecondaryBrd">
+                            <div class="content slds-grid">
+                                <span class="slds-icon_container slds-icon-standard-account slds-icon_container_circle slds-m-right_small slds-no-flex slds-align-middle"  style="padding:0;">
+                                    <svg class="slds-icon">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/standard-sprite/svg/symbols.svg#contract')}" />
+                                    </svg>
+                                </span>
+                                <div>
+                                    <h1 class="pageType" style="margin-left:0;">{!JSENCODE($Label.omnistudio__DocumentGenerationPageLabel)}</h1>
+                                    <h2 class="pageDescription" style="margin-left:0;">{!JSENCODE($Label.omnistudio__DocumentGenerationLegalAgreement)}</h2>
+                                    <h3 class="pageTitle" style="margin-left:0;margin-top:0.2rem;">{!JSENCODE($Label.omnistudio__DocumentGenerationLegalAgreementDesc)}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Table structure for Banners -->
+                    <apex:outputPanel id="bannerTable" rendered="{!isSystemAdmin}">
+                        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                            <thead>
+                                <tr style="background-color: #f4f4f4;">
+                                    <th>{!JSENCODE($Label.omnistudio__Name)}</th>
+                                    <th>{!JSENCODE($Label.omnistudio__Status)}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <a href="javascript:void(0);" onclick="openModal()">{!JSENCODE($Label.omnistudio__DocumentGenerationNotice)}</a>
+                                    </td>
+                                    <td>
+                                        <apex:outputText value="{!docgenVersion}" />
+                                    </td>  
+                                </tr>
+                            </tbody>
+                        </table>
+                    </apex:outputPanel>
+                </apex:outputPanel>    
+                <apex:outputPanel rendered="{!NOT(isDocgenEnabled)}">
+                    <div class="bPageTitle">
+                        <div class="ptBody secondaryPalette brandSecondaryBrd">
+                            <div class="slds-grid">
+                                <h2 style="margin-top:1rem;">
+                                    {!JSENCODE($Label.omnistudio__DocumentGenerationDocgenDisabledMessage)}
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                </apex:outputPanel>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!NOT(isSystemAdmin)}">
+                <div class="slds-p-top_medium slds-p-left_medium">
+                    <span style="font-weight: bold; font-size: 12pt;">{!JSENCODE($Label.omnistudio__DocumentGenerationsInsufficientPrivilegesError)}</span>
+                    <div>{!JSENCODE($Label.omnistudio__DocumentGenerationDocgenNoAccessError)}</div>
+                </div>
+            </apex:outputPanel>
+            <!-- Terms and Conditions Modal -->
+            <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-modal_medium slds-fade-in-open" id="termsAndCondition" style="display:none;z-index: 1001;">
+                <div class="slds-modal__container">
+        
+                    <!-- Modal/Popup Header -->
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick="closeModal()">
+                            <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#close')}" />
+                            </svg>
+                            <span class="slds-assistive-text">Cancel and close</span>
+                        </button>
+                        <h1 role="heading" id="modal-heading-01" class="slds-text-heading_medium">{!JSENCODE($Label.DocumentGenerationTermsAndCondition)}</h1>
+                    </header>
+        
+                    <!-- Modal/Popup Body -->
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <p>{!JSENCODE($Label.DocumentGenerationTerms)} <span><a href="https://www.salesforce.com/company/legal/trust-and-compliance-documentation/">{!JSENCODE($Label.DocumentGenerationDocumentationLink)}</a></span>
+                        </p>
+                    </div>
+        
+                    <!-- Modal/Popup Footer -->
+                    <apex:outputPanel id="termsAndConditionsModal">
+                        <div class="slds-modal__footer">
+                            <button class="slds-button slds-button_brand" onclick="closeServerSideNotice()">{!JSENCODE($Label.omnistudio__DocumentGenerationDocgenGotIt)}</button>
+                            </div>
+                    </apex:outputPanel>
+                </div>
+            </section>
+            
+        <!-- Modal Backdrop -->
+            <div class="slds-backdrop slds-backdrop_open" id="backdrop" style="display:none;z-index: 1000;"></div>
+            <div class="slds-backdrop slds-backdrop_open" id="confirmBackdrop" style="display:none;z-index: 1002"></div>
+            <apex:form id="modalForm">
+                <apex:actionFunction name="callUpdateBannerResponse" action="{!updateDocGenBannerResponse}" reRender="bannerTable,termsAndConditionsModal,toastPanel">
+                    <apex:param name="legalBannerResponse" assignTo="{!docGenBannerResponse}" value=""/>
+                </apex:actionFunction>
+            </apex:form>
+    </html>   
+</apex:page>

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OmniDataTransform xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>false</active>
+    <assignmentRulesUsed>false</assignmentRulesUsed>
+    <deletedOnSuccess>false</deletedOnSuccess>
+    <description>Creates or updates a party expense.</description>
+    <errorIgnored>false</errorIgnored>
+    <fieldLevelSecurityEnabled>false</fieldLevelSecurityEnabled>
+    <inputType>JSON</inputType>
+    <isManagedUsingStdDesigner>false</isManagedUsingStdDesigner>
+    <name>PSSUpsertPartyExpense1</name>
+    <nullInputsIncludedInOutput>false</nullInputsIncludedInOutput>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSUpsertPartyExpenseCustom7074</globalKey>
+        <inputFieldName>Type</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSUpsertPartyExpense1</name>
+        <omniDataTransformation>0kdhk0000001diC</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001diC</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Type</outputFieldName>
+        <outputObjectName>PartyExpense</outputObjectName>
+        <requiredForUpsert>true</requiredForUpsert>
+        <upsertKey>true</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSUpsertPartyExpenseCustom2618</globalKey>
+        <inputFieldName>TotalAmount</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSUpsertPartyExpense1</name>
+        <omniDataTransformation>0kdhk0000001diE</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001diE</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>TotalAmount</outputFieldName>
+        <outputObjectName>PartyExpense</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSUpsertPartyExpenseCustom5766</globalKey>
+        <inputFieldName>StartDateTime</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSUpsertPartyExpense1</name>
+        <omniDataTransformation>0kdhk0000001diD</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001diD</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>StartDateTime</outputFieldName>
+        <outputObjectName>PartyExpense</outputObjectName>
+        <requiredForUpsert>true</requiredForUpsert>
+        <upsertKey>true</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSUpsertPartyExpenseCustom8861</globalKey>
+        <inputFieldName>EndDateTime</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSUpsertPartyExpense1</name>
+        <omniDataTransformation>0kdhk0000001diG</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001diG</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>EndDateTime</outputFieldName>
+        <outputObjectName>PartyExpense</outputObjectName>
+        <requiredForUpsert>true</requiredForUpsert>
+        <upsertKey>true</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>true</disabled>
+        <filterGroup>0.0</filterGroup>
+        <filterOperator>=</filterOperator>
+        <globalKey>PSSUpsertPartyExpenseCustom6920</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <migrationValue>FAKEMAPPING</migrationValue>
+        <name>PSSUpsertPartyExpense1</name>
+        <omniDataTransformation>0kdhk0000001diF</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001diF</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Id</outputFieldName>
+        <outputObjectName>PartyExpense</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSUpsertPartyExpenseCustom7142</globalKey>
+        <inputFieldName>PartyId</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSUpsertPartyExpense1</name>
+        <omniDataTransformation>0kdhk0000001diH</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001diH</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>PartyId</outputFieldName>
+        <outputObjectName>PartyExpense</outputObjectName>
+        <requiredForUpsert>true</requiredForUpsert>
+        <upsertKey>true</upsertKey>
+    </omniDataTransformItem>
+    <outputType>SObject</outputType>
+    <previewJsonData>[ {
+  &quot;TotalAmount&quot; : &quot;500&quot;,
+  &quot;PartyId&quot; : &quot;001xx000003Ggt9AAC&quot;,
+  &quot;StartDateTime&quot; : &quot;2023-06-13T05:02:59.000Z&quot;,
+  &quot;EndDateTime&quot; : &quot;2023-06-13T05:02:59.000Z&quot;,
+  &quot;Type&quot; : &quot;Child Care&quot;
+}, {
+  &quot;TotalAmount&quot; : &quot;150&quot;,
+  &quot;PartyId&quot; : &quot;001xx000003Ggt9AAC&quot;,
+  &quot;StartDateTime&quot; : &quot;2023-06-13T05:02:59.000Z&quot;,
+  &quot;EndDateTime&quot; : &quot;2023-06-13T05:02:59.000Z&quot;,
+  &quot;Type&quot; : &quot;Garnishments&quot;
+} ]</previewJsonData>
+    <processSuperBulk>false</processSuperBulk>
+    <responseCacheTtlMinutes>0.0</responseCacheTtlMinutes>
+    <rollbackOnError>true</rollbackOnError>
+    <sourceObject>json</sourceObject>
+    <sourceObjectDefault>false</sourceObjectDefault>
+    <synchronousProcessThreshold>0.0</synchronousProcessThreshold>
+    <type>Load</type>
+    <uniqueName>PSSUpsertPartyExpense1_1</uniqueName>
+    <versionNumber>1.0</versionNumber>
+    <xmlDeclarationRemoved>false</xmlDeclarationRemoved>
+</OmniDataTransform>

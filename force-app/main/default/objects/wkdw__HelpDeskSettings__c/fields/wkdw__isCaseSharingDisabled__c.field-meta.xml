@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>wkdw__isCaseSharingDisabled__c</fullName>
+    <defaultValue>false</defaultValue>
+    <deprecated>false</deprecated>
+    <description>Disables the Case trigger</description>
+    <inlineHelpText>When selected, the Case trigger is disabled and new cases aren’t automatically shared with the associated employee</inlineHelpText>
+    <label>Case Sharing Disabled</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OmniDataTransform xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>false</active>
+    <assignmentRulesUsed>false</assignmentRulesUsed>
+    <deletedOnSuccess>false</deletedOnSuccess>
+    <description>Creates or updates a contact point address.</description>
+    <errorIgnored>false</errorIgnored>
+    <expectedInputJson>{
+  &quot;IACreationDate&quot; : &quot;2023-02-28T20:00:00.000Z&quot;,
+  &quot;AccountId&quot; : &quot;001RO000004VtybYAC&quot;,
+  &quot;AssessmentData&quot; : {
+    &quot;HouseholdMemberDetails&quot; : [ {
+      &quot;HouseholdMemberLastName&quot; : &quot;abc&quot;,
+      &quot;Race&quot; : &quot;American Indian&quot;,
+      &quot;Relationship&quot; : &quot;Self&quot;,
+      &quot;Ethnicity&quot; : &quot;Hispanic or Latino&quot;,
+      &quot;HouseholdMemberFirstName&quot; : &quot;abc&quot;,
+      &quot;DateOfBirth&quot; : &quot;2023-02-02&quot;
+    } ],
+    &quot;HeadOfHouseholdState&quot; : &quot;abc&quot;,
+    &quot;HeadOfHouseholdAddress&quot; : &quot;abc&quot;,
+    &quot;GHouseholdIncomeDetails&quot; : [ {
+      &quot;IncomeLastMonth&quot; : 1,
+      &quot;IncomeNextMonth&quot; : 1,
+      &quot;IncomeFrequency&quot; : &quot;Weekly&quot;,
+      &quot;IncomeCurrentMonth&quot; : 1,
+      &quot;GIncomeLastMonth&quot; : 1,
+      &quot;GIncomeCurrentMonth&quot; : 1,
+      &quot;GEmployer&quot; : &quot;abc&quot;,
+      &quot;GIncomeFrequency&quot; : &quot;Weekly&quot;,
+      &quot;Employer&quot; : &quot;abc&quot;,
+      &quot;GIncomeNextMonth&quot; : 1
+    } ],
+    &quot;HeadOfHouseholdZipCode&quot; : &quot;1111111&quot;,
+    &quot;HeadOfHouseholdCounty&quot; : &quot;abc&quot;,
+    &quot;HeadOfHouseholdFirstName&quot; : &quot;abc&quot;,
+    &quot;HeadOfHouseholdLastName&quot; : &quot;abc&quot;,
+    &quot;HeadOfHouseholdPhoneNumber&quot; : &quot;1111111111&quot;,
+    &quot;HeadOfHouseholdCity&quot; : &quot;abc&quot;
+  }
+}</expectedInputJson>
+    <fieldLevelSecurityEnabled>false</fieldLevelSecurityEnabled>
+    <inputType>JSON</inputType>
+    <isManagedUsingStdDesigner>false</isManagedUsingStdDesigner>
+    <name>PSSUpsertContactPointAddress1</name>
+    <nullInputsIncludedInOutput>false</nullInputsIncludedInOutput>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSUpsertContactPointAddress6167983572607887</globalKey>
+        <inputFieldName>IACreationDate</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSUpsertContactPointAddress1</name>
+        <omniDataTransformation>0kdhk0000001di3</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001di3</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>ActiveFromDate</outputFieldName>
+        <outputObjectName>ContactPointAddress</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <filterOperator>=</filterOperator>
+        <globalKey>PSSUpsertContactPointAddress5533134744071655</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <migrationValue>FAKEMAPPING</migrationValue>
+        <name>PSSUpsertContactPointAddress1</name>
+        <omniDataTransformation>0kdhk0000001di2</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001di2</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Id</outputFieldName>
+        <outputObjectName>ContactPointAddress</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSUpsertContactPointAddress6047092584488292</globalKey>
+        <inputFieldName>AccountId</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSUpsertContactPointAddress1</name>
+        <omniDataTransformation>0kdhk0000001di5</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001di5</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>ParentId</outputFieldName>
+        <outputObjectName>ContactPointAddress</outputObjectName>
+        <requiredForUpsert>true</requiredForUpsert>
+        <upsertKey>true</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSUpsertContactPointAddress43509662830845186</globalKey>
+        <inputFieldName>AssessmentData:HeadOfHouseholdCounty</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSUpsertContactPointAddress1</name>
+        <omniDataTransformation>0kdhk0000001di4</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001di4</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Country</outputFieldName>
+        <outputObjectName>ContactPointAddress</outputObjectName>
+        <requiredForUpsert>true</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <formulaConverted>| var:AssessmentData:HeadOfHouseholdFirstName &apos;/\/\/&apos; var:AssessmentData:HeadOfHouseholdLastName CONCAT</formulaConverted>
+        <formulaExpression>CONCAT(AssessmentData:HeadOfHouseholdFirstName, &apos; &apos;, AssessmentData:HeadOfHouseholdLastName)</formulaExpression>
+        <formulaResultPath>HeadOfHouseholdName</formulaResultPath>
+        <formulaSequence>1.0</formulaSequence>
+        <globalKey>PSSUpsertContactPointAddress4917451681906273</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSUpsertContactPointAddress1</name>
+        <omniDataTransformation>0kdhk0000001dhx</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dhx</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Formula</outputFieldName>
+        <outputObjectName>Formula</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSUpsertContactPointAddress3979355201467505</globalKey>
+        <inputFieldName>HeadOfHouseholdName</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSUpsertContactPointAddress1</name>
+        <omniDataTransformation>0kdhk0000001dhw</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dhw</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Name</outputFieldName>
+        <outputObjectName>ContactPointAddress</outputObjectName>
+        <requiredForUpsert>true</requiredForUpsert>
+        <transformValuesMappings>{ }</transformValuesMappings>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSUpsertContactPointAddress2460201097678405</globalKey>
+        <inputFieldName>AssessmentData:HeadOfHouseholdState</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSUpsertContactPointAddress1</name>
+        <omniDataTransformation>0kdhk0000001dhz</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dhz</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>State</outputFieldName>
+        <outputObjectName>ContactPointAddress</outputObjectName>
+        <requiredForUpsert>true</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSUpsertContactPointAddress19299499460295788</globalKey>
+        <inputFieldName>AssessmentData:HeadOfHouseholdCity</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSUpsertContactPointAddress1</name>
+        <omniDataTransformation>0kdhk0000001dhy</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dhy</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>City</outputFieldName>
+        <outputObjectName>ContactPointAddress</outputObjectName>
+        <requiredForUpsert>true</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSUpsertContactPointAddress9813816637057025</globalKey>
+        <inputFieldName>AssessmentData:HeadOfHouseholdZipCode</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSUpsertContactPointAddress1</name>
+        <omniDataTransformation>0kdhk0000001di1</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001di1</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>PostalCode</outputFieldName>
+        <outputObjectName>ContactPointAddress</outputObjectName>
+        <requiredForUpsert>true</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSUpsertContactPointAddress3022036411912301</globalKey>
+        <inputFieldName>AssessmentData:HeadOfHouseholdAddress</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSUpsertContactPointAddress1</name>
+        <omniDataTransformation>0kdhk0000001di0</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001di0</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Street</outputFieldName>
+        <outputObjectName>ContactPointAddress</outputObjectName>
+        <requiredForUpsert>true</requiredForUpsert>
+        <upsertKey>true</upsertKey>
+    </omniDataTransformItem>
+    <outputType>SObject</outputType>
+    <previewJsonData>{
+  &quot;IACreationDate&quot; : &quot;2023-02-28T20:00:00.000Z&quot;,
+  &quot;AccountId&quot; : &quot;001RO000004VtybYAC&quot;,
+  &quot;AssessmentData&quot; : {
+    &quot;HouseholdMemberDetails&quot; : [ {
+      &quot;HouseholdMemberLastName&quot; : &quot;abc&quot;,
+      &quot;Race&quot; : &quot;American Indian&quot;,
+      &quot;Relationship&quot; : &quot;Self&quot;,
+      &quot;Ethnicity&quot; : &quot;Hispanic or Latino&quot;,
+      &quot;HouseholdMemberFirstName&quot; : &quot;abc&quot;,
+      &quot;DateOfBirth&quot; : &quot;2023-02-02&quot;
+    } ],
+    &quot;HeadOfHouseholdState&quot; : &quot;abc&quot;,
+    &quot;HeadOfHouseholdAddress&quot; : &quot;abc&quot;,
+    &quot;GHouseholdIncomeDetails&quot; : [ {
+      &quot;IncomeLastMonth&quot; : 1,
+      &quot;IncomeNextMonth&quot; : 1,
+      &quot;IncomeFrequency&quot; : &quot;Weekly&quot;,
+      &quot;IncomeCurrentMonth&quot; : 1,
+      &quot;GIncomeLastMonth&quot; : 1,
+      &quot;GIncomeCurrentMonth&quot; : 1,
+      &quot;GEmployer&quot; : &quot;abc&quot;,
+      &quot;GIncomeFrequency&quot; : &quot;Weekly&quot;,
+      &quot;Employer&quot; : &quot;abc&quot;,
+      &quot;GIncomeNextMonth&quot; : 1
+    } ],
+    &quot;HeadOfHouseholdZipCode&quot; : &quot;1111111&quot;,
+    &quot;HeadOfHouseholdCounty&quot; : &quot;abc&quot;,
+    &quot;HeadOfHouseholdFirstName&quot; : &quot;abc&quot;,
+    &quot;HeadOfHouseholdLastName&quot; : &quot;abc&quot;,
+    &quot;HeadOfHouseholdPhoneNumber&quot; : &quot;1111111111&quot;,
+    &quot;HeadOfHouseholdCity&quot; : &quot;abc&quot;
+  }
+}</previewJsonData>
+    <processSuperBulk>false</processSuperBulk>
+    <responseCacheTtlMinutes>0.0</responseCacheTtlMinutes>
+    <rollbackOnError>true</rollbackOnError>
+    <sourceObject>json</sourceObject>
+    <sourceObjectDefault>false</sourceObjectDefault>
+    <synchronousProcessThreshold>0.0</synchronousProcessThreshold>
+    <type>Load</type>
+    <uniqueName>PSSUpsertContactPointAddress1_1</uniqueName>
+    <versionNumber>1.0</versionNumber>
+    <xmlDeclarationRemoved>false</xmlDeclarationRemoved>
+</OmniDataTransform>

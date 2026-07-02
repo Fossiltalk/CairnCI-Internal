@@ -1,0 +1,27 @@
+<template>
+    <lightning-card footer="" title="">
+        <h1 class="slds-text-heading_medium">{app_welcome_text}</h1> 
+
+        <div class="c-footer" >
+            <a href="/lightning/n/PSC_LPI_Learning_Home">Return to LPI Learning Home</a>
+        </div>
+        
+        <div class="c-container"> 
+            <lightning-layout>
+                <lightning-layout-item flexibility="auto" padding="around-small">
+                    <p class="c-description">{app_description}</p>
+
+                    <c-feature-child
+                        heading="Inspections App"  
+                        image-name="/resource/PSS_Learning_org_Icons/Inspections_Management.png"
+                        app-text="View Scheduled Inspections" 
+                        link-in-new-tab={pass_true}
+                        app="standard__PublicSectorInspectionManagement"
+                        link-reference="standard__appPage"></c-feature-child>
+
+                    
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+    </lightning-card>
+</template>

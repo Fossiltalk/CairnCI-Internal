@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>wkdw__OnboardingTask__c</fullName>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <deprecated>false</deprecated>
+    <description>Onboarding Task that is linked to the template</description>
+    <label>Onboarding Task</label>
+    <referenceTo>wkdw__OnboardingTask__c</referenceTo>
+    <relationshipName>Onboarding_Tasks</relationshipName>
+    <required>true</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

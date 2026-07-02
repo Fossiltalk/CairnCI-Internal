@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OmniDataTransform xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>false</active>
+    <assignmentRulesUsed>false</assignmentRulesUsed>
+    <deletedOnSuccess>false</deletedOnSuccess>
+    <description>Transform Disability Data To Unique Attributes</description>
+    <errorIgnored>false</errorIgnored>
+    <expectedInputJson>{
+  &quot;PersonDisabilityList&quot; : [ {
+    &quot;Name&quot; : &quot;PD1&quot;,
+    &quot;IndividualId&quot; : &quot;001RM000005fKAyYAM&quot;,
+    &quot;Id&quot; : &quot;0xDRM0000004C9I2AU&quot;,
+    &quot;Status&quot; : &quot;Temporary&quot;
+  }, {
+    &quot;Name&quot; : &quot;PD2&quot;,
+    &quot;IndividualId&quot; : &quot;001RM000005fTryYAE&quot;,
+    &quot;Id&quot; : &quot;0xDRM0000004C9N2AU&quot;
+  } ]
+}</expectedInputJson>
+    <expectedOutputJson>{
+  &quot;PersonDisabilityList&quot; : [ {
+    &quot;DisabilityName&quot; : &quot;PD1&quot;,
+    &quot;IndividualId&quot; : &quot;001RM000005fKAyYAM&quot;,
+    &quot;DisabilityNameId&quot; : &quot;0xDRM0000004C9I2AU&quot;,
+    &quot;DisabilityNameStatus&quot; : &quot;Temporary&quot;
+  }, {
+    &quot;DisabilityName&quot; : &quot;PD2&quot;,
+    &quot;IndividualId&quot; : &quot;001RM000005fTryYAE&quot;,
+    &quot;DisabilityId&quot; : &quot;0xDRM0000004C9N2AU&quot;,
+    &quot;DisabilityStatus&quot; : &quot;Temporary&quot;
+  } ]
+}</expectedOutputJson>
+    <fieldLevelSecurityEnabled>false</fieldLevelSecurityEnabled>
+    <inputType>JSON</inputType>
+    <isManagedUsingStdDesigner>false</isManagedUsingStdDesigner>
+    <name>TransformDisabilityDataToUniqueAttributes</name>
+    <nullInputsIncludedInOutput>false</nullInputsIncludedInOutput>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TransformDisabilityDataToUniqueAttributesCustom6456</globalKey>
+        <inputFieldName>PersonDisabilityList:Id</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TransformDisabilityDataToUniqueAttributes</name>
+        <omniDataTransformation>0kdhk0000001dim</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dim</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>AllPersonDisabilityList:DisabilityId</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TransformDisabilityDataToUniqueAttributesCustom2819</globalKey>
+        <inputFieldName>PersonDisabilityList:IndividualId</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TransformDisabilityDataToUniqueAttributes</name>
+        <omniDataTransformation>0kdhk0000001dio</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dio</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>AllPersonDisabilityList:IndividualId</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TransformDisabilityDataToUniqueAttributesCustom1675</globalKey>
+        <inputFieldName>PersonDisabilityList:Name</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TransformDisabilityDataToUniqueAttributes</name>
+        <omniDataTransformation>0kdhk0000001din</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001din</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>AllPersonDisabilityList:DisabilityName</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TransformDisabilityDataToUniqueAttributesCustom9250</globalKey>
+        <inputFieldName>PersonDisabilityList:Status</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TransformDisabilityDataToUniqueAttributes</name>
+        <omniDataTransformation>0kdhk0000001dip</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dip</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>AllPersonDisabilityList:DisabilityStatus</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <outputType>JSON</outputType>
+    <previewJsonData>{
+  &quot;PersonDisabilityList&quot; : [ {
+    &quot;Name&quot; : &quot;PD1&quot;,
+    &quot;IndividualId&quot; : &quot;001RM000005fKAyYAM&quot;,
+    &quot;Id&quot; : &quot;0xDRM0000004C9I2AU&quot;,
+    &quot;Status&quot; : &quot;Temporary&quot;
+  }, {
+    &quot;Name&quot; : &quot;PD2&quot;,
+    &quot;IndividualId&quot; : &quot;001RM000005fTryYAE&quot;,
+    &quot;Id&quot; : &quot;0xDRM0000004C9N2AU&quot;
+  } ]
+}</previewJsonData>
+    <processSuperBulk>false</processSuperBulk>
+    <responseCacheTtlMinutes>0.0</responseCacheTtlMinutes>
+    <rollbackOnError>false</rollbackOnError>
+    <sourceObject>json</sourceObject>
+    <sourceObjectDefault>false</sourceObjectDefault>
+    <synchronousProcessThreshold>0.0</synchronousProcessThreshold>
+    <type>Transform</type>
+    <uniqueName>TransformDisabilityDataToUniqueAttributes_1</uniqueName>
+    <versionNumber>1.0</versionNumber>
+    <xmlDeclarationRemoved>false</xmlDeclarationRemoved>
+</OmniDataTransform>

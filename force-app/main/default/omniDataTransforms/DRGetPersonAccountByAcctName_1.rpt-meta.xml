@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OmniDataTransform xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>false</active>
+    <assignmentRulesUsed>false</assignmentRulesUsed>
+    <deletedOnSuccess>false</deletedOnSuccess>
+    <errorIgnored>false</errorIgnored>
+    <expectedInputJson>{
+  &quot;ContextId&quot; : &quot;&quot;,
+  &quot;timeStamp&quot; : &quot;2020-å03-25T15:04:48.502Z&quot;,
+  &quot;userId&quot; : &quot;005B00000065DsSIAU&quot;,
+  &quot;userName&quot; : &quot;sazher_patch1@salesforce.com&quot;,
+  &quot;userProfile&quot; : &quot;System Administrator&quot;,
+  &quot;userTimeZone&quot; : -420,
+  &quot;userCurrencyCode&quot; : &quot;USD&quot;,
+  &quot;sfdcIFrameOrigin&quot; : &quot;https://vlocity-ins.na44.visual.stmfa.stm.force.com&quot;,
+  &quot;sfdcIFrameHost&quot; : &quot;web&quot;,
+  &quot;layout&quot; : &quot;lightning&quot;,
+  &quot;isdtp&quot; : &quot;p1&quot;,
+  &quot;id&quot; : &quot;a3KRM000000005h2AA&quot;,
+  &quot;vlcPersistentComponent&quot; : { },
+  &quot;LICENCETYPE_AND_FEES&quot; : {
+    &quot;ProfessionalDesignation&quot; : &quot;Medicine &amp; Surgery (MD)&quot;,
+    &quot;GraduateType&quot; : &quot;U.S./Canada&quot;,
+    &quot;ApplicationType&quot; : &quot;License by Examination ($805.00)&quot;,
+    &quot;Industries&quot; : &quot;Healthcare&quot;,
+    &quot;isIndustriesFilled&quot; : true,
+    &quot;BusinessActivity&quot; : &quot;ACT 1 BT1&quot;,
+    &quot;isBusinessActivityFilled&quot; : true,
+    &quot;AuthorizationCategory&quot; : &quot;License&quot;,
+    &quot;AuthorizationType&quot; : &quot;RAT 1&quot;,
+    &quot;AssociatedPersonAccount&quot; : &quot;ACT - 1&quot;
+  },
+  &quot;SampleUser&quot; : &quot;005RM0000025atnYAA&quot;,
+  &quot;APPLICANT_INFORMATION&quot; : {
+    &quot;AssociatedPersonAccount&quot; : &quot;ACT - 1&quot;
+  },
+  &quot;ApplicationStatus&quot; : &quot;Submitted&quot;,
+  &quot;ContactId&quot; : &quot;003RM000006GmF9YAK&quot;,
+  &quot;ContactName&quot; : &quot;Dieggo John&quot;,
+  &quot;vlcKnowledge&quot; : {
+    &quot;knowledgeItems&quot; : [ ]
+  },
+  &quot;error&quot; : &quot;OK&quot;
+}</expectedInputJson>
+    <fieldLevelSecurityEnabled>false</fieldLevelSecurityEnabled>
+    <inputType>JSON</inputType>
+    <isManagedUsingStdDesigner>false</isManagedUsingStdDesigner>
+    <name>DRGetPersonAccountByAcctName</name>
+    <nullInputsIncludedInOutput>false</nullInputsIncludedInOutput>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>d397b7c2-897b-4014-a260-3a1e43f46f7f</globalKey>
+        <inputFieldName>PersonAccount:Name</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRGetPersonAccountByAcctName</name>
+        <omniDataTransformation>0kdhk0000001djT</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001djT</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldFormat>String</outputFieldFormat>
+        <outputFieldName>PersonAccountName</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <transformValuesMappings>{ }</transformValuesMappings>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <filterOperator>=</filterOperator>
+        <filterValue>PersonAccountName</filterValue>
+        <globalKey>826443e1-801b-4bd6-81a1-7fbcd5d8bb7c</globalKey>
+        <inputFieldName>Name</inputFieldName>
+        <inputObjectName>Account</inputObjectName>
+        <inputObjectQuerySequence>1.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRGetPersonAccountByAcctName</name>
+        <omniDataTransformation>0kdhk0000001djS</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001djS</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>PersonAccount</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>bf0f0582-c8e8-4fbc-981e-b5eca6fa88c4</globalKey>
+        <inputFieldName>PersonAccount:Type</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRGetPersonAccountByAcctName</name>
+        <omniDataTransformation>0kdhk0000001djV</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001djV</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldFormat>String</outputFieldFormat>
+        <outputFieldName>PersonAccountType</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>cada833e-8a43-41a6-9af7-473a3c8b6ae7</globalKey>
+        <inputFieldName>PersonAccount:Phone</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRGetPersonAccountByAcctName</name>
+        <omniDataTransformation>0kdhk0000001djU</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001djU</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldFormat>String</outputFieldFormat>
+        <outputFieldName>PersonAccountPhone</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>72046f0a-71ba-454d-a170-84378bb21af6</globalKey>
+        <inputFieldName>PersonAccount:Id</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRGetPersonAccountByAcctName</name>
+        <omniDataTransformation>0kdhk0000001djW</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001djW</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldFormat>String</outputFieldFormat>
+        <outputFieldName>PersonAccountId</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <outputType>JSON</outputType>
+    <previewJsonData>{
+  &quot;PersonAccountName&quot; : &quot;ACT - 1&quot;
+}</previewJsonData>
+    <processSuperBulk>false</processSuperBulk>
+    <responseCacheTtlMinutes>0.0</responseCacheTtlMinutes>
+    <rollbackOnError>false</rollbackOnError>
+    <sourceObject>json</sourceObject>
+    <sourceObjectDefault>false</sourceObjectDefault>
+    <synchronousProcessThreshold>-1.0</synchronousProcessThreshold>
+    <type>Extract</type>
+    <uniqueName>DRGetPersonAccountByAcctName_1</uniqueName>
+    <versionNumber>1.0</versionNumber>
+    <xmlDeclarationRemoved>false</xmlDeclarationRemoved>
+</OmniDataTransform>

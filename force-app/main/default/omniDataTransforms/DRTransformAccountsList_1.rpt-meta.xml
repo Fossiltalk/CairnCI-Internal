@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OmniDataTransform xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>false</active>
+    <assignmentRulesUsed>false</assignmentRulesUsed>
+    <deletedOnSuccess>false</deletedOnSuccess>
+    <errorIgnored>false</errorIgnored>
+    <expectedInputJson>{
+  &quot;actList&quot; : [ {
+    &quot;BusinessTypeName&quot; : &quot;BT1&quot;,
+    &quot;Zipcode&quot; : &quot;77095&quot;,
+    &quot;State&quot; : &quot;TX&quot;,
+    &quot;Street&quot; : &quot;7034 Highway 6 North&quot;,
+    &quot;IsPersonAccount&quot; : true,
+    &quot;City&quot; : &quot;Houston&quot;,
+    &quot;AccountId&quot; : &quot;001RM000004fmGNYAY&quot;,
+    &quot;AccountName&quot; : &quot;Sarah Silvery&quot;,
+    &quot;BusinessOperatingName&quot; : &quot;Sarah Operating Name&quot;
+  }, {
+    &quot;BusinessTypeName&quot; : &quot;BT1&quot;,
+    &quot;Country&quot; : &quot;United Kingdom&quot;,
+    &quot;Zipcode&quot; : &quot;EC2N 4AY&quot;,
+    &quot;Street&quot; : &quot;Heron Tower\n110 Bishopsgate&quot;,
+    &quot;IsPersonAccount&quot; : true,
+    &quot;City&quot; : &quot;London&quot;,
+    &quot;AccountId&quot; : &quot;001RM000004fmGIYAY&quot;,
+    &quot;AccountName&quot; : &quot;Sarah Jones&quot;,
+    &quot;BusinessOperatingName&quot; : &quot;Sarah Operating Name&quot;
+  } ]
+}</expectedInputJson>
+    <fieldLevelSecurityEnabled>false</fieldLevelSecurityEnabled>
+    <inputType>JSON</inputType>
+    <isManagedUsingStdDesigner>false</isManagedUsingStdDesigner>
+    <name>DRTransformAccountsList</name>
+    <nullInputsIncludedInOutput>false</nullInputsIncludedInOutput>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>9a0177b9-d204-41d2-9c70-18a74e0de81b</globalKey>
+        <inputFieldName>actList:State</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRTransformAccountsList</name>
+        <omniDataTransformation>0kdhk0000001dkm</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dkm</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>State</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>5e3d8e12-f693-4571-8df0-dcca6cc1204b</globalKey>
+        <inputFieldName>actList:Country</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRTransformAccountsList</name>
+        <omniDataTransformation>0kdhk0000001dkl</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dkl</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Country</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>7cf55978-ef1d-4902-b64d-c504703e5aaf</globalKey>
+        <inputFieldName>actList:Zipcode</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRTransformAccountsList</name>
+        <omniDataTransformation>0kdhk0000001dko</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dko</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Zipcode</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>045aae07-f012-4f19-b630-2b9454acc93d</globalKey>
+        <inputFieldName>actList:Street</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRTransformAccountsList</name>
+        <omniDataTransformation>0kdhk0000001dkn</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dkn</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Street</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>77f2e416-a691-4d48-b083-78d171ed751b</globalKey>
+        <inputFieldName>actList:Website</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRTransformAccountsList</name>
+        <omniDataTransformation>0kdhk0000001dkp</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dkp</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Website</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>89bfb98c-0e40-4b28-ad56-b21785e64e17</globalKey>
+        <inputFieldName>Address</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRTransformAccountsList</name>
+        <omniDataTransformation>0kdhk0000001dke</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dke</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldFormat>String</outputFieldFormat>
+        <outputFieldName>Address</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <formulaConverted>var:actList:Street</formulaConverted>
+        <formulaExpression>actList:Street</formulaExpression>
+        <formulaResultPath>Address</formulaResultPath>
+        <formulaSequence>1.0</formulaSequence>
+        <globalKey>cbe163ce-ee35-4e51-bf58-dc7c6ff05715</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRTransformAccountsList</name>
+        <omniDataTransformation>0kdhk0000001dkd</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dkd</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Formula</outputFieldName>
+        <outputObjectName>Formula</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>f385a424-55c7-4c8c-bf28-a08ddc8d17df</globalKey>
+        <inputFieldName>actList:AccountName</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRTransformAccountsList</name>
+        <omniDataTransformation>0kdhk0000001dkg</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dkg</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>AccountName</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>5a652c92-8092-4fd7-9fa1-6e65573ef43e</globalKey>
+        <inputFieldName>actList:AccountId</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRTransformAccountsList</name>
+        <omniDataTransformation>0kdhk0000001dkf</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dkf</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>AccountId</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>76d71750-d332-44db-bdb7-0d13cd3ed2b8</globalKey>
+        <inputFieldName>actList:BusinessTypeName</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRTransformAccountsList</name>
+        <omniDataTransformation>0kdhk0000001dki</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dki</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>BusinessTypeName</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>fb851b75-3cd8-44db-81fe-b9ea2ecf0ac2</globalKey>
+        <inputFieldName>actList:BusinessOperatingName</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRTransformAccountsList</name>
+        <omniDataTransformation>0kdhk0000001dkh</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dkh</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>BusinessOperatingName</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>3c0f8edf-85d4-498d-9798-1474c2d4af92</globalKey>
+        <inputFieldName>actList:City</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRTransformAccountsList</name>
+        <omniDataTransformation>0kdhk0000001dkk</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dkk</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>City</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>e473507a-70b6-48bb-b3ae-35679b120069</globalKey>
+        <inputFieldName>actList:IsPersonAccount</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRTransformAccountsList</name>
+        <omniDataTransformation>0kdhk0000001dkj</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dkj</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>IsPersonAccount</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <outputType>JSON</outputType>
+    <previewJsonData>{
+  &quot;accountList&quot; : [ {
+    &quot;BusinessTypeName&quot; : &quot;BT1&quot;,
+    &quot;Country&quot; : &quot;United Kingdom&quot;,
+    &quot;Zipcode&quot; : &quot;EC2N 4AY&quot;,
+    &quot;Street&quot; : &quot;Heron Tower\n110 Bishopsgate&quot;,
+    &quot;AccountName&quot; : &quot;Sarah Jones&quot;,
+    &quot;IsPersonAccount&quot; : true,
+    &quot;AccountId&quot; : &quot;001RM000004fmGIYAY&quot;,
+    &quot;City&quot; : &quot;London&quot;,
+    &quot;BusinessOperatingName&quot; : &quot;Sarah Operating Name&quot;
+  }, {
+    &quot;BusinessTypeName&quot; : &quot;BT1&quot;,
+    &quot;Zipcode&quot; : &quot;77095&quot;,
+    &quot;State&quot; : &quot;TX&quot;,
+    &quot;Street&quot; : &quot;7034 Highway 6 North&quot;,
+    &quot;AccountName&quot; : &quot;Sarah Silvery&quot;,
+    &quot;IsPersonAccount&quot; : true,
+    &quot;AccountId&quot; : &quot;001RM000004fmGNYAY&quot;,
+    &quot;City&quot; : &quot;Houston&quot;,
+    &quot;BusinessOperatingName&quot; : &quot;Sarah Operating Name&quot;
+  } ]
+}</previewJsonData>
+    <processSuperBulk>false</processSuperBulk>
+    <responseCacheTtlMinutes>0.0</responseCacheTtlMinutes>
+    <rollbackOnError>false</rollbackOnError>
+    <sourceObject>json</sourceObject>
+    <sourceObjectDefault>false</sourceObjectDefault>
+    <synchronousProcessThreshold>-1.0</synchronousProcessThreshold>
+    <type>Transform</type>
+    <uniqueName>DRTransformAccountsList_1</uniqueName>
+    <versionNumber>1.0</versionNumber>
+    <xmlDeclarationRemoved>false</xmlDeclarationRemoved>
+</OmniDataTransform>

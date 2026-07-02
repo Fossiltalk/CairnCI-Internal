@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <article>Definite</article>
+        <plural>false</plural>
+        <value>קישור המאמר לזרימה</value>
+    </caseValues>
+    <caseValues>
+        <article>None</article>
+        <plural>false</plural>
+        <value>קישור מאמר לזרימה</value>
+    </caseValues>
+    <caseValues>
+        <article>Definite</article>
+        <plural>true</plural>
+        <value>קישורי המאמרים לזרימה</value>
+    </caseValues>
+    <caseValues>
+        <article>None</article>
+        <plural>true</plural>
+        <value>קישורי מאמרים לזרימה</value>
+    </caseValues>
+    <gender>Masculine</gender>
+    <nameFieldLabel>שם קישור מאמר לזרימה</nameFieldLabel>
+</CustomObjectTranslation>

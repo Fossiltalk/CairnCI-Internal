@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OmniDataTransform xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>false</active>
+    <assignmentRulesUsed>false</assignmentRulesUsed>
+    <deletedOnSuccess>false</deletedOnSuccess>
+    <description>Update BirthDates</description>
+    <errorIgnored>false</errorIgnored>
+    <expectedInputJson>{
+  &quot;AccountId&quot; : &quot;001xx000003GZuOAAW&quot;,
+  &quot;Birthdate&quot; : &quot;2000-01-01&quot;
+}</expectedInputJson>
+    <fieldLevelSecurityEnabled>false</fieldLevelSecurityEnabled>
+    <inputType>JSON</inputType>
+    <isManagedUsingStdDesigner>false</isManagedUsingStdDesigner>
+    <name>PSSCOCExpUpdateBirthDates</name>
+    <nullInputsIncludedInOutput>false</nullInputsIncludedInOutput>
+    <omniDataTransformItem>
+        <disabled>true</disabled>
+        <filterGroup>0.0</filterGroup>
+        <filterOperator>=</filterOperator>
+        <globalKey>PSSCOCExpUpdateBirthDatesCustom1682</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <migrationValue>FAKEMAPPING</migrationValue>
+        <name>PSSCOCExpUpdateBirthDates</name>
+        <omniDataTransformation>0kdhk0000001dSI</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dSI</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Id</outputFieldName>
+        <outputObjectName>Account</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCOCExpUpdateBirthDatesCustom2829</globalKey>
+        <inputFieldName>AccountId</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCOCExpUpdateBirthDates</name>
+        <omniDataTransformation>0kdhk0000001dSH</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dSH</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Id</outputFieldName>
+        <outputObjectName>Account</outputObjectName>
+        <requiredForUpsert>true</requiredForUpsert>
+        <upsertKey>true</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCOCExpUpdateBirthDatesCustom3263</globalKey>
+        <inputFieldName>Birthdate</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCOCExpUpdateBirthDates</name>
+        <omniDataTransformation>0kdhk0000001dSJ</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dSJ</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>PersonBirthdate</outputFieldName>
+        <outputObjectName>Account</outputObjectName>
+        <requiredForUpsert>true</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <outputType>SObject</outputType>
+    <previewJsonData>{
+  &quot;FinalListMerge&quot; : [ {
+    &quot;IsDisable&quot; : &quot;Yes&quot;,
+    &quot;DisabilityName&quot; : &quot;Blind&quot;,
+    &quot;HighestEducationLevel&quot; : &quot;Graduate&quot;,
+    &quot;Id&quot; : &quot;0xDxx0000000001EAA&quot;,
+    &quot;LastName&quot; : &quot;Baker&quot;,
+    &quot;PersonGenderIdentity&quot; : &quot;F&quot;,
+    &quot;Relationship&quot; : &quot;Spouse&quot;,
+    &quot;Race&quot; : &quot;Asian&quot;,
+    &quot;HouseholdMemberName&quot; : &quot;Sam Baker&quot;,
+    &quot;Ethnicity&quot; : &quot;Hispanic or Latino&quot;,
+    &quot;Birthdate&quot; : &quot;2021-01-01&quot;,
+    &quot;ContactId&quot; : &quot;003xx000004WhHQAA0&quot;,
+    &quot;PersonAge&quot; : 3,
+    &quot;FirstName&quot; : &quot;Sam&quot;,
+    &quot;BirthPlace&quot; : &quot;India&quot;,
+    &quot;AccountId&quot; : &quot;001xx000003GZuOAAW&quot;,
+    &quot;PrimaryCitizenshipType&quot; : &quot;Yes&quot;
+  }, {
+    &quot;IsDisable&quot; : &quot;No&quot;,
+    &quot;HighestEducationLevel&quot; : &quot;Graduate&quot;,
+    &quot;LastName&quot; : &quot;Baker&quot;,
+    &quot;PersonGenderIdentity&quot; : &quot;F&quot;,
+    &quot;Relationship&quot; : &quot;Spouse&quot;,
+    &quot;Race&quot; : &quot;Asian&quot;,
+    &quot;HouseholdMemberName&quot; : &quot;Perry Baker&quot;,
+    &quot;Ethnicity&quot; : &quot;Hispanic or Latino&quot;,
+    &quot;Birthdate&quot; : &quot;2021-01-01&quot;,
+    &quot;ContactId&quot; : &quot;003xx000004WhHRAA0&quot;,
+    &quot;PersonAge&quot; : 3,
+    &quot;FirstName&quot; : &quot;Perry&quot;,
+    &quot;BirthPlace&quot; : &quot;India&quot;,
+    &quot;AccountId&quot; : &quot;001xx000003GZuPAAW&quot;,
+    &quot;PrimaryCitizenshipType&quot; : &quot;Yes&quot;
+  } ]
+}</previewJsonData>
+    <processSuperBulk>false</processSuperBulk>
+    <responseCacheTtlMinutes>0.0</responseCacheTtlMinutes>
+    <rollbackOnError>false</rollbackOnError>
+    <sourceObject>json</sourceObject>
+    <sourceObjectDefault>false</sourceObjectDefault>
+    <synchronousProcessThreshold>0.0</synchronousProcessThreshold>
+    <type>Load</type>
+    <uniqueName>PSSCOCExpUpdateBirthDates_1</uniqueName>
+    <versionNumber>1.0</versionNumber>
+    <xmlDeclarationRemoved>false</xmlDeclarationRemoved>
+</OmniDataTransform>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OmniDataTransform xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>false</active>
+    <assignmentRulesUsed>false</assignmentRulesUsed>
+    <deletedOnSuccess>false</deletedOnSuccess>
+    <errorIgnored>false</errorIgnored>
+    <expectedInputJson>{
+  &quot;ContextId&quot; : &quot;&quot;,
+  &quot;timeStamp&quot; : &quot;2020-03-19T12:36:31.671Z&quot;,
+  &quot;userId&quot; : &quot;005B0000005gGB9IAM&quot;,
+  &quot;userName&quot; : &quot;lpi_226stmfa@lpi.org&quot;,
+  &quot;userProfile&quot; : &quot;System Administrator&quot;,
+  &quot;userTimeZone&quot; : -420,
+  &quot;userCurrencyCode&quot; : &quot;USD&quot;,
+  &quot;sfdcIFrameOrigin&quot; : &quot;https://vlocity-ins.na44.visual.stmfa.stm.force.com&quot;,
+  &quot;sfdcIFrameHost&quot; : &quot;web&quot;,
+  &quot;layout&quot; : &quot;lightning&quot;,
+  &quot;isdtp&quot; : &quot;p1&quot;,
+  &quot;id&quot; : &quot;a80RM000000004JYAQ&quot;,
+  &quot;vlcPersistentComponent&quot; : { },
+  &quot;ApplicationInformation&quot; : {
+    &quot;AssociatedAccount&quot; : &quot;Act1&quot;,
+    &quot;Industries&quot; : &quot;Healthcare&quot;,
+    &quot;isIndustriesFilled&quot; : true,
+    &quot;BusinessActivity&quot; : &quot;Act 1 BT&quot;,
+    &quot;isBusinessActivityFilled&quot; : true,
+    &quot;AuthorizationCategory&quot; : &quot;License&quot;,
+    &quot;AuthorizationType&quot; : &quot;RAT 1&quot;,
+    &quot;ApplicationCategory&quot; : &quot;Basic&quot;,
+    &quot;BusinessActivityId&quot; : &quot;2gFRM0000004C9I2AU&quot;,
+    &quot;AuthorizationTypeId&quot; : &quot;0ehRM0000004C9DYAU&quot;,
+    &quot;AssociatedAccountId&quot; : &quot;001RM000004dRr6YAE&quot;,
+    &quot;exprShowMinnesotaSalonLicenceApplication&quot; : true
+  },
+  &quot;EstablishmentInformation&quot; : {
+    &quot;BusinessLegalName&quot; : &quot;Act1&quot;,
+    &quot;BusinessDBAName&quot; : null,
+    &quot;TaxID&quot; : null,
+    &quot;ContactName&quot; : &quot;Act1 Contact&quot;,
+    &quot;ContactEmail&quot; : null,
+    &quot;Street&quot; : null,
+    &quot;City&quot; : null,
+    &quot;State&quot; : null,
+    &quot;Zipcode&quot; : null,
+    &quot;Neighborhood&quot; : null,
+    &quot;Address&quot; : &quot;Street -:  null City -: null State -: null Zipcode -: undefined&quot;
+  },
+  &quot;SalonInformation&quot; : {
+    &quot;SalonStartDate&quot; : null,
+    &quot;SalonInAResidence&quot; : null,
+    &quot;BusinessLocation&quot; : null,
+    &quot;BusinessType&quot; : null
+  },
+  &quot;ReasonForNewLicenseApplication&quot; : {
+    &quot;SelectReasonforNewLicenseApplication&quot; : null,
+    &quot;SalonPrevLic&quot; : null,
+    &quot;SalonRelocPrevAddr&quot; : null,
+    &quot;SalonPrevOwner&quot; : null,
+    &quot;PreviousExpirationDate&quot; : null
+  },
+  &quot;Certification&quot; : {
+    &quot;CertificationText&quot; : false,
+    &quot;Signature&quot; : null
+  },
+  &quot;SampleUser&quot; : &quot;005RM0000024wK9YAI&quot;,
+  &quot;ApplicationStatus&quot; : &quot;Submitted&quot;,
+  &quot;ContactId&quot; : &quot;003RM000006GHdyYAG&quot;,
+  &quot;OwnershipInformation&quot; : {
+    &quot;PurchaseOrTakeOver&quot; : null,
+    &quot;PriorEstablishmentDetails&quot; : null,
+    &quot;OwnershipType&quot; : null,
+    &quot;IndividualOwnership&quot; : null,
+    &quot;CorporationOrLLCOwnership&quot; : null,
+    &quot;PartnershipOwnership&quot; : null
+  },
+  &quot;DRId_PreliminaryApplicationRef__c&quot; : &quot;aAmRM00000000650AA&quot;,
+  &quot;sInstanceId&quot; : &quot;a7zRM000000008uYAA&quot;,
+  &quot;CreatedPreliminaryApplicationRefId&quot; : &quot;aAmRM00000000650AA&quot;
+}</expectedInputJson>
+    <fieldLevelSecurityEnabled>false</fieldLevelSecurityEnabled>
+    <inputType>JSON</inputType>
+    <isManagedUsingStdDesigner>false</isManagedUsingStdDesigner>
+    <name>UpdatePremAppRefCustom</name>
+    <nullInputsIncludedInOutput>false</nullInputsIncludedInOutput>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>0f3ab4e1-8b73-4015-a7eb-b405b3bf004e</globalKey>
+        <inputFieldName>savedApplicationUrl</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>UpdatePremAppRefCustom</name>
+        <omniDataTransformation>0kdhk0000001dkK</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dkK</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldFormat>String</outputFieldFormat>
+        <outputFieldName>SavedApplicationUrl__c</outputFieldName>
+        <outputObjectName>PreliminaryApplicationRef__c</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <formulaConverted>&quot;/resume-application-ps?OmniScriptInstanceId=&quot; var:sInstanceId +</formulaConverted>
+        <formulaExpression>&quot;/resume-application-ps?OmniScriptInstanceId=&quot;+sInstanceId</formulaExpression>
+        <formulaResultPath>savedApplicationUrl</formulaResultPath>
+        <formulaSequence>1.0</formulaSequence>
+        <globalKey>e4b54784-da8c-45bc-87ae-f79cd95c6d83</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>UpdatePremAppRefCustom</name>
+        <omniDataTransformation>0kdhk0000001dkM</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dkM</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Formula</outputFieldName>
+        <outputObjectName>Formula</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>true</disabled>
+        <filterGroup>0.0</filterGroup>
+        <filterOperator>=</filterOperator>
+        <globalKey>1aa8b770-3d49-4167-9cc2-eb420449fc05</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <migrationValue>FAKEMAPPING</migrationValue>
+        <name>UpdatePremAppRefCustom</name>
+        <omniDataTransformation>0kdhk0000001dkL</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dkL</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Id</outputFieldName>
+        <outputObjectName>PreliminaryApplicationRef__c</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>ba84cf98-a098-4920-a3f5-18d439258983</globalKey>
+        <inputFieldName>CreatedPreliminaryApplicationRefId</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>UpdatePremAppRefCustom</name>
+        <omniDataTransformation>0kdhk0000001dkN</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dkN</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldFormat>String</outputFieldFormat>
+        <outputFieldName>Id</outputFieldName>
+        <outputObjectName>PreliminaryApplicationRef__c</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <outputType>SObject</outputType>
+    <processSuperBulk>false</processSuperBulk>
+    <responseCacheTtlMinutes>0.0</responseCacheTtlMinutes>
+    <rollbackOnError>false</rollbackOnError>
+    <sourceObject>json</sourceObject>
+    <sourceObjectDefault>false</sourceObjectDefault>
+    <synchronousProcessThreshold>-1.0</synchronousProcessThreshold>
+    <type>Load</type>
+    <uniqueName>UpdatePremAppRefCustom_1</uniqueName>
+    <versionNumber>1.0</versionNumber>
+    <xmlDeclarationRemoved>false</xmlDeclarationRemoved>
+</OmniDataTransform>

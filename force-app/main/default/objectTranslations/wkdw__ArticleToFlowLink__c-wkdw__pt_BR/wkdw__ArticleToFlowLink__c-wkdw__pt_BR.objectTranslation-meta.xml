@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Link de artigo para fluxo</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Links de artigo para fluxo</value>
+    </caseValues>
+    <gender>Masculine</gender>
+    <nameFieldLabel>Nome do link de artigo para fluxo</nameFieldLabel>
+</CustomObjectTranslation>

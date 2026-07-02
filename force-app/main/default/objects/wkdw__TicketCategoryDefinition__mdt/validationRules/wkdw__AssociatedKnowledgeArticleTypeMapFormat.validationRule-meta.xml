@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>wkdw__AssociatedKnowledgeArticleTypeMapFormat</fullName>
+    <active>true</active>
+    <description>Enter comma-separated knowledge article record types.</description>
+    <errorConditionFormula>AND(
+!ISBLANK(wkdw__AssociatedKnowledgeArticleTypeMapping__c),
+OR
+            ( 
+!REGEX(wkdw__AssociatedKnowledgeArticleTypeMapping__c, &quot;^(?!_)([a-zA-Z0-9_]+,( ){0,2})*[a-zA-Z0-9_]+$&quot;)
+        ))</errorConditionFormula>
+    <errorDisplayField>wkdw__AssociatedKnowledgeArticleTypeMapping__c</errorDisplayField>
+    <errorMessage>We couldn&apos;t find knowledge article record types that match your values. Enter the names exactly.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,165 @@
+<apex:page showHeader="true" sidebar="false"
+            standardStylesheets="false"
+            docType="html-5.0" applyBodyTag="false"
+            controller="omnistudio.DRDataPackRunnerController"
+            extensions="omnistudio.DRMapperControllerFoundation"
+            lightningStylesheets="true"
+            tabStyle="DataRaptor__tab"
+            title="Data Mapper Designer Home"
+            action="{!checkIfThisIsFirstInstalledPackage}">
+
+  <head>
+      <apex:includeScript value="{!$Resource.omnistudio__angular_bundle_1_6}"/>
+      <apex:includeScript value="{!URLFOR($Resource.omnistudio__vlocity_assets, '/bower_components/ng-table/dist/ng-table.js')}"/>
+      <apex:includeScript value="{!URLFOR($Resource.omnistudio__ngInfiniteScroll, '/build/ng-infinite-scroll.min.js')}"/>
+      <apex:stylesheet value="{!IF(isLanguageRTL, URLFOR($Resource.omnistudio__slds, '/assets/styles/salesforce-lightning-design-system-vf.rtl.min.css'), URLFOR($Resource.omnistudio__slds, '/assets/styles/salesforce-lightning-design-system-vf.min.css'))}"/>
+      <apex:includeScript value="{!$Resource.omnistudio__SldsAngular}"/>
+      <apex:includeScript value="{!$Resource.omnistudio__DRVComp}"/>
+      <apex:includeScript value="{!$Resource.omnistudio__DRHome}"/>
+      <apex:includeScript value="/support/console/42.0/integration.js"/>
+      <script type="text/javascript">
+          if({!isCoreDesigner}) {
+            window.open(`/lightning/o/OmniDataMapperView/list`, "_parent");
+          }
+          window.industryPkgNSPrefix = '{!industryPkgNSPrefix}';
+          window.isFoundationPackage = {!isFoundation};
+          window.isOmniStudioHybridEnabled = {!isOmniStudioHybridEnabled};
+          window.DRNewUrl = "{!newUrl}";
+      </script>
+  </head>
+  <style>
+    html.Theme4d body,
+    html.Theme4u body {
+      margin: 0;
+    }
+    html:not(.Theme3) body.sfdcBody {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+    .bodyDiv .noSidebarCell{
+      padding: 0;
+    }
+  </style>
+  <script>
+    (function() {
+      document.documentElement.classList.add('{!$User.UIThemeDisplayed}');
+    })();
+  </script>
+  <body xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <div ng-app="drhome" class="via-slds ng-cloak {!$User.UIThemeDisplayed}" ng-controller="drhome">
+      <!--{!$ObjectType.OmniDataTransform.Name} will be automatically fixed by Make on deploy-->
+      <slds-home
+                page-title="'Data Mapper'"
+                new-url="'{!newUrl}'"
+                view-url="'{!newUrl}?id={Id}'"
+                group-by="groupBy"
+                min-height="'300px'"
+                id-prefix="drbundle-home"
+                s-object-type="'{!drBundleObjType}'"
+                row-actions="rowActions"
+                default-columns="defaultColumns"
+                extra-filters="extraFilters"
+                load-file-based-data-raptors="{!isFoundation}">
+      </slds-home>
+    </div>
+    <c:VFActionFunction />
+    <!-- New Data Mapper LWC modal: hybrid pref AND OmniStudio (bOmniStudio / same as isFoundation on this controller) -->
+    <apex:outputPanel rendered="{!isOmniStudioHybridEnabled && isFoundation}">
+        <apex:includeLightning />
+        <div class="via-slds" id="custom-slds-home-new-modal" style="display: none">
+            <div id="lightning" />
+        </div>
+        <script>
+            var ns = "{!namespacePrefix}".replace('__', '');
+            $Lightning.use(ns + ':ltngOutVF', function () {
+                creatNewDRForm();
+            });
+
+            function creatNewDRForm() {
+                $Lightning.createComponent(ns + ':omniDesignerNewDataRaptorForm',
+                    {
+                        isNavigationApiUnsupported: true
+                    },
+                    "lightning",
+                    function (cmp, status) {
+                        if (status === "SUCCESS") {
+                            var newform = document.getElementById('lightning');
+                            newform.addEventListener('drnewnavigate', function (event) {
+                                vlocityOpenUrl(window.DRNewUrl + '?id=' + event.detail.recordId, null, false);
+                                event.stopPropagation();
+                                event.preventDefault();
+                            });
+                            newform.addEventListener('close', function (event) {
+                                cmp.destroy();
+                                Promise.resolve().then(function () {
+                                    var modalWrapper = document.getElementById('custom-slds-home-new-modal');
+                                    modalWrapper.style.display = 'none';
+                                    var newLightningEl = document.createElement('div');
+                                    newLightningEl.id = 'lightning';
+                                    modalWrapper.innerHTML = null;
+                                    modalWrapper.appendChild(newLightningEl);
+                                    creatNewDRForm();
+                                });
+                            });
+                            if (document.querySelector("#auraErrorMessage")) {
+                                document.querySelector("#auraErrorMessage").innerHTML = "";
+                            }
+                        }
+                    }
+                );
+            }
+        </script>
+    </apex:outputPanel>
+  <script>
+       angular.module('DRHome.core', [])
+           .value('IsFoundation', {!JSENCODE(IF(isFoundation, "true", "false"))})
+           .value('DRBundleFieldMappingsNamespace', JSON.parse('{!JSENCODE(drBundleFieldMappingsNamespace)}'));
+  </script>
+  <script>
+      window.i18n = {
+        "SldsObjectHomeHeaderInfo": "{!JSENCODE($Label.omnistudio__SldsObjectHomeHeaderInfo)}",
+        "RefreshData": "{!JSENCODE($Label.omnistudio__RefreshData)}",
+        "Export": "{!JSENCODE($Label.omnistudio__Export)}",
+        "New": "{!JSENCODE($Label.omnistudio__New)}",
+        "FilterList": "{!JSENCODE($Label.omnistudio__FilterList)}",
+        "Import": "{!JSENCODE($Label.omnistudio__Import)}",
+        "AdditionalActions": "{!JSENCODE($Label.omnistudio__AdditionalActions)}",
+        "Delete": "{!JSENCODE($Label.omnistudio__Delete)}",
+        "Preview": "{!JSENCODE($Label.omnistudio__Preview)}",
+        "LastModified": "{!JSENCODE($Label.omnistudio__LastModified)}",
+        "Name": "{!JSENCODE($Label.omnistudio__Name)}",
+        "ModifiedOnBy": "{!JSENCODE($Label.omnistudio__ModifiedOnBy)}",
+        "DeleteDataRaptor": "{!JSENCODE($Label.omnistudio__DeleteDataRaptor)}",
+        "InstallDataPack": "{!JSENCODE($Label.omnistudio__InstallDataPack)}",
+        "DeleteDataraptorConfirmation2": "{!JSENCODE($Label.omnistudio__DeleteDataraptorConfirmation2)}",
+        "Filters":"{!JSENCODE($Label.omnistudio__Filters)}",
+        "HideFilter":"{!JSENCODE($Label.omnistudio__HideFilter)}",
+        "Cancel":"{!JSENCODE($Label.omnistudio__Cancel)}",
+        "Save":"{!JSENCODE($Label.omnistudio__Save)}",
+        "ShowMe":"{!JSENCODE($Label.omnistudio__ShowMe)}",
+        "MatchingAllOfTheseFilters":"{!JSENCODE($Label.omnistudio__MatchingAllOfTheseFilters)}",
+        "Remove":"{!JSENCODE($Label.omnistudio__Remove)}",
+        "NewFilter":"{!JSENCODE($Label.omnistudio__NewFilter)}",
+        "AddFilter":"{!JSENCODE($Label.omnistudio__AddFilter)}",
+        "RemoveAll":"{!JSENCODE($Label.omnistudio__RemoveAll)}",
+        "Field":"{!JSENCODE($Label.omnistudio__Field)}",
+        "Operator":"{!JSENCODE($Label.omnistudio__Operator)}",
+        "Value":"{!JSENCODE($Label.omnistudio__Value)}",
+        "Done":"{!JSENCODE($Label.omnistudio__Done)}",
+        "AllType":"{!JSENCODE($Label.omnistudio__AllType)}",
+        "MyType":"{!JSENCODE($Label.omnistudio__MyType)}",
+        "DRHomeStandard":"{!JSENCODE($Label.omnistudio__DRHomeStandard)}",
+        "DRHomeActive":"{!JSENCODE($Label.omnistudio__DRHomeActive)}",
+        "DrCoreUpdatedComponent":"{!JSENCODE($Label.omnistudio__DrCoreUpdatedComponent)}",
+        "MgdUsingStdDesigner": "{!JSENCODE($Label.omnistudio__MgdUsingStdDesigner)}",
+      };
+      if (typeof sforce !== 'undefined') {
+          if (sforce.console && sforce.console.isInConsole()) {
+              sforce.console.setTabTitle('Vlocity Data Mapper Designer');
+              sforce.console.setTabIcon('standard:environment_hub');
+          }
+      }
+    </script>
+  </body>
+</apex:page>

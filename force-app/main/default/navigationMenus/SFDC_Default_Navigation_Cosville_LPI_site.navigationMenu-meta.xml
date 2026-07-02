@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NavigationMenu xmlns="http://soap.sforce.com/2006/04/metadata">
+    <container>Cosville LPI site</container>
+    <containerType>Network</containerType>
+    <label>Default Navigation</label>
+    <navigationMenuItem>
+        <label>License and Permits</label>
+        <position>0</position>
+        <publiclyAvailable>true</publiclyAvailable>
+        <subMenu>
+            <navigationMenuItem>
+                <label>Assess Your License or Permit Needs</label>
+                <position>0</position>
+                <publiclyAvailable>true</publiclyAvailable>
+                <target>/assess-license-permit-needs</target>
+                <type>InternalLink</type>
+            </navigationMenuItem>
+            <navigationMenuItem>
+                <label>New Application</label>
+                <position>1</position>
+                <publiclyAvailable>false</publiclyAvailable>
+                <target>/apply-license-permit</target>
+                <type>InternalLink</type>
+            </navigationMenuItem>
+            <navigationMenuItem>
+                <label>Renew a License or a Permit</label>
+                <position>2</position>
+                <publiclyAvailable>false</publiclyAvailable>
+                <target>/renew-license-permit</target>
+                <type>InternalLink</type>
+            </navigationMenuItem>
+            <navigationMenuItem>
+                <label>Permits</label>
+                <position>3</position>
+                <publiclyAvailable>false</publiclyAvailable>
+                <target>/show-permit-dependency</target>
+                <type>InternalLink</type>
+            </navigationMenuItem>
+        </subMenu>
+        <type>MenuLabel</type>
+    </navigationMenuItem>
+    <navigationMenuItem>
+        <label>Complaints and License Holder Search</label>
+        <position>1</position>
+        <publiclyAvailable>true</publiclyAvailable>
+        <subMenu>
+            <navigationMenuItem>
+                <label>Search for License or Permit Holder</label>
+                <position>0</position>
+                <publiclyAvailable>true</publiclyAvailable>
+                <target>/search-license-permit-holder</target>
+                <type>InternalLink</type>
+            </navigationMenuItem>
+            <navigationMenuItem>
+                <label>File a Complaint</label>
+                <position>1</position>
+                <publiclyAvailable>true</publiclyAvailable>
+                <target>/file-a-complaint</target>
+                <type>InternalLink</type>
+            </navigationMenuItem>
+            <navigationMenuItem>
+                <label>My Complaints</label>
+                <position>2</position>
+                <publiclyAvailable>false</publiclyAvailable>
+                <target>/my-complaints</target>
+                <type>InternalLink</type>
+            </navigationMenuItem>
+        </subMenu>
+        <type>MenuLabel</type>
+    </navigationMenuItem>
+    <navigationMenuItem>
+        <label>My Dashboard</label>
+        <position>2</position>
+        <publiclyAvailable>false</publiclyAvailable>
+        <subMenu>
+            <navigationMenuItem>
+                <label>View License and Permit Status</label>
+                <position>0</position>
+                <publiclyAvailable>false</publiclyAvailable>
+                <target>/view-license-permit-status</target>
+                <type>InternalLink</type>
+            </navigationMenuItem>
+            <navigationMenuItem>
+                <label>View Inspection History</label>
+                <position>1</position>
+                <publiclyAvailable>false</publiclyAvailable>
+                <target>/view-inspection-history</target>
+                <type>InternalLink</type>
+            </navigationMenuItem>
+        </subMenu>
+        <type>MenuLabel</type>
+    </navigationMenuItem>
+</NavigationMenu>

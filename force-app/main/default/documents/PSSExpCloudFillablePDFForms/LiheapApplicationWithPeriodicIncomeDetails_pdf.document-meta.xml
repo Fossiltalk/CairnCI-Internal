@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>A sample benefit application form. Along with other applicant details, this form shows the applicant&apos;s income for the previous, current, and next periods. The period may be weekly, monthly, and so on.</description>
+    <internalUseOnly>false</internalUseOnly>
+    <name>LiheapApplicationWithPeriodicIncomeDetails.pdf</name>
+    <public>true</public>
+</Document>

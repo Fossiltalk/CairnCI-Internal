@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Grantmaking_Manager</label>
+    <permissionSets>force__ActionPlans</permissionSets>
+    <permissionSets>force__CompliantDataSharingUser</permissionSets>
+    <permissionSets>force__DocumentChecklist</permissionSets>
+    <permissionSets>force__GrantmakingManager</permissionSets>
+    <permissionSets>force__OmniStudioUser</permissionSets>
+    <permissionSets>force__StageManagementUser</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>Adds the PermissionSetAssignment record to the PermissionSetAssignments record collection.</description>
+        <name>AddPermissionSetAssignmentToCollection</name>
+        <label>Add Permission Set Assignment to Collection</label>
+        <locationX>374</locationX>
+        <locationY>708</locationY>
+        <assignmentItems>
+            <assignToReference>PermissionSetAssignments</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>PermissionSetAssignment</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>IterateOverPermissionSets</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>For the PermissionSetAssignment record variable, sets the assignee ID to the user ID of the triggering user and the permission set ID to the permission set ID of the current item in the loop.</description>
+        <name>SetPermissionSetAssignment</name>
+        <label>Set Permission Set Assignment</label>
+        <locationX>374</locationX>
+        <locationY>600</locationY>
+        <assignmentItems>
+            <assignToReference>PermissionSetAssignment.AssigneeId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>PermissionSetAssignment.PermissionSetId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>IterateOverPermissionSets.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AddPermissionSetAssignmentToCollection</targetReference>
+        </connector>
+    </assignments>
+    <constants>
+        <description>Stores the name of the user profile for applicants. Update this value to the name of the profile that you create for applicants.</description>
+        <name>ApplicantUserProfileName</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Applicant User</stringValue>
+        </value>
+    </constants>
+    <decisions>
+        <description>Determines whether the applicant user profile is associated with the triggering user record by checking if the Name of the profile associated with the user record matches PortalUserProfileName.</description>
+        <name>HaveApplicantUserProfile</name>
+        <label>Have Applicant User Profile?</label>
+        <locationX>418</locationX>
+        <locationY>276</locationY>
+        <defaultConnectorLabel>No (Default)</defaultConnectorLabel>
+        <rules>
+            <name>HasApplicantUserProfile</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Profile.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>ApplicantUserProfileName</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GetPermissionSets</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <interviewLabel>Assign Applicant Permissions {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Assign Applicant Permissions</label>
+    <loops>
+        <description>Repeats actions for each record in the Permission Sets from GetPermissionSet record collection variable.</description>
+        <name>IterateOverPermissionSets</name>
+        <label>Iterate Over Permission Sets</label>
+        <locationX>286</locationX>
+        <locationY>492</locationY>
+        <collectionReference>GetPermissionSets</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>SetPermissionSetAssignment</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>CreatePermissionSetAssignments</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <description>Creates permission set assignment records using the values in the PermissionSetAssignments record collection.</description>
+        <name>CreatePermissionSetAssignments</name>
+        <label>Create Permission Set Assignments</label>
+        <locationX>286</locationX>
+        <locationY>900</locationY>
+        <inputReference>PermissionSetAssignments</inputReference>
+    </recordCreates>
+    <recordLookups>
+        <description>Gets the permission set records with a Name matching TlntRcrtMgmtApplicantAccess, CriteriaBasedSearchFilterExpCloudPsl, DocumentChecklist or OmniStudioUser. Stores the ID of the results in the Permission Sets from GetPermissionSets record collection variable.</description>
+        <name>GetPermissionSets</name>
+        <label>Get Permission Sets</label>
+        <locationX>286</locationX>
+        <locationY>384</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>IterateOverPermissionSets</targetReference>
+        </connector>
+        <filterLogic>or</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>TlntRcrtMgmtApplicantAccess</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>CriteriaBasedSearchFilterExpCloudPsl</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>DocumentChecklist</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>OmniStudioUser</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>PermissionSet</object>
+        <queriedFields>Id</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <sourceTemplate>emp_recruitment__AsgnApplntPerm</sourceTemplate>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <object>User</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <scheduledPaths>
+            <connector>
+                <targetReference>HaveApplicantUserProfile</targetReference>
+            </connector>
+            <pathType>AsyncAfterCommit</pathType>
+        </scheduledPaths>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>Temporarily stores the permission set assignment record in the IterateOverPermissionSets loop.</description>
+        <name>PermissionSetAssignment</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>PermissionSetAssignment</objectType>
+    </variables>
+    <variables>
+        <description>Stores a collection of permission set assignment records to be created.</description>
+        <name>PermissionSetAssignments</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>PermissionSetAssignment</objectType>
+    </variables>
+</Flow>

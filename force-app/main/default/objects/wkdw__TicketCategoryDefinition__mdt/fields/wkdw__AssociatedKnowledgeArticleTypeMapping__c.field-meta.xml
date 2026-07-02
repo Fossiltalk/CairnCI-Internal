@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>wkdw__AssociatedKnowledgeArticleTypeMapping__c</fullName>
+    <deprecated>false</deprecated>
+    <description>A comma-separated list of knowledge article record types that map to the associated ticket category.</description>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <inlineHelpText>Enter all knowledge article record types associated with the ticket category.</inlineHelpText>
+    <label>AssociatedKnowledgeArticleTypeMapping</label>
+    <required>false</required>
+    <type>TextArea</type>
+</CustomField>

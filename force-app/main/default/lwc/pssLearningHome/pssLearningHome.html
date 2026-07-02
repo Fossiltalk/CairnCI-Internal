@@ -1,0 +1,44 @@
+<template>
+    <lightning-card footer="" title="">
+        <h1 class="slds-text-heading_medium">{welcome_text}</h1> 
+        <div class="c-container"> 
+            <lightning-layout>
+                <lightning-layout-item flexibility="auto" padding="around-small"> 
+
+                    <c-in-app-landing-child 
+                        heading="Licenses, Permit and Inspection Management(LPI)" 
+                        image-name="/resource/PSS_Learning_org_Icons/Admin_Icon_Square_2Color_RGB.png"
+                        app="c__Public_Sector_Learning_App" 
+                        page="PSC_LPI_Learning_Home"
+                        link-in-new-tab={pass_false}
+                        link-reference="standard__navItemPage"></c-in-app-landing-child>
+
+                    <c-in-app-landing-child
+                        heading="Grantmaking" 
+                        image-name="/resource/PSS_Learning_org_Icons/Inspections_Manager_Icon.png"
+                        app="c__Public_Sector_Learning_App"
+                        page="Public_Sector_Grantmaking"
+                        link-in-new-tab={pass_false}
+                        link-reference="standard__navItemPage"></c-in-app-landing-child>
+
+                        <c-in-app-landing-child
+                        heading="Benefit Management" 
+                        image-name="/resource/PSS_Learning_org_Icons/Inspector_Icon.png"
+                        app="c__Public_Sector_Learning_App"
+                        page="Benefit_Management_Home" 
+                        link-in-new-tab={pass_false}
+                        link-reference="standard__navItemPage"></c-in-app-landing-child>
+
+                        <c-feature-child
+                        heading="Talent Recruitment Management"  
+                        image-name="/resource/PSS_Learning_org_Icons/Compliance_Officer_Icon.png"
+                        app-text=""
+                        page="Talent_Recruitment_Home"
+                        app="c__Public_Sector_Learning_App"
+                        link-reference="standard__navItemPage"></c-feature-child>
+
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+    </lightning-card>
+</template>

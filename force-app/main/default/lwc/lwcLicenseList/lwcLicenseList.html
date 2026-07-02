@@ -1,0 +1,24 @@
+<template>
+    <div class="c-container">
+        <template if:true={_showResults}>
+        <lightning-datatable
+                key-field="AccountName"
+                data={_licenseList}
+                columns={columns}
+                hide-checkbox-column="true">
+        </lightning-datatable>
+    </template>
+    <template if:false={_licenseList}>
+        <div style="text-align:center">
+            <h2>Looking for a business license or permit holder?</h2>
+            <p>Give us a hint and we’ll get you the details.</p>
+          </div>
+    </template>
+    <template if:true={_zeroRecord}>
+        <div style="text-align:center">
+            <h2>We couldn’t find any business or individual with that name or license number.</h2>
+          <p>Try a different search type or name or click Search to search again.</p>
+          </div>
+    </template>
+    </div>
+</template>

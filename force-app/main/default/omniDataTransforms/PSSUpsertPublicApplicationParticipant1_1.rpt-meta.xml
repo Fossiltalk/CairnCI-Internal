@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OmniDataTransform xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>false</active>
+    <assignmentRulesUsed>false</assignmentRulesUsed>
+    <deletedOnSuccess>false</deletedOnSuccess>
+    <description>Creates or updates a public application participant record.</description>
+    <errorIgnored>false</errorIgnored>
+    <expectedInputJson>{
+  &quot;RecordId&quot; : &quot;&quot;,
+  &quot;ContactNo&quot; : &quot;&quot;,
+  &quot;HouseholdMemberDetails&quot; : {
+    &quot;DateOfBirth&quot; : &quot;1997-01-28&quot;,
+    &quot;GradeCompleted&quot; : &quot;btech&quot;,
+    &quot;Race&quot; : &quot;American Indian/Alaska Native&quot;,
+    &quot;Ethnicity&quot; : &quot;Non-Hispanic/Latino&quot;,
+    &quot;Gender&quot; : &quot;Male&quot;,
+    &quot;Age&quot; : 26,
+    &quot;HouseholdMemberFirstName&quot; : &quot;firstH&quot;,
+    &quot;Relationship&quot; : &quot;Spouse&quot;,
+    &quot;HouseholdMemberLastName&quot; : &quot;lastH&quot;,
+    &quot;USCitizen&quot; : &quot;Yes&quot;
+  }
+}</expectedInputJson>
+    <fieldLevelSecurityEnabled>false</fieldLevelSecurityEnabled>
+    <inputType>JSON</inputType>
+    <isManagedUsingStdDesigner>false</isManagedUsingStdDesigner>
+    <name>PSSUpsertPublicApplicationParticipant1</name>
+    <nullInputsIncludedInOutput>false</nullInputsIncludedInOutput>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <filterOperator>=</filterOperator>
+        <globalKey>PSSUpsertPublicApplicationParticipant24714650544318761</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <migrationValue>FAKEMAPPING</migrationValue>
+        <name>PSSUpsertPublicApplicationParticipant1</name>
+        <omniDataTransformation>0kdhk0000001diY</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001diY</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Id</outputFieldName>
+        <outputObjectName>Account</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSUpsertPublicApplicationParticipant34502126108899156</globalKey>
+        <inputFieldName>HouseholdMemberDetails:DateOfBirth</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSUpsertPublicApplicationParticipant1</name>
+        <omniDataTransformation>0kdhk0000001dik</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dik</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>PersonBirthdate</outputFieldName>
+        <outputObjectName>Account</outputObjectName>
+        <requiredForUpsert>true</requiredForUpsert>
+        <upsertKey>true</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSUpsertPublicApplicationParticipantCustom8074</globalKey>
+        <inputFieldName>HouseholdMemberDetails:Relationship</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSUpsertPublicApplicationParticipant1</name>
+        <omniDataTransformation>0kdhk0000001dij</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dij</omniDataTransformationId>
+        <outputCreationSequence>2.0</outputCreationSequence>
+        <outputFieldName>RelationshipType</outputFieldName>
+        <outputObjectName>PublicApplicationParticipant</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <filterOperator>=</filterOperator>
+        <globalKey>PSSUpsertPublicApplicationParticipant40650070556870155</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <migrationValue>FAKEMAPPING</migrationValue>
+        <name>PSSUpsertPublicApplicationParticipant1</name>
+        <omniDataTransformation>0kdhk0000001dil</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dil</omniDataTransformationId>
+        <outputCreationSequence>2.0</outputCreationSequence>
+        <outputFieldName>Id</outputFieldName>
+        <outputObjectName>PublicApplicationParticipant</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <filterOperator>=</filterOperator>
+        <globalKey>PSSUpsertPublicApplicationParticipant29259690089173773</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedFieldName>Id</linkedFieldName>
+        <linkedObjectSequence>1.0</linkedObjectSequence>
+        <migrationValue>FAKEMAPPING</migrationValue>
+        <name>PSSUpsertPublicApplicationParticipant1</name>
+        <omniDataTransformation>0kdhk0000001dic</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dic</omniDataTransformationId>
+        <outputCreationSequence>2.0</outputCreationSequence>
+        <outputFieldName>ParticipantId</outputFieldName>
+        <outputObjectName>PublicApplicationParticipant</outputObjectName>
+        <requiredForUpsert>true</requiredForUpsert>
+        <upsertKey>true</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <formulaConverted>| var:HouseholdMemberDetails:Relationship &quot;Self&quot; == &quot;Yes&quot; &quot;No&quot; IF</formulaConverted>
+        <formulaExpression>IF(HouseholdMemberDetails:Relationship==&quot;Self&quot;, &quot;Yes&quot;,&quot;No&quot;)</formulaExpression>
+        <formulaResultPath>HouseholdMemberDetails:PrimaryApplicant</formulaResultPath>
+        <formulaSequence>1.0</formulaSequence>
+        <globalKey>PSSUpsertPublicApplicationParticipantCustom3184</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSUpsertPublicApplicationParticipant1</name>
+        <omniDataTransformation>0kdhk0000001dib</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dib</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Formula</outputFieldName>
+        <outputObjectName>Formula</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSUpsertPublicApplicationParticipant512929845759746</globalKey>
+        <inputFieldName>PhoneNumber</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSUpsertPublicApplicationParticipant1</name>
+        <omniDataTransformation>0kdhk0000001die</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001die</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>PersonMobilePhone</outputFieldName>
+        <outputObjectName>Account</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSUpsertPublicApplicationParticipant23843992430281613</globalKey>
+        <inputFieldName>HouseholdMemberDetails:HouseholdMemberFirstName</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSUpsertPublicApplicationParticipant1</name>
+        <omniDataTransformation>0kdhk0000001did</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001did</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>FirstName</outputFieldName>
+        <outputObjectName>Account</outputObjectName>
+        <requiredForUpsert>true</requiredForUpsert>
+        <upsertKey>true</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <defaultValue>True</defaultValue>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSUpsertPublicApplicationParticipant14587276202192556</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSUpsertPublicApplicationParticipant1</name>
+        <omniDataTransformation>0kdhk0000001dig</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dig</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldFormat>Boolean</outputFieldFormat>
+        <outputFieldName>IsPersonAccount</outputFieldName>
+        <outputObjectName>Account</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSUpsertPublicApplicationParticipant805008145017619</globalKey>
+        <inputFieldName>RecordId</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSUpsertPublicApplicationParticipant1</name>
+        <omniDataTransformation>0kdhk0000001dif</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dif</omniDataTransformationId>
+        <outputCreationSequence>2.0</outputCreationSequence>
+        <outputFieldName>ApplicationId</outputFieldName>
+        <outputObjectName>PublicApplicationParticipant</outputObjectName>
+        <requiredForUpsert>true</requiredForUpsert>
+        <upsertKey>true</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSUpsertPublicApplicationParticipantCustom5868</globalKey>
+        <inputFieldName>BenefitEligibilityStatus</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSUpsertPublicApplicationParticipant1</name>
+        <omniDataTransformation>0kdhk0000001dii</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dii</omniDataTransformationId>
+        <outputCreationSequence>2.0</outputCreationSequence>
+        <outputFieldName>BenefitEligibilityStatus</outputFieldName>
+        <outputObjectName>PublicApplicationParticipant</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <transformValuesMappings>{
+  &quot;&quot; : &quot;&quot;
+}</transformValuesMappings>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSUpsertPublicApplicationParticipant08651599903813367</globalKey>
+        <inputFieldName>HouseholdMemberDetails:HouseholdMemberLastName</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSUpsertPublicApplicationParticipant1</name>
+        <omniDataTransformation>0kdhk0000001dih</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dih</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>LastName</outputFieldName>
+        <outputObjectName>Account</outputObjectName>
+        <requiredForUpsert>true</requiredForUpsert>
+        <upsertKey>true</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <defaultValue>Active</defaultValue>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSUpsertPublicApplicationParticipant19823231592047175</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSUpsertPublicApplicationParticipant1</name>
+        <omniDataTransformation>0kdhk0000001diZ</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001diZ</omniDataTransformationId>
+        <outputCreationSequence>2.0</outputCreationSequence>
+        <outputFieldFormat>String</outputFieldFormat>
+        <outputFieldName>Status</outputFieldName>
+        <outputObjectName>PublicApplicationParticipant</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <defaultValue>Co-applicant</defaultValue>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSUpsertPublicApplicationParticipant19110140775980322</globalKey>
+        <inputFieldName>HouseholdMemberDetails:PrimaryApplicant</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSUpsertPublicApplicationParticipant1</name>
+        <omniDataTransformation>0kdhk0000001dia</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dia</omniDataTransformationId>
+        <outputCreationSequence>2.0</outputCreationSequence>
+        <outputFieldFormat>String</outputFieldFormat>
+        <outputFieldName>Role</outputFieldName>
+        <outputObjectName>PublicApplicationParticipant</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <transformValuesMappings>{
+  &quot;Yes&quot; : &quot;Applicant&quot;,
+  &quot;No&quot; : &quot;Co-applicant&quot;
+}</transformValuesMappings>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <outputType>SObject</outputType>
+    <previewJsonData>{
+  &quot;HouseholdMemberDetails&quot; : {
+    &quot;Gender&quot; : &quot;F&quot;,
+    &quot;GradeCompleted&quot; : &quot;10&quot;,
+    &quot;IsDisabled&quot; : &quot;Yes&quot;,
+    &quot;HouseholdMemberLastName&quot; : &quot;James&quot;,
+    &quot;Relationship&quot; : &quot;Spouse&quot;,
+    &quot;Race&quot; : &quot;WH&quot;,
+    &quot;USCitizen&quot; : &quot;Yes&quot;,
+    &quot;Ethnicity&quot; : &quot;HL&quot;,
+    &quot;HouseholdMemberFirstName&quot; : &quot;Mary&quot;,
+    &quot;DateOfBirth&quot; : &quot;1999-06-07&quot;
+  },
+  &quot;BenefitEligibilityStatus&quot; : &quot;Eligible&quot;,
+  &quot;RecordId&quot; : &quot;0iTxx000000001dEAA&quot;,
+  &quot;PhoneNumber&quot; : &quot;3456789078&quot;
+}</previewJsonData>
+    <processSuperBulk>false</processSuperBulk>
+    <responseCacheTtlMinutes>0.0</responseCacheTtlMinutes>
+    <rollbackOnError>false</rollbackOnError>
+    <sourceObject>json</sourceObject>
+    <sourceObjectDefault>false</sourceObjectDefault>
+    <synchronousProcessThreshold>0.0</synchronousProcessThreshold>
+    <type>Load</type>
+    <uniqueName>PSSUpsertPublicApplicationParticipant1_1</uniqueName>
+    <versionNumber>1.0</versionNumber>
+    <xmlDeclarationRemoved>false</xmlDeclarationRemoved>
+</OmniDataTransform>

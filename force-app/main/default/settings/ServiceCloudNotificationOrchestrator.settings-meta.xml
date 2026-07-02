@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ServiceCloudNotificationOrchestratorSettings xmlns="http://soap.sforce.com/2006/04/metadata">
+    <enableEmailNotifications>false</enableEmailNotifications>
+    <enableInAppNotifications>false</enableInAppNotifications>
+    <enableNotifications>false</enableNotifications>
+    <enableSlackNotifications>false</enableSlackNotifications>
+    <enableTeamsNotifications>false</enableTeamsNotifications>
+</ServiceCloudNotificationOrchestratorSettings>

@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OmniDataTransform xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>false</active>
+    <assignmentRulesUsed>false</assignmentRulesUsed>
+    <deletedOnSuccess>false</deletedOnSuccess>
+    <errorIgnored>false</errorIgnored>
+    <expectedInputJson>{
+  &quot;ContextId&quot; : &quot;&quot;,
+  &quot;timeStamp&quot; : &quot;2020-04-06T14:58:31.531Z&quot;,
+  &quot;userId&quot; : &quot;005B00000065DsSIAU&quot;,
+  &quot;userName&quot; : &quot;sazher_patch1@salesforce.com&quot;,
+  &quot;userProfile&quot; : &quot;System Administrator&quot;,
+  &quot;userTimeZone&quot; : -420,
+  &quot;userCurrencyCode&quot; : &quot;USD&quot;,
+  &quot;sfdcIFrameOrigin&quot; : &quot;https://vlocity-ins.na44.visual.stmfa.stm.force.com&quot;,
+  &quot;sfdcIFrameHost&quot; : &quot;web&quot;,
+  &quot;layout&quot; : &quot;lightning&quot;,
+  &quot;isdtp&quot; : &quot;p1&quot;,
+  &quot;id&quot; : &quot;a3KRM00000000662AA&quot;,
+  &quot;vlcPersistentComponent&quot; : { },
+  &quot;vlcTimeTracking&quot; : {
+    &quot;OmniScriptSessionToken&quot; : &quot;eb03f07d-261f-400e-9086-cbf97a64aacf&quot;,
+    &quot;SetContext&quot; : 44,
+    &quot;DRContactForUser&quot; : 6374,
+    &quot;SetStatus&quot; : 5,
+    &quot;SetIsOlaSubmitted1&quot; : 16,
+    &quot;SetPreviewModeOff&quot; : 62,
+    &quot;IntroScreen&quot; : 2179,
+    &quot;DRGetWasOlaReturned&quot; : 913,
+    &quot;TypeOfApplication&quot; : 1066
+  },
+  &quot;LICENCETYPE_AND_FEES&quot; : {
+    &quot;ProfessionalDesignation&quot; : null,
+    &quot;GraduateType&quot; : null,
+    &quot;ApplicationType&quot; : null,
+    &quot;Industries&quot; : null,
+    &quot;isIndustriesFilled&quot; : false,
+    &quot;isBusinessActivityFilled&quot; : false,
+    &quot;BusinessActivity&quot; : null,
+    &quot;AuthorizationCategory&quot; : null,
+    &quot;AuthorizationType&quot; : null,
+    &quot;AssociatedPersonAccount&quot; : null
+  },
+  &quot;APPLICANT_INFORMATION&quot; : {
+    &quot;PersonAccountName&quot; : null,
+    &quot;PersonAccountLastName&quot; : null,
+    &quot;EmailOfPersonAccount&quot; : null,
+    &quot;Telephone1&quot; : null,
+    &quot;PersonAccountDob&quot; : null,
+    &quot;GenderOfPersonAccount&quot; : null,
+    &quot;SSN&quot; : null,
+    &quot;DegreesHeld&quot; : null,
+    &quot;RaceEthnicity&quot; : null,
+    &quot;RaceEthnicityHasChooseNotToDisclose&quot; : null,
+    &quot;RaceEthnicitySelCountGtOne&quot; : null,
+    &quot;RaceEthnicityValidate&quot; : null,
+    &quot;LanguagesSpoken&quot; : null,
+    &quot;IsLanguagesSpokenOther&quot; : null,
+    &quot;OtherLanguage&quot; : null
+  },
+  &quot;OtherNamesUsed&quot; : {
+    &quot;OtherName&quot; : {
+      &quot;FirstNameOther&quot; : null,
+      &quot;LastNameOther&quot; : null
+    }
+  },
+  &quot;MailingAddress&quot; : {
+    &quot;MailingAddrSelect&quot; : null,
+    &quot;IsHomeAddrSelected&quot; : null,
+    &quot;IsBizAddrSelected&quot; : null,
+    &quot;EnsureOnlyOneOfHomeBizAddrIsSelected&quot; : null,
+    &quot;HomeAddress&quot; : null,
+    &quot;BusinessAddress&quot; : null
+  },
+  &quot;MEDICAL_SCHOOLS_ATTENDED&quot; : {
+    &quot;MedicalSchoolAttended&quot; : {
+      &quot;MedSchoolName&quot; : null,
+      &quot;GraduationDate&quot; : null,
+      &quot;DegreeCertAwarded&quot; : null,
+      &quot;GradCity&quot; : null,
+      &quot;GradState&quot; : null,
+      &quot;GradCountry&quot; : null
+    }
+  },
+  &quot;PgMedTrainings&quot; : {
+    &quot;PgMedicalTraining&quot; : {
+      &quot;ProgramName&quot; : null,
+      &quot;ProgramStartDate&quot; : null,
+      &quot;ProgramEndDate&quot; : null,
+      &quot;ProgramTypeofPosition&quot; : null,
+      &quot;ProgramCity&quot; : null,
+      &quot;ProgramState&quot; : null,
+      &quot;ProgramCountry&quot; : null
+    }
+  },
+  &quot;WORK_EXPERIENCE&quot; : {
+    &quot;Employer&quot; : {
+      &quot;EmployerName&quot; : null,
+      &quot;EmploymentStartDate&quot; : null,
+      &quot;EmploymentEndDate&quot; : null,
+      &quot;ReasonForLeaving&quot; : null,
+      &quot;EmploymentCity&quot; : null,
+      &quot;EmploymentState&quot; : null,
+      &quot;EmploymentCountry&quot; : null
+    }
+  },
+  &quot;OTHER_MEDICAL_LICENSES&quot; : {
+    &quot;MedicalLicense&quot; : {
+      &quot;Jurisdiction&quot; : null,
+      &quot;IssueDate&quot; : null,
+      &quot;ExpiryDate&quot; : null,
+      &quot;LicenseNumber&quot; : null
+    }
+  },
+  &quot;PRACTICE_SPECIALTIES_AND_BOARD_CERTS&quot; : {
+    &quot;PracticeSpecialityList&quot; : null,
+    &quot;PracticeSpeciality&quot; : null,
+    &quot;BoardCertifiedInfo&quot; : {
+      &quot;CertifyingBoard&quot; : null,
+      &quot;CertifyingAgency&quot; : null
+    }
+  },
+  &quot;REQUIRED_SCREENING_QUESTIONS&quot; : {
+    &quot;ScreenQuestion1&quot; : false,
+    &quot;ScreenQuestion2&quot; : false,
+    &quot;ScreenQuestion3&quot; : false,
+    &quot;ScreenQuestion4&quot; : false,
+    &quot;ScreenQuestion5&quot; : false,
+    &quot;ScreenQuestion6&quot; : false,
+    &quot;ScreenQuestion7&quot; : false
+  },
+  &quot;APPLICANT_AFFIDAVIT&quot; : {
+    &quot;ApplicantSign&quot; : null,
+    &quot;Submission Date&quot; : null
+  },
+  &quot;SampleUser&quot; : &quot;005RM0000025atnYAA&quot;,
+  &quot;ContactId&quot; : &quot;003RM000006GmF9YAK&quot;,
+  &quot;ContactName&quot; : &quot;Dieggo John&quot;,
+  &quot;ApplicationStatus&quot; : &quot;Submitted&quot;,
+  &quot;IsOlaSubmitted&quot; : false,
+  &quot;IsPreviewMode&quot; : false,
+  &quot;IntroScreen&quot; : {
+    &quot;IsExistingApplication&quot; : false
+  },
+  &quot;TypeOfApplication&quot; : {
+    &quot;IsSubmittedOlaEditable&quot; : true
+  },
+  &quot;vlcKnowledge&quot; : {
+    &quot;knowledgeItems&quot; : [ ]
+  },
+  &quot;error&quot; : &quot;OK&quot;
+}</expectedInputJson>
+    <fieldLevelSecurityEnabled>false</fieldLevelSecurityEnabled>
+    <inputType>JSON</inputType>
+    <isManagedUsingStdDesigner>false</isManagedUsingStdDesigner>
+    <name>DRCreateTrainingCourseParticipantV2</name>
+    <nullInputsIncludedInOutput>false</nullInputsIncludedInOutput>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>DRCreateTrainingCourseParticipantV25841639285016298</globalKey>
+        <inputFieldName>PgMedTrainings:PgMedicalTraining:ProgramEndDate</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRCreateTrainingCourseParticipantV2</name>
+        <omniDataTransformation>0kdhk0000001dk5</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dk5</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>EndDate</outputFieldName>
+        <outputObjectName>TrainingCourseParticipant</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>DRCreateTrainingCourseParticipantV21644105030581937</globalKey>
+        <inputFieldName>PgMedTrainings:PgMedicalTraining:ProgramName</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <lookupByFieldName>Name</lookupByFieldName>
+        <lookupObjectName>CourseOffering</lookupObjectName>
+        <lookupReturnedFieldName>Id</lookupReturnedFieldName>
+        <name>DRCreateTrainingCourseParticipantV2</name>
+        <omniDataTransformation>0kdhk0000001dk7</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dk7</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>CourseOfferingId</outputFieldName>
+        <outputObjectName>TrainingCourseParticipant</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>DRCreateTrainingCourseParticipantV29901924433921867</globalKey>
+        <inputFieldName>DRContactForUser:ContactId</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRCreateTrainingCourseParticipantV2</name>
+        <omniDataTransformation>0kdhk0000001dk6</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dk6</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>ContactId</outputFieldName>
+        <outputObjectName>TrainingCourseParticipant</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>true</disabled>
+        <filterGroup>0.0</filterGroup>
+        <filterOperator>=</filterOperator>
+        <globalKey>DRCreateTrainingCourseParticipantV25381920292143942</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <migrationValue>FAKEMAPPING</migrationValue>
+        <name>DRCreateTrainingCourseParticipantV2</name>
+        <omniDataTransformation>0kdhk0000001dk9</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dk9</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Id</outputFieldName>
+        <outputObjectName>TrainingCourseParticipant</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>DRCreateTrainingCourseParticipantV233181363511966366</globalKey>
+        <inputFieldName>DRId_TrainingCourseParticipant</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRCreateTrainingCourseParticipantV2</name>
+        <omniDataTransformation>0kdhk0000001dk8</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dk8</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Id</outputFieldName>
+        <outputObjectName>TrainingCourseParticipant</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>true</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>DRCreateTrainingCourseParticipantV215808174660843233</globalKey>
+        <inputFieldName>PgMedTrainings:PgMedicalTraining:ProgramStartDate</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRCreateTrainingCourseParticipantV2</name>
+        <omniDataTransformation>0kdhk0000001dkA</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dkA</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>StartDate</outputFieldName>
+        <outputObjectName>TrainingCourseParticipant</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <outputType>SObject</outputType>
+    <previewJsonData>{
+  &quot;vlcTimeTracking&quot; : {
+    &quot;MailingAddress&quot; : null,
+    &quot;SetStatus&quot; : null,
+    &quot;APPLICANT_INFORMATION&quot; : null,
+    &quot;REQUIRED_SCREENING_QUESTIONS&quot; : null,
+    &quot;OTHER_MEDICAL_LICENSES&quot; : null,
+    &quot;PRACTICE_SPECIALTIES_AND_BOARD_CERTS&quot; : null,
+    &quot;PgMedTrainings&quot; : null,
+    &quot;TypeOfApplication&quot; : null,
+    &quot;DRPostActionCreatePersonEducation&quot; : null,
+    &quot;SetIsOlaSubmitted1&quot; : null,
+    &quot;DRContactForUser&quot; : null,
+    &quot;APPLICANT_AFFIDAVIT&quot; : null,
+    &quot;ImpMesgOnUpdatingContactInfo&quot; : null,
+    &quot;LICENCETYPE_AND_FEES&quot; : null,
+    &quot;OtherNamesUsed&quot; : null,
+    &quot;DRPostActionTrainingCourseParticipant&quot; : null,
+    &quot;SetPreviewModeOff&quot; : null,
+    &quot;MEDICAL_SCHOOLS_ATTENDED&quot; : null,
+    &quot;WORK_EXPERIENCE&quot; : null,
+    &quot;DRPostActionUpdateOla&quot; : null,
+    &quot;DRGetWasOlaReturned&quot; : null,
+    &quot;SetPreviewModeOn&quot; : null,
+    &quot;Confirmation&quot; : null,
+    &quot;IntroScreen&quot; : null,
+    &quot;DRGetOlaName&quot; : null,
+    &quot;DRGetIdsToSetOla&quot; : null,
+    &quot;PreConfirmationScreen&quot; : null,
+    &quot;DRCreateOccupationLicenseApplication&quot; : null,
+    &quot;DRGetPersonAccountByAcctName&quot; : null,
+    &quot;SetContext&quot; : null
+  },
+  &quot;vlcPersistentComponent&quot; : { },
+  &quot;userTimeZone&quot; : null,
+  &quot;userProfile&quot; : null,
+  &quot;userName&quot; : null,
+  &quot;userId&quot; : null,
+  &quot;timeStamp&quot; : null,
+  &quot;ContextId&quot; : null,
+  &quot;MailingAddress&quot; : {
+    &quot;EnsureOnlyOneOfHomeBizAddrIsSelected&quot; : null,
+    &quot;IsHomeAddrSelected&quot; : null,
+    &quot;HomeAddress&quot; : {
+      &quot;HomeEmail&quot; : null,
+      &quot;HomeCity&quot; : null,
+      &quot;ZipCode&quot; : null,
+      &quot;HomeState&quot; : null,
+      &quot;HomePhone&quot; : null,
+      &quot;CHA&quot; : null
+    },
+    &quot;MailingAddrSelect&quot; : null,
+    &quot;BusinessAddress&quot; : {
+      &quot;BizEmail&quot; : null,
+      &quot;CurrentBusinessAddress&quot; : null,
+      &quot;BusinessCity&quot; : null,
+      &quot;BusinessState&quot; : null,
+      &quot;BizZipCode&quot; : null,
+      &quot;BizTelephone&quot; : null
+    },
+    &quot;IsBizAddrSelected&quot; : null
+  },
+  &quot;APPLICANT_INFORMATION&quot; : {
+    &quot;EmailOfPersonAccount&quot; : null,
+    &quot;LanguagesSpoken&quot; : null,
+    &quot;RaceEthnicityHasChooseNotToDisclose&quot; : null,
+    &quot;RaceEthnicitySelCountGtOne&quot; : null,
+    &quot;PersonAccountName&quot; : null,
+    &quot;Telephone1&quot; : null,
+    &quot;GenderOfPersonAccount&quot; : null,
+    &quot;DegreesHeld&quot; : null,
+    &quot;IsLanguagesSpokenOther&quot; : null,
+    &quot;PersonAccountLastName&quot; : null,
+    &quot;SSN&quot; : null,
+    &quot;RaceEthnicity&quot; : null,
+    &quot;PersonAccountDob&quot; : null,
+    &quot;OtherLanguage&quot; : null,
+    &quot;RaceEthnicityValidate&quot; : null
+  },
+  &quot;REQUIRED_SCREENING_QUESTIONS&quot; : {
+    &quot;ScreenQuestion2&quot; : null,
+    &quot;ScreenQuestion3&quot; : null,
+    &quot;ScreenQuestion6&quot; : null,
+    &quot;ScreenQuestion5&quot; : null,
+    &quot;ScreenQuestion1&quot; : null,
+    &quot;ScreenQuestion4&quot; : null,
+    &quot;ScreenQuestion7&quot; : null
+  },
+  &quot;OTHER_MEDICAL_LICENSES&quot; : {
+    &quot;MedicalLicense&quot; : {
+      &quot;ExpiryDate&quot; : null,
+      &quot;Jurisdiction&quot; : null,
+      &quot;IssueDate&quot; : null,
+      &quot;LicenseNumber&quot; : null
+    }
+  },
+  &quot;PRACTICE_SPECIALTIES_AND_BOARD_CERTS&quot; : {
+    &quot;PracticeSpecialityList&quot; : null,
+    &quot;BoardCertifiedInfo&quot; : {
+      &quot;CertifyingBoard&quot; : null,
+      &quot;CertifyingAgency&quot; : null
+    },
+    &quot;PracticeSpeciality&quot; : null
+  },
+  &quot;PgMedTrainings&quot; : {
+    &quot;PgMedicalTraining&quot; : {
+      &quot;ProgramTypeofPosition&quot; : null,
+      &quot;ProgramCity&quot; : null,
+      &quot;ProgramName&quot; : null,
+      &quot;ProgramStartDate&quot; : null,
+      &quot;ProgramCountry&quot; : null,
+      &quot;ProgramEndDate&quot; : null,
+      &quot;ProgramState&quot; : null
+    }
+  },
+  &quot;TypeOfApplication&quot; : {
+    &quot;IsSubmittedOlaEditable&quot; : null
+  },
+  &quot;APPLICANT_AFFIDAVIT&quot; : {
+    &quot;ApplicantSign&quot; : null,
+    &quot;Submission Date&quot; : null
+  },
+  &quot;ImpMesgOnUpdatingContactInfo&quot; : { },
+  &quot;LICENCETYPE_AND_FEES&quot; : {
+    &quot;ProfessionalDesignation&quot; : null,
+    &quot;Industries&quot; : null,
+    &quot;isIndustriesFilled&quot; : null,
+    &quot;isBusinessActivityFilled&quot; : null,
+    &quot;AuthorizationType&quot; : null,
+    &quot;ApplicationType&quot; : null,
+    &quot;BusinessActivity&quot; : null,
+    &quot;AssociatedPersonAccount&quot; : null,
+    &quot;AuthorizationCategory&quot; : null,
+    &quot;GraduateType&quot; : null
+  },
+  &quot;OtherNamesUsed&quot; : {
+    &quot;OtherName&quot; : {
+      &quot;LastNameOther&quot; : null,
+      &quot;FirstNameOther&quot; : null
+    }
+  },
+  &quot;MEDICAL_SCHOOLS_ATTENDED&quot; : {
+    &quot;MedicalSchoolAttended&quot; : {
+      &quot;DegreeCertAwarded&quot; : null,
+      &quot;GraduationDate&quot; : null,
+      &quot;GradCountry&quot; : null,
+      &quot;GradState&quot; : null,
+      &quot;MedSchoolName&quot; : null,
+      &quot;GradCity&quot; : null
+    }
+  },
+  &quot;WORK_EXPERIENCE&quot; : {
+    &quot;Employer&quot; : {
+      &quot;EmploymentCity&quot; : null,
+      &quot;EmploymentCountry&quot; : null,
+      &quot;EmploymentState&quot; : null,
+      &quot;ReasonForLeaving&quot; : null,
+      &quot;EmploymentStartDate&quot; : null,
+      &quot;EmploymentEndDate&quot; : null,
+      &quot;EmployerName&quot; : null
+    }
+  },
+  &quot;Confirmation&quot; : { },
+  &quot;IntroScreen&quot; : {
+    &quot;IsExistingApplication&quot; : null
+  },
+  &quot;PreConfirmationScreen&quot; : { }
+}</previewJsonData>
+    <processSuperBulk>false</processSuperBulk>
+    <responseCacheTtlMinutes>0.0</responseCacheTtlMinutes>
+    <rollbackOnError>false</rollbackOnError>
+    <sourceObject>json</sourceObject>
+    <sourceObjectDefault>false</sourceObjectDefault>
+    <synchronousProcessThreshold>-1.0</synchronousProcessThreshold>
+    <type>Load</type>
+    <uniqueName>DRCreateTrainingCourseParticipantV2_1</uniqueName>
+    <versionNumber>1.0</versionNumber>
+    <xmlDeclarationRemoved>false</xmlDeclarationRemoved>
+</OmniDataTransform>

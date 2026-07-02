@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>ItSrvcCnfgItmOwner</label>
+    <permissionSets>force__ItSrvcCnfgItmOwnerPermissionSet</permissionSets>
+    <permissionSets>force__ItSrvcCnfgItmReadPermissionSet</permissionSets>
+    <permissionSets>force__ItSrvcCnfgItmTypReadPermissionSet</permissionSets>
+    <permissionSets>force__ItSrvcRelRecReadPermissionSet</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

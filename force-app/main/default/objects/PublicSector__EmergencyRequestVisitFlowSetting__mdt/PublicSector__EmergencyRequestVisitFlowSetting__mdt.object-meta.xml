@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Holds the name for the Action Plan Template which can be used in Flow to create visits and associate visits with these action plan template</description>
+    <label>Emergency Request Visit Flow Setting</label>
+    <pluralLabel>Emergency Request Visit Flow Settings</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

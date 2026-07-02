@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BillingSettings xmlns="http://soap.sforce.com/2006/04/metadata">
+    <enableAutomaticRefunds>false</enableAutomaticRefunds>
+    <enableBillingDisputeManagement>false</enableBillingDisputeManagement>
+    <enableBillingSetup>true</enableBillingSetup>
+    <enableConvertedCrMemoCrMemoLnAppln>true</enableConvertedCrMemoCrMemoLnAppln>
+    <enableCrMemoApplicationToPostedInvoices>true</enableCrMemoApplicationToPostedInvoices>
+    <enableDunningOrchestration>false</enableDunningOrchestration>
+    <enableEnhancedPaymentData>false</enableEnhancedPaymentData>
+    <enableFailedPaymentsRetry>false</enableFailedPaymentsRetry>
+    <enableForeignExchangeTrxnJrnlCreation>false</enableForeignExchangeTrxnJrnlCreation>
+    <enableInvoiceEmailDelivery>false</enableInvoiceEmailDelivery>
+    <enableInvoicePdfGeneration>false</enableInvoicePdfGeneration>
+    <enableMilestoneBillingForAmend>false</enableMilestoneBillingForAmend>
+    <enableNegInvoiceLnConversionToCrMemoLn>true</enableNegInvoiceLnConversionToCrMemoLn>
+    <enablePaymentApplicationToPostedInvoices>true</enablePaymentApplicationToPostedInvoices>
+    <enablePaymentSchedulesAndItemsCreation>false</enablePaymentSchedulesAndItemsCreation>
+    <enableTransactionJournalCreation>false</enableTransactionJournalCreation>
+    <enableTransactionsApplicationToInvoices>true</enableTransactionsApplicationToInvoices>
+    <enableTrxnAmountsStorageInCorpCurrency>false</enableTrxnAmountsStorageInCorpCurrency>
+</BillingSettings>

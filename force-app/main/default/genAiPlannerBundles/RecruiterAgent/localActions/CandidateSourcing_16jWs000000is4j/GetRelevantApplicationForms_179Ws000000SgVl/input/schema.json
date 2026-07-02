@@ -1,0 +1,43 @@
+{
+  "required" : [ "applicationFormStage" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "applicationFormStage" : {
+      "title" : "Application Form Stage",
+      "description" : "The stage of the relevant application forms that the user requested.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "recruitmentPostingNameOrId" : {
+      "title" : "Recruitment Posting Name Or ID",
+      "description" : "The name or Salesforce record ID of the recruitment posting record the user is currently viewing.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "shouldLimitApplicationForms" : {
+      "title" : "Should Limit Application Forms",
+      "description" : "A boolean value that indicates whether to return only a limited number of relevant application forms. This should always be set to true.",
+      "lightning:type" : "lightning__booleanType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "recruitmentRequisitionNameOrId" : {
+      "title" : "Recruitment Requisition Name Or ID",
+      "description" : "The name or Salesforce ID of a recruitment requisition record.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "recruitmentRequisitionState" : {
+      "title" : "Recruitment Requisition State",
+      "description" : "The state that recruitment requisitions for a similar vacancy must have. The default value is Closed.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType",
+  "lightning:textIndexed" : true
+}

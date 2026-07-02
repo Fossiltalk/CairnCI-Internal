@@ -1,0 +1,691 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Profile xmlns="http://soap.sforce.com/2006/04/metadata">
+    <custom>false</custom>
+    <flowAccesses>
+        <enabled>false</enabled>
+        <flow>Aggregate_Job_Apps</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
+        <flow>Assign_Applicant_Permissions</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
+        <flow>Invoke_Record_Aggregation</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
+        <flow>PublicSector__CreateVisitFromSalesforceMapsEmergencyRequestEvent</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
+        <flow>PublicSector__Emergency_Assistance_Request</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
+        <flow>PublicSector__Emergency_Supplies_Donation</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
+        <flow>PublicSector__Emergency_Supplies_Request</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
+        <flow>PublicSector__Location_Access_Permit_Request</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
+        <flow>PublicSector__Request_a_Reopening_Permit</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
+        <flow>PublicSector__Request_a_Training_Certificate</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
+        <flow>PublicSector__ScheduleEmergencyVisit</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
+        <flow>defer_caseproceeding_flow</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
+        <flow>wkdw__Apply_for_Corporate_Credit_Card</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
+        <flow>wkdw__AssignOnboardingTasks</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
+        <flow>wkdw__Direct_Deposit</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
+        <flow>wkdw__Health_Verification</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
+        <flow>wkdw__Health_Verification_After_Handler</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
+        <flow>wkdw__Review_Documents</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
+        <flow>wkdw__Sample_ergonomic_assessment</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
+        <flow>wkdw__Sample_welcome_video</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
+        <flow>wkdw__WorkdayTimeOffBalance</flow>
+    </flowAccesses>
+    <layoutAssignments>
+        <layout>AccountingPeriod-Accounting Period Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Accreditation-Accreditation Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AlternativePaymentMethod-Alternative Payment Method Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Applicant-Applicant Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ApplicationForm-Application Form Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ApplicationFormEvaluation-Application Form Evaluation Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ApplicationFormRelatedCode-Application Form Related Code Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ApplicationFormRelation-Application Form Relation Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ApplicationRenderMethod-Application Render Method Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ApplicationStageDefinition-Application Stage Definition Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ApprovalAlertContentDef-%5F%5FMISSING LABEL%5F%5F PropertyFile - val ApprovalAlertContentDef not found in section StandardLayouts</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AssessmentDefinition-Assessment Definition Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AssessmentQuestionVerChoice-%5F%5FMISSING LABEL%5F%5F PropertyFile - val AssessmentQuestionVerChoice not found in section StandardLayouts</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AssessmentSavedSession-Assessment Saved Session Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Award-Award Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>BatchJob-Batch Job Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>BenefitItemCode-Benefit Item Code Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>BenefitPrvdSearchableFld-Benefit Provider Searchable Field Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>BenefitSpecialty-Benefit Specialty Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>BillingArrangement-Billing Arrangement Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>BillingBatchFilterCriteria-Billing Batch Filter Criteria Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>BillingMilestonePlan-Billing Milestone Plan Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>BillingPeriodItem-Billing Period Item Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>BillingPolicy-Billing Policy Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>BillingSchedule-Billing Schedule Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>BillingTreatment-Billing Treatment Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>BillingTreatmentItem-Billing Treatment Item Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Block__c-Block Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>BnftAsgntBnftItemCode-Benefit Assignment Benefit Item Code Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>BoardCertification-Board Certification Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>BusinessLicenseCodeSet-Business License Code Set Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>BusinessProfile-Business Profile Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>BusinessType-Business Type Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CardPaymentMethod-Card Payment Method Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CareBarrier-Care Barrier Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CareBarrierType-Care Barrier Type Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CarePlanDetail-Care Plan Detail Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CareProviderAdverseAction-Care Provider Adverse Action Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CareProviderFacilitySpecialty-Care Provider Facility Specialty Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CareSpecialty-Care Specialty Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CareSpecialtyTaxonomy-Care Specialty Taxonomy Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CareTaxonomy-Care Taxonomy Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ChannelProgram-Channel Program Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Claim-Claim Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CodeSet-Code Set Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CodeSetBundle-Code Set Bundle Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Competency-Competency Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CompetencyRelatedObject-Competency Related Object Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ContentLink-Content Link Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ContentSource-Content Source Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CreditMemo-Credit Memo Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CreditMemoLine-Credit Memo Line Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CustodyChainEntry-Custody Chain Entry Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CustodyItem-Custody Item Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CustodyItemRelation-Custody Item Relation Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CustodyItemRgltyCodeVio-Custody Item Regulatory Code Violation Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>DCI_Status__mdt-DCI Status Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>DebitMemo-Debit Memo Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>DebitMemoLine-Debit Memo Line Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>DigitalWallet-Digital Wallet Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>DocumentCategory-Document Category Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>DynamicLink__c-APINamePage Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Employee2-Employee Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>FundingAwardRqmtSection-Funding Award Requirement Section Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>GeneralLdgrAcctPrdSummary-General Ledger Accounting Period Summary Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>GeneralLedgerAccount-General Ledger Account Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>GeneralLedgerAcctAsgntRule-General Ledger Account Assignment Rule Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>GoalAssignmentDetail-Goal Assignment Detail Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>GuestUserAnomalyEventStore-Guest User Anomaly Event Store Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>HealthcareFacility-Healthcare Facility Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>HealthcarePractitionerFacility-Healthcare Practitioner Facility Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>HealthcareProvider-Healthcare Provider Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>HealthcareProviderNpi-Healthcare Provider NPI Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>HealthcareProviderSpecialty-Healthcare Provider Specialty Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>HealthcareProviderTaxonomy-Healthcare Provider Taxonomy Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Icon__c-Icon Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>IndividualApplicationTask-Individual Application Task Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>IntakeFormSection-Intake Form Section Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Invoice-Invoice Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>InvoiceAddressGroup-Invoice Address Group Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>InvoiceLine-Invoice Line Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>JobPosition-Job Position Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>JobPostingSearchableField-Job Posting Searchable Field Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>JobPstnRecruitmentRqs-Job Position Recruitment Requisition Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>LegalEntity-Legal Entity Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>LegalEntyAccountingPeriod-Legal Entity Accounting Period Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ListEmail-List Email Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>LoginAnomalyEventStore-Login Anomaly Event Store Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>MerchantAccount-Merchant Account Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ObjectStateDefinition-Object State Definition Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Occupation-Occupation Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>OccupationGroup-Occupation Group Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>OmniProcess-Omni Process Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Page__c-Page Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>PartyCategory-Party Category Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>PartyProfile-Party Profile</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>PartyProfileAddress-Party Profile Address</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>PayGrade-Pay Grade Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Payment-Payment Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>PaymentAuthAdjustment-Payment Authorization Adjustment Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>PaymentAuthorization-Payment Authorization Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>PaymentCart-Payment Cart Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>PaymentCartItem-Payment Cart Item Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>PaymentGateway-Payment Gateway Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>PaymentGatewayLog-Payment Gateway Log Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>PaymentGroup-Payment Group Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>PaymentLineInvoice-Payment Line Invoice Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>PaymentRetryRule-Payment Retry Rule Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>PaymentRetryRuleSet-Payment Retry Rule Set Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>PersonCompetency-Person Competency Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>PersonDisability-Person Disability Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>PersonEducation-Person Education Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>PersonEmployment-Person Employment Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>PersonLanguage-Person Language Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Position-Position Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>PositionPayGrade-Position Pay Grade Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ProgramEnrollment-Program Enrollment Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>PublicApplicationParticipant-Public Application Participant Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>PublicProgram-Public Program Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ReceivedDocument-Received Document Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ReceivedDocumentType-Received Document Type Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>RecordAggregationResult-Record Aggregation Result Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>RecruitmentPosting-Recruitment Posting Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>RecruitmentPostingCntntSect-Recruitment Posting Content Section Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>RecruitmentRequisition-Recruitment Requisition Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>RecruitmentRequisitionPtcp-Recruitment Requisition Participant Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Refund-Refund Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>RefundLinePayment-Refund Line Payment Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>RegulatoryAuthorizationType-Regulatory Authorization Type Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>RevenueTransactionErrorLog-Revenue Transaction Error Log Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SectionBlock__c-SectionBlock Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Section__c-Detail Page Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Setup_Page_Map__mdt-Setup Page Map Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>TaxPolicy-Tax Policy Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>TaxTreatment-Tax Treatment Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>UniversalAnomalyEventStore-Universal Anomaly Event Store Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>UserAppMenuItem-Application Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>VettingEvaluation-Vetting Evaluation Layout</layout>
+    </layoutAssignments>
+    <tabVisibilities>
+        <tab>Benefit_Management_Admin</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Benefit_Management_Home</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Block__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Compliance_Officer</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>DynamicLink__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Getting_Started</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>GrantSeeker</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Grantmaking_Admin</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>GrantsManager</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>HR_Specialist</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Hiring_Manager</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Icon__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Inspection_Manager</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Inspectors</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Intake_Officers</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Knowledge__kav</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Learning_Application_Details_Page</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>PSC_LPI_Learning_Home</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>PSS_Learning_Home</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Page__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Public_Sector_Grantmaking</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>SectionBlock__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Section__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Talent_Applicant</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Talent_Recruitment_Home</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>omnistudio__DataPacks</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>omnistudio__DataRaptor</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>omnistudio__DocumentTemplate</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>omnistudio__FlexCards</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>omnistudio__IntegrationProcedureHome</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>omnistudio__LegalBannerSetup</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>omnistudio__OmniScriptHome</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>omnistudio__OmniScriptWorkbench</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>omnistudio__VlocityDocuSignSetup</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>pSCLPIAdminHome</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>wkdw__ArticleToFlowLink__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>wkdw__Concierge_Settings</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>wkdw__EmployeeWorkExperienceLink__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>wkdw__EmployeeWorkExperience__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>wkdw__HealthVerification__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>wkdw__OnboardingTask__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>wkdw__OnboardingTemplateTask__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>wkdw__OnboardingTemplate__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>wkdw__WorkExperienceMembership__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <userLicense>Salesforce Integration</userLicense>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ApiEnabled</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ApiUserOnly</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ChatterInternalUser</name>
+    </userPermissions>
+</Profile>

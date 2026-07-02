@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <quickActions>
+        <aspect>Master</aspect>
+        <label>Attribuer l&apos;intégration</label>
+        <name>wkdw__AssignOnboarding</name>
+    </quickActions>
+</CustomObjectTranslation>

@@ -1,0 +1,50 @@
+<template>
+    <lightning-card footer="" title="">
+        <h1 class="slds-text-heading_medium">{app_welcome_text}</h1> 
+
+        <div class="c-footer" >
+            <a href="/lightning/n/PSC_LPI_Learning_Home">Return to LPI Learning Home</a>
+        </div> 
+        
+        <div class="c-container"> 
+            <lightning-layout>
+                <lightning-layout-item flexibility="auto" padding="around-small">
+                    <p class="c-description">{app_description}</p>
+ 
+  
+                    <c-feature-child
+                        heading="Application Hierarchical View"  
+                        image="standard:environment_hub" 
+                        app-text="View or Create Business License Applications" 
+                        link-in-new-tab={pass_true}
+                        object-name="BusinessLicenseApplication"
+                        filter-name="Recent"
+                        app="standard__PublicSector"
+                        link-reference="standard__objectPage"></c-feature-child>
+
+                        <c-feature-child
+                        heading="Enforcement Actions"  
+                        image="standard:report" 
+                        app-text="View or Create Violation Enforcement Actions" 
+                        link-in-new-tab={pass_true}
+                        object-name="ViolationEnforcementAction"
+                        filter-name="Recent"
+                        app="standard__PublicSector"
+                        link-reference="standard__objectPage"></c-feature-child>
+
+                        <c-feature-child
+                        heading="Business License"  
+                        image="action:submit_for_approval" 
+                        app-text="View or Create Business Licenses" 
+                        link-in-new-tab={pass_true}
+                        object-name="BusinessLicense"
+                        filter-name="Recent"
+                        app="standard__PublicSector"
+                        link-reference="standard__objectPage"></c-feature-child>
+
+                    
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+    </lightning-card>
+</template>

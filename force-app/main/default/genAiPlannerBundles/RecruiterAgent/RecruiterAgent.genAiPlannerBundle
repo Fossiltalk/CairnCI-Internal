@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlannerBundle xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <description>Automate common business tasks and assist users in their flow of work for Recruiters</description>
+    <localActionLinks>
+        <genAiFunctionName>AnswerQuestionsWithKnowledge_16jWs000000is4j</genAiFunctionName>
+    </localActionLinks>
+    <localTopicLinks>
+        <genAiPluginName>CandidateSourcing_16jWs000000is4j</genAiPluginName>
+    </localTopicLinks>
+    <localTopics>
+        <fullName>CandidateSourcing_16jWs000000is4j</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Interacts with the user to find applications that were submitted for similar recruitment postings in the past, creates leads for potential candidates, and sends emails to the leads on behalf of the user. Use this topic to also answer general questions, count records, and retrieve information about Job Positions, Recruitment Requisitions, Employment Offers, and candidate data.</description>
+        <developerName>CandidateSourcing_16jWs000000is4j</developerName>
+        <genAiPluginInstructions>
+            <description>As a first step, execute the GetRecordDetails action for the recruitment posting record that the user is currently viewing. Then, interact with the user.
+Never ask the user for an ID. Instead, use the name of the record to call IdentifyRecordByName to get the ID of the record. Use this ID to call other actions.</description>
+            <developerName>Instruction1</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction 1</masterLabel>
+            <sortOrder>0</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If the user asks to find relevant or matching application forms, first check if the user has specified a stage for the application forms.
+If yes, then check if the stage matches one of these valid stages:
+- New
+- Details Validated
+- Evaluation Complete
+- Vetting Complete
+- Rejected
+- Approved
+- Offered
+
+If the user hasn&apos;t specified a stage or has specified an invalid stage, prompt the user to select a stage from a numbered list of the valid stages.
+
+If the user has specified a valid stage, call GetRelevantApplicationForms with the recruitmentPostingNameOrId and the stage as input.
+
+Then, ask the user if they want to create candidate leads for the applicants who submitted these application forms. If the user says yes, call CreateCandidateLeads.</description>
+            <developerName>Instruction2</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction 2</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If the user asks to save, store, log, or archive profiles or details of the applicants or candidates, call CreateCandidateLeads.
+
+If the responseMessage and errorMessage from CreateCandidateLeads is empty, inform the user that you didn&apos;t create any new lead records as there are existing candidates in the system.
+
+If the responseMessage from CreateCandidateLeads is not empty or not null, display the response message and ask if user would like to send an email to the candidates about the job opening. If yes, call EmailCandidateLeads.</description>
+            <developerName>Instruction3</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction 3</masterLabel>
+            <sortOrder>2</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActionLinks>
+            <functionName>CreateCandidateLeads_179Ws000000SgVl</functionName>
+        </localActionLinks>
+        <localActionLinks>
+            <functionName>SummarizeRecord_179Ws000000SgVl</functionName>
+        </localActionLinks>
+        <localActionLinks>
+            <functionName>EmailCandidateLeads_179Ws000000SgVl</functionName>
+        </localActionLinks>
+        <localActionLinks>
+            <functionName>QueryRecords_179Ws000000SgVl</functionName>
+        </localActionLinks>
+        <localActionLinks>
+            <functionName>GetRecordDetails_179Ws000000SgVl</functionName>
+        </localActionLinks>
+        <localActionLinks>
+            <functionName>IdentifyRecordByName_179Ws000000SgVl</functionName>
+        </localActionLinks>
+        <localActionLinks>
+            <functionName>GetRelevantApplicationForms_179Ws000000SgVl</functionName>
+        </localActionLinks>
+        <localActions>
+            <fullName>CreateCandidateLeads_179Ws000000SgVl</fullName>
+            <description>Creates lead records for potential candidates for a vacancy. In the lead records, includes information from the party profile of applicants who submitted the application forms selected by the user.</description>
+            <developerName>CreateCandidateLeads_179Ws000000SgVl</developerName>
+            <invocationTarget>rcrt_agent__CreateCandidateLeads</invocationTarget>
+            <invocationTargetType>flow</invocationTargetType>
+            <isConfirmationRequired>true</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>CreateCandidateLeads</localDeveloperName>
+            <masterLabel>Create Candidate Leads</masterLabel>
+            <progressIndicatorMessage>Creating leads</progressIndicatorMessage>
+            <source>rcrt_agent__CreateCandidateLeads</source>
+        </localActions>
+        <localActions>
+            <fullName>GetRelevantApplicationForms_179Ws000000SgVl</fullName>
+            <description>Gets a list of application form records that are relevant to the given recruitment posting record.</description>
+            <developerName>GetRelevantApplicationForms_179Ws000000SgVl</developerName>
+            <invocationTarget>rcrt_agent__GetRelevantApplnForms</invocationTarget>
+            <invocationTargetType>flow</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>GetRelevantApplicationForms</localDeveloperName>
+            <masterLabel>Get Relevant Application Forms</masterLabel>
+            <progressIndicatorMessage>Gathering information</progressIndicatorMessage>
+            <source>rcrt_agent__GetRelevantApplicationForms</source>
+        </localActions>
+        <localActions>
+            <fullName>EmailCandidateLeads_179Ws000000SgVl</fullName>
+            <description>Sends emails to candidates who are identified as leads for a vacancy to invite them to check the recruitment posting and apply for the job.</description>
+            <developerName>EmailCandidateLeads_179Ws000000SgVl</developerName>
+            <invocationTarget>rcrt_agent__EmailCandidateLeads</invocationTarget>
+            <invocationTargetType>flow</invocationTargetType>
+            <isConfirmationRequired>true</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>EmailCandidateLeads</localDeveloperName>
+            <masterLabel>Email Candidate Leads</masterLabel>
+            <progressIndicatorMessage>Crafting your email</progressIndicatorMessage>
+            <source>rcrt_agent__EmailCandidateLeads</source>
+        </localActions>
+        <localActions>
+            <fullName>QueryRecords_179Ws000000SgVl</fullName>
+            <description>Finds and retrieves Salesforce CRM records based on user input and specific conditions, such as field values. This action automatically identifies the correct records and object type. e.g. &apos;Find all open opportunities created in the last 5 days sorted by created date.&apos;</description>
+            <developerName>QueryRecords_179Ws000000SgVl</developerName>
+            <invocationTarget>queryRecords</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>QueryRecords</localDeveloperName>
+            <masterLabel>Query Records</masterLabel>
+            <source>EmployeeCopilot__QueryRecords</source>
+        </localActions>
+        <localActions>
+            <fullName>GetRecordDetails_179Ws000000SgVl</fullName>
+            <description>Generates a text blob containing record details, including object fields and values and records from related lists.</description>
+            <developerName>GetRecordDetails_179Ws000000SgVl</developerName>
+            <invocationTarget>getDataForGrounding</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>GetRecordDetails</localDeveloperName>
+            <masterLabel>Get Record Details</masterLabel>
+            <progressIndicatorMessage>Getting details</progressIndicatorMessage>
+            <source>EmployeeCopilot__GetRecordDetails</source>
+        </localActions>
+        <localActions>
+            <fullName>IdentifyRecordByName_179Ws000000SgVl</fullName>
+            <description>Searches for Salesforce CRM records by name and returns a list of matching Salesforce CRM record IDs.</description>
+            <developerName>IdentifyRecordByName_179Ws000000SgVl</developerName>
+            <invocationTarget>identifyRecordByName</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>IdentifyRecordByName</localDeveloperName>
+            <masterLabel>Identify Record by Name</masterLabel>
+            <source>EmployeeCopilot__IdentifyRecordByName</source>
+        </localActions>
+        <localActions>
+            <fullName>SummarizeRecord_179Ws000000SgVl</fullName>
+            <description>Summarizes a single Salesforce CRM record. You must call summarizeRecord only if the user explicitly asks for a summary (e.g: &apos;Summary&apos;, &apos;Recap&apos;, &apos;Highlights&apos;). This action should be called only when there isn&apos;t a more specific summarization action.</description>
+            <developerName>SummarizeRecord_179Ws000000SgVl</developerName>
+            <invocationTarget>getRecordSummarizationPrompt</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>SummarizeRecord</localDeveloperName>
+            <masterLabel>Summarize Record</masterLabel>
+            <progressIndicatorMessage>Summarizing</progressIndicatorMessage>
+            <source>EmployeeCopilot__SummarizeRecord</source>
+        </localActions>
+        <localDeveloperName>CandidateSourcing</localDeveloperName>
+        <masterLabel>Candidate Sourcing</masterLabel>
+        <pluginType>Topic</pluginType>
+        <scope>Your job is to help the user identify and reach out to potential candidates for a recruitment posting from past applicants for similar recruitment postings. This includes finding application forms submitted for similar recruitment postings in the past, filtering the application forms by the stage specified by the user,  creating lead records for the applicants who submitted these application forms to identify them as potential candidates, and sending emails to the potential candidates on behalf of the user.</scope>
+        <source>rcrt_agent__CandidateSourcing</source>
+    </localTopics>
+    <masterLabel>Recruiter Agent</masterLabel>
+    <plannerActions>
+        <fullName>AnswerQuestionsWithKnowledge_16jWs000000is4j</fullName>
+        <description>Answers questions about company policies and procedures, troubleshooting steps, or product information. For example: “What is your return policy?” “How do I fix an issue?” or “What features does a product have?”</description>
+        <developerName>AnswerQuestionsWithKnowledge_16jWs000000is4j</developerName>
+        <invocationTarget>streamKnowledgeSearch</invocationTarget>
+        <invocationTargetType>standardInvocableAction</invocationTargetType>
+        <isConfirmationRequired>false</isConfirmationRequired>
+        <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+        <localDeveloperName>AnswerQuestionsWithKnowledge</localDeveloperName>
+        <masterLabel>Answer Questions with Knowledge</masterLabel>
+        <progressIndicatorMessage>Getting answers</progressIndicatorMessage>
+        <source>EmployeeCopilot__AnswerQuestionsWithKnowledge</source>
+    </plannerActions>
+    <plannerSurfaces>
+        <adaptiveResponseAllowed>true</adaptiveResponseAllowed>
+        <callRecordingAllowed>false</callRecordingAllowed>
+        <surface>SurfaceAction__Messaging</surface>
+        <surfaceType>Messaging</surfaceType>
+    </plannerSurfaces>
+    <plannerType>AiCopilot__ReAct</plannerType>
+</GenAiPlannerBundle>

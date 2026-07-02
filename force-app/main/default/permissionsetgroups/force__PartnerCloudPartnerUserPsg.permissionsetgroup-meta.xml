@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>PartnerCloudPartnerUserPsg</label>
+    <permissionSets>force__ContactInspectionForPartnersPartnerCommunityLoginUser</permissionSets>
+    <permissionSets>force__ContactInspectionForPartnersPartnerCommunityUser</permissionSets>
+    <permissionSets>force__LeadInspectionForPartnersPartnerCommunityLoginUser</permissionSets>
+    <permissionSets>force__LeadInspectionForPartnersPartnerCommunityUser</permissionSets>
+    <permissionSets>force__MDFForPartnerCommunityLoginUsers</permissionSets>
+    <permissionSets>force__MDFForPartnerCommunityUsers</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Contains the packaged permission sets required to access Employee Concierge.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Employee Concierge Access Group</label>
+    <permissionSets>wkdw__EmployeeConciergeAccess</permissionSets>
+    <permissionSets>wkdw__helpdesk_user</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

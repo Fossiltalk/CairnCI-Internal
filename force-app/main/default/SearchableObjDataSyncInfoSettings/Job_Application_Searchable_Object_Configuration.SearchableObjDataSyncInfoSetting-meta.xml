@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchableObjDataSyncInfo xmlns="http://soap.sforce.com/2006/04/metadata">
+    <dataSyncActive>false</dataSyncActive>
+    <description>Configuration that specifies the Data Processing Engine definition that creates or updates searchable object records, maps search criteria fields to picklist values, and links search result fields to corresponding records.</description>
+    <lookupMappings>
+        <inputObject>JobApplnSearchableField</inputObject>
+        <mappingFields>
+            <inputField>ApplicationFormId</inputField>
+            <outputField>ApplicationFormName</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>JobPositionId</inputField>
+            <outputField>JobPositionName</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>AccountId</inputField>
+            <outputField>ApplicantName</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>LastEvaluationId</inputField>
+            <outputField>LastEvaluationName</outputField>
+        </mappingFields>
+        <outputObject>JobApplnSearchableField</outputObject>
+    </lookupMappings>
+    <masterLabel>Job Application Searchable Object Configuration</masterLabel>
+    <searchableObject>JobApplnSearchableField</searchableObject>
+</SearchableObjDataSyncInfo>

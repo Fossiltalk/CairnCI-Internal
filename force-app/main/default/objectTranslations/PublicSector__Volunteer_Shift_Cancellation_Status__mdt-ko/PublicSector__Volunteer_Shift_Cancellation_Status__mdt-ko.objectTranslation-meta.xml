@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- 자원봉사자 교대 근무 취소 상태 --></value>
+    </caseValues>
+</CustomObjectTranslation>

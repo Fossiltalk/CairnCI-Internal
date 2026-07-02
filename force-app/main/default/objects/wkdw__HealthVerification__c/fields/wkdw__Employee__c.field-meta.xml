@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>wkdw__Employee__c</fullName>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <deprecated>false</deprecated>
+    <description>This field connects the Vaccination record to the related Employee record</description>
+    <label>Employee</label>
+    <referenceTo>Employee</referenceTo>
+    <relationshipLabel>Health Verifications</relationshipLabel>
+    <relationshipName>Health_Verifications</relationshipName>
+    <required>true</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

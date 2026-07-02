@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PublicSector__RequestedService__c</fullName>
+    <deprecated>false</deprecated>
+    <label>Requested Service</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Food Delivery</fullName>
+                <default>true</default>
+                <label>Food Delivery</label>
+            </value>
+            <value>
+                <fullName>Medicine / Medical Supplies Delivery</fullName>
+                <default>false</default>
+                <label>Medicine / Medical Supplies Delivery</label>
+            </value>
+            <value>
+                <fullName>Temporary Housing</fullName>
+                <default>false</default>
+                <label>Temporary Housing</label>
+            </value>
+            <value>
+                <fullName>Well-Being Check</fullName>
+                <default>false</default>
+                <label>Well-Being Check</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

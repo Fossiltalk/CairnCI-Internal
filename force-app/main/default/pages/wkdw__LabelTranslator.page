@@ -1,0 +1,7 @@
+<apex:page showHeader="false"
+    sidebar="false"
+    controller="wkdw.LabelTranslatorController"
+    language="{!language}"
+    standardStylesheets="false"
+    contentType="application/json"
+    >{!$Label[label]}</apex:page>

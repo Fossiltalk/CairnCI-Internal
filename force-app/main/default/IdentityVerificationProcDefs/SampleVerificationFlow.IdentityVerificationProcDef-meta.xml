@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<IdentityVerificationProcDef xmlns="http://soap.sforce.com/2006/04/metadata">
+    <identityVerificationProcDtls>
+        <fullName>SamplePersonAccountSearch</fullName>
+        <dataSourceType>Salesforce</dataSourceType>
+        <developerName>SamplePersonAccountSearch</developerName>
+        <identityVerificationProcFlds>
+            <fullName>SampleAccountName</fullName>
+            <dataSourceType>Salesforce</dataSourceType>
+            <developerName>SampleAccountName</developerName>
+            <fieldName>Name</fieldName>
+            <fieldType>requiredVerifier</fieldType>
+            <isActive>true</isActive>
+            <isManualInput>false</isManualInput>
+            <masterLabel>Sample Account Name</masterLabel>
+            <sequenceNumber>1</sequenceNumber>
+        </identityVerificationProcFlds>
+        <identityVerificationProcFlds>
+            <fullName>SamplePhone</fullName>
+            <dataSourceType>Salesforce</dataSourceType>
+            <developerName>SamplePhone</developerName>
+            <fieldName>Phone</fieldName>
+            <fieldType>optionalVerifier</fieldType>
+            <isActive>true</isActive>
+            <isManualInput>false</isManualInput>
+            <masterLabel>Sample Phone</masterLabel>
+            <sequenceNumber>3</sequenceNumber>
+        </identityVerificationProcFlds>
+        <identityVerificationProcFlds>
+            <fullName>SamplePostalCode</fullName>
+            <dataSourceType>Salesforce</dataSourceType>
+            <developerName>SamplePostalCode</developerName>
+            <fieldName>BillingPostalCode</fieldName>
+            <fieldType>optionalVerifier</fieldType>
+            <isActive>true</isActive>
+            <isManualInput>false</isManualInput>
+            <masterLabel>Sample Postal Code</masterLabel>
+            <sequenceNumber>4</sequenceNumber>
+        </identityVerificationProcFlds>
+        <identityVerificationProcFlds>
+            <fullName>SampleAccount</fullName>
+            <dataSourceType>Salesforce</dataSourceType>
+            <developerName>SampleAccount</developerName>
+            <fieldName>Name</fieldName>
+            <fieldType>resultField</fieldType>
+            <isActive>true</isActive>
+            <isManualInput>false</isManualInput>
+            <masterLabel>Sample Account</masterLabel>
+            <sequenceNumber>1</sequenceNumber>
+        </identityVerificationProcFlds>
+        <identityVerificationProcFlds>
+            <fullName>SamplePhoneNumber</fullName>
+            <dataSourceType>Salesforce</dataSourceType>
+            <developerName>SamplePhoneNumber</developerName>
+            <fieldName>Phone</fieldName>
+            <fieldType>resultField</fieldType>
+            <isActive>true</isActive>
+            <isManualInput>false</isManualInput>
+            <masterLabel>Sample Phone Number</masterLabel>
+            <sequenceNumber>3</sequenceNumber>
+        </identityVerificationProcFlds>
+        <identityVerificationProcFlds>
+            <fullName>SampleBirthdate</fullName>
+            <dataSourceType>Salesforce</dataSourceType>
+            <developerName>SampleBirthdate</developerName>
+            <fieldName>PersonBirthdate</fieldName>
+            <fieldType>requiredVerifier</fieldType>
+            <isActive>true</isActive>
+            <isManualInput>false</isManualInput>
+            <masterLabel>Sample Birthdate</masterLabel>
+            <sequenceNumber>2</sequenceNumber>
+        </identityVerificationProcFlds>
+        <identityVerificationProcFlds>
+            <fullName>SampleDOB</fullName>
+            <dataSourceType>Salesforce</dataSourceType>
+            <developerName>SampleDOB</developerName>
+            <fieldName>PersonBirthdate</fieldName>
+            <fieldType>resultField</fieldType>
+            <isActive>true</isActive>
+            <isManualInput>false</isManualInput>
+            <masterLabel>Sample Date of Birth</masterLabel>
+            <sequenceNumber>2</sequenceNumber>
+        </identityVerificationProcFlds>
+        <isActive>true</isActive>
+        <isRetryAllowedAfterLimit>false</isRetryAllowedAfterLimit>
+        <masterLabel>Sample Person Account Search</masterLabel>
+        <objectName>Account</objectName>
+        <optionalVerifiersMinVerfCount>1</optionalVerifiersMinVerfCount>
+        <searchFilter>isPersonAccount = true</searchFilter>
+        <searchRecordUniqueIdField>Id</searchRecordUniqueIdField>
+        <searchResultSortBy>Name</searchResultSortBy>
+        <searchSequenceNumber>1</searchSequenceNumber>
+        <searchType>Text-Based</searchType>
+    </identityVerificationProcDtls>
+    <masterLabel>Sample Verification Flow</masterLabel>
+    <searchLayoutType>Tab</searchLayoutType>
+</IdentityVerificationProcDef>

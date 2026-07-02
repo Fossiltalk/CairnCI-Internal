@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PublicSector__Volunteer_Shift</fullName>
+    <active>true</active>
+    <description>Record type for Volunteers assigned to Shift</description>
+    <label>Volunteer Shift</label>
+    <picklistValues>
+        <picklist>Status</picklist>
+        <values>
+            <fullName>Tentative</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+</RecordType>

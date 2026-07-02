@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Образец за регистриране</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Образци за регистриране</value>
+    </caseValues>
+    <gender>Masculine</gender>
+    <nameFieldLabel>Име на образец</nameFieldLabel>
+</CustomObjectTranslation>

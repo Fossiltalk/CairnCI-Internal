@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OmniDataTransform xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>false</active>
+    <assignmentRulesUsed>false</assignmentRulesUsed>
+    <deletedOnSuccess>false</deletedOnSuccess>
+    <errorIgnored>false</errorIgnored>
+    <fieldLevelSecurityEnabled>false</fieldLevelSecurityEnabled>
+    <inputType>JSON</inputType>
+    <isManagedUsingStdDesigner>false</isManagedUsingStdDesigner>
+    <name>PSSCoCDeletePartyIncomeRecords</name>
+    <nullInputsIncludedInOutput>false</nullInputsIncludedInOutput>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCDeletePartyIncomeRecords9067692231147426</globalKey>
+        <inputFieldName>HouseholdIncomeDetails:PartyIncomeId</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCDeletePartyIncomeRecords</name>
+        <omniDataTransformation>0kdhk0000001dTB</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dTB</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Id</outputFieldName>
+        <outputObjectName>PartyIncome</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>true</disabled>
+        <filterGroup>0.0</filterGroup>
+        <filterOperator>=</filterOperator>
+        <globalKey>PSSCoCDeletePartyIncomeRecords12165681909318016</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <migrationValue>FAKEMAPPING</migrationValue>
+        <name>PSSCoCDeletePartyIncomeRecords</name>
+        <omniDataTransformation>0kdhk0000001dTA</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dTA</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Id</outputFieldName>
+        <outputObjectName>PartyIncome</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <formulaConverted>| var:HouseholdIncomeDetails:StartDate &quot;*-*&quot; LIKE var:StartDate | var:StartDate UNIXTODATETIME IF</formulaConverted>
+        <formulaResultPath>StartDate</formulaResultPath>
+        <formulaSequence>1.0</formulaSequence>
+        <globalKey>PSSCoCDeletePartyIncomeRecords570127415916921</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCDeletePartyIncomeRecords</name>
+        <omniDataTransformation>0kdhk0000001dT8</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dT8</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Formula</outputFieldName>
+        <outputObjectName>Formula</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCDeletePartyIncomeRecords4319205773523762</globalKey>
+        <inputFieldName>HouseholdIncomeDetails:StartDate</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCDeletePartyIncomeRecords</name>
+        <omniDataTransformation>0kdhk0000001dT9</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dT9</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>EndDate</outputFieldName>
+        <outputObjectName>PartyIncome</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <transformValuesMappings>{ }</transformValuesMappings>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <outputType>SObject</outputType>
+    <previewJsonData>{
+  &quot;HouseholdIncomeDetails&quot; : {
+    &quot;PartyIncomeId&quot; : &quot;2m3xx000000004rAAA&quot;,
+    &quot;StartDate&quot; : &quot;2024-01-01T00:00:00.000Z&quot;,
+    &quot;IncomeFrequency&quot; : &quot;Monthly&quot;,
+    &quot;Employer&quot; : &quot;Salesforce&quot;,
+    &quot;IncomeCurrentMonth&quot; : 12,
+    &quot;IncomeHouseholdMemberName&quot; : &quot;Integration Demo PA&quot;
+  }
+}</previewJsonData>
+    <processSuperBulk>false</processSuperBulk>
+    <responseCacheTtlMinutes>0.0</responseCacheTtlMinutes>
+    <rollbackOnError>false</rollbackOnError>
+    <sourceObject>json</sourceObject>
+    <sourceObjectDefault>false</sourceObjectDefault>
+    <synchronousProcessThreshold>0.0</synchronousProcessThreshold>
+    <type>Load</type>
+    <uniqueName>PSSCoCDeletePartyIncomeRecords_1</uniqueName>
+    <versionNumber>1.0</versionNumber>
+    <xmlDeclarationRemoved>false</xmlDeclarationRemoved>
+</OmniDataTransform>

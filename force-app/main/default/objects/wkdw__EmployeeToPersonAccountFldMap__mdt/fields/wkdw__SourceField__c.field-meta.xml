@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>wkdw__SourceField__c</fullName>
+    <deprecated>false</deprecated>
+    <description>The employee record field that maps to the specified target field on the person account.</description>
+    <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <inlineHelpText>API name of the Employee field. Needs to include the __c if it is a custom field</inlineHelpText>
+    <label>Source Field Name</label>
+    <length>255</length>
+    <required>true</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

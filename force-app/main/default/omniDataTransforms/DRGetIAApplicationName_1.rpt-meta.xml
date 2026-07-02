@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OmniDataTransform xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>false</active>
+    <assignmentRulesUsed>false</assignmentRulesUsed>
+    <deletedOnSuccess>false</deletedOnSuccess>
+    <errorIgnored>false</errorIgnored>
+    <expectedInputJson>{
+  &quot;ContextId&quot; : &quot;&quot;,
+  &quot;timeStamp&quot; : &quot;2020-03-31T06:00:23.982Z&quot;,
+  &quot;userId&quot; : &quot;005B00000065DsSåIAU&quot;,
+  &quot;userName&quot; : &quot;sazher_patch1@salesforce.com&quot;,
+  &quot;userProfile&quot; : &quot;System Administrator&quot;,
+  &quot;userTimeZone&quot; : -420,
+  &quot;userCurrencyCode&quot; : &quot;USD&quot;,
+  &quot;sfdcIFrameOrigin&quot; : &quot;https://vlocity-ins.na44.visual.stmfa.stm.force.com&quot;,
+  &quot;sfdcIFrameHost&quot; : &quot;web&quot;,
+  &quot;layout&quot; : &quot;lightning&quot;,
+  &quot;isdtp&quot; : &quot;p1&quot;,
+  &quot;id&quot; : &quot;a3KRM000000005h2AA&quot;,
+  &quot;vlcPersistentComponent&quot; : { },
+  &quot;LICENCETYPE_AND_FEES&quot; : {
+    &quot;ProfessionalDesignation&quot; : &quot;Medicine &amp; Surgery (MD)&quot;,
+    &quot;GraduateType&quot; : &quot;U.S./Canada&quot;,
+    &quot;ApplicationType&quot; : &quot;License by Examination ($805.00)&quot;,
+    &quot;Industries&quot; : &quot;Healthcare&quot;,
+    &quot;isIndustriesFilled&quot; : true,
+    &quot;BusinessActivity&quot; : &quot;ACT 1 BT1&quot;,
+    &quot;isBusinessActivityFilled&quot; : true,
+    &quot;AuthorizationCategory&quot; : &quot;License&quot;,
+    &quot;AuthorizationType&quot; : &quot;RAT 1&quot;,
+    &quot;AssociatedPersonAccount&quot; : &quot;ACT - 1&quot;
+  },
+  &quot;APPLICANT_INFORMATION&quot; : {
+    &quot;PersonAccountName&quot; : &quot;ACT - 1&quot;,
+    &quot;PersonAccountLastName&quot; : &quot;eweqwe&quot;,
+    &quot;EmailOfPersonAccount&quot; : &quot;a@b.com&quot;,
+    &quot;Telephone1&quot; : &quot;1231312312&quot;,
+    &quot;PersonAccountDob&quot; : &quot;2020-03-03&quot;,
+    &quot;GenderOfPersonAccount&quot; : &quot;Male&quot;,
+    &quot;SSN&quot; : null,
+    &quot;DegreesHeld&quot; : null,
+    &quot;RaceEthnicity&quot; : null,
+    &quot;RaceEthnicityHasChooseNotToDisclose&quot; : false,
+    &quot;RaceEthnicitySelCountGtOne&quot; : false,
+    &quot;RaceEthnicityValidate&quot; : false,
+    &quot;LanguagesSpoken&quot; : null,
+    &quot;IsLanguagesSpokenOther&quot; : false,
+    &quot;OtherLanguage&quot; : null
+  },
+  &quot;OtherNamesUsed&quot; : {
+    &quot;OtherName&quot; : {
+      &quot;FirstNameOther&quot; : &quot;wqeeqw&quot;,
+      &quot;LastNameOther&quot; : &quot;ewqewq&quot;
+    }
+  },
+  &quot;MailingAddress&quot; : {
+    &quot;MailingAddrSelect&quot; : &quot;HomeAddress&quot;,
+    &quot;IsHomeAddrSelected&quot; : true,
+    &quot;IsBizAddrSelected&quot; : false,
+    &quot;EnsureOnlyOneOfHomeBizAddrIsSelected&quot; : true,
+    &quot;HomeAddress&quot; : {
+      &quot;CHA&quot; : &quot;Gachiwad Road&quot;,
+      &quot;HomeCity&quot; : &quot;Valsad&quot;,
+      &quot;HomeState&quot; : &quot;GJ&quot;,
+      &quot;ZipCode&quot; : 396001,
+      &quot;HomePhone&quot; : null,
+      &quot;HomeEmail&quot; : null
+    },
+    &quot;BusinessAddress&quot; : {
+      &quot;CurrentBusinessAddress&quot; : null,
+      &quot;BusinessCity&quot; : null,
+      &quot;BusinessState&quot; : null,
+      &quot;BizZipCode&quot; : null,
+      &quot;BizTelephone&quot; : null,
+      &quot;BizEmail&quot; : null
+    }
+  },
+  &quot;MEDICAL_SCHOOLS_ATTENDED&quot; : {
+    &quot;MedicalSchoolAttended&quot; : {
+      &quot;MedSchoolName&quot; : &quot;qwe&quot;,
+      &quot;GraduationDate&quot; : &quot;2020-03-09&quot;,
+      &quot;DegreeCertAwarded&quot; : &quot;qwe&quot;,
+      &quot;GradCity&quot; : &quot;Valsad&quot;,
+      &quot;GradState&quot; : &quot;GJ&quot;,
+      &quot;GradCountry&quot; : &quot;India&quot;
+    }
+  },
+  &quot;PgMedTrainings&quot; : {
+    &quot;PgMedicalTraining&quot; : {
+      &quot;ProgramName&quot; : &quot;ewq&quot;,
+      &quot;ProgramStartDate&quot; : &quot;2020-03-03&quot;,
+      &quot;ProgramEndDate&quot; : &quot;2020-03-03&quot;,
+      &quot;ProgramTypeofPosition&quot; : &quot;Internship&quot;,
+      &quot;ProgramCity&quot; : &quot;Valsad&quot;,
+      &quot;ProgramState&quot; : &quot;GJ&quot;,
+      &quot;ProgramCountry&quot; : &quot;India&quot;
+    }
+  },
+  &quot;WORK_EXPERIENCE&quot; : {
+    &quot;Employer&quot; : {
+      &quot;EmployerName&quot; : &quot;ads&quot;,
+      &quot;EmploymentStartDate&quot; : &quot;2020-03-17&quot;,
+      &quot;EmploymentEndDate&quot; : &quot;2020-03-09&quot;,
+      &quot;ReasonForLeaving&quot; : &quot;ads&quot;,
+      &quot;EmploymentCity&quot; : &quot;Valsad&quot;,
+      &quot;EmploymentState&quot; : &quot;GJ&quot;,
+      &quot;EmploymentCountry&quot; : &quot;India&quot;
+    }
+  },
+  &quot;OTHER_MEDICAL_LICENSES&quot; : {
+    &quot;MedicalLicense&quot; : {
+      &quot;Jurisdiction&quot; : &quot;cxz&quot;,
+      &quot;IssueDate&quot; : &quot;2020-03-10&quot;,
+      &quot;ExpiryDate&quot; : &quot;2020-03-10&quot;,
+      &quot;LicenseNumber&quot; : &quot;eqw&quot;
+    }
+  },
+  &quot;PRACTICE_SPECIALTIES_AND_BOARD_CERTS&quot; : {
+    &quot;PracticeSpeciality&quot; : &quot;qwe&quot;,
+    &quot;BoardCertifiedInfo&quot; : {
+      &quot;CertifyingBoard&quot; : &quot;ads&quot;,
+      &quot;CertifyingAgency&quot; : &quot;ads&quot;
+    }
+  },
+  &quot;REQUIRED_SCREENING_QUESTIONS&quot; : {
+    &quot;ScreenQuestion1&quot; : false,
+    &quot;ScreenQuestion2&quot; : false,
+    &quot;ScreenQuestion3&quot; : false,
+    &quot;ScreenQuestion4&quot; : false,
+    &quot;ScreenQuestion5&quot; : false,
+    &quot;ScreenQuestion6&quot; : false,
+    &quot;ScreenQuestion7&quot; : false
+  },
+  &quot;APPLICANT_AFFIDAVIT&quot; : {
+    &quot;ApplicantSign&quot; : &quot;ads&quot;,
+    &quot;Submission Date&quot; : &quot;2020-03-11&quot;
+  },
+  &quot;SampleUser&quot; : &quot;005RM0000025atnYAA&quot;,
+  &quot;ApplicationStatus&quot; : &quot;Submitted&quot;,
+  &quot;ContactId&quot; : &quot;003RM000006GmF9YAK&quot;,
+  &quot;ContactName&quot; : &quot;Dieggo John&quot;,
+  &quot;vlcKnowledge&quot; : {
+    &quot;knowledgeItems&quot; : [ ]
+  },
+  &quot;error&quot; : &quot;OK&quot;,
+  &quot;PersonAccountId&quot; : &quot;001RM000004eZGJYA2&quot;,
+  &quot;AssociatedAccountId&quot; : &quot;001RM000004eZGJYA2&quot;,
+  &quot;AuthorizationTypeId&quot; : &quot;0ehRM0000004C9NYAU&quot;,
+  &quot;BusinessActivityId&quot; : &quot;2gFRM0000004C9S2AU&quot;,
+  &quot;DRId_OccupationLicenseApplication&quot; : &quot;0f2RM0000004C9NYAU&quot;,
+  &quot;DRId_Case&quot; : &quot;500RM000002hw7oYAA&quot;
+}</expectedInputJson>
+    <fieldLevelSecurityEnabled>true</fieldLevelSecurityEnabled>
+    <inputType>JSON</inputType>
+    <isManagedUsingStdDesigner>false</isManagedUsingStdDesigner>
+    <name>DRGetIAApplicationName</name>
+    <nullInputsIncludedInOutput>false</nullInputsIncludedInOutput>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>bf4aab42-f3d1-4003-a25a-fe1212390e96</globalKey>
+        <inputFieldName>CreatedOla:Name</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRGetIAApplicationName</name>
+        <omniDataTransformation>0kdhk0000001djR</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001djR</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>CreatedOlaName</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <filterOperator>=</filterOperator>
+        <filterValue>createdOlaId</filterValue>
+        <globalKey>fd59b0b2-edd1-47e0-bc0e-64a9a95fb0be</globalKey>
+        <inputFieldName>Id</inputFieldName>
+        <inputObjectName>IndividualApplication</inputObjectName>
+        <inputObjectQuerySequence>1.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRGetIAApplicationName</name>
+        <omniDataTransformation>0kdhk0000001djQ</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001djQ</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>CreatedOla</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <outputType>JSON</outputType>
+    <previewJsonData>{
+  &quot;createdOlaId&quot; : &quot;0f2RM0000004C9NYAU&quot;
+}</previewJsonData>
+    <processSuperBulk>false</processSuperBulk>
+    <responseCacheTtlMinutes>0.0</responseCacheTtlMinutes>
+    <rollbackOnError>false</rollbackOnError>
+    <sourceObject>json</sourceObject>
+    <sourceObjectDefault>false</sourceObjectDefault>
+    <synchronousProcessThreshold>-1.0</synchronousProcessThreshold>
+    <type>Extract</type>
+    <uniqueName>DRGetIAApplicationName_1</uniqueName>
+    <versionNumber>1.0</versionNumber>
+    <xmlDeclarationRemoved>false</xmlDeclarationRemoved>
+</OmniDataTransform>

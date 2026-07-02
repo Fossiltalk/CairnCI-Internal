@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>UnifiedCatalogAdminPsl</label>
+    <permissionSets>force__ContextServiceAdminPsl</permissionSets>
+    <permissionSets>force__ProductCatalogManagementAdministrator</permissionSets>
+    <permissionSets>force__ProductDiscoveryAdmin</permissionSets>
+    <permissionSets>force__ProductDiscoveryUser</permissionSets>
+    <permissionSets>force__UnifiedCatalogAdmin</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

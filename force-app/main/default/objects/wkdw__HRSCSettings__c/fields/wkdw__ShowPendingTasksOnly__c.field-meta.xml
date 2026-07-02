@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>wkdw__ShowPendingTasksOnly__c</fullName>
+    <defaultValue>false</defaultValue>
+    <deprecated>false</deprecated>
+    <description>Display only pending tasks in the onboarding task list.</description>
+    <inlineHelpText>When selected, only pending tasks are displayed in the onboarding task checklist. When deselected, all tasks are displayed.</inlineHelpText>
+    <label>Show Only Pending Tasks</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

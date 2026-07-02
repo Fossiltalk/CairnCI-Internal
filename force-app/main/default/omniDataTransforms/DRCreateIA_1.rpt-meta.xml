@@ -1,0 +1,687 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OmniDataTransform xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>false</active>
+    <assignmentRulesUsed>false</assignmentRulesUsed>
+    <deletedOnSuccess>false</deletedOnSuccess>
+    <errorIgnored>false</errorIgnored>
+    <expectedInputJson>{
+  &quot;ContextId&quot; : &quot;&quot;,
+  &quot;timeStamp&quot; : &quot;2020-03-31T05:02:26.359Z&quot;,
+  &quot;userId&quot; : &quot;005B00000065DsSIAU&quot;,
+  &quot;userName&quot; : &quot;sazher_patch1@salesforce.com&quot;,
+  &quot;userProfile&quot; : &quot;System Administrator&quot;,
+  &quot;userTimeZone&quot; : -420,
+  &quot;userCurrencyCode&quot; : &quot;USD&quot;,
+  &quot;sfdcIFrameOrigin&quot; : &quot;https://vlocity-ins.na44.visual.stmfa.stm.force.com&quot;,
+  &quot;sfdcIFrameHost&quot; : &quot;web&quot;,
+  &quot;layout&quot; : &quot;lightning&quot;,
+  &quot;isdtp&quot; : &quot;p1&quot;,
+  &quot;id&quot; : &quot;a3KRM000000005h2AA&quot;,
+  &quot;vlcPersistentComponent&quot; : { },
+  &quot;LICENCETYPE_AND_FEES&quot; : {
+    &quot;ProfessionalDesignation&quot; : &quot;Medicine &amp; Surgery (MD)&quot;,
+    &quot;GraduateType&quot; : &quot;U.S./Canada&quot;,
+    &quot;ApplicationType&quot; : &quot;License by Examination ($805.00)&quot;,
+    &quot;Industries&quot; : &quot;Healthcare&quot;,
+    &quot;isIndustriesFilled&quot; : true,
+    &quot;BusinessActivity&quot; : &quot;ACT 1 BT1&quot;,
+    &quot;isBusinessActivityFilled&quot; : true,
+    &quot;AuthorizationCategory&quot; : &quot;License&quot;,
+    &quot;AuthorizationType&quot; : &quot;RAT 1&quot;,
+    &quot;AssociatedPersonAccount&quot; : &quot;ACT - 1&quot;
+  },
+  &quot;APPLICANT_INFORMATION&quot; : {
+    &quot;PersonAccountName&quot; : &quot;ACT - 1&quot;,
+    &quot;PersonAccountLastName&quot; : &quot;test&quot;,
+    &quot;EmailOfPersonAccount&quot; : &quot;test@test.com&quot;,
+    &quot;Telephone1&quot; : &quot;9898989898&quot;,
+    &quot;PersonAccountDob&quot; : &quot;1974-03-05&quot;,
+    &quot;GenderOfPersonAccount&quot; : &quot;Male&quot;,
+    &quot;SSN&quot; : null,
+    &quot;DegreesHeld&quot; : null,
+    &quot;RaceEthnicity&quot; : &quot;Black/African American&quot;,
+    &quot;RaceEthnicityHasChooseNotToDisclose&quot; : false,
+    &quot;RaceEthnicitySelCountGtOne&quot; : false,
+    &quot;RaceEthnicityValidate&quot; : false,
+    &quot;LanguagesSpoken&quot; : &quot;Other&quot;,
+    &quot;IsLanguagesSpokenOther&quot; : true,
+    &quot;OtherLanguage&quot; : &quot;asdf&quot;
+  },
+  &quot;OtherNamesUsed&quot; : {
+    &quot;OtherName&quot; : {
+      &quot;FirstNameOther&quot; : &quot;asdf&quot;,
+      &quot;LastNameOther&quot; : &quot;asdf&quot;
+    }
+  },
+  &quot;MailingAddress&quot; : {
+    &quot;MailingAddrSelect&quot; : &quot;HomeAddress&quot;,
+    &quot;IsHomeAddrSelected&quot; : true,
+    &quot;IsBizAddrSelected&quot; : false,
+    &quot;EnsureOnlyOneOfHomeBizAddrIsSelected&quot; : true,
+    &quot;HomeAddress&quot; : {
+      &quot;CHA&quot; : &quot;2245 Islington Avenue&quot;,
+      &quot;HomeCity&quot; : &quot;Toronto&quot;,
+      &quot;HomeState&quot; : &quot;ON&quot;,
+      &quot;ZipCode&quot; : 342134,
+      &quot;HomePhone&quot; : null,
+      &quot;HomeEmail&quot; : null
+    },
+    &quot;BusinessAddress&quot; : {
+      &quot;CurrentBusinessAddress&quot; : null,
+      &quot;BusinessCity&quot; : null,
+      &quot;BusinessState&quot; : null,
+      &quot;BizZipCode&quot; : null,
+      &quot;BizTelephone&quot; : null,
+      &quot;BizEmail&quot; : null
+    }
+  },
+  &quot;MEDICAL_SCHOOLS_ATTENDED&quot; : {
+    &quot;MedicalSchoolAttended&quot; : {
+      &quot;MedSchoolName&quot; : &quot;asdf&quot;,
+      &quot;GraduationDate&quot; : &quot;2020-03-02&quot;,
+      &quot;DegreeCertAwarded&quot; : &quot;tewst&quot;,
+      &quot;GradCity&quot; : &quot;Toronto&quot;,
+      &quot;GradState&quot; : &quot;ON&quot;,
+      &quot;GradCountry&quot; : &quot;Canada&quot;
+    }
+  },
+  &quot;PgMedTrainings&quot; : {
+    &quot;PgMedicalTraining&quot; : {
+      &quot;ProgramName&quot; : &quot;tesate&quot;,
+      &quot;ProgramStartDate&quot; : &quot;2020-03-02&quot;,
+      &quot;ProgramEndDate&quot; : &quot;2020-03-17&quot;,
+      &quot;ProgramTypeofPosition&quot; : null,
+      &quot;ProgramCity&quot; : &quot;San Francisco&quot;,
+      &quot;ProgramState&quot; : &quot;CA&quot;,
+      &quot;ProgramCountry&quot; : &quot;United States&quot;
+    }
+  },
+  &quot;WORK_EXPERIENCE&quot; : {
+    &quot;Employer&quot; : {
+      &quot;EmployerName&quot; : &quot;adf&quot;,
+      &quot;EmploymentStartDate&quot; : &quot;2020-03-09&quot;,
+      &quot;EmploymentEndDate&quot; : &quot;2020-03-02&quot;,
+      &quot;ReasonForLeaving&quot; : &quot;asdfasfd&quot;,
+      &quot;EmploymentCity&quot; : &quot;London&quot;,
+      &quot;EmploymentState&quot; : &quot;TELANGANA&quot;,
+      &quot;EmploymentCountry&quot; : &quot;United Kingdom&quot;
+    }
+  },
+  &quot;OTHER_MEDICAL_LICENSES&quot; : {
+    &quot;MedicalLicense&quot; : {
+      &quot;Jurisdiction&quot; : &quot;eadsfasf&quot;,
+      &quot;IssueDate&quot; : &quot;2020-03-01&quot;,
+      &quot;ExpiryDate&quot; : &quot;2021-03-31&quot;,
+      &quot;LicenseNumber&quot; : &quot;2342424&quot;
+    }
+  },
+  &quot;PRACTICE_SPECIALTIES_AND_BOARD_CERTS&quot; : {
+    &quot;PracticeSpeciality&quot; : &quot;teasdfsaf&quot;,
+    &quot;BoardCertifiedInfo&quot; : {
+      &quot;CertifyingBoard&quot; : &quot;asdfasdf&quot;,
+      &quot;CertifyingAgency&quot; : &quot;adsfasdf&quot;
+    }
+  },
+  &quot;REQUIRED_SCREENING_QUESTIONS&quot; : {
+    &quot;ScreenQuestion1&quot; : false,
+    &quot;ScreenQuestion2&quot; : false,
+    &quot;ScreenQuestion3&quot; : false,
+    &quot;ScreenQuestion4&quot; : true,
+    &quot;ScreenQuestion5&quot; : false,
+    &quot;ScreenQuestion6&quot; : false,
+    &quot;ScreenQuestion7&quot; : false
+  },
+  &quot;APPLICANT_AFFIDAVIT&quot; : {
+    &quot;ApplicantSign&quot; : &quot;adsf&quot;,
+    &quot;Submission Date&quot; : &quot;2020-03-02&quot;
+  },
+  &quot;SampleUser&quot; : &quot;005RM0000025atnYAA&quot;,
+  &quot;ApplicationStatus&quot; : &quot;Submitted&quot;,
+  &quot;ContactId&quot; : &quot;003RM000006GmF9YAK&quot;,
+  &quot;ContactName&quot; : &quot;Dieggo John&quot;,
+  &quot;vlcKnowledge&quot; : {
+    &quot;knowledgeItems&quot; : [ ]
+  },
+  &quot;error&quot; : &quot;OK&quot;,
+  &quot;PersonAccountId&quot; : &quot;001RM000004eZGJYA2&quot;,
+  &quot;AssociatedAccountId&quot; : &quot;001RM000004eZGJYA2&quot;,
+  &quot;AuthorizationTypeId&quot; : &quot;0ehRM0000004C9NYAU&quot;,
+  &quot;BusinessActivityId&quot; : &quot;2gFRM0000004C9S2AU&quot;,
+  &quot;DRId_OccupationLicenseApplication&quot; : &quot;0f2RM0000004C9IYAU&quot;,
+  &quot;DRId_Case&quot; : &quot;500RM000002hw7eYAA&quot;
+}</expectedInputJson>
+    <fieldLevelSecurityEnabled>false</fieldLevelSecurityEnabled>
+    <inputType>JSON</inputType>
+    <isManagedUsingStdDesigner>false</isManagedUsingStdDesigner>
+    <name>DRCreateIA</name>
+    <nullInputsIncludedInOutput>false</nullInputsIncludedInOutput>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>c657660a-5a22-4895-8529-092a61797b9d</globalKey>
+        <inputFieldName>DRPersonAccountForContact:AssociatedPersonAccountId</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRCreateIA</name>
+        <omniDataTransformation>0kdhk0000001dis</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dis</omniDataTransformationId>
+        <outputCreationSequence>2.0</outputCreationSequence>
+        <outputFieldName>AccountId</outputFieldName>
+        <outputObjectName>IndividualApplication</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>true</disabled>
+        <filterGroup>0.0</filterGroup>
+        <filterOperator>=</filterOperator>
+        <globalKey>f761fa39-b2fd-4288-baaf-500629be7efa</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <migrationValue>FAKEMAPPING</migrationValue>
+        <name>DRCreateIA</name>
+        <omniDataTransformation>0kdhk0000001dj4</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dj4</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Id</outputFieldName>
+        <outputObjectName>Case</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>1e07ad21-5b04-42ed-8be0-448201972c1e</globalKey>
+        <inputFieldName>LICENCETYPE_AND_FEES:AuthorizationCategory</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRCreateIA</name>
+        <omniDataTransformation>0kdhk0000001dj3</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dj3</omniDataTransformationId>
+        <outputCreationSequence>2.0</outputCreationSequence>
+        <outputFieldName>Category</outputFieldName>
+        <outputObjectName>IndividualApplication</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>cc09d1c1-7e79-4d53-8f1a-d4fe3f592de0</globalKey>
+        <inputFieldName>ApplicationStatus</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRCreateIA</name>
+        <omniDataTransformation>0kdhk0000001diu</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001diu</omniDataTransformationId>
+        <outputCreationSequence>2.0</outputCreationSequence>
+        <outputFieldName>Status</outputFieldName>
+        <outputObjectName>IndividualApplication</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>8d389510-e82a-4bc4-8325-8c09e9e358f3</globalKey>
+        <inputFieldName>AppliedDate</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRCreateIA</name>
+        <omniDataTransformation>0kdhk0000001dj6</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dj6</omniDataTransformationId>
+        <outputCreationSequence>2.0</outputCreationSequence>
+        <outputFieldName>AppliedDate</outputFieldName>
+        <outputObjectName>IndividualApplication</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>c1395101-c27a-4f29-b845-93fd4d4f41ce</globalKey>
+        <inputFieldName>ApplicationCategory</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRCreateIA</name>
+        <omniDataTransformation>0kdhk0000001dit</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dit</omniDataTransformationId>
+        <outputCreationSequence>2.0</outputCreationSequence>
+        <outputFieldName>ApplicationCategory</outputFieldName>
+        <outputObjectName>IndividualApplication</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>bd5d8178-a582-4e77-877c-b4fcf05e6380</globalKey>
+        <inputFieldName>AuthorizationTypeId</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRCreateIA</name>
+        <omniDataTransformation>0kdhk0000001dj5</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dj5</omniDataTransformationId>
+        <outputCreationSequence>2.0</outputCreationSequence>
+        <outputFieldName>LicenseTypeId</outputFieldName>
+        <outputObjectName>IndividualApplication</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <formulaConverted>&quot;Basic&quot;</formulaConverted>
+        <formulaExpression>&quot;Basic&quot;</formulaExpression>
+        <formulaResultPath>ApplicationCategory</formulaResultPath>
+        <formulaSequence>4.0</formulaSequence>
+        <globalKey>1fdcc394-36dc-4d88-82a6-3474a356c5cc</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRCreateIA</name>
+        <omniDataTransformation>0kdhk0000001diw</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001diw</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Formula</outputFieldName>
+        <outputObjectName>Formula</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <formulaConverted>| TODAY</formulaConverted>
+        <formulaExpression>TODAY()</formulaExpression>
+        <formulaResultPath>AppliedDate</formulaResultPath>
+        <formulaSequence>2.0</formulaSequence>
+        <globalKey>b002b8d5-acf5-4618-b387-032fda3e212b</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRCreateIA</name>
+        <omniDataTransformation>0kdhk0000001dj8</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dj8</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Formula</outputFieldName>
+        <outputObjectName>Formula</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>b89146e6-561b-445c-ba47-1011069033a9</globalKey>
+        <inputFieldName>DRPersonAccountForContact:AssociatedPersonAccountId</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRCreateIA</name>
+        <omniDataTransformation>0kdhk0000001div</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001div</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>AccountId</outputFieldName>
+        <outputObjectName>Case</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>d0825d26-4443-4cb7-aa5c-a1b05e7965dd</globalKey>
+        <inputFieldName>DRId_Case</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRCreateIA</name>
+        <omniDataTransformation>0kdhk0000001dj7</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dj7</omniDataTransformationId>
+        <outputCreationSequence>2.0</outputCreationSequence>
+        <outputFieldName>ApplicationCaseId</outputFieldName>
+        <outputObjectName>IndividualApplication</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>818b98ee-da3a-480a-89a5-8f766cb68dab</globalKey>
+        <inputFieldName>CaseDescription</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRCreateIA</name>
+        <omniDataTransformation>0kdhk0000001diy</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001diy</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Description</outputFieldName>
+        <outputObjectName>Case</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <formulaConverted>&quot;Person/\/\/Name:/\/\/&quot; var:APPLICANT_INFORMATION:PersonAccountLastName + &quot;/\/\/,/\/\/Authorization/\/\/Type:/\/\/&quot; + var:LICENCETYPE_AND_FEES:AuthorizationType + &quot;,/\/\/Submitted/\/\/by:/\/\/&quot; + var:ContactName +</formulaConverted>
+        <formulaExpression>&quot;Person Name: &quot; + APPLICANT_INFORMATION:PersonAccountLastName + &quot; , Authorization Type: &quot; + LICENCETYPE_AND_FEES:AuthorizationType + &quot;, Submitted by: &quot; + ContactName</formulaExpression>
+        <formulaResultPath>CaseDescription</formulaResultPath>
+        <formulaSequence>1.0</formulaSequence>
+        <globalKey>bf5864b4-45d9-40b7-8528-632d49fe309f</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRCreateIA</name>
+        <omniDataTransformation>0kdhk0000001dix</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dix</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Formula</outputFieldName>
+        <outputObjectName>Formula</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>f160f6d9-fcfe-41fe-afaf-69d6c044fb06</globalKey>
+        <inputFieldName>DRContactForUser:ContactId</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRCreateIA</name>
+        <omniDataTransformation>0kdhk0000001dj9</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dj9</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>ContactId</outputFieldName>
+        <outputObjectName>Case</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <formulaConverted>&quot;Submitted&quot;</formulaConverted>
+        <formulaExpression>&quot;Submitted&quot;</formulaExpression>
+        <formulaResultPath>ApplicationStatus</formulaResultPath>
+        <formulaSequence>5.0</formulaSequence>
+        <globalKey>d97b042a-87c5-4091-82f1-262e6998f673</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRCreateIA</name>
+        <omniDataTransformation>0kdhk0000001dj0</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dj0</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Formula</outputFieldName>
+        <outputObjectName>Formula</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>e1a491eb-6bef-49e0-8319-fd82c4efddae</globalKey>
+        <inputFieldName>CaseDescription</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRCreateIA</name>
+        <omniDataTransformation>0kdhk0000001dj2</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dj2</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Subject</outputFieldName>
+        <outputObjectName>Case</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <filterOperator>=</filterOperator>
+        <globalKey>832ded64-0419-4238-b479-fb22a44dc3a5</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedFieldName>Id</linkedFieldName>
+        <linkedObjectSequence>1.0</linkedObjectSequence>
+        <migrationValue>FAKEMAPPING</migrationValue>
+        <name>DRCreateIA</name>
+        <omniDataTransformation>0kdhk0000001dj1</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dj1</omniDataTransformationId>
+        <outputCreationSequence>2.0</outputCreationSequence>
+        <outputFieldName>ApplicationCaseId</outputFieldName>
+        <outputObjectName>IndividualApplication</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>10eb4845-188d-4877-9a02-c44e1719528a</globalKey>
+        <inputFieldName>BusinessActivityId</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRCreateIA</name>
+        <omniDataTransformation>0kdhk0000001djD</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001djD</omniDataTransformationId>
+        <outputCreationSequence>2.0</outputCreationSequence>
+        <outputFieldFormat>String</outputFieldFormat>
+        <outputFieldName>BusinessTypeId</outputFieldName>
+        <outputObjectName>IndividualApplication</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>true</disabled>
+        <filterGroup>0.0</filterGroup>
+        <filterOperator>=</filterOperator>
+        <globalKey>63cf82a2-1cfe-4426-b19b-e7f7f547dac1</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <migrationValue>FAKEMAPPING</migrationValue>
+        <name>DRCreateIA</name>
+        <omniDataTransformation>0kdhk0000001djC</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001djC</omniDataTransformationId>
+        <outputCreationSequence>2.0</outputCreationSequence>
+        <outputFieldName>Id</outputFieldName>
+        <outputObjectName>IndividualApplication</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <formulaConverted>| var:RenewApplication var:null = &quot;New&quot; &quot;Renewal&quot; IF</formulaConverted>
+        <formulaExpression>IF(%RenewApplication%=null, &quot;New&quot;, &quot;Renewal&quot;)</formulaExpression>
+        <formulaResultPath>ApplicationType</formulaResultPath>
+        <formulaSequence>3.0</formulaSequence>
+        <globalKey>777412a9-256f-4bcd-8b5d-9f3475b691b2</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRCreateIA</name>
+        <omniDataTransformation>0kdhk0000001diz</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001diz</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Formula</outputFieldName>
+        <outputObjectName>Formula</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>fcb2aaa4-9a4c-4dc2-bb82-405b0a37f629</globalKey>
+        <inputFieldName>LICENCETYPE_AND_FEES:ApplicationType</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRCreateIA</name>
+        <omniDataTransformation>0kdhk0000001djB</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001djB</omniDataTransformationId>
+        <outputCreationSequence>2.0</outputCreationSequence>
+        <outputFieldName>ApplicationType</outputFieldName>
+        <outputObjectName>IndividualApplication</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>1e2e9be7-1976-4ad3-856d-91d869ff3f03</globalKey>
+        <inputFieldName>DRId_PreliminaryApplicationRef</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>DRCreateIA</name>
+        <omniDataTransformation>0kdhk0000001djA</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001djA</omniDataTransformationId>
+        <outputCreationSequence>2.0</outputCreationSequence>
+        <outputFieldName>SavedApplicationRefId</outputFieldName>
+        <outputObjectName>IndividualApplication</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <outputType>SObject</outputType>
+    <previewJsonData>{
+  &quot;ContextId&quot; : &quot;&quot;,
+  &quot;timeStamp&quot; : &quot;2020-03-31T06:00:23.982Z&quot;,
+  &quot;userId&quot; : &quot;005B00000065DsSåIAU&quot;,
+  &quot;userName&quot; : &quot;sazher_patch1@salesforce.com&quot;,
+  &quot;userProfile&quot; : &quot;System Administrator&quot;,
+  &quot;userTimeZone&quot; : -420,
+  &quot;userCurrencyCode&quot; : &quot;USD&quot;,
+  &quot;sfdcIFrameOrigin&quot; : &quot;https://vlocity-ins.na44.visual.stmfa.stm.force.com&quot;,
+  &quot;sfdcIFrameHost&quot; : &quot;web&quot;,
+  &quot;layout&quot; : &quot;lightning&quot;,
+  &quot;isdtp&quot; : &quot;p1&quot;,
+  &quot;id&quot; : &quot;a3KRM000000005h2AA&quot;,
+  &quot;vlcPersistentComponent&quot; : { },
+  &quot;LICENCETYPE_AND_FEES&quot; : {
+    &quot;ProfessionalDesignation&quot; : &quot;Medicine &amp; Surgery (MD)&quot;,
+    &quot;GraduateType&quot; : &quot;U.S./Canada&quot;,
+    &quot;ApplicationType&quot; : &quot;License by Examination ($805.00)&quot;,
+    &quot;Industries&quot; : &quot;Healthcare&quot;,
+    &quot;isIndustriesFilled&quot; : true,
+    &quot;BusinessActivity&quot; : &quot;ACT 1 BT1&quot;,
+    &quot;isBusinessActivityFilled&quot; : true,
+    &quot;AuthorizationCategory&quot; : &quot;License&quot;,
+    &quot;AuthorizationType&quot; : &quot;RAT 1&quot;,
+    &quot;AssociatedPersonAccount&quot; : &quot;ACT - 1&quot;
+  },
+  &quot;APPLICANT_INFORMATION&quot; : {
+    &quot;PersonAccountName&quot; : &quot;ACT - 1&quot;,
+    &quot;PersonAccountLastName&quot; : &quot;eweqwe&quot;,
+    &quot;EmailOfPersonAccount&quot; : &quot;a@b.com&quot;,
+    &quot;Telephone1&quot; : &quot;1231312312&quot;,
+    &quot;PersonAccountDob&quot; : &quot;2020-03-03&quot;,
+    &quot;GenderOfPersonAccount&quot; : &quot;Male&quot;,
+    &quot;SSN&quot; : null,
+    &quot;DegreesHeld&quot; : null,
+    &quot;RaceEthnicity&quot; : null,
+    &quot;RaceEthnicityHasChooseNotToDisclose&quot; : false,
+    &quot;RaceEthnicitySelCountGtOne&quot; : false,
+    &quot;RaceEthnicityValidate&quot; : false,
+    &quot;LanguagesSpoken&quot; : null,
+    &quot;IsLanguagesSpokenOther&quot; : false,
+    &quot;OtherLanguage&quot; : null
+  },
+  &quot;OtherNamesUsed&quot; : {
+    &quot;OtherName&quot; : {
+      &quot;FirstNameOther&quot; : &quot;wqeeqw&quot;,
+      &quot;LastNameOther&quot; : &quot;ewqewq&quot;
+    }
+  },
+  &quot;MailingAddress&quot; : {
+    &quot;MailingAddrSelect&quot; : &quot;HomeAddress&quot;,
+    &quot;IsHomeAddrSelected&quot; : true,
+    &quot;IsBizAddrSelected&quot; : false,
+    &quot;EnsureOnlyOneOfHomeBizAddrIsSelected&quot; : true,
+    &quot;HomeAddress&quot; : {
+      &quot;CHA&quot; : &quot;Gachiwad Road&quot;,
+      &quot;HomeCity&quot; : &quot;Valsad&quot;,
+      &quot;HomeState&quot; : &quot;GJ&quot;,
+      &quot;ZipCode&quot; : 396001,
+      &quot;HomePhone&quot; : null,
+      &quot;HomeEmail&quot; : null
+    },
+    &quot;BusinessAddress&quot; : {
+      &quot;CurrentBusinessAddress&quot; : null,
+      &quot;BusinessCity&quot; : null,
+      &quot;BusinessState&quot; : null,
+      &quot;BizZipCode&quot; : null,
+      &quot;BizTelephone&quot; : null,
+      &quot;BizEmail&quot; : null
+    }
+  },
+  &quot;MEDICAL_SCHOOLS_ATTENDED&quot; : {
+    &quot;MedicalSchoolAttended&quot; : {
+      &quot;MedSchoolName&quot; : &quot;qwe&quot;,
+      &quot;GraduationDate&quot; : &quot;2020-03-09&quot;,
+      &quot;DegreeCertAwarded&quot; : &quot;qwe&quot;,
+      &quot;GradCity&quot; : &quot;Valsad&quot;,
+      &quot;GradState&quot; : &quot;GJ&quot;,
+      &quot;GradCountry&quot; : &quot;India&quot;
+    }
+  },
+  &quot;PgMedTrainings&quot; : {
+    &quot;PgMedicalTraining&quot; : {
+      &quot;ProgramName&quot; : &quot;ewq&quot;,
+      &quot;ProgramStartDate&quot; : &quot;2020-03-03&quot;,
+      &quot;ProgramEndDate&quot; : &quot;2020-03-03&quot;,
+      &quot;ProgramTypeofPosition&quot; : &quot;Internship&quot;,
+      &quot;ProgramCity&quot; : &quot;Valsad&quot;,
+      &quot;ProgramState&quot; : &quot;GJ&quot;,
+      &quot;ProgramCountry&quot; : &quot;India&quot;
+    }
+  },
+  &quot;WORK_EXPERIENCE&quot; : {
+    &quot;Employer&quot; : {
+      &quot;EmployerName&quot; : &quot;ads&quot;,
+      &quot;EmploymentStartDate&quot; : &quot;2020-03-17&quot;,
+      &quot;EmploymentEndDate&quot; : &quot;2020-03-09&quot;,
+      &quot;ReasonForLeaving&quot; : &quot;ads&quot;,
+      &quot;EmploymentCity&quot; : &quot;Valsad&quot;,
+      &quot;EmploymentState&quot; : &quot;GJ&quot;,
+      &quot;EmploymentCountry&quot; : &quot;India&quot;
+    }
+  },
+  &quot;OTHER_MEDICAL_LICENSES&quot; : {
+    &quot;MedicalLicense&quot; : {
+      &quot;Jurisdiction&quot; : &quot;cxz&quot;,
+      &quot;IssueDate&quot; : &quot;2020-03-10&quot;,
+      &quot;ExpiryDate&quot; : &quot;2020-03-10&quot;,
+      &quot;LicenseNumber&quot; : &quot;eqw&quot;
+    }
+  },
+  &quot;PRACTICE_SPECIALTIES_AND_BOARD_CERTS&quot; : {
+    &quot;PracticeSpeciality&quot; : &quot;qwe&quot;,
+    &quot;BoardCertifiedInfo&quot; : {
+      &quot;CertifyingBoard&quot; : &quot;ads&quot;,
+      &quot;CertifyingAgency&quot; : &quot;ads&quot;
+    }
+  },
+  &quot;REQUIRED_SCREENING_QUESTIONS&quot; : {
+    &quot;ScreenQuestion1&quot; : false,
+    &quot;ScreenQuestion2&quot; : false,
+    &quot;ScreenQuestion3&quot; : false,
+    &quot;ScreenQuestion4&quot; : false,
+    &quot;ScreenQuestion5&quot; : false,
+    &quot;ScreenQuestion6&quot; : false,
+    &quot;ScreenQuestion7&quot; : false
+  },
+  &quot;APPLICANT_AFFIDAVIT&quot; : {
+    &quot;ApplicantSign&quot; : &quot;ads&quot;,
+    &quot;Submission Date&quot; : &quot;2020-03-11&quot;
+  },
+  &quot;SampleUser&quot; : &quot;005RM0000025atnYAA&quot;,
+  &quot;ApplicationStatus&quot; : &quot;Submitted&quot;,
+  &quot;ContactId&quot; : &quot;003RM000006GmF9YAK&quot;,
+  &quot;ContactName&quot; : &quot;Dieggo John&quot;,
+  &quot;vlcKnowledge&quot; : {
+    &quot;knowledgeItems&quot; : [ ]
+  },
+  &quot;error&quot; : &quot;OK&quot;,
+  &quot;PersonAccountId&quot; : &quot;001RM000004eZGJYA2&quot;,
+  &quot;AssociatedAccountId&quot; : &quot;001RM000004eZGJYA2&quot;,
+  &quot;AuthorizationTypeId&quot; : &quot;0ehRM0000004C9NYAU&quot;,
+  &quot;BusinessActivityId&quot; : &quot;2gFRM0000004C9S2AU&quot;,
+  &quot;DRId_OccupationLicenseApplication&quot; : &quot;0f2RM0000004C9NYAU&quot;,
+  &quot;DRId_Case&quot; : &quot;500RM000002hw7oYAA&quot;
+}</previewJsonData>
+    <processSuperBulk>false</processSuperBulk>
+    <responseCacheTtlMinutes>0.0</responseCacheTtlMinutes>
+    <rollbackOnError>true</rollbackOnError>
+    <sourceObject>json</sourceObject>
+    <sourceObjectDefault>false</sourceObjectDefault>
+    <synchronousProcessThreshold>-1.0</synchronousProcessThreshold>
+    <type>Load</type>
+    <uniqueName>DRCreateIA_1</uniqueName>
+    <versionNumber>1.0</versionNumber>
+    <xmlDeclarationRemoved>false</xmlDeclarationRemoved>
+</OmniDataTransform>

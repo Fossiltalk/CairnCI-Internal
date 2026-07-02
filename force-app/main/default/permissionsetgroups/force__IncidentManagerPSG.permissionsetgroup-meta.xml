@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>IncidentManagerPSG</label>
+    <permissionSets>force__IncidentManager</permissionSets>
+    <permissionSets>force__ItSrvcCnfgItmReadPermissionSet</permissionSets>
+    <permissionSets>force__ItSrvcIncAssocsRslvPermSet</permissionSets>
+    <permissionSets>force__ItSrvcIncChgAssocPermSet</permissionSets>
+    <permissionSets>force__ItSrvcIncDeletePermSet</permissionSets>
+    <permissionSets>force__ItSrvcIncProbAssocPermSet</permissionSets>
+    <permissionSets>force__ItSrvcIncRelAssocPermSet</permissionSets>
+    <permissionSets>force__ItSrvcMajIncProposPermSet</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

@@ -1,0 +1,22 @@
+<apex:page standardStylesheets="false"
+           showHeader="false" applyHtmlTag="false" applyBodyTag="false"
+           sidebar="false" controller="omnistudio.VFLegacyAccessController" docType="html-5.0"
+           language="{!$CurrentPage.parameters.LanguageCode}"
+           action="{!checkOmniPreviewPageAccess}">
+
+    <html>
+        <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+        </head>
+
+        <body>
+            <apex:outputPanel rendered="{!showLegacyOmniStudioUi}">
+                <apex:include pageName="omnistudio__OmniScriptPreviewPageInner"/>
+            </apex:outputPanel>
+            <c:VFPageDeprecatedMessage rendered="{!NOT(showLegacyOmniStudioUi)}"/>
+            <c:VFActionFunction rendered="{!showLegacyOmniStudioUi}" />
+        </body>
+
+    </html>
+
+</apex:page>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>ChangeRequestManagerPSG</label>
+    <permissionSets>force__ChangeRequestManagerPermSet</permissionSets>
+    <permissionSets>force__ItSrvcChgAssocsRslvPermSet</permissionSets>
+    <permissionSets>force__ItSrvcChgDeletePermSet</permissionSets>
+    <permissionSets>force__ItSrvcChgRelAssocPermSet</permissionSets>
+    <permissionSets>force__ItSrvcChgRqstCnflctPermSet</permissionSets>
+    <permissionSets>force__ItSrvcCnfgItmReadPermissionSet</permissionSets>
+    <permissionSets>force__ItSrvcIncChgAssocPermSet</permissionSets>
+    <permissionSets>force__ItSrvcProbChgAssocPermSet</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

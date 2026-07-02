@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OmniDataTransform xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>false</active>
+    <assignmentRulesUsed>false</assignmentRulesUsed>
+    <deletedOnSuccess>false</deletedOnSuccess>
+    <description>Creates or updates a party income record.</description>
+    <errorIgnored>false</errorIgnored>
+    <expectedInputJson>{
+  &quot;EndDate&quot; : &quot;4000-12-31&quot;,
+  &quot;IncomeFrequency&quot; : &quot;Weekly&quot;,
+  &quot;IncomeType&quot; : &quot;Salary&quot;,
+  &quot;Employer&quot; : &quot;salesforce&quot;,
+  &quot;IncomeAmount&quot; : 100,
+  &quot;PartyId&quot; : &quot;001RO000004ZkbMYAS&quot;,
+  &quot;IncomeStatus&quot; : &quot;Active&quot;,
+  &quot;CalendarYear&quot; : 2023,
+  &quot;PartyIncomeId&quot; : &quot;&quot;,
+  &quot;StartDate&quot; : &quot;2023-03-01&quot;
+}</expectedInputJson>
+    <fieldLevelSecurityEnabled>false</fieldLevelSecurityEnabled>
+    <inputType>JSON</inputType>
+    <isManagedUsingStdDesigner>false</isManagedUsingStdDesigner>
+    <name>PSSUpsertPartyIncome1</name>
+    <nullInputsIncludedInOutput>false</nullInputsIncludedInOutput>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSUpsertPartyIncome944673700420759</globalKey>
+        <inputFieldName>EndDate</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSUpsertPartyIncome1</name>
+        <omniDataTransformation>0kdhk0000001diS</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001diS</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>EndDate</outputFieldName>
+        <outputObjectName>PartyIncome</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <transformValuesMappings>{ }</transformValuesMappings>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <defaultValue>Salary</defaultValue>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSUpsertPartyIncomeCustom8160</globalKey>
+        <inputFieldName>IncomeType</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSUpsertPartyIncome1</name>
+        <omniDataTransformation>0kdhk0000001diR</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001diR</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>IncomeType</outputFieldName>
+        <outputObjectName>PartyIncome</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSUpsertPartyIncome12239364308189749</globalKey>
+        <inputFieldName>IncomeFrequency</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSUpsertPartyIncome1</name>
+        <omniDataTransformation>0kdhk0000001diT</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001diT</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>IncomeFrequency</outputFieldName>
+        <outputObjectName>PartyIncome</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <formulaConverted>| var:StartDate &quot;*-*&quot; LIKE var:StartDate | var:StartDate UNIXTODATETIME IF</formulaConverted>
+        <formulaExpression>IF(%StartDate% LIKE &quot;*-*&quot;, %StartDate%, UNIXTODATETIME(%StartDate%))</formulaExpression>
+        <formulaResultPath>StartDate</formulaResultPath>
+        <formulaSequence>1.0</formulaSequence>
+        <globalKey>PSSUpsertPartyIncomeCustom1416</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSUpsertPartyIncome1</name>
+        <omniDataTransformation>0kdhk0000001diI</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001diI</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Formula</outputFieldName>
+        <outputObjectName>Formula</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <formulaConverted>| var:EndDate &quot;*-*&quot; LIKE var:EndDate | var:EndDate UNIXTODATETIME IF</formulaConverted>
+        <formulaExpression>IF(%EndDate% LIKE &quot;*-*&quot;, %EndDate%, UNIXTODATETIME(%EndDate%))</formulaExpression>
+        <formulaResultPath>EndDate</formulaResultPath>
+        <formulaSequence>2.0</formulaSequence>
+        <globalKey>PSSUpsertPartyIncomeCustom6523</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSUpsertPartyIncome1</name>
+        <omniDataTransformation>0kdhk0000001diK</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001diK</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Formula</outputFieldName>
+        <outputObjectName>Formula</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSUpsertPartyIncomeCustom4173</globalKey>
+        <inputFieldName>PartyIncomeId</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSUpsertPartyIncome1</name>
+        <omniDataTransformation>0kdhk0000001diJ</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001diJ</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Id</outputFieldName>
+        <outputObjectName>PartyIncome</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSUpsertPartyIncome005015484758797761</globalKey>
+        <inputFieldName>CalendarYear</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSUpsertPartyIncome1</name>
+        <omniDataTransformation>0kdhk0000001diM</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001diM</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>CalendarYear</outputFieldName>
+        <outputObjectName>PartyIncome</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSUpsertPartyIncome002329627936320966</globalKey>
+        <inputFieldName>Employer</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSUpsertPartyIncome1</name>
+        <omniDataTransformation>0kdhk0000001diL</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001diL</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldFormat>String</outputFieldFormat>
+        <outputFieldName>EmployerName</outputFieldName>
+        <outputObjectName>PartyIncome</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSUpsertPartyIncome8033478000103667</globalKey>
+        <inputFieldName>StartDate</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSUpsertPartyIncome1</name>
+        <omniDataTransformation>0kdhk0000001diO</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001diO</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>StartDate</outputFieldName>
+        <outputObjectName>PartyIncome</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSUpsertPartyIncome9352601307298671</globalKey>
+        <inputFieldName>PartyId</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSUpsertPartyIncome1</name>
+        <omniDataTransformation>0kdhk0000001diN</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001diN</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldFormat>String</outputFieldFormat>
+        <outputFieldName>PartyId</outputFieldName>
+        <outputObjectName>PartyIncome</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <defaultValue>Active</defaultValue>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSUpsertPartyIncome33176438009581366</globalKey>
+        <inputFieldName>IncomeStatus</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSUpsertPartyIncome1</name>
+        <omniDataTransformation>0kdhk0000001diQ</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001diQ</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>IncomeStatus</outputFieldName>
+        <outputObjectName>PartyIncome</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSUpsertPartyIncome9176149994029414</globalKey>
+        <inputFieldName>IncomeAmount</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSUpsertPartyIncome1</name>
+        <omniDataTransformation>0kdhk0000001diP</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001diP</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>IncomeAmount</outputFieldName>
+        <outputObjectName>PartyIncome</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <outputType>SObject</outputType>
+    <previewJsonData>{
+  &quot;EndDate&quot; : &quot;4000-12-31T00:00:00.000Z&quot;,
+  &quot;IncomeFrequency&quot; : &quot;Monthly&quot;,
+  &quot;IncomeType&quot; : &quot;Salary&quot;,
+  &quot;Employer&quot; : &quot;cisco&quot;,
+  &quot;IncomeAmount&quot; : 1001,
+  &quot;PartyId&quot; : &quot;001RO000004XJcwYAG&quot;,
+  &quot;IncomeStatus&quot; : &quot;Active&quot;,
+  &quot;CalendarYear&quot; : 2023,
+  &quot;PartyIncomeId&quot; : &quot;2m3RO00000000sJYAQ&quot;,
+  &quot;StartDate&quot; : 1678492800000
+}</previewJsonData>
+    <processSuperBulk>false</processSuperBulk>
+    <responseCacheTtlMinutes>0.0</responseCacheTtlMinutes>
+    <rollbackOnError>true</rollbackOnError>
+    <sourceObject>json</sourceObject>
+    <sourceObjectDefault>false</sourceObjectDefault>
+    <synchronousProcessThreshold>0.0</synchronousProcessThreshold>
+    <type>Load</type>
+    <uniqueName>PSSUpsertPartyIncome1_1</uniqueName>
+    <versionNumber>1.0</versionNumber>
+    <xmlDeclarationRemoved>false</xmlDeclarationRemoved>
+</OmniDataTransform>

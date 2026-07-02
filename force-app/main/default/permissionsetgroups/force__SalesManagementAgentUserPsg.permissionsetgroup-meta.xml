@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>SalesManagementAgentUserPsg</label>
+    <permissionSets>force__AccountManagementAgentAutonomousUser</permissionSets>
+    <permissionSets>force__PipelineManagementAgentAutonomousUser</permissionSets>
+    <permissionSets>force__SalesManagementAgentAutonomousUserViewAllCalls</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

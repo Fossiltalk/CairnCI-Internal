@@ -1,0 +1,37 @@
+{
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "responseMessage" : {
+      "title" : "Response Message",
+      "description" : "A message that tells the user that relevant application forms are fetched.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : true,
+      "copilotAction:isUsedByPlanner" : false
+    },
+    "relevantApplicationForms" : {
+      "title" : "Relevant Application Forms",
+      "description" : "A list of application forms that are relevant to the vacancy associated with the recruitment posting or recruitment requisition.",
+      "items" : {
+        "lightning:type" : "lightning__recordInfoType",
+        "lightning:sObjectInfo" : {
+          "apiName" : "ApplicationForm"
+        }
+      },
+      "lightning:type" : "lightning__listType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : true,
+      "copilotAction:isUsedByPlanner" : false
+    },
+    "errorMessage" : {
+      "title" : "Error Message",
+      "description" : "A message that lets the user know why the action failed.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : true,
+      "copilotAction:isUsedByPlanner" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType",
+  "lightning:textIndexed" : true
+}

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DecisionMatrixDefinitionVersion xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <columnType>Input</columnType>
+        <dataType>Number</dataType>
+        <displaySequence>1</displaySequence>
+        <isWildcardColumn>false</isWildcardColumn>
+        <name>NumberOfHouseholdMembers</name>
+    </columns>
+    <columns>
+        <columnType>Output</columnType>
+        <dataType>Currency</dataType>
+        <displaySequence>2</displaySequence>
+        <isWildcardColumn>false</isWildcardColumn>
+        <name>AnnualIncomeLimit</name>
+    </columns>
+    <decisionMatrixDefinition>PrescreeningForBenefits_PovertyGuideline</decisionMatrixDefinition>
+    <label>PrescreeningForBenefits_PovertyGuideline V1</label>
+    <rank>1</rank>
+    <startDate>2023-11-02T03:46:11.000Z</startDate>
+    <status>Active</status>
+    <versionNumber>1</versionNumber>
+</DecisionMatrixDefinitionVersion>

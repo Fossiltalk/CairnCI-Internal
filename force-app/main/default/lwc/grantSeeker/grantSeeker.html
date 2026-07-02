@@ -1,0 +1,39 @@
+<template>
+    <lightning-card footer="" title="">
+        <h1 class="slds-text-heading_medium">{welcome_text}</h1> 
+        <div class="c-footer" >
+            <a href="/lightning/n/Public_Sector_Grantmaking">Return to Grantmaking Home</a>
+        </div>
+        <div class="c-container"> 
+            <lightning-layout>
+                <lightning-layout-item flexibility="auto" padding="around-small"> 
+
+                    <c-feature-child
+                    heading="Explore the Experience Sites for External Users" 
+                    image-name="/resource/PSS_Learning_org_Icons/Compliance_Officer_Icon.png"
+                    app-text="Experience sites extend the platform to external users to respond back to the surveys." 
+                    app-sec-heading="Publish your Experience Site"
+                    list-text-present={pass_true}
+                    list-item1=" 1. Ensure you update the Email on the ‘Authenticated Community’ Experience Site to your email address. Navigate to the ‘Administration’ section from the Experience Site’s Workspace. You can find the Sites under 'Digital Experiences → All Sites'"
+                    list-item2=" 2. Publish the Experience Site - 'Authenticated Community' by navigating to the Builder. You can find the Sites under 'Digital Experiences → All Sites’"
+                    url="/lightning/setup/SetupNetworks/home"
+                    link-in-new-tab={pass_true}
+                    link-reference="standard__webPage"></c-feature-child>
+
+                    <template if:false={no_contact}>
+                    <c-feature-child 
+                        heading="View Experience Site as External User" 
+                        image-name="/resource/PSS_Learning_org_Icons/Admin_Icon_Square_2Color_RGB.png"
+                        app-text="View Grantmaking portal as Carole White (on Contact record, select Menu > Log in to Experience as User)"
+                        app="standard__PublicSector"
+                        link-in-new-tab={pass_true}
+                        object-name="Contact"
+                        object-id={contactId}
+                        link-reference="standard__recordPage"></c-feature-child>
+                    </template>
+
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+    </lightning-card>
+</template>

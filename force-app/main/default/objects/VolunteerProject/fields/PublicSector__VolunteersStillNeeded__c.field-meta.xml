@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PublicSector__VolunteersStillNeeded__c</fullName>
+    <deprecated>false</deprecated>
+    <description>Number of volunteers that are still needed for this volunteer project. This is an auto-calculated field.</description>
+    <externalId>false</externalId>
+    <formula>VolunteersRequired  -  PublicSector__VolunteersRegistered__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Number of volunteers that are still needed for this volunteer project. This is an auto-calculated field.</inlineHelpText>
+    <label>Volunteers Still Needed</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

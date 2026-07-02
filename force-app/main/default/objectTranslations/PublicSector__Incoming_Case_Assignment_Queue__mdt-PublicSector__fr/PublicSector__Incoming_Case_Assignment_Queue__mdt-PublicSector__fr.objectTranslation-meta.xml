@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>File d&apos;attente d&apos;attribution des requêtes entrantes</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Files d&apos;attente d&apos;attribution des requêtes entrantes</value>
+    </caseValues>
+    <gender>Feminine</gender>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

@@ -1,0 +1,125 @@
+<apex:page showHeader="false" sidebar="false" docType="html-5.0" applyBodyTag="false" lightningStylesheets="true" title="Flex Card Compile Page"
+  cache="false" controller="omnistudio.FlexCardController">
+
+  <apex:includeLightning />
+  <apex:stylesheet value="{!URLFOR($Resource.omnistudio__slds, '/assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
+
+  <head>
+
+
+  </head>
+
+  <body>
+    <div id="lightning">
+    </div>
+    <div id="auraErrorMessage">
+      <div id="loader" class="via-slds">
+        <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+          <span class="slds-assistive-text">Loading</span>
+          <div class="slds-spinner__dot-a"></div>
+          <div class="slds-spinner__dot-b"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    (function () {
+      let url = '{!$CurrentPage.URL}';
+      let flexCardIds = getUrlParam(url, 'id');
+      let deploybulk = getUrlParam(url, 'deploybulk');
+      window.addEventListener("message", receiveMessage, false);
+      document.getElementById("lightning").addEventListener('deployLightningWebComponent', handleDeployLightningWebComponent);
+      let componentLoading = false;
+      let componentName = "";
+      receiveMessage();
+      function receiveMessage(event) {
+        if (event?.data?.name !== "deployLightningWebComponentResponse_compiler") {
+          if (document.getElementById('lightning')) {
+            document.getElementById('lightning').innerHTML = "";
+          }
+          renderLoader(true);
+          componentLoading = true;
+          let orgNamespace = '{!namespace}';
+          orgNamespace = orgNamespace ? orgNamespace : 'c';
+          $Lightning.use(orgNamespace + ':ltngOutAppSupport', function () {
+            $Lightning.createComponent(`${orgNamespace ? orgNamespace : 'c'}:flexCardCompile`,
+              { "flexCardIds": flexCardIds },
+              "lightning",
+              function (cmp, status) {
+                componentLoading = false;
+                renderLoader(false);
+                if (status === "SUCCESS") {
+                  // If lwc load succesfully, making sure error div is empty
+                  document.querySelector("#auraErrorMessage").innerHTML = "";
+                }
+              }
+            );
+          });
+        }
+      }
+      function handleDeployLightningWebComponent(event) {
+        if (event?.detail) {
+          const resources = [...event.detail.resources];
+          const identifier = event.detail.identifier;
+          if(deploybulk && deploybulk == "true") {
+              sessionStorage.clear();
+              const existingResources = {};
+              resources && resources.forEach(resource => {
+                const fileName = resource.filepath || resource.name || 'unnamed';
+                existingResources[fileName] = resource.source;
+              });
+
+              sessionStorage.setItem('bulkAllResources', JSON.stringify(existingResources));
+              let element = document.getElementById("lightning");
+              if(element) {
+                let successMessage = `<div class="compileMessage slds-p-around_small" style="font-size: 16px;" id="compileMessage-0">DONE SUCCESSFULLY</div>`;
+                element.innerHTML = successMessage;
+              }
+              return Promise.resolve();
+          } 
+          else {
+              getDeployedLWC(resources, (result, event) => {
+                const response = {
+                  result: result,
+                  event: event
+                }
+                window.postMessage({ name: `deployLightningWebComponentResponse_${identifier ? identifier : 'default'}`, response: response }, "*");
+              })
+          }
+          
+        }
+      }
+      function getUrlParam(url, paramName) {
+        var paramMatch = new RegExp(paramName + '=([^&#=]*)', 'i').exec(url);
+        if (paramMatch && paramMatch.length > 1) {
+          return decodeURIComponent(paramMatch[1]);
+        }
+        return null;
+      }
+      function renderLoader(render) {
+        let loaderHtml = `<div id="loader" class="via-slds">
+        <div  role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+          <span class="slds-assistive-text">Loading</span>
+          <div class="slds-spinner__dot-a"></div>
+          <div class="slds-spinner__dot-b"></div>
+        </div>
+      </div>`;
+        let loader = document.getElementById("loader");
+        let container = document.getElementById("auraErrorMessage");
+        if (render) {
+          container.innerHTML = loaderHtml;
+        } else {
+          if (loader) {
+            container.removeChild(loader);
+          }
+        }
+      }
+      function getDeployedLWC(resources, callback) {
+        Visualforce.remoting.Manager.invokeAction(
+          '{!$RemoteAction.FlexCardController.deployLightningWebComponent}', resources, callback,
+          { buffer: false, escape: false, timeout: 120000 });
+      }
+
+    })();
+  </script>
+</apex:page>

@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OmniDataTransform xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>false</active>
+    <assignmentRulesUsed>false</assignmentRulesUsed>
+    <deletedOnSuccess>false</deletedOnSuccess>
+    <description>Finds the income details of removed members in the household income list and move the income details to a separate list.</description>
+    <errorIgnored>false</errorIgnored>
+    <fieldLevelSecurityEnabled>false</fieldLevelSecurityEnabled>
+    <inputType>JSON</inputType>
+    <isManagedUsingStdDesigner>false</isManagedUsingStdDesigner>
+    <name>PSSCoCSeparateRemovedMemberIncome</name>
+    <nullInputsIncludedInOutput>false</nullInputsIncludedInOutput>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCSeparateRemovedMemberIncome9162832123886135</globalKey>
+        <inputFieldName>RemovedMemberList:PSS_BM_v3_ExistingIncomeCurrentMonth</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCSeparateRemovedMemberIncome</name>
+        <omniDataTransformation>0kdhk0000001dTb</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dTb</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>PSS_BM_v3_RemovedHouseholdIncomeDetails:PSS_BM_v3_ExistingIncomeCurrentMonthRemoved</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCSeparateRemovedMemberIncome23885345604123032</globalKey>
+        <inputFieldName>ExistingMemberList:PSS_BM_v3_ExistingIncomeFrequency</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCSeparateRemovedMemberIncome</name>
+        <omniDataTransformation>0kdhk0000001dTa</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dTa</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>PSS_BM_v3_HouseholdIncomeDetails:PSS_BM_v3_ExistingIncomeFrequency</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCSeparateRemovedMemberIncome26940984939671053</globalKey>
+        <inputFieldName>RemovedMemberList:PSS_BM_v3_ExistingEmployer</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCSeparateRemovedMemberIncome</name>
+        <omniDataTransformation>0kdhk0000001dTd</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dTd</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>PSS_BM_v3_RemovedHouseholdIncomeDetails:PSS_BM_v3_EmployerRemoved</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCSeparateRemovedMemberIncome4817284415751828</globalKey>
+        <inputFieldName>RemovedMemberList:PSS_BM_v3_UpdatedIncomeCurrentMonth</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCSeparateRemovedMemberIncome</name>
+        <omniDataTransformation>0kdhk0000001dTc</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dTc</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>PSS_BM_v3_RemovedHouseholdIncomeDetails:PSS_BM_v3_IncomeCurrentMonthRemoved</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCSeparateRemovedMemberIncomeCustom1815</globalKey>
+        <inputFieldName>RemovedMemberList:PartyId</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCSeparateRemovedMemberIncome</name>
+        <omniDataTransformation>0kdhk0000001dTV</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dTV</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>PSS_BM_v3_RemovedHouseholdIncomeDetails:PSS_BM_v3_PartyId</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCSeparateRemovedMemberIncomeCustom7998</globalKey>
+        <inputFieldName>RemovedMemberList:PartyIncomeId</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCSeparateRemovedMemberIncome</name>
+        <omniDataTransformation>0kdhk0000001dTU</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dTU</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>PSS_BM_v3_RemovedHouseholdIncomeDetails:PSS_BM_v3_PartyIncomeId</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCSeparateRemovedMemberIncomeCustom3709</globalKey>
+        <inputFieldName>ExistingMemberList:PartyIncomeId</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCSeparateRemovedMemberIncome</name>
+        <omniDataTransformation>0kdhk0000001dTX</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dTX</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>PSS_BM_v3_HouseholdIncomeDetails:PSS_BM_v3_PartyIncomeId</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCSeparateRemovedMemberIncome8606722410211674</globalKey>
+        <inputFieldName>RemovedMemberList:PSS_BM_v3_StartDate</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCSeparateRemovedMemberIncome</name>
+        <omniDataTransformation>0kdhk0000001dTW</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dTW</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>PSS_BM_v3_RemovedHouseholdIncomeDetails:PSS_BM_v3_StartDateRemoved</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <formulaConverted>| | var:MergeList LIST &apos;MemberRemoved/\/\/!=/\/\/&quot;Yes&quot;&apos; FILTER</formulaConverted>
+        <formulaExpression>FILTER(LIST(MergeList), &apos;MemberRemoved != &quot;Yes&quot;&apos;)</formulaExpression>
+        <formulaResultPath>ExistingMemberList</formulaResultPath>
+        <formulaSequence>2.0</formulaSequence>
+        <globalKey>PSSCoCSeparateRemovedMemberIncome5247932773926376</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCSeparateRemovedMemberIncome</name>
+        <omniDataTransformation>0kdhk0000001dTZ</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dTZ</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Formula</outputFieldName>
+        <outputObjectName>Formula</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCSeparateRemovedMemberIncome7041062494433235</globalKey>
+        <inputFieldName>ExistingMemberList:PSS_BM_v3_ExistingIncomeHouseholdMemberName</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCSeparateRemovedMemberIncome</name>
+        <omniDataTransformation>0kdhk0000001dTY</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dTY</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>PSS_BM_v3_HouseholdIncomeDetails:PSS_BM_v3_ExistingIncomeHouseholdMemberName</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCSeparateRemovedMemberIncome626053847833058</globalKey>
+        <inputFieldName>ExistingMemberList:PSS_BM_v3_UpdatedIncomeCurrentMonth</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCSeparateRemovedMemberIncome</name>
+        <omniDataTransformation>0kdhk0000001dTf</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dTf</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>PSS_BM_v3_HouseholdIncomeDetails:PSS_BM_v3_UpdatedIncomeCurrentMonth</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCSeparateRemovedMemberIncome22855033656937307</globalKey>
+        <inputFieldName>RemovedMemberList:PSS_BM_v3_ExistingIncomeHouseholdMemberName</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCSeparateRemovedMemberIncome</name>
+        <omniDataTransformation>0kdhk0000001dTe</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dTe</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>PSS_BM_v3_RemovedHouseholdIncomeDetails:PSS_BM_v3_IncomeHouseholdMemberNameRemoved</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCSeparateRemovedMemberIncome8307189343488874</globalKey>
+        <inputFieldName>ExistingMemberList:PSS_BM_v3_StartDate</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCSeparateRemovedMemberIncome</name>
+        <omniDataTransformation>0kdhk0000001dTh</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dTh</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>PSS_BM_v3_HouseholdIncomeDetails:PSS_BM_v3_StartDate</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCSeparateRemovedMemberIncome9453930704322604</globalKey>
+        <inputFieldName>ExistingMemberList:PSS_BM_v3_ExistingIncomeCurrentMonth</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCSeparateRemovedMemberIncome</name>
+        <omniDataTransformation>0kdhk0000001dTg</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dTg</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>PSS_BM_v3_HouseholdIncomeDetails:PSS_BM_v3_ExistingIncomeCurrentMonth</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <formulaConverted>| | var:MergeList LIST &apos;MemberRemoved/\/\/==/\/\/&quot;Yes&quot;&apos; FILTER</formulaConverted>
+        <formulaExpression>FILTER(LIST(MergeList), &apos;MemberRemoved == &quot;Yes&quot;&apos;)</formulaExpression>
+        <formulaResultPath>RemovedMemberList</formulaResultPath>
+        <formulaSequence>1.0</formulaSequence>
+        <globalKey>PSSCoCSeparateRemovedMemberIncome6716630110574242</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCSeparateRemovedMemberIncome</name>
+        <omniDataTransformation>0kdhk0000001dTj</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dTj</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Formula</outputFieldName>
+        <outputObjectName>Formula</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCSeparateRemovedMemberIncome5691342407186788</globalKey>
+        <inputFieldName>ExistingMemberList:PSS_BM_v3_ExistingEmployer</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCSeparateRemovedMemberIncome</name>
+        <omniDataTransformation>0kdhk0000001dTi</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dTi</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>PSS_BM_v3_HouseholdIncomeDetails:PSS_BM_v3_ExistingEmployer</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCSeparateRemovedMemberIncome6312618445625535</globalKey>
+        <inputFieldName>RemovedMemberList:PSS_BM_v3_ExistingIncomeFrequency</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCSeparateRemovedMemberIncome</name>
+        <omniDataTransformation>0kdhk0000001dTl</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dTl</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>PSS_BM_v3_RemovedHouseholdIncomeDetails:PSS_BM_v3_IncomeFrequencyRemoved</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>PSSCoCSeparateRemovedMemberIncomeCustom7880</globalKey>
+        <inputFieldName>ExistingMemberList:PartyId</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>PSSCoCSeparateRemovedMemberIncome</name>
+        <omniDataTransformation>0kdhk0000001dTk</omniDataTransformation>
+        <omniDataTransformationId>0kdhk0000001dTk</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>PSS_BM_v3_HouseholdIncomeDetails:PSS_BM_v3_PartyId</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <outputType>JSON</outputType>
+    <previewJsonData>{
+  &quot;MergeList&quot; : [ {
+    &quot;PSS_BM_v3_ExistingIncomeFrequency&quot; : &quot;Monthly&quot;,
+    &quot;PSS_BM_v3_ExistingIncomeCurrentMonth&quot; : 125,
+    &quot;PSS_BM_v3_StartDate&quot; : &quot;09/07/2023&quot;,
+    &quot;PSS_BM_v3_Employer&quot; : &quot;Salesforce&quot;,
+    &quot;MemberRemoved&quot; : &quot;Yes&quot;,
+    &quot;name&quot; : &quot;Integration Demo PA&quot;,
+    &quot;PSS_BM_v3_IncomeCurrentMonth&quot; : 125,
+    &quot;PartyId&quot; : &quot;001xx000003GdzbAAC&quot;,
+    &quot;AccountId&quot; : &quot;001xx000003GdzbAAC&quot;,
+    &quot;PSS_BM_v3_IncomeHouseholdMemberName&quot; : &quot;Integration Demo PA&quot;,
+    &quot;PartyIncomeId&quot; : &quot;2m3xx00000000EXAAY&quot;
+  }, {
+    &quot;PSS_BM_v3_IncomeFrequency&quot; : &quot;Weekly&quot;,
+    &quot;PSS_BM_v3_ExistingIncomeCurrentMonth&quot; : 120,
+    &quot;PSS_BM_v3_StartDate&quot; : &quot;10/04/2023&quot;,
+    &quot;PSS_BM_v3_Employer&quot; : &quot;Amex&quot;,
+    &quot;MemberRemoved&quot; : &quot;Yes&quot;,
+    &quot;name&quot; : &quot;Integration Demo Wife&quot;,
+    &quot;PSS_BM_v3_IncomeCurrentMonth&quot; : 120,
+    &quot;PartyId&quot; : &quot;001xx000003Ge1DAAS&quot;,
+    &quot;AccountId&quot; : &quot;001xx000003Ge1DAAS&quot;,
+    &quot;PSS_BM_v3_IncomeHouseholdMemberName&quot; : &quot;Integration Demo Wife&quot;,
+    &quot;PartyIncomeId&quot; : &quot;2m3xx00000000CwAAI&quot;
+  }, {
+    &quot;PSS_BM_v3_IncomeFrequency&quot; : &quot;Monthly&quot;,
+    &quot;PSS_BM_v3_ExistingIncomeCurrentMonth&quot; : 125,
+    &quot;PSS_BM_v3_StartDate&quot; : &quot;09/07/2023&quot;,
+    &quot;PSS_BM_v3_Employer&quot; : &quot;Salesforce&quot;,
+    &quot;MemberRemoved&quot; : &quot;Yes&quot;,
+    &quot;name&quot; : &quot;Integration Demo PA&quot;,
+    &quot;PSS_BM_v3_IncomeCurrentMonth&quot; : 125,
+    &quot;PartyId&quot; : &quot;001xx000003GdzbAAC&quot;,
+    &quot;AccountId&quot; : &quot;001xx000003GdzbAAC&quot;,
+    &quot;PSS_BM_v3_IncomeHouseholdMemberName&quot; : &quot;Integration Demo PA&quot;,
+    &quot;PartyIncomeId&quot; : &quot;2m3xx00000000EXAAY&quot;
+  } ],
+  &quot;PSS_BM_v3_HouseholdIncomeDetails&quot; : [ {
+    &quot;PSS_BM_v3_IncomeFrequency&quot; : &quot;Monthly&quot;,
+    &quot;PSS_BM_v3_ExistingIncomeCurrentMonth&quot; : 125,
+    &quot;PSS_BM_v3_StartDate&quot; : &quot;09/07/2023&quot;,
+    &quot;PSS_BM_v3_Employer&quot; : &quot;Salesforce&quot;,
+    &quot;PSS_BM_v3_IncomeCurrentMonth&quot; : 125,
+    &quot;PartyId&quot; : &quot;001xx000003GdzbAAC&quot;,
+    &quot;AccountId&quot; : &quot;001xx000003GdzbAAC&quot;,
+    &quot;PSS_BM_v3_IncomeHouseholdMemberName&quot; : &quot;Integration Demo PA&quot;,
+    &quot;PartyIncomeId&quot; : &quot;2m3xx00000000EXAAY&quot;
+  }, {
+    &quot;PSS_BM_v3_IncomeFrequency&quot; : &quot;Weekly&quot;,
+    &quot;PSS_BM_v3_ExistingIncomeCurrentMonth&quot; : 120,
+    &quot;PSS_BM_v3_StartDate&quot; : &quot;10/04/2023&quot;,
+    &quot;PSS_BM_v3_Employer&quot; : &quot;Amex&quot;,
+    &quot;PSS_BM_v3_IncomeCurrentMonth&quot; : 120,
+    &quot;PartyId&quot; : &quot;001xx000003Ge1DAAS&quot;,
+    &quot;AccountId&quot; : &quot;001xx000003Ge1DAAS&quot;,
+    &quot;PSS_BM_v3_IncomeHouseholdMemberName&quot; : &quot;Integration Demo Wife&quot;,
+    &quot;PartyIncomeId&quot; : &quot;2m3xx00000000CwAAI&quot;
+  }, {
+    &quot;PSS_BM_v3_IncomeFrequency&quot; : &quot;Monthly&quot;,
+    &quot;PSS_BM_v3_ExistingIncomeCurrentMonth&quot; : 125,
+    &quot;PSS_BM_v3_StartDate&quot; : &quot;09/07/2023&quot;,
+    &quot;PSS_BM_v3_Employer&quot; : &quot;Salesforce&quot;,
+    &quot;PSS_BM_v3_IncomeCurrentMonth&quot; : 125,
+    &quot;PartyId&quot; : &quot;001xx000003GdzbAAC&quot;,
+    &quot;AccountId&quot; : &quot;001xx000003GdzbAAC&quot;,
+    &quot;PSS_BM_v3_IncomeHouseholdMemberName&quot; : &quot;Integration Demo PA&quot;,
+    &quot;PartyIncomeId&quot; : &quot;2m3xx00000000EXAAY&quot;
+  } ],
+  &quot;options&quot; : {
+    &quot;vlcFilesMap&quot; : null,
+    &quot;forceQueueable&quot; : false,
+    &quot;mockHttpResponse&quot; : null,
+    &quot;vlcApexResponse&quot; : true,
+    &quot;ParentInteractionToken&quot; : null,
+    &quot;useFuture&quot; : false,
+    &quot;isTestProcedure&quot; : false,
+    &quot;useQueueable&quot; : false,
+    &quot;disableMetadataCache&quot; : false,
+    &quot;resetCache&quot; : false,
+    &quot;vlcIPData&quot; : null,
+    &quot;OmniAnalyticsTrackingDebug&quot; : false,
+    &quot;ignoreCache&quot; : true,
+    &quot;isDebug&quot; : true,
+    &quot;queueableChainable&quot; : false,
+    &quot;useContinuation&quot; : false,
+    &quot;chainable&quot; : false,
+    &quot;shouldCommit&quot; : false,
+    &quot;vlcTestSuiteUniqueKey&quot; : null,
+    &quot;vlcTestUniqueKey&quot; : null,
+    &quot;vlcCacheKey&quot; : null,
+    &quot;useHttpCalloutMock&quot; : false,
+    &quot;continuationStepResult&quot; : null,
+    &quot;useQueueableApexRemoting&quot; : false
+  },
+  &quot;FetchRemovedMemberStatus&quot; : true,
+  &quot;MemberList&quot; : [ {
+    &quot;MemberSectionAction&quot; : &quot;Remove member&quot;,
+    &quot;PSS_BM_v3_HouseholdMemberLastName&quot; : &quot;Wife&quot;,
+    &quot;PSS_BM_v3_HouseholdMemberFirstName&quot; : &quot;Integration Demo&quot;
+  }, {
+    &quot;MemberSectionAction&quot; : &quot;Remove member&quot;,
+    &quot;PSS_BM_v3_HouseholdMemberLastName&quot; : &quot;PA&quot;,
+    &quot;PSS_BM_v3_HouseholdMemberFirstName&quot; : &quot;Integration Demo&quot;
+  } ],
+  &quot;FetchRemovedMember&quot; : [ {
+    &quot;LoopBlockIterationIndex&quot; : 1,
+    &quot;RemovedMembers&quot; : {
+      &quot;MemberRemoved&quot; : &quot;Yes&quot;,
+      &quot;name&quot; : &quot;Integration Demo Wife&quot;
+    },
+    &quot;RemovedHHMembersStatus&quot; : true,
+    &quot;AddedMembers&quot; : &quot;&quot;,
+    &quot;AddedHHMembersStatus&quot; : false,
+    &quot;LoopBlockIterationStatus&quot; : false
+  }, {
+    &quot;LoopBlockIterationIndex&quot; : 2,
+    &quot;RemovedMembers&quot; : {
+      &quot;MemberRemoved&quot; : &quot;Yes&quot;,
+      &quot;name&quot; : &quot;Integration Demo PA&quot;
+    },
+    &quot;RemovedHHMembersStatus&quot; : true,
+    &quot;AddedMembers&quot; : &quot;&quot;,
+    &quot;AddedHHMembersStatus&quot; : false,
+    &quot;LoopBlockIterationStatus&quot; : false
+  } ],
+  &quot;MergeListStatus&quot; : true
+}</previewJsonData>
+    <processSuperBulk>false</processSuperBulk>
+    <responseCacheTtlMinutes>0.0</responseCacheTtlMinutes>
+    <rollbackOnError>false</rollbackOnError>
+    <sourceObject>json</sourceObject>
+    <sourceObjectDefault>false</sourceObjectDefault>
+    <synchronousProcessThreshold>0.0</synchronousProcessThreshold>
+    <type>Transform</type>
+    <uniqueName>PSSCoCSeparateRemovedMemberIncome_1</uniqueName>
+    <versionNumber>1.0</versionNumber>
+    <xmlDeclarationRemoved>false</xmlDeclarationRemoved>
+</OmniDataTransform>

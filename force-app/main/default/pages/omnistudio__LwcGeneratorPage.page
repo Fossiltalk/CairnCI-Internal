@@ -1,0 +1,29 @@
+<apex:page showHeader="false" sidebar="false" docType="html-5.0" applyBodyTag="false" lightningStylesheets="true" title="Lwc Generation Using Java Page"
+    cache="false" controller="omnistudio.FlexCardController">
+    <apex:includeLightning />
+    <script>
+        Visualforce.remoting.timeout = 120000; // Page level timeout
+        function getDeployedLWC(resources, callback) {
+            Visualforce.remoting.Manager.invokeAction(
+                '{!$RemoteAction.FlexCardController.deployLightningWebComponent}', resources, callback,
+                { buffer: false, escape: false });
+        }
+        function receiveMessage(event) {
+            if (event?.data?.name === "deployLightningWebComponent") {
+                const resources = [...event.data.resources];
+                const identifier = event.data.identifier;
+                getDeployedLWC(resources, (result, event) => {
+                    const response = {
+                        result: result,
+                        event: event
+                    }
+                    window.top.postMessage({ name: `deployLightningWebComponentResponse_${identifier ? identifier : 'default'}`, response: response }, "*");
+                })
+            }
+        }
+        function addListener() {
+            window.addEventListener("message", receiveMessage, false);
+        }
+        addListener();
+    </script>
+</apex:page>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>To file a workers&apos; compensation claim, an employee completes an assessment. The employee&apos;s assessment responses are saved to a PDF file by using this template.</description>
+    <internalUseOnly>false</internalUseOnly>
+    <name>WorkersCompensationClaimTemplate.pdf</name>
+    <public>true</public>
+</Document>

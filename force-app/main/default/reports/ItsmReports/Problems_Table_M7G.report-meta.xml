@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Problem$Name</field>
+    </columns>
+    <columns>
+        <field>Problem$Subject</field>
+    </columns>
+    <columns>
+        <field>Problem$AssignedUser</field>
+    </columns>
+    <columns>
+        <field>Problem$Priority</field>
+    </columns>
+    <columns>
+        <field>Problem$CreatedDate</field>
+    </columns>
+    <columns>
+        <field>Problem$Status</field>
+    </columns>
+    <description>Problems Details Table</description>
+    <format>Tabular</format>
+    <name>All Problems Table</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>ITSM_Problems__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>Problem$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

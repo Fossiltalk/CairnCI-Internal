@@ -1,0 +1,53 @@
+<template>
+            <div class="slds-grid slds-wrap slds-is-relative ">
+            <div style="position: fixed;z-index: 999999;top: 0;right: 0;">
+  <omnistudio-toast class="flexcard-toast-element" theme="slds" title="" message="" styletype=""> </omnistudio-toast>
+</div>
+            <div if:false={cardLoaded} class="slds-is-absolute vloc-loader_override" style="height: 100%; width: 100%; min-height:50px; background: white; z-index: 99;">
+  <div>
+   <omnistudio-spinner
+      variant="brand"
+      alternative-text="Loading content..."
+      size="medium"
+      theme="slds"
+      ></omnistudio-spinner>
+  </div>
+</div>
+            <template if:false={hasPermission}>
+              You don't have required permissions to view this card.
+            </template>
+            <template if:true={hasPermission}>
+              <template if:true={hasRecords}>
+                      <omnistudio-flex-card-state   data-statue="true"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12"  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap slds-card slds-p-around_x-small slds-m-bottom_x-small" style="">
+          <div data-style-id="state0element0" class="slds-col   slds-size_8-of-12  " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0_child"   card={card}  record={record}  placeholder=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element1" class="slds-col   slds-size_2-of-12  " data-rindex={rindex} style="" ><omnistudio-action data-style-id="state0element1_child"  tracking-obj={_childCardTrackingObj}   state-obj={record}  card={card}  record={record}  label="Create Contact"  icon-name="standard-default"  action-list='\[{"stateAction":{"id":"flex-action-1647389118584","type":"Flyout","openUrlIn":"Current Window","flyoutType":"childCard","openFlyoutIn":"Modal","channelName":"close_modal","cardName":"CreateContactFlyout","flyoutLwc":"CreateContactFlyout"},"key":"1647389004903-w0kf0pwx8","label":"Action","draggable":true,"isOpen":true,"actionIndex":0}]'  show-spinner="false"  hide-action-icon="true"  flyout-channel="close_modal"  flyout-details='\{"openFlyoutIn":"Modal"}'  styles='\{"label":{"color":"#4070BD"}}'  theme="slds"  ></omnistudio-action>
+      </div><div data-style-id="state0element2" class="slds-col   slds-size_2-of-12  " data-rindex={rindex} style="" ><omnistudio-action data-style-id="state0element2_child"  tracking-obj={_childCardTrackingObj}   state-obj={record}  card={card}  record={record}  label="Create Account"  icon-name="standard-default"  action-list='\[{"stateAction":{"id":"flex-action-1647389237964","type":"Flyout","openUrlIn":"Current Window","flyoutType":"childCard","openFlyoutIn":"Modal","channelName":"close_modal","cardName":"CreateAccountFlyout","flyoutLwc":"CreateAccountFlyout"},"key":"1647389215537-h9dry6qs3","label":"Action","draggable":true,"isOpen":true,"actionIndex":0}]'  show-spinner="false"  hide-action-icon="true"  flyout-channel="close_modal"  flyout-details='\{"openFlyoutIn":"Modal"}'  styles='\{"label":{"color":"#4070BD"}}'  theme="slds"  ></omnistudio-action>
+      </div>
+        </div>
+      </omnistudio-flex-card-state>
+                </template>
+                <template if:false={hasRecords}>
+                      <omnistudio-flex-card-state   data-statue="false"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12"  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap slds-card slds-p-around_x-small slds-m-bottom_x-small" style="">
+          <div data-style-id="state0element0" class="slds-col   slds-size_8-of-12  " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0_child"   card={card}  record={record}  placeholder=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element1" class="slds-col   slds-size_2-of-12  " data-rindex={rindex} style="" ><omnistudio-action data-style-id="state0element1_child"  tracking-obj={_childCardTrackingObj}   state-obj={record}  card={card}  record={record}  label="Create Contact"  icon-name="standard-default"  action-list='\[{"stateAction":{"id":"flex-action-1647389118584","type":"Flyout","openUrlIn":"Current Window","flyoutType":"childCard","openFlyoutIn":"Modal","channelName":"close_modal","cardName":"CreateContactFlyout","flyoutLwc":"CreateContactFlyout"},"key":"1647389004903-w0kf0pwx8","label":"Action","draggable":true,"isOpen":true,"actionIndex":0}]'  show-spinner="false"  hide-action-icon="true"  flyout-channel="close_modal"  flyout-details='\{"openFlyoutIn":"Modal"}'  styles='\{"label":{"color":"#4070BD"}}'  theme="slds"  ></omnistudio-action>
+      </div><div data-style-id="state0element2" class="slds-col   slds-size_2-of-12  " data-rindex={rindex} style="" ><omnistudio-action data-style-id="state0element2_child"  tracking-obj={_childCardTrackingObj}   state-obj={record}  card={card}  record={record}  label="Create Account"  icon-name="standard-default"  action-list='\[{"stateAction":{"id":"flex-action-1647389237964","type":"Flyout","openUrlIn":"Current Window","flyoutType":"childCard","openFlyoutIn":"Modal","channelName":"close_modal","cardName":"CreateAccountFlyout","flyoutLwc":"CreateAccountFlyout"},"key":"1647389215537-h9dry6qs3","label":"Action","draggable":true,"isOpen":true,"actionIndex":0}]'  show-spinner="false"  hide-action-icon="true"  flyout-channel="close_modal"  flyout-details='\{"openFlyoutIn":"Modal"}'  styles='\{"label":{"color":"#4070BD"}}'  theme="slds"  ></omnistudio-action>
+      </div>
+        </div>
+      </omnistudio-flex-card-state>
+                </template>
+            </template>
+            <template if:true={hasError}>
+            {error}
+            </template>
+            
+      <omnistudio-action action-wrapperclass="slds-hide" re-render-flyout class="action-trigger slds-col" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+      
+      </omnistudio-action>
+  
+            <omnistudio-action class="execute-action" re-render-flyout action-wrapperclass="slds-hide" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+            
+            </omnistudio-action>
+            </div>
+          </template>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>An employer verifies information in a workers&apos; compensation claim and completes an assessment to provide comments and details. The employer&apos;s assessment responses are saved to a PDF file by using this template.</description>
+    <internalUseOnly>false</internalUseOnly>
+    <name>WorkersCompensationResponseTemplate.pdf</name>
+    <public>true</public>
+</Document>

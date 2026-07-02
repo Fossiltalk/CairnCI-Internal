@@ -1,0 +1,69 @@
+<template>
+    <div class="c-description">
+        <lightning-layout-item flexibility="auto">
+            <div class="custom-box">
+                <div>
+                    <template if:true={image}>
+                        <lightning-icon icon-name={image} alternative-text={heading} title="medium (default)"></lightning-icon>
+                        </template>
+                        <template if:true={imageName}>
+                        <image src={imageName} height="40" width="40"></image>
+                         </template>
+
+                    <a class="c-heading" onclick={handleClick}>{heading}</a>
+
+                    <template if:true={noRecord}>
+                        <div class="slds-text-body_small c-no-record">
+                            (There are NO records to navigate to - Clickable link will NOT work)
+                        </div> 
+                    </template> 
+                </div>
+
+       <!--      <p class="slds-text-body_regular c-feature-desc">{appText}</p>  --> 
+
+             <lightning-formatted-rich-text class="slds-text-body_regular c-feature-desc" value={appText}></lightning-formatted-rich-text>
+
+                <template if:true={secondaryTextPresent}>
+                    <div class="slds-text-body_regular c-feature-desc-second">{secondaryText}</div>
+                </template>
+
+                <template if:true={insideLinkPresent}>
+                    <div class="slds-text-body_regular c-feature-desc-second">
+                        {insideLinkBeforeText}
+                    	<lightning-formatted-url value={insideLink} label={insideLinkText} target="_blank"></lightning-formatted-url>
+                        {insideLinkAfterText}
+                    </div>
+                </template>
+
+                <template if:true={insideLink2Present}>
+                    <div class="slds-text-body_regular c-feature-desc-second">
+                        {insideLink2BeforeText}
+                    	<lightning-formatted-url value={insideLink2} label={insideLink2Text} target="_blank"></lightning-formatted-url>
+                        {insideLink2AfterText}
+                    </div>
+                </template>
+
+                <template if:true={helpTextStr}> 
+                    <lightning-helptext content={helpTextStr}></lightning-helptext>
+                </template>
+
+                <p class="c-sec-heading">{appSecHeading}</p>
+                
+                <template if:true={listTextPresent}>
+                    <div class="slds-text-body_regular">
+                        <ol type="1">
+                        <li>{listItem1}</li>
+                        <li>{listItem2}</li>
+                        <li>{listItem3}</li>
+                        <li>{listItem4}</li>
+                        <li>{listItem5}</li>
+                        <li>{listItem6}</li>
+                        <li>{listItem7}</li>
+                        <li>{listItem8}</li>
+                        </ol>
+                    </div>
+                </template>
+            </div>
+        </lightning-layout-item>
+    </div>
+</template>

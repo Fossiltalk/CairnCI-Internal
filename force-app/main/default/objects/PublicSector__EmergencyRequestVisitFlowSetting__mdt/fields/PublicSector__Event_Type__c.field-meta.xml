@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PublicSector__Event_Type__c</fullName>
+    <caseSensitive>false</caseSensitive>
+    <defaultValue>&quot;Emergency Request Visit&quot;</defaultValue>
+    <deprecated>false</deprecated>
+    <description>Picklist Value for the Type field in Event</description>
+    <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <inlineHelpText>Holds the value of the Picklist for the Type field in Event</inlineHelpText>
+    <label>Event Type</label>
+    <length>100</length>
+    <required>true</required>
+    <type>Text</type>
+    <unique>true</unique>
+</CustomField>

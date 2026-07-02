@@ -1,0 +1,25 @@
+<template>
+    <div class="c-container">
+        <template if:true={_showResults}>
+        <lightning-datatable
+                key-field="Id"
+                data={_accountList}
+                columns={columns}
+                max-row-selection="1"
+                onrowselection={getSelectedName}>
+        </lightning-datatable>
+    </template>
+    <template if:false={_accountList}>
+        <div style="text-align:center">
+            <h2>Filing a complaint?</h2>
+            <p>Give us a hint and we’ll get you the details</p>
+          </div>
+    </template>
+    <template if:true={_zeroRecord}>
+        <div style="text-align:center">
+            <h2>We couldn’t find any business or individual with that name.</h2>
+          <p>Try a different name or click Next to enter the details manually.</p>
+          </div>
+    </template>
+    </div>
+</template>
