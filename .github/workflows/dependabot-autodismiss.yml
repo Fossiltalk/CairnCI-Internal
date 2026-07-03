@@ -1,0 +1,77 @@
+# Auto-dismiss Dependabot alerts that originate from the org-metadata export
+# under force-app/. That tree is a working copy of the org and is full of
+# third-party managed-package bundles (OmniStudio: tinymce, vlocity, htmldiff,
+# angular, ...). Their transitive CVEs are not actionable here — the code is
+# inert backed-up metadata, not executed by CairnCI's CI and not deployable by
+# us. We keep force-app/ tracked but don't want its managed-package manifests
+# generating a standing Dependabot backlog.
+#
+# GitHub's dependency-graph alerts have no repo-config path-exclude, and the
+# auto-triage rules UI isn't available on this account, so this scheduled job
+# re-applies the same scoped dismissal on a cadence (and on demand).
+#
+# SCOPE: only alerts whose manifest_path starts with force-app/ are dismissed.
+# Any alert on CairnCI's real dependencies is left untouched.
+#
+# TOKEN NOTE: dismissing Dependabot alerts needs a token with Dependabot-alert
+# write. This uses the built-in GITHUB_TOKEN with `security-events: write`. If a
+# run fails every PATCH with 403, this repo/plan doesn't grant Dependabot-alert
+# write to GITHUB_TOKEN — switch GH_TOKEN below to a fine-grained PAT secret
+# (Dependabot alerts: Read and write) or the CAIRNCI app token, e.g.:
+#   env:
+#     GH_TOKEN: ${{ secrets.DEPENDABOT_DISMISS_PAT }}
+name: Dependabot auto-dismiss (force-app)
+
+on:
+  schedule:
+    - cron: '0 7 * * 1' # Mondays 07:00 UTC
+  workflow_dispatch:
+
+permissions:
+  security-events: write
+
+jobs:
+  dismiss:
+    name: Dismiss force-app-scoped alerts
+    if: github.repository == 'Fossiltalk/CairnCI-Internal'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dismiss force-app/ Dependabot alerts
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          reason="not_used"
+          comment="Managed-package (OmniStudio) static-resource bundle under force-app/, retrieved as an org-metadata backup. Not executed by CairnCI and not deployable by us; dependency is not used in this project."
+
+          mapfile -t nums < <(gh api --paginate \
+            "repos/${REPO}/dependabot/alerts?state=open&per_page=100" \
+            --jq '.[] | select(.dependency.manifest_path | startswith("force-app/")) | .number')
+
+          echo "Found ${#nums[@]} open force-app/ alert(s)."
+          if [ "${#nums[@]}" -eq 0 ]; then
+            echo "Nothing to dismiss."
+            exit 0
+          fi
+
+          dismissed=0
+          fail=0
+          for n in "${nums[@]}"; do
+            if gh api --method PATCH "repos/${REPO}/dependabot/alerts/${n}" \
+                -f state=dismissed -f dismissed_reason="$reason" \
+                -f dismissed_comment="$comment" >/dev/null 2>/tmp/dismiss-err; then
+              dismissed=$((dismissed + 1))
+            else
+              fail=$((fail + 1))
+              echo "::warning::Failed to dismiss alert #${n}: $(head -1 /tmp/dismiss-err)"
+            fi
+            sleep 0.3
+          done
+
+          echo "Dismissed ${dismissed}, failed ${fail}, of ${#nums[@]}."
+          if [ "$dismissed" -eq 0 ]; then
+            echo "::error::All dismissals failed — the token likely lacks Dependabot-alert write. See the TOKEN NOTE at the top of this workflow for the PAT/app fallback." >&2
+            exit 1
+          fi
