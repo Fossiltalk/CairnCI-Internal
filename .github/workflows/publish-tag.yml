@@ -1,10 +1,23 @@
-# Mirrors a version tag from Fossiltalk/CairnCI-Internal to Fossiltalk/CairnCI-Public.
-# Triggers whenever a tag matching v* is pushed here. The public repo is what
-# consumers pin (e.g. Fossiltalk/CairnCI-Public/.github/workflows/sf-validate.yml@v1).
+# Publishes the reusable CairnCI workflows from Fossiltalk/CairnCI-Internal to
+# the PUBLIC Fossiltalk/CairnCI-Public repo, which is what consumers pin
+# (e.g. Fossiltalk/CairnCI-Public/.github/workflows/sf-validate.yml@v1).
+#
+# IMPORTANT: this does NOT mirror the internal repo. CairnCI-Internal is a
+# private working space that also holds a full org-metadata export under
+# force-app/, the export tooling under scripts/, test fixtures, and
+# internal-only CI. Only the curated allowlist below may ever reach the public
+# repo. The publish rebuilds the public tree from that allowlist (clean slate),
+# so the internal git history and any non-allowlisted files never leave.
+#
+# Push an exact semver tag to CairnCI-Internal to release, e.g. `v1.0.0`. The
+# workflow republishes the curated content to CairnCI-Public's main and pushes
+# two tags there: the exact tag (v1.0.0, immutable) and a floating major alias
+# (v1, force-updated) that consumers pin to.
 #
 # Required secrets (stored in CairnCI-Internal):
 #   CAIRNCI_APP_ID          — the GitHub App's numeric App ID
 #   CAIRNCI_APP_PRIVATE_KEY — the PEM private key generated for the app
+# The app must be installed on Fossiltalk/CairnCI-Public with Contents: Read and write.
 name: Publish Tag to Public Repo
 
 on:
@@ -17,13 +30,10 @@ permissions:
 
 jobs:
   publish-tag:
-    name: Mirror ${{ github.ref_name }} → CairnCI-Public
+    name: Publish ${{ github.ref_name }} → CairnCI-Public
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-        with:
-          fetch-depth: 0
-          fetch-tags: true
 
       - name: Generate GitHub App token
         id: app-token
@@ -33,12 +43,80 @@ jobs:
           private-key: ${{ secrets.CAIRNCI_APP_PRIVATE_KEY }}
           repositories: CairnCI-Public
 
-      - name: Push tag to public repo
+      - name: Rebuild curated public tree and push tags
         shell: bash
         env:
           TAG: ${{ github.ref_name }}
           TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
           set -euo pipefail
-          git remote add public "https://x-access-token:${TOKEN}@github.com/Fossiltalk/CairnCI-Public.git"
-          git push public "refs/tags/${TAG}:refs/tags/${TAG}"
+
+          # v1.0.0 -> v1 (floating major alias consumers pin to).
+          MAJOR_TAG="${TAG%%.*}"
+
+          # Allowlist — the ONLY paths that may reach the public repo. This is
+          # an allowlist, not a denylist: anything not named here (force-app/,
+          # scripts/, tests/, sfdx-project.json, internal workflows, etc.) is
+          # never copied. Update deliberately when the public surface changes.
+          PUBLISH_PATHS=(
+            LICENSE
+            NOTICE
+            README.md
+            .gitignore
+            docs
+            examples
+            .github/workflows/sf-validate.yml
+            .github/workflows/sf-deploy.yml
+          )
+
+          for p in "${PUBLISH_PATHS[@]}"; do
+            if [ ! -e "$p" ]; then
+              echo "::error::Expected publish path missing from the tagged commit: $p" >&2
+              exit 1
+            fi
+          done
+
+          git clone "https://x-access-token:${TOKEN}@github.com/Fossiltalk/CairnCI-Public.git" public-repo
+
+          # Clean slate: drop every tracked file in the public checkout (keeps
+          # .git), then lay down only the allowlist. The public tree becomes a
+          # pure function of PUBLISH_PATHS — no stale or accidental files.
+          ( cd public-repo && git rm -rq --ignore-unmatch . >/dev/null 2>&1 || true )
+
+          for p in "${PUBLISH_PATHS[@]}"; do
+            mkdir -p "public-repo/$(dirname "$p")"
+            cp -a "$p" "public-repo/$p"
+          done
+
+          cd public-repo
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+
+          # Safety net on top of the allowlist copy: hard-fail if anything
+          # outside the intended public shape got staged.
+          if git diff --cached --name-only \
+            | grep -Ev '^(LICENSE|NOTICE|README\.md|\.gitignore|docs/.*|examples/.*|\.github/workflows/sf-(validate|deploy)\.yml)$'; then
+            echo "::error::Unexpected file staged for public publish (listed above). Aborting." >&2
+            exit 1
+          fi
+
+          if git diff --cached --quiet; then
+            echo "No content changes — pushing tags to existing HEAD."
+          else
+            git commit -m "publish: CairnCI ${TAG}"
+            git push origin HEAD:main
+          fi
+
+          # Exact semver tag (immutable — never force). Fail loudly if it already
+          # exists on the public repo, rather than silently re-pointing it.
+          if git ls-remote --exit-code --tags origin "refs/tags/${TAG}" >/dev/null 2>&1; then
+            echo "::error::Tag ${TAG} already exists on CairnCI-Public; refusing to move an immutable release tag." >&2
+            exit 1
+          fi
+          git tag "${TAG}"
+          git push origin "refs/tags/${TAG}"
+
+          # Floating major alias (e.g. v1) — force-updated to the new release.
+          git tag "${MAJOR_TAG}" --force
+          git push origin "refs/tags/${MAJOR_TAG}" --force
