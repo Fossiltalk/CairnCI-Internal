@@ -62,6 +62,7 @@ jobs:
             LICENSE
             NOTICE
             README.md
+            CHANGELOG.md
             .gitignore
             docs
             examples
@@ -96,7 +97,7 @@ jobs:
           # Safety net on top of the allowlist copy: hard-fail if anything
           # outside the intended public shape got staged.
           if git diff --cached --name-only \
-            | grep -Ev '^(LICENSE|NOTICE|README\.md|\.gitignore|docs/.*|examples/.*|\.github/workflows/sf-(validate|deploy)\.yml)$'; then
+            | grep -Ev '^(LICENSE|NOTICE|README\.md|CHANGELOG\.md|\.gitignore|docs/.*|examples/.*|\.github/workflows/sf-(validate|deploy)\.yml)$'; then
             echo "::error::Unexpected file staged for public publish (listed above). Aborting." >&2
             exit 1
           fi
