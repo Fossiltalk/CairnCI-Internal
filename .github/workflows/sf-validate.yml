@@ -92,6 +92,10 @@ jobs:
     name: Validate delta
     runs-on: ${{ fromJSON(inputs.runs-on) }}
     environment: ${{ inputs.environment }}
+    # Read-only: validation checks out the repo and uploads the job-id artifact;
+    # it never writes back. (sf-deploy.yml declares write scopes for rollback.)
+    permissions:
+      contents: read
     steps:
       - name: Checkout (full history for delta)
         uses: actions/checkout@v7

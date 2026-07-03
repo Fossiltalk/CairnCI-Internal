@@ -11,6 +11,11 @@ on:
       - "force-app/**"
   merge_group: # paths filtering unsupported on merge_group — runs unconditionally
 
+# Validation is read-only; declare it explicitly so the caller (and the
+# reusable workflow it caps) never gets a broader token.
+permissions:
+  contents: read
+
 jobs:
   validate:
     uses: ./.github/workflows/sf-validate.yml

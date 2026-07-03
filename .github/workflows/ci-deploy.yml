@@ -8,6 +8,14 @@ on:
     paths:
       - "force-app/**"
 
+# ci-deploy dogfoods sf-deploy.yml, which can push a revert / open a PR when
+# rollback-strategy is enabled. A caller's permissions cap the reusable
+# workflow's token, so grant what sf-deploy needs — else rollback silently
+# can't run. See docs/consumer-setup.md section 5a.
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   deploy:
     uses: ./.github/workflows/sf-deploy.yml
