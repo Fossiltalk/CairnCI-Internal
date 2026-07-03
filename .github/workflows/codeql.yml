@@ -76,6 +76,17 @@ jobs:
         with:
           languages: ${{ matrix.language }}
           build-mode: ${{ matrix.build-mode }}
+          # Exclude force-app/ from analysis. It holds a full org-metadata
+          # export (see scripts/org-metadata-export), which is thousands of
+          # third-party managed-package JS files (OmniStudio: tinymce, vlocity,
+          # etc.) — not CairnCI source. Scanning it only produces noise
+          # (~69 of ~72 alerts came from there) and slows the run. CairnCI's
+          # own JS lives in scripts/ and is still analyzed. paths-ignore
+          # applies to the interpreted (javascript-typescript) analysis; the
+          # 'actions' analysis is unaffected (force-app has no workflow files).
+          config: |
+            paths-ignore:
+              - force-app
           # If you wish to specify custom queries, you can do so here or in a config file.
           # By default, queries listed here will override any specified in a config file.
           # Prefix the list here with "+" to use these queries and those in the config file.
