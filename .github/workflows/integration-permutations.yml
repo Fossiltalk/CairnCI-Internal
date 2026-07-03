@@ -51,6 +51,18 @@ jobs:
     secrets: inherit
 
   # --- Permutation 3: full-branch, no destructive ---
+  # test-level is RunSpecifiedTests here (not RunLocalTests, unlike the delta permutations
+  # above): full-branch mode deploys the entire fixture, which includes Apex
+  # (CairnCiSmoke*.cls). The moment any Apex is in the payload, RunLocalTests makes Salesforce
+  # check org-wide coverage across *everything already live in CairnCI-Main* (a real,
+  # richly-populated dogfood org) plus every trigger's individual coverage org-wide — so that
+  # gate was failing on the target org's pre-existing content, not anything about the pipeline
+  # mechanics this permutation exists to test (confirmed: ProcessIAForBenefitAssistance, a
+  # real Public Sector trigger unrelated to this fixture, tripped "0% coverage, >=1% required").
+  # RunSpecifiedTests scopes coverage to just the specified test's own targets instead of the
+  # whole org (verified directly against CairnCI-Main: 100% coverage, validation succeeds).
+  # The delta permutations don't need this since their computed delta for these
+  # fixture-untouched commits contains no Apex, so coverage checking never engages there.
   perm-full-no-destructive:
     name: "delta=false destructive=false"
     if: github.repository == 'Fossiltalk/CairnCI-Internal'
@@ -60,11 +72,13 @@ jobs:
       source-dir: tests/fixtures/force-app
       delta: ${{ 'false' }}
       allow-destructive-changes: ${{ 'false' }}
-      test-level: RunLocalTests
+      test-level: RunSpecifiedTests
+      tests: CairnCiSmokeTest
       min-coverage: "75"
     secrets: inherit
 
   # --- Permutation 4: full-branch + destructive ---
+  # test-level: RunSpecifiedTests — see permutation 3's comment above; same reasoning applies.
   perm-full-destructive:
     name: "delta=false destructive=true"
     if: github.repository == 'Fossiltalk/CairnCI-Internal'
@@ -74,6 +88,7 @@ jobs:
       source-dir: tests/fixtures/force-app
       delta: ${{ 'false' }}
       allow-destructive-changes: ${{ 'true' }}
-      test-level: RunLocalTests
+      test-level: RunSpecifiedTests
+      tests: CairnCiSmokeTest
       min-coverage: "75"
     secrets: inherit
