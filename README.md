@@ -1,5 +1,7 @@
 # CairnCI — an open-source CI/CD pipeline for Salesforce DX
 
+**Pinned toolchain:** [![Integration](https://github.com/Fossiltalk/CairnCI-Internal/actions/workflows/integration-permutations.yml/badge.svg)](https://github.com/Fossiltalk/CairnCI-Internal/actions/workflows/integration-permutations.yml) &nbsp; **Latest `@salesforce/cli`:** [![SF CLI Compatibility Probe](https://github.com/Fossiltalk/CairnCI-Internal/actions/workflows/sf-cli-compat-probe.yml/badge.svg)](https://github.com/Fossiltalk/CairnCI-Internal/actions/workflows/sf-cli-compat-probe.yml) &nbsp; ([validated versions](docs/compatibility.md))
+
 > **Not affiliated with Salesforce.** CairnCI is an independent,
 > community-maintained open-source project. It is **not** affiliated with,
 > endorsed by, sponsored by, or supported by Salesforce, Inc. "Salesforce",

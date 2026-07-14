@@ -1,0 +1,204 @@
+# Weekly probe: does the CURRENT @salesforce/cli "latest" still pass CairnCI's
+# integration test? Runs two representative permutations (one delta, one
+# full-branch) from integration-permutations.yml against the real target org,
+# with sf-cli-version overridden to the resolved latest (the pinned Node/sgd
+# are kept). The outcome is recorded in compatibility.json (source of truth) and
+# rendered to docs/compatibility.md, which is published to CairnCI-Public so
+# consumers can see which versions are validated before they pin.
+#
+# On a green result for a NEW version, it triggers the existing "Bump SF
+# Toolchain Versions" workflow — so bumps are test-gated, not blind. That bump
+# workflow no longer runs on its own schedule; this probe is its gate.
+#
+# The probe run's own conclusion is meaningful: if latest is incompatible the
+# validate jobs fail and this workflow goes red (that's the signal), while the
+# record/publish job still runs via `if: always()`.
+#
+# NOTE: the record step pushes compatibility.json + docs/compatibility.md to
+# CairnCI-Internal's main. If main is protected against direct pushes by
+# github-actions[bot], grant the bot an exception or swap GITHUB_TOKEN for a PAT.
+name: SF CLI Compatibility Probe
+
+on:
+  schedule:
+    - cron: "0 4 * * 1" # Mondays 04:00 UTC — ahead of the (now probe-gated) bump
+  workflow_dispatch:
+
+permissions:
+  contents: write # commit compatibility files to main
+  actions: write # trigger the bump workflow on a validated new version
+
+jobs:
+  resolve:
+    name: Resolve latest + pinned toolchain
+    if: github.repository == 'Fossiltalk/CairnCI-Internal'
+    runs-on: ubuntu-latest
+    outputs:
+      latest_cli: ${{ steps.v.outputs.latest_cli }}
+      pinned_cli: ${{ steps.v.outputs.pinned_cli }}
+      node: ${{ steps.v.outputs.node }}
+      sgd: ${{ steps.v.outputs.sgd }}
+      changed: ${{ steps.v.outputs.changed }}
+    steps:
+      - uses: actions/checkout@v7
+      - name: Resolve versions
+        id: v
+        shell: bash
+        run: |
+          set -euo pipefail
+          latest_cli="$(npm view @salesforce/cli version)"
+
+          read_default() {
+            python3 - "$1" <<'PY'
+          import sys
+          name = sys.argv[1]
+          in_block = False
+          for line in open('.github/workflows/sf-validate.yml'):
+              s = line.lstrip()
+              if s.startswith(name + ':'):
+                  in_block = True
+              elif in_block and s.startswith('default:'):
+                  print(s.split('"')[1])
+                  break
+          PY
+          }
+
+          pinned_cli="$(read_default sf-cli-version)"
+          node="$(read_default node-version)"
+          sgd="$(read_default sgd-version)"
+
+          echo "latest_cli=${latest_cli}"
+          echo "pinned_cli=${pinned_cli}  node=${node}  sgd=${sgd}"
+
+          {
+            echo "latest_cli=${latest_cli}"
+            echo "pinned_cli=${pinned_cli}"
+            echo "node=${node}"
+            echo "sgd=${sgd}"
+            if [ "${latest_cli}" != "${pinned_cli}" ]; then
+              echo "changed=true"
+            else
+              echo "changed=false"
+            fi
+          } >> "$GITHUB_OUTPUT"
+
+  # Two representative permutations against sf-cli @latest: one delta path, one
+  # full-branch path (both non-destructive) — mirrors perms 1 & 3 of the full
+  # integration matrix, which stays pinned.
+  probe-delta:
+    name: "probe latest — delta"
+    needs: resolve
+    uses: ./.github/workflows/sf-validate.yml
+    with:
+      environment: main
+      source-dir: tests/fixtures/force-app
+      sf-cli-version: ${{ needs.resolve.outputs.latest_cli }}
+      delta: ${{ 'true' }}
+      allow-destructive-changes: ${{ 'false' }}
+      test-level: RunLocalTests
+      min-coverage: "75"
+    secrets: inherit
+
+  probe-full:
+    name: "probe latest — full-branch"
+    needs: resolve
+    uses: ./.github/workflows/sf-validate.yml
+    with:
+      environment: main
+      source-dir: tests/fixtures/force-app
+      sf-cli-version: ${{ needs.resolve.outputs.latest_cli }}
+      delta: ${{ 'false' }}
+      allow-destructive-changes: ${{ 'false' }}
+      test-level: RunSpecifiedTests
+      tests: CairnCiSmokeTest
+      min-coverage: "75"
+    secrets: inherit
+
+  record:
+    name: Record + publish compatibility
+    needs: [resolve, probe-delta, probe-full]
+    if: always() && needs.resolve.result == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Update compatibility record
+        id: rec
+        shell: bash
+        env:
+          LATEST_CLI: ${{ needs.resolve.outputs.latest_cli }}
+          NODE: ${{ needs.resolve.outputs.node }}
+          SGD: ${{ needs.resolve.outputs.sgd }}
+          DELTA_RESULT: ${{ needs.probe-delta.result }}
+          FULL_RESULT: ${{ needs.probe-full.result }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          today="$(date -u +%Y-%m-%d)"
+
+          if [ "$DELTA_RESULT" = "success" ] && [ "$FULL_RESULT" = "success" ]; then
+            status=validated
+            echo "status=validated" >> "$GITHUB_OUTPUT"
+            python3 scripts/update-compat.py \
+              --version "$LATEST_CLI" --node "$NODE" --sgd "$SGD" \
+              --status validated --date "$today"
+          else
+            status=failing
+            echo "status=failing" >> "$GITHUB_OUTPUT"
+            python3 scripts/update-compat.py \
+              --version "$LATEST_CLI" --node "$NODE" \
+              --status failing --date "$today" \
+              --reason "Integration probe failed (delta=$DELTA_RESULT, full=$FULL_RESULT). See ${RUN_URL}"
+          fi
+
+      - name: Commit to Internal
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add compatibility.json docs/compatibility.md
+          if git diff --cached --quiet; then
+            echo "No compatibility change to commit."
+          else
+            git commit -m "chore: update SF CLI compatibility record"
+            git push origin HEAD:main
+          fi
+
+      - name: Publish table to CairnCI-Public
+        id: pub
+        uses: actions/create-github-app-token@v3
+        with:
+          app-id: ${{ secrets.CAIRNCI_APP_ID }}
+          private-key: ${{ secrets.CAIRNCI_APP_PRIVATE_KEY }}
+          repositories: CairnCI-Public
+
+      - name: Push table to public repo
+        shell: bash
+        env:
+          TOKEN: ${{ steps.pub.outputs.token }}
+        run: |
+          set -euo pipefail
+          git clone "https://x-access-token:${TOKEN}@github.com/Fossiltalk/CairnCI-Public.git" public-repo
+          mkdir -p public-repo/docs
+          cp docs/compatibility.md public-repo/docs/compatibility.md
+          cd public-repo
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/compatibility.md
+          if git diff --cached --quiet; then
+            echo "Public table already current."
+          else
+            git commit -m "docs: refresh SF CLI compatibility table"
+            git push origin HEAD:main
+          fi
+
+      - name: Trigger test-gated bump on a validated new version
+        if: steps.rec.outputs.status == 'validated' && needs.resolve.outputs.changed == 'true'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          echo "latest ${{ needs.resolve.outputs.latest_cli }} validated and differs from pinned ${{ needs.resolve.outputs.pinned_cli }} — triggering bump."
+          gh workflow run bump-sf-toolchain.yml --repo "${{ github.repository }}"

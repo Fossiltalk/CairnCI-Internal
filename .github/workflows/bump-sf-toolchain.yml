@@ -1,14 +1,17 @@
-# Checks npm weekly for newer @salesforce/cli and sfdx-git-delta versions and
-# opens a single PR bumping the default: values in sf-validate.yml and sf-deploy.yml.
+# Checks npm for newer @salesforce/cli and sfdx-git-delta versions and opens a
+# single PR bumping the default: values in sf-validate.yml and sf-deploy.yml.
 # Uses dist-tags.stable for sfdx-git-delta (not latest) to track the stable channel.
 #
-# PRs created by GITHUB_TOKEN do not trigger CI automatically — run the integration
-# test manually on the PR branch before merging.
+# GATED, NOT SCHEDULED: this no longer runs on its own cron. The SF CLI
+# Compatibility Probe (sf-cli-compat-probe.yml) triggers it via workflow_dispatch
+# only after `latest` has passed the integration test, so bumps are test-gated
+# rather than blind. It can still be dispatched manually.
+#
+# PRs created by GITHUB_TOKEN do not trigger CI automatically — the probe has
+# already validated the target version before this runs.
 name: Bump SF Toolchain Versions
 
 on:
-  schedule:
-    - cron: "0 5 * * 1" # Mondays 05:00 UTC — one hour before integration test
   workflow_dispatch:
 
 permissions:

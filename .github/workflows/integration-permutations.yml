@@ -17,6 +17,11 @@ on:
     branches: [main]
   merge_group:
   workflow_dispatch:
+  schedule:
+    # Mondays 03:00 UTC — re-validate the pinned toolchain weekly so the public
+    # "Pinned toolchain" compatibility badge stays fresh even when main is quiet.
+    # Staggered an hour before the compat probe (04:00) to avoid concurrent org load.
+    - cron: "0 3 * * 1"
 
 permissions:
   contents: read
