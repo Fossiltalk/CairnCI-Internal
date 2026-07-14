@@ -27,15 +27,15 @@ on:
         type: string
         default: "22"
       sf-cli-version:
-        description: "@salesforce/cli version (npm dist-tag or exact version)."
+        description: "@salesforce/cli version (npm dist-tag or exact version). Pinned to 2.142.7 for a reproducible toolchain; bump via the 'Bump SF Toolchain Versions' workflow. Requires node-version >= 22 (see note there)."
         required: false
         type: string
-        default: "latest"
+        default: "2.142.7"
       sgd-version:
-        description: "sfdx-git-delta plugin version (npm dist-tag or exact version). Default 'stable'."
+        description: "sfdx-git-delta plugin version (npm dist-tag or exact version). Pinned to 6.31.0 (the stable channel at pin time) for a reproducible toolchain; bump via the 'Bump SF Toolchain Versions' workflow."
         required: false
         type: string
-        default: "stable"
+        default: "6.31.0"
       config-file:
         description: "Path to an optional JSON config file in the consumer repo."
         required: false
