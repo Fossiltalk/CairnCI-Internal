@@ -137,13 +137,11 @@ jobs:
           today="$(date -u +%Y-%m-%d)"
 
           if [ "$DELTA_RESULT" = "success" ] && [ "$FULL_RESULT" = "success" ]; then
-            status=validated
             echo "status=validated" >> "$GITHUB_OUTPUT"
             python3 scripts/update-compat.py \
               --version "$LATEST_CLI" --node "$NODE" --sgd "$SGD" \
               --status validated --date "$today"
           else
-            status=failing
             echo "status=failing" >> "$GITHUB_OUTPUT"
             python3 scripts/update-compat.py \
               --version "$LATEST_CLI" --node "$NODE" \
