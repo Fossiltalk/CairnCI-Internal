@@ -14,12 +14,13 @@
 # Any alert on CairnCI's real dependencies is left untouched.
 #
 # TOKEN NOTE: dismissing Dependabot alerts needs a token with Dependabot-alert
-# write. This uses the built-in GITHUB_TOKEN with `security-events: write`. If a
-# run fails every PATCH with 403, this repo/plan doesn't grant Dependabot-alert
-# write to GITHUB_TOKEN — switch GH_TOKEN below to a fine-grained PAT secret
-# (Dependabot alerts: Read and write) or the CAIRNCI app token, e.g.:
-#   env:
-#     GH_TOKEN: ${{ secrets.DEPENDABOT_DISMISS_PAT }}
+# write. The built-in GITHUB_TOKEN cannot read or write Dependabot alerts at
+# all (confirmed: even listing alerts 403s with "Resource not accessible by
+# integration"), regardless of the `security-events: write` permission below —
+# that permission covers code-scanning, not Dependabot alerts. Create a
+# fine-grained PAT (Dependabot alerts: Read and write) or use the CAIRNCI app
+# token, and store it as the DEPENDABOT_DISMISS_PAT repo secret. Until that
+# secret exists, this job will fail cleanly every run with a clear error.
 name: Dependabot auto-dismiss (force-app)
 
 on:
@@ -39,16 +40,32 @@ jobs:
       - name: Dismiss force-app/ Dependabot alerts
         shell: bash
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.DEPENDABOT_DISMISS_PAT || github.token }}
           REPO: ${{ github.repository }}
         run: |
           set -euo pipefail
           reason="not_used"
           comment="Managed-package (OmniStudio) static-resource bundle under force-app/, retrieved as an org-metadata backup. Not executed by CairnCI and not deployable by us; dependency is not used in this project."
 
-          mapfile -t nums < <(gh api --paginate \
+          # Capture into a variable first (not process substitution) so a
+          # failed `gh api` call trips set -e here instead of silently
+          # handing an error-JSON blob to mapfile as a fake alert number.
+          set +e
+          nums_raw=$(gh api --paginate \
             "repos/${REPO}/dependabot/alerts?state=open&per_page=100" \
-            --jq '.[] | select(.dependency.manifest_path | startswith("force-app/")) | .number')
+            --jq '.[] | select(.dependency.manifest_path | startswith("force-app/")) | .number' \
+            2>/tmp/list-err)
+          list_status=$?
+          set -e
+          if [ "$list_status" -ne 0 ]; then
+            echo "::error::Failed to list Dependabot alerts: $(head -1 /tmp/list-err). Token likely lacks Dependabot-alert read/write — see the TOKEN NOTE at the top of this workflow." >&2
+            exit 1
+          fi
+
+          nums=()
+          if [ -n "$nums_raw" ]; then
+            mapfile -t nums <<< "$nums_raw"
+          fi
 
           echo "Found ${#nums[@]} open force-app/ alert(s)."
           if [ "${#nums[@]}" -eq 0 ]; then

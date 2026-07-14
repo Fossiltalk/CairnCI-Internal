@@ -14,6 +14,7 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  issues: write # required for `gh label create` and applying --label on the PR
 
 jobs:
   bump:
@@ -119,7 +120,9 @@ jobs:
           CURRENT_SGD: ${{ steps.versions.outputs.current_sgd }}
           LATEST_SGD: ${{ steps.versions.outputs.latest_sgd }}
         run: |
-          set -euo pipefail
+          # set -x so a future failure logs the exact command that failed,
+          # instead of a bare "Process completed with exit code 1".
+          set -euxo pipefail
           branch="bump/sf-toolchain"
 
           git config user.name "github-actions[bot]"
@@ -130,7 +133,11 @@ jobs:
 
           @salesforce/cli: ${CURRENT_CLI} -> ${LATEST_CLI}
           sfdx-git-delta: ${CURRENT_SGD} -> ${LATEST_SGD}"
-          git push --force origin "${branch}"
+
+          if ! git push --force origin "${branch}"; then
+            echo "::error::git push of ${branch} failed. Check that contents: write is actually granted to GITHUB_TOKEN for this run (repo Settings > Actions > General > Workflow permissions)." >&2
+            exit 1
+          fi
 
           existing=$(gh pr list --head "${branch}" --json number --jq '.[0].number // empty')
           if [ -n "${existing}" ]; then
@@ -149,9 +156,20 @@ jobs:
           Before merging: trigger the integration test on this branch and confirm it passes.
           EOF
 
-          gh pr create \
-            --title "chore: bump SF toolchain defaults" \
-            --body-file /tmp/pr-body.md \
-            --label "dependencies" \
-            --base main \
-            --head "${branch}"
+          # Ensure the label exists first — gh pr create hard-fails if a
+          # --label doesn't already exist, and this repo has no "dependencies"
+          # label (Dependabot itself isn't configured to create one here).
+          gh label create "dependencies" \
+            --color "0366d6" \
+            --description "Dependency version bumps" \
+            2>/dev/null || true
+
+          if ! gh pr create \
+              --title "chore: bump SF toolchain defaults" \
+              --body-file /tmp/pr-body.md \
+              --label "dependencies" \
+              --base main \
+              --head "${branch}"; then
+            echo "::error::gh pr create failed. If this repo has 'Allow GitHub Actions to create and approve pull requests' disabled (Settings > Actions > General), enable it — pull-requests: write in this workflow's permissions block cannot override that separate toggle." >&2
+            exit 1
+          fi
