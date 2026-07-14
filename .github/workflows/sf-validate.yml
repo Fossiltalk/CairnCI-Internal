@@ -22,10 +22,10 @@ on:
         type: string
         default: '["ubuntu-latest"]'
       node-version:
-        description: "Node.js version. Default '20' (pinned; newer LTS releases trigger an unsettled top-level await error in the Salesforce CLI). sfdx-git-delta requires >= 20."
+        description: "Node.js version. Default '22' (Active LTS). @salesforce/cli 2.142+ bundles an undici that calls worker_threads.markAsUncloneable (Node >= 22.10), so Node 20 crashes at CLI load with 'markAsUncloneable is not a function'. sfdx-git-delta requires >= 20."
         required: false
         type: string
-        default: "20"
+        default: "22"
       sf-cli-version:
         description: "@salesforce/cli version (npm dist-tag or exact version)."
         required: false
