@@ -5,6 +5,32 @@ All notable changes to CairnCI are documented here. This project adheres to
 workflows by major tag (e.g. `@v1`); see
 [docs/consumer-setup.md](docs/consumer-setup.md).
 
+## [v1.1.0] - 2026-07-14
+
+Toolchain reproducibility and Node.js compatibility. The reusable workflows now
+default to a pinned, validated toolchain instead of floating dist-tags. Consumers
+pinning `@v1` pick this up automatically; the workflow inputs are unchanged, so
+you can still override any version.
+
+### Changed
+
+- **Default Node.js version is now `22`** (was `20`). `@salesforce/cli` 2.142+
+  bundles an `undici` that calls `worker_threads.markAsUncloneable` (Node
+  >= 22.10) at CLI load, so Node 20 now crashes with
+  `TypeError: markAsUncloneable is not a function`. Override with `node-version`
+  if needed (sfdx-git-delta still requires >= 20).
+- **Default `@salesforce/cli` is now pinned to `2.142.7`** (was the floating
+  `latest` dist-tag), for a reproducible toolchain.
+- **Default `sfdx-git-delta` is now pinned to `6.31.0`** (was the floating
+  `stable` dist-tag).
+
+### Added
+
+- **[SF CLI compatibility table](docs/compatibility.md)** — the
+  `@salesforce/cli` versions CairnCI has validated end-to-end against a real org
+  (with Node version and date), so you know which version is safe to pin. Kept
+  current automatically.
+
 ## [v1.0.0] - 2026-07-03
 
 First stable public release. The `sf-validate` and `sf-deploy` reusable
