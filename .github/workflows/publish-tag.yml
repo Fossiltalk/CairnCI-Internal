@@ -82,7 +82,7 @@ jobs:
           # Clean slate: drop every tracked file in the public checkout (keeps
           # .git), then lay down only the allowlist. The public tree becomes a
           # pure function of PUBLISH_PATHS — no stale or accidental files.
-          ( cd public-repo && git rm -rq --ignore-unmatch . >/dev/null 2>&1 || true )
+          ( cd public-repo && { git rm -rq --ignore-unmatch . >/dev/null 2>&1 || true; } )
 
           for p in "${PUBLISH_PATHS[@]}"; do
             mkdir -p "public-repo/$(dirname "$p")"
