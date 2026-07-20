@@ -1,0 +1,48 @@
+# CairnCI Extension Caller — runs the consumer's source-tracked pipeline
+# extensions (.cairnci/extensions.json) for one lifecycle phase.
+#
+# The core reusable workflows (sf-validate.yml / sf-deploy.yml) invoke this
+# action at each phase; it no-ops when the consumer has no extensions config,
+# so extensions stay fully optional. See docs/extensions.md for the config
+# schema and the extension exit-code contract (0 = ok, 10 = warn, else error).
+#
+# This action is core framework (not an extension): it is published to
+# CairnCI-Public together with the reusable workflows on every core v* tag,
+# and versions in lockstep with them.
+name: CairnCI Extension Caller
+description: >-
+  Runs user-defined pre/post pipeline extensions (local scripts or pinned
+  external git repos) for a CairnCI lifecycle phase, in source-tracked order,
+  with configurable blocking/non-blocking behavior.
+
+inputs:
+  phase:
+    description: >-
+      Lifecycle phase to run: pre-validate | post-validate-success |
+      post-validate-failure | pre-deploy | post-deploy-success |
+      post-deploy-failure.
+    required: true
+  config-file:
+    description: Path to the extensions config JSON in the consumer repo.
+    required: false
+    default: .cairnci/extensions.json
+  context:
+    description: JSON string of pipeline context passed to extensions as CAIRNCI_CONTEXT.
+    required: false
+    default: "{}"
+
+runs:
+  using: composite
+  steps:
+    - name: Run extensions for phase
+      shell: bash
+      env:
+        PHASE: ${{ inputs.phase }}
+        CONFIG_FILE: ${{ inputs.config-file }}
+        CONTEXT: ${{ inputs.context }}
+      run: |
+        set -euo pipefail
+        node "${{ github.action_path }}/caller.mjs" \
+          --phase "$PHASE" \
+          --config "$CONFIG_FILE" \
+          --context "$CONTEXT"

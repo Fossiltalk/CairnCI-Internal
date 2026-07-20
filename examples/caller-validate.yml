@@ -4,6 +4,11 @@
 # Extensions (from CairnCI-Extensions or your own) are added as additional jobs
 # below the core validate job. Use `needs: validate` to gate them on a green
 # validation first. See the commented examples at the bottom of this file.
+#
+# For finer-grained, source-tracked hooks (pre-validate / post-validate-success
+# / post-validate-failure, ordered, blocking or non-blocking), commit a
+# .cairnci/extensions.json instead — see examples/extensions.json and
+# docs/extensions.md. No extra wiring needed here.
 name: Salesforce Validate
 
 on:
