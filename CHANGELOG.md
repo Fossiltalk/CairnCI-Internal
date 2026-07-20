@@ -5,7 +5,7 @@ All notable changes to CairnCI are documented here. This project adheres to
 workflows by major tag (e.g. `@v1`); see
 [docs/consumer-setup.md](docs/consumer-setup.md).
 
-## [Unreleased]
+## [v1.2.0] - 2026-07-20
 
 ### Added
 
