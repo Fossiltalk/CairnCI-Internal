@@ -5,6 +5,28 @@ All notable changes to CairnCI are documented here. This project adheres to
 workflows by major tag (e.g. `@v1`); see
 [docs/consumer-setup.md](docs/consumer-setup.md).
 
+## [Unreleased]
+
+### Added
+
+- **Extension caller framework** — an optional, source-tracked way to hook
+  consumer-developed extensions into the pipeline. Consumers commit
+  `.cairnci/extensions.json` (see `examples/extensions.json`) listing
+  extensions in run order, pinned to lifecycle phases (`pre-validate`,
+  `post-validate-success`, `post-validate-failure`, `pre-deploy`,
+  `post-deploy-success`, `post-deploy-failure`), each configurably blocking or
+  non-blocking. Extensions are local scripts in the consumer repo or entries
+  in any external git repo pinned to a ref (cloned outside the workspace).
+  Exit-code contract: `0` = ok, `10` = warn (never blocks), anything else =
+  error (blocks only when `blocking: true`). New `extensions-config-file`
+  input on `sf-validate.yml` and `sf-deploy.yml`. The caller is itself an
+  extension (`.github/actions/extension-caller/`, published as
+  `extension-caller/v1.0.0` to CairnCI-Extensions); its `extension-caller/v1.0.0`
+  tag must be published **before** the first core release that references it.
+  Extension development happens on the `CairnCI-External` branch; releases use
+  the existing scoped-tag publish pipeline (`publish-extension.yml`). See
+  [docs/extensions.md](docs/extensions.md).
+
 ## [v1.1.0] - 2026-07-14
 
 Toolchain reproducibility and Node.js compatibility. The reusable workflows now

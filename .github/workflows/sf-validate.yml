@@ -83,6 +83,11 @@ on:
         required: false
         type: string
         default: ""
+      extensions-config-file:
+        description: "Path to the optional, source-tracked extensions config JSON in the consumer repo. Extensions listed there run at the pre-validate / post-validate-success / post-validate-failure phases in config order. See docs/extensions.md. Default: .cairnci/extensions.json."
+        required: false
+        type: string
+        default: ".cairnci/extensions.json"
 # Callers must use `secrets: inherit` so `secrets.SFDX_AUTH_URL` resolves
 # (repo-level, or environment-scoped if the caller job is environment-bound).
 # See sf-deploy.yml for why we don't declare it explicitly.
@@ -300,6 +305,17 @@ jobs:
             echo "has-changes=false" >> "$GITHUB_OUTPUT"
             echo "No deployable metadata changed — nothing to validate."
           fi
+
+      # Consumer extensions pinned to the pre-validate phase run before any
+      # check-only validation is submitted to the org. A blocking extension
+      # failure stops the validation here.
+      - name: Extensions — pre-validate
+        uses: Fossiltalk/CairnCI-Extensions/.github/actions/extension-caller@extension-caller/v1.0.0
+        with:
+          phase: pre-validate
+          config-file: ${{ inputs.extensions-config-file }}
+          context: >-
+            {"deployDir":"${{ steps.delta.outputs.deploy-dir }}","hasChanges":"${{ steps.delta.outputs.has-changes }}"}
 
       - name: Split rule metadata (matching + duplicate rules)
         id: split-rules
@@ -522,3 +538,24 @@ jobs:
           name: sf-validation-${{ github.event.pull_request.head.sha }}
           path: validation.json
           retention-days: 10
+
+      # Post-validation extension phases. A blocking failure in
+      # post-validate-success fails the job (the validation itself already
+      # passed — this is for consumers who gate on their own post-checks).
+      - name: Extensions — post-validate-success
+        if: success()
+        uses: Fossiltalk/CairnCI-Extensions/.github/actions/extension-caller@extension-caller/v1.0.0
+        with:
+          phase: post-validate-success
+          config-file: ${{ inputs.extensions-config-file }}
+          context: >-
+            {"jobId":"${{ steps.validate.outputs.job-id }}","coverage":"${{ steps.validate.outputs.coverage }}","hasChanges":"${{ steps.delta.outputs.has-changes }}"}
+
+      - name: Extensions — post-validate-failure
+        if: failure()
+        uses: Fossiltalk/CairnCI-Extensions/.github/actions/extension-caller@extension-caller/v1.0.0
+        with:
+          phase: post-validate-failure
+          config-file: ${{ inputs.extensions-config-file }}
+          context: >-
+            {"validateOutcome":"${{ steps.validate.outcome }}","jobId":"${{ steps.validate.outputs.job-id }}","coverage":"${{ steps.validate.outputs.coverage }}"}

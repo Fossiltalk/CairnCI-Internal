@@ -1,0 +1,67 @@
+# Unit tests for the extension-caller framework (org-free — pure node:test).
+# Follows the per-extension integration workflow convention from
+# docs/extensions.md, but needs no org secret: the caller never talks to
+# Salesforce itself, it only orchestrates consumer extension processes.
+name: Extension Caller Tests
+
+on:
+  pull_request:
+    paths: [.github/actions/extension-caller/**]
+  push:
+    branches: [main, CairnCI-External]
+    paths: [.github/actions/extension-caller/**]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    if: github.repository == 'Fossiltalk/CairnCI-Internal'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+
+      - name: Run extension-caller unit tests
+        shell: bash
+        # Explicit glob: Node >= 23 treats a bare directory arg as a module
+        # path, so the glob form works on every Node line.
+        run: node --test .github/actions/extension-caller/tests/*.test.mjs
+
+      # Smoke the composite action itself against a real config: one local
+      # blocking gate, one local non-blocking failure, exercised end-to-end.
+      - name: Build smoke fixture
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .cairnci ci-smoke
+          cat > ci-smoke/ok.sh <<'SH'
+          #!/usr/bin/env bash
+          echo "smoke gate ran in phase $CAIRNCI_PHASE"
+          SH
+          cat > ci-smoke/fail.sh <<'SH'
+          #!/usr/bin/env bash
+          echo "intentional non-blocking failure"
+          exit 1
+          SH
+          cat > .cairnci/extensions.json <<'JSON'
+          {
+            "extensions": [
+              { "id": "smoke-ok", "phases": ["pre-validate"], "blocking": true,
+                "run": { "type": "local", "entry": "ci-smoke/ok.sh" } },
+              { "id": "smoke-nonblocking-fail", "phases": ["pre-validate"], "blocking": false,
+                "run": { "type": "local", "entry": "ci-smoke/fail.sh" } }
+            ]
+          }
+          JSON
+
+      - name: Smoke the composite action (local path)
+        uses: ./.github/actions/extension-caller
+        with:
+          phase: pre-validate
+          context: '{"smoke":"true"}'

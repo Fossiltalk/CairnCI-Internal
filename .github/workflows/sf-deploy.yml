@@ -91,6 +91,11 @@ on:
         required: false
         type: string
         default: ""
+      extensions-config-file:
+        description: "Path to the optional, source-tracked extensions config JSON in the consumer repo. Extensions listed there run at the pre-deploy / post-deploy-success / post-deploy-failure phases in config order. See docs/extensions.md. Default: .cairnci/extensions.json."
+        required: false
+        type: string
+        default: ".cairnci/extensions.json"
 # No `secrets:` declaration on purpose. Environment-scoped secrets only
 # resolve inside this reusable workflow's environment-bound job, so callers
 # MUST use `secrets: inherit` (a declared/explicitly-passed secret would be
@@ -306,6 +311,16 @@ jobs:
             echo "has-changes=false" >> "$GITHUB_OUTPUT"
             echo "No deployable metadata changed — nothing to deploy."
           fi
+
+      # Consumer extensions pinned to the pre-deploy phase run before anything
+      # is deployed to the org. A blocking extension failure stops the deploy.
+      - name: Extensions — pre-deploy
+        uses: Fossiltalk/CairnCI-Extensions/.github/actions/extension-caller@extension-caller/v1.0.0
+        with:
+          phase: pre-deploy
+          config-file: ${{ inputs.extensions-config-file }}
+          context: >-
+            {"deployDir":"${{ steps.delta.outputs.deploy-dir }}","hasChanges":"${{ steps.delta.outputs.has-changes }}"}
 
       - name: Split rule metadata (matching + duplicate rules)
         id: split-rules
@@ -545,6 +560,27 @@ jobs:
           fi
           echo "Running: sf ${args[*]}"
           sf "${args[@]}"
+
+      # Post-deploy extension phases. post-deploy-failure runs BEFORE the git
+      # rollback below so notification/analysis extensions always see the
+      # failed state; the rollback step still runs afterwards.
+      - name: Extensions — post-deploy-success
+        if: success()
+        uses: Fossiltalk/CairnCI-Extensions/.github/actions/extension-caller@extension-caller/v1.0.0
+        with:
+          phase: post-deploy-success
+          config-file: ${{ inputs.extensions-config-file }}
+          context: >-
+            {"hasChanges":"${{ steps.delta.outputs.has-changes }}","quickDeployJobId":"${{ steps.lookup.outputs.job-id }}","environment":"${{ inputs.environment }}"}
+
+      - name: Extensions — post-deploy-failure
+        if: failure()
+        uses: Fossiltalk/CairnCI-Extensions/.github/actions/extension-caller@extension-caller/v1.0.0
+        with:
+          phase: post-deploy-failure
+          config-file: ${{ inputs.extensions-config-file }}
+          context: >-
+            {"deployOutcome":"${{ steps.deploy.outcome }}","rollbackStrategy":"${{ env.EFFECTIVE_ROLLBACK_STRATEGY }}","environment":"${{ inputs.environment }}"}
 
       # Re-align git with the org when the deploy failed. The org auto-rolls-back
       # a failed deploy, so the merged commits no longer match what's deployed.

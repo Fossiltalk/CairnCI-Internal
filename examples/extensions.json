@@ -1,0 +1,41 @@
+{
+  "$comment": "Optional. Place at .cairnci/extensions.json in your repo (or point the extensions-config-file input elsewhere). Array order IS the run order within each phase. blocking defaults to true. Exit codes from an extension: 0 = ok, 10 = warn (annotated, never blocks), anything else = error (fails the pipeline only when blocking). See docs/extensions.md.",
+  "extensions": [
+    {
+      "id": "metadata-naming-gate",
+      "phases": ["pre-validate"],
+      "blocking": true,
+      "run": { "type": "local", "entry": "ci/checks/naming-gate.sh" },
+      "env": { "SOURCE_DIR": "force-app" }
+    },
+    {
+      "id": "field-permset-gate",
+      "phases": ["post-validate-success"],
+      "blocking": true,
+      "run": {
+        "type": "git",
+        "repo": "https://github.com/Fossiltalk/CairnCI-Extensions.git",
+        "ref": "field-permset-gate/v1.0.0",
+        "entry": ".github/actions/field-permset-gate/run.sh"
+      }
+    },
+    {
+      "id": "notify-deploy-outcome",
+      "phases": ["post-deploy-success", "post-deploy-failure"],
+      "blocking": false,
+      "timeoutSeconds": 120,
+      "run": { "type": "local", "entry": "ci/notify/deploy-outcome.mjs" }
+    },
+    {
+      "id": "collect-validation-diagnostics",
+      "phases": ["post-validate-failure", "post-deploy-failure"],
+      "blocking": false,
+      "run": {
+        "type": "git",
+        "repo": "https://github.com/your-org/your-ci-tools.git",
+        "ref": "v2.3.1",
+        "entry": "cairnci/collect-diagnostics.sh"
+      }
+    }
+  ]
+}
