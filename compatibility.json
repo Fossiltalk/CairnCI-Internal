@@ -5,6 +5,12 @@
       "node": "22",
       "sgd": "6.31.0",
       "status": "validated"
+    },
+    "2.143.6": {
+      "date": "2026-07-20",
+      "node": "22",
+      "sgd": "6.31.0",
+      "status": "validated"
     }
   }
 }
