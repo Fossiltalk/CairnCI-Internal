@@ -310,7 +310,9 @@ jobs:
       # check-only validation is submitted to the org. A blocking extension
       # failure stops the validation here.
       - name: Extensions — pre-validate
-        uses: Fossiltalk/CairnCI-Extensions/.github/actions/extension-caller@extension-caller/v1.0.0
+        # The caller ships with core to CairnCI-Public in the same publish that
+        # moves the v1 tag, so workflow and caller always come from one release.
+        uses: Fossiltalk/CairnCI-Public/.github/actions/extension-caller@v1
         with:
           phase: pre-validate
           config-file: ${{ inputs.extensions-config-file }}
@@ -544,7 +546,7 @@ jobs:
       # passed — this is for consumers who gate on their own post-checks).
       - name: Extensions — post-validate-success
         if: success()
-        uses: Fossiltalk/CairnCI-Extensions/.github/actions/extension-caller@extension-caller/v1.0.0
+        uses: Fossiltalk/CairnCI-Public/.github/actions/extension-caller@v1
         with:
           phase: post-validate-success
           config-file: ${{ inputs.extensions-config-file }}
@@ -553,7 +555,7 @@ jobs:
 
       - name: Extensions — post-validate-failure
         if: failure()
-        uses: Fossiltalk/CairnCI-Extensions/.github/actions/extension-caller@extension-caller/v1.0.0
+        uses: Fossiltalk/CairnCI-Public/.github/actions/extension-caller@v1
         with:
           phase: post-validate-failure
           config-file: ${{ inputs.extensions-config-file }}

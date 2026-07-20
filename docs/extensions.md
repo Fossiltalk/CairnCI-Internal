@@ -118,17 +118,17 @@ Each phase also writes a results table to the job's step summary.
 The caller itself lives at `.github/actions/extension-caller/` (class in
 `lib/extension-caller.mjs`, CLI in `caller.mjs`) with unit tests under
 `tests/` run by `integration-extension-caller.yml` (`node --test`, org-free).
-It is published to CairnCI-Extensions like any other extension:
 
-```bash
-git tag extension-caller/v1.0.0
-git push origin extension-caller/v1.0.0
-```
-
-**Release order matters:** `sf-validate.yml` / `sf-deploy.yml` pin
-`extension-caller@extension-caller/v1.0.0`, so that tag must exist on
-CairnCI-Extensions **before** a core `v*` release referencing it is tagged
-(and before org-touching internal CI runs of those workflows).
+Unlike the extensions it runs, the caller is **core framework**, not an
+extension: its contract (phase names, context fields, inputs) versions in
+lockstep with the hook steps in `sf-validate.yml` / `sf-deploy.yml`. It is
+therefore published to **CairnCI-Public** with the core workflows on every
+`v*` release (`publish-tag.yml` allowlist), and the workflows reference
+`Fossiltalk/CairnCI-Public/.github/actions/extension-caller@v1`. Because a
+core publish updates the public tree and the floating `v1` tag in one pass,
+workflow and caller always come from the same release — there is no separate
+caller release step, and `publish-extension.yml` refuses `extension-caller/v*`
+tags. CairnCI-Extensions holds only actual extensions.
 
 ## Directory layout
 

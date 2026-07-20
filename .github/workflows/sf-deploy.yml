@@ -315,7 +315,9 @@ jobs:
       # Consumer extensions pinned to the pre-deploy phase run before anything
       # is deployed to the org. A blocking extension failure stops the deploy.
       - name: Extensions — pre-deploy
-        uses: Fossiltalk/CairnCI-Extensions/.github/actions/extension-caller@extension-caller/v1.0.0
+        # The caller ships with core to CairnCI-Public in the same publish that
+        # moves the v1 tag, so workflow and caller always come from one release.
+        uses: Fossiltalk/CairnCI-Public/.github/actions/extension-caller@v1
         with:
           phase: pre-deploy
           config-file: ${{ inputs.extensions-config-file }}
@@ -566,7 +568,7 @@ jobs:
       # failed state; the rollback step still runs afterwards.
       - name: Extensions — post-deploy-success
         if: success()
-        uses: Fossiltalk/CairnCI-Extensions/.github/actions/extension-caller@extension-caller/v1.0.0
+        uses: Fossiltalk/CairnCI-Public/.github/actions/extension-caller@v1
         with:
           phase: post-deploy-success
           config-file: ${{ inputs.extensions-config-file }}
@@ -575,7 +577,7 @@ jobs:
 
       - name: Extensions — post-deploy-failure
         if: failure()
-        uses: Fossiltalk/CairnCI-Extensions/.github/actions/extension-caller@extension-caller/v1.0.0
+        uses: Fossiltalk/CairnCI-Public/.github/actions/extension-caller@v1
         with:
           phase: post-deploy-failure
           config-file: ${{ inputs.extensions-config-file }}

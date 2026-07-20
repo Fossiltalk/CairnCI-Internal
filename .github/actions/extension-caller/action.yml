@@ -5,6 +5,10 @@
 # action at each phase; it no-ops when the consumer has no extensions config,
 # so extensions stay fully optional. See docs/extensions.md for the config
 # schema and the extension exit-code contract (0 = ok, 10 = warn, else error).
+#
+# This action is core framework (not an extension): it is published to
+# CairnCI-Public together with the reusable workflows on every core v* tag,
+# and versions in lockstep with them.
 name: CairnCI Extension Caller
 description: >-
   Runs user-defined pre/post pipeline extensions (local scripts or pinned

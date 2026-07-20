@@ -19,13 +19,15 @@ workflows by major tag (e.g. `@v1`); see
   in any external git repo pinned to a ref (cloned outside the workspace).
   Exit-code contract: `0` = ok, `10` = warn (never blocks), anything else =
   error (blocks only when `blocking: true`). New `extensions-config-file`
-  input on `sf-validate.yml` and `sf-deploy.yml`. The caller is itself an
-  extension (`.github/actions/extension-caller/`, published as
-  `extension-caller/v1.0.0` to CairnCI-Extensions); its `extension-caller/v1.0.0`
-  tag must be published **before** the first core release that references it.
-  Extension development happens on the `CairnCI-External` branch; releases use
-  the existing scoped-tag publish pipeline (`publish-extension.yml`). See
-  [docs/extensions.md](docs/extensions.md).
+  input on `sf-validate.yml` and `sf-deploy.yml`. The caller
+  (`.github/actions/extension-caller/`) is core framework: it publishes to
+  CairnCI-Public together with the reusable workflows on every core `v*` tag
+  and the workflows reference it at
+  `Fossiltalk/CairnCI-Public/.github/actions/extension-caller@v1`, so both
+  always come from the same release (`publish-extension.yml` refuses
+  `extension-caller/v*` tags). Extension development happens on the
+  `CairnCI-External` branch; extensions still release to CairnCI-Extensions
+  via the scoped-tag pipeline. See [docs/extensions.md](docs/extensions.md).
 
 ## [v1.1.0] - 2026-07-14
 

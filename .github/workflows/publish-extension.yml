@@ -44,6 +44,14 @@ jobs:
             echo "major-tag=${MAJOR_TAG}"
           } >> "$GITHUB_OUTPUT"
 
+          # The extension-caller is core framework: it ships to CairnCI-Public
+          # with the sf-validate/sf-deploy workflows (publish-tag.yml), never
+          # to CairnCI-Extensions.
+          if [ "${EXT_NAME}" = "extension-caller" ]; then
+            echo "::error::extension-caller is published to CairnCI-Public via core v* tags, not to CairnCI-Extensions. Remove the ${TAG} tag." >&2
+            exit 1
+          fi
+
           if [ ! -f ".github/actions/${EXT_NAME}/action.yml" ]; then
             echo "::error::No action.yml found at .github/actions/${EXT_NAME}/action.yml" >&2
             exit 1
