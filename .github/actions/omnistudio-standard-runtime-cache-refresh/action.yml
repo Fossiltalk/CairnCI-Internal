@@ -1,0 +1,111 @@
+# CairnCI omnistudio-standard-runtime-cache-refresh — post-deploy drift check
+# and forced reactivation for OmniStudio Standard Runtime components. Does NOT
+# apply to OmniStudio for Managed Packages (vlocity_cmt namespace).
+#
+# Runs after an OmniStudio-first deploy: reads the deploy's own delta manifest,
+# SOQL-checks each deployed component's active state on the SObject layer
+# (OmniProcess / OmniUiCard / OmniDataTransform), and only for components that
+# are out of sync drives the org's compile/activation Visualforce pages with a
+# headless browser (runner-preinstalled Chrome), reusing the org session the
+# deploy job already established — no credential inputs.
+#
+# WARN-ONLY BY DESIGN: a failed or unconfirmed reactivation emits a ::warning
+# annotation and a job-summary row and the step exits 0 — it never fails the
+# job and never triggers a rollback. This deliberately deviates from
+# field-permset-gate's fail-on-violation behavior; see this action's README.
+# Exit 2 (config error, e.g. malformed policy JSON) does still fail.
+name: OmniStudio Standard Runtime — Cache Refresh
+description: >-
+  Post-deploy cache/activation refresh for OmniStudio Standard Runtime
+  components: SOQL drift check, conditional headless reactivation via the
+  org's compile pages, warn-only reporting. Not for the vlocity_cmt
+  managed-package runtime.
+
+inputs:
+  manifest:
+    description: >-
+      Path to the deployed package.xml (the delta manifest the deploy step
+      produced). Missing file = nothing to check.
+    required: false
+    default: ""
+  deploy-dir:
+    description: Directory holding the deployed source (read for intended active state).
+    required: false
+    default: ""
+  policy-file:
+    description: >-
+      Optional policy JSON in the consumer repo. Explicit action inputs win
+      over policy-file values (input > file > default).
+    required: false
+    default: ""
+  target-org:
+    description: sf CLI org alias/username. Empty uses the default org of the job's session.
+    required: false
+    default: ""
+  omniscript-compile-page:
+    description: Visualforce path that compiles/activates OmniScripts and Integration Procedures.
+    required: false
+    default: ""
+  flexcard-compile-page:
+    description: Visualforce path that compiles FlexCards.
+    required: false
+    default: ""
+  activation-timeout-seconds:
+    description: Per-attempt activation timeout (raise for sandboxes; they are slower here).
+    required: false
+    default: ""
+  activation-retries:
+    description: Retries per component after the first failed activation attempt.
+    required: false
+    default: ""
+  activation-mode:
+    description: >-
+      out-of-sync-only (default) activates only components the org shows
+      inactive; always re-activates every deployed component.
+    required: false
+    default: ""
+  browser-executable:
+    description: Chrome/Chromium binary. Empty probes CHROME_PATH and known runner paths.
+    required: false
+    default: ""
+
+runs:
+  using: composite
+  steps:
+    - name: Run OmniStudio Standard Runtime cache refresh
+      shell: bash
+      env:
+        MANIFEST: ${{ inputs.manifest }}
+        DEPLOY_DIR: ${{ inputs.deploy-dir }}
+        POLICY_FILE: ${{ inputs.policy-file }}
+        TARGET_ORG: ${{ inputs.target-org }}
+        OS_PAGE: ${{ inputs.omniscript-compile-page }}
+        FC_PAGE: ${{ inputs.flexcard-compile-page }}
+        TIMEOUT_S: ${{ inputs.activation-timeout-seconds }}
+        RETRIES: ${{ inputs.activation-retries }}
+        MODE: ${{ inputs.activation-mode }}
+        BROWSER: ${{ inputs.browser-executable }}
+      run: |
+        set -uo pipefail
+        args=()
+        [ -n "$MANIFEST" ] && args+=(--manifest "$MANIFEST")
+        [ -n "$DEPLOY_DIR" ] && args+=(--deploy-dir "$DEPLOY_DIR")
+        [ -n "$POLICY_FILE" ] && args+=(--policy-file "$POLICY_FILE")
+        [ -n "$TARGET_ORG" ] && args+=(--target-org "$TARGET_ORG")
+        [ -n "$OS_PAGE" ] && args+=(--omniscript-compile-page "$OS_PAGE")
+        [ -n "$FC_PAGE" ] && args+=(--flexcard-compile-page "$FC_PAGE")
+        [ -n "$TIMEOUT_S" ] && args+=(--activation-timeout-seconds "$TIMEOUT_S")
+        [ -n "$RETRIES" ] && args+=(--activation-retries "$RETRIES")
+        [ -n "$MODE" ] && args+=(--activation-mode "$MODE")
+        [ -n "$BROWSER" ] && args+=(--browser-executable "$BROWSER")
+        # Warn (exit 10) must not fail the composite step: per-component
+        # ::warning annotations were already emitted, so map 10 -> 0.
+        set +e
+        node "${{ github.action_path }}/dist/index.mjs" "${args[@]}"
+        code=$?
+        set -e
+        if [ "$code" -eq 10 ]; then
+          echo "::warning::OmniStudio (Standard Runtime): cache refresh reported warnings (non-blocking by design)."
+          exit 0
+        fi
+        exit "$code"
