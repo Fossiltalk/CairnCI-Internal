@@ -19,7 +19,7 @@ import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { DEFAULTS, METADATA_TYPE_TO_FAMILY } from "../lib/cache-refresh.mjs";
+import { DEFAULTS, METADATA_TYPE_TO_FAMILY, soqlQuote } from "../lib/cache-refresh.mjs";
 import { orgSession, soqlQuery } from "../lib/org.mjs";
 
 const ORG = process.env.OMNI_CACHE_REFRESH_LIVE_ORG || "";
@@ -96,7 +96,7 @@ describe("live-org validation (read-only)", { skip }, () => {
       const items = (Array.isArray(listed) ? listed : [listed]).filter(Boolean);
       const sample = items.slice(0, 5).map((i) => i.fullName);
       if (sample.length === 0) continue;
-      const inList = sample.map((n) => `'${n.replace(/'/g, "\\'")}'`).join(", ");
+      const inList = sample.map(soqlQuote).join(", ");
       const records = soqlQuery(
         `SELECT UniqueName FROM ${family} WHERE UniqueName IN (${inList})`,
         ORG,
