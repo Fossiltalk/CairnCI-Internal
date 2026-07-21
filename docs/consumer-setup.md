@@ -230,6 +230,49 @@ See the `rule-deploy` section (§5b) for a related constraint; that feature also
 > `unsignedPluginAllowList.json` so it installs without prompting. (See the
 > [Salesforce allowlist docs](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_allowlist.htm).)
 
+### 5e. OmniStudio Standard Runtime deployments (optional)
+
+This does not apply to OmniStudio for Managed Packages (`vlocity_cmt` namespace).
+
+Salesforce and community guidance is that OmniStudio Standard Runtime content
+should deploy in its own step, **before** the rest of the metadata, when using
+the Metadata API path: the deploy moves the component definitions correctly, but
+components that reference each other (and anything that reads them at runtime)
+behave more predictably when they land ahead of dependent metadata, and the
+post-deploy cache/activation refresh tooling expects them in place first.
+
+Set `omnistudioStandardRuntimeFirst: true` (in config or via the
+`omnistudio-standard-runtime-first` input) to enable a 2-step deployment path:
+
+1. **Deploy OmniStudio first** — changed `OmniScript`,
+   `OmniIntegrationProcedure`, `OmniDataTransform`, and `OmniUiCard` metadata
+   deploys in its own step. This package never contains Apex, so no tests run.
+2. **Deploy main** — all other changed metadata deploys normally, with the
+   configured test level.
+
+Only those four *content* types are pulled forward. The adjacent OmniStudio
+config/tracking types (`OmniInteractionConfig`, `OmniInteractionAccessConfig`,
+`OmniStudioSettings`, `OmniSupervisorConfig`, `OmniTrackingComponentDef`,
+`OmniTrackingGroup`, `OmniExtTrackingDef`) are settings rather than content and
+stay in the main deploy.
+
+Note that deploying is not the whole story for Standard Runtime OmniStudio:
+the Metadata API keeps each component's active/compiled state from the source
+org, so a deployed component may still need a cache/activation refresh before
+end users see it. That refresh is out of scope for the deploy workflow.
+
+**Constraints:** `omnistudioStandardRuntimeFirst` only applies in delta mode
+(`delta: true`), the same as `ruleDeploy` (§5b). In full-branch mode everything
+deploys as one step. Quick deploy (reusing the PR validation job-id) is also
+bypassed for runs that include OmniStudio changes, since a quick deploy replays
+the validated single-transaction deploy and cannot honor the ordering — the
+workflow falls back to a full deploy automatically. Both flags can be combined;
+the order is then: deactivate rules → OmniStudio → main → activate rules.
+
+```json
+{ "omnistudioStandardRuntimeFirst": true }
+```
+
 ---
 
 ## 6. Configuration: inputs and/or a config file
@@ -252,7 +295,8 @@ built-in default applies.
 Structural settings — `runs-on`, `environment`, and the `on:` triggers — are
 evaluated before any step runs, so they **must** stay in the caller workflow
 (they can't come from the file). The config file covers behavioral settings:
-`sourceDir`, `testLevel`, `tests`, `wait`, `rollbackStrategy`.
+`sourceDir`, `testLevel`, `tests`, `wait`, `rollbackStrategy`,
+`omnistudioStandardRuntimeFirst`.
 
 Optional extensions follow the same precedence with their own config files —
 e.g. the field gate's `.cairnci/field-policy.json` (see
@@ -277,6 +321,7 @@ e.g. the field gate's `.cairnci/field-policy.json` (see
 | `scratch-def-file` | `config/project-scratch-def.json` (validate only) | Scratch definition file used when `org-mode: scratch`. |
 | `min-coverage`   | `75` (validate only) | Minimum org-wide Apex coverage % required to pass. |
 | `rule-deploy`    | `false`          | `true` = 3-step path for MatchingRule/DuplicateRule (deactivate → update → activate). Delta mode only. See §5b. |
+| `omnistudio-standard-runtime-first` | `false` (deploy only) | `true` = OmniStudio Standard Runtime content deploys in its own step ahead of the rest. Delta mode only. See §5e. |
 | `config-file`    | `.cairnci/config.json` | Path to the optional JSON config file. |
 
 ## 8. Runners
