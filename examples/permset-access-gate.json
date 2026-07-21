@@ -1,0 +1,24 @@
+{
+  "$comment": "Optional. Place at .cairnci/permset-access-gate.json in your repo (or point the config-file input / CONFIG_FILE env elsewhere). The permset-access-gate inspects the PR git diff for newly created custom fields and objects and checks that the permission sets in your repo grant each rule's minimum access. No org connection, no sf CLI — pure git + filesystem. Exit codes: 0 = ok, 10 = warn (never blocks), 1 = an error-severity finding, 2 = config/environment problem. See .github/actions/permset-access-gate/README.md.",
+  "bypass": {
+    "$comment": "Global bypass, unioned into every rule. `objects` suppresses object-CRUD findings; `fields` (Object.Field API names) suppresses field-FLS findings. Matching is case-insensitive and supports a trailing `*` wildcard segment: `Invoice__c.*` bypasses every field on Invoice__c, `Temp_*` bypasses objects with that prefix.",
+    "objects": ["Legacy_Thing__c"],
+    "fields": ["Account.Legacy_Code__c", "Invoice__c.*"]
+  },
+  "rules": [
+    {
+      "$comment": "permissionSet is required. severity: error|warn (default error). fieldAccess: read|edit (default read). objectAccess: any of read|create|edit|delete|viewAll|modifyAll (default [read]). Per-rule bypass is optional and unions with the global bypass, applying only to this rule.",
+      "permissionSet": "Sales_Core",
+      "severity": "error",
+      "fieldAccess": "edit",
+      "objectAccess": ["read", "create", "edit"],
+      "bypass": { "objects": [], "fields": [] }
+    },
+    {
+      "permissionSet": "Support_Readonly",
+      "severity": "warn",
+      "fieldAccess": "read",
+      "objectAccess": ["read"]
+    }
+  ]
+}
