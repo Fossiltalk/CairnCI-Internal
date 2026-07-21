@@ -91,6 +91,11 @@ on:
         required: false
         type: string
         default: ""
+      omnistudio-standard-runtime-first:
+        description: "When 'true', OmniStudio Standard Runtime metadata (OmniScript, OmniIntegrationProcedure, OmniDataTransform, OmniUiCard) is deployed in its own step before the rest of the changed metadata (2-step path). Does not apply to managed-package (vlocity_cmt) OmniStudio. Only applies in delta mode. Default: false."
+        required: false
+        type: string
+        default: ""
       extensions-config-file:
         description: "Path to the optional, source-tracked extensions config JSON in the consumer repo. Extensions listed there run at the pre-deploy / post-deploy-success / post-deploy-failure phases in config order. See docs/extensions.md. Default: .cairnci/extensions.json."
         required: false
@@ -146,6 +151,7 @@ jobs:
           IN_ROLLBACK_STRATEGY: ${{ inputs.rollback-strategy }}
           IN_RULE_DEPLOY: ${{ inputs.rule-deploy }}
           IN_ALLOW_DESTRUCTIVE_CHANGES: ${{ inputs.allow-destructive-changes }}
+          IN_OMNISTUDIO_STANDARD_RUNTIME_FIRST: ${{ inputs.omnistudio-standard-runtime-first }}
         run: |
           node <<'EOF'
           const fs = require("fs");
@@ -157,7 +163,7 @@ jobs:
           } else {
             console.log("No config file at '" + cfgPath + "' — using inputs/defaults.");
           }
-          const defaults = { sourceDir: "force-app", allowDeltaDeploys: "true", allowDestructiveChanges: "false", testLevel: "RunLocalTests", tests: "", wait: "60", rollbackStrategy: "none", ruleDeploy: "false" };
+          const defaults = { sourceDir: "force-app", allowDeltaDeploys: "true", allowDestructiveChanges: "false", testLevel: "RunLocalTests", tests: "", wait: "60", rollbackStrategy: "none", ruleDeploy: "false", omnistudioStandardRuntimeFirst: "false" };
           const inputs = {
             sourceDir: process.env.IN_SOURCE_DIR,
             allowDeltaDeploys: process.env.IN_DELTA, // workflow `delta` input overrides config
@@ -167,6 +173,7 @@ jobs:
             wait: process.env.IN_WAIT,
             rollbackStrategy: process.env.IN_ROLLBACK_STRATEGY,
             ruleDeploy: process.env.IN_RULE_DEPLOY,
+            omnistudioStandardRuntimeFirst: process.env.IN_OMNISTUDIO_STANDARD_RUNTIME_FIRST,
           };
           const pick = (k) => {
             const i = inputs[k];
@@ -183,6 +190,7 @@ jobs:
             EFFECTIVE_WAIT: "wait",
             EFFECTIVE_ROLLBACK_STRATEGY: "rollbackStrategy",
             EFFECTIVE_RULE_DEPLOY: "ruleDeploy",
+            EFFECTIVE_OMNISTUDIO_STANDARD_RUNTIME_FIRST: "omnistudioStandardRuntimeFirst",
           };
           let out = "";
           for (const [envName, key] of Object.entries(map)) {
@@ -385,6 +393,47 @@ jobs:
             `has-rules=true\nhas-main-pkg=${mainBlocks.length > 0 ? 'true' : 'false'}\n`);
           EOF
 
+      - name: Split OmniStudio Standard Runtime metadata
+        id: split-omnistudio
+        if: steps.delta.outputs.has-changes == 'true' && env.EFFECTIVE_OMNISTUDIO_STANDARD_RUNTIME_FIRST == 'true' && env.EFFECTIVE_DELTA == 'true'
+        shell: bash
+        run: |
+          node <<'EOF'
+          const fs = require('fs');
+          const cs = 'changed-sources';
+          // The rule split (if it ran) already carved main-pkg.xml out of the
+          // delta package; split the OmniStudio types out of whichever manifest
+          // now represents the rest of the deploy.
+          const srcPath = fs.existsSync(`${cs}/main-pkg.xml`) ? `${cs}/main-pkg.xml` : `${cs}/package/package.xml`;
+          if (!fs.existsSync(srcPath)) {
+            fs.appendFileSync(process.env.GITHUB_OUTPUT, 'has-omnistudio=false\nhas-remainder=true\n');
+            process.exit(0);
+          }
+          const pkgXml = fs.readFileSync(srcPath, 'utf8');
+          // Standard Runtime content types only. The adjacent config/tracking
+          // types (OmniInteractionConfig, OmniInteractionAccessConfig,
+          // OmniStudioSettings, OmniSupervisorConfig, OmniTrackingComponentDef,
+          // OmniTrackingGroup, OmniExtTrackingDef) are settings, not content,
+          // and deliberately stay in the main deploy.
+          const OMNI_TYPES = ['OmniScript', 'OmniIntegrationProcedure', 'OmniDataTransform', 'OmniUiCard'];
+          const typeName = b => { const m = b.match(/<name>([^<]+)<\/name>/); return m ? m[1].trim() : ''; };
+          const typeBlocks = pkgXml.match(/<types>[\s\S]*?<\/types>/g) || [];
+          const omniBlocks = typeBlocks.filter(b => OMNI_TYPES.includes(typeName(b)));
+          if (omniBlocks.length === 0) {
+            fs.appendFileSync(process.env.GITHUB_OUTPUT, 'has-omnistudio=false\nhas-remainder=true\n');
+            process.exit(0);
+          }
+          const mainBlocks = typeBlocks.filter(b => !OMNI_TYPES.includes(typeName(b)));
+          const ver = (pkgXml.match(/<version>([^<]+)<\/version>/) || [null,'62.0'])[1];
+          const buildPkg = blocks =>
+            `<?xml version="1.0" encoding="UTF-8"?>\n<Package xmlns="http://soap.sforce.com/2006/04/metadata">\n${blocks.join('\n')}\n    <version>${ver}</version>\n</Package>`;
+          fs.writeFileSync(`${cs}/omnistudio-pkg.xml`, buildPkg(omniBlocks));
+          if (mainBlocks.length > 0) fs.writeFileSync(`${cs}/main-pkg.xml`, buildPkg(mainBlocks));
+          console.log(`OmniStudio split complete. omnistudio-pkg.xml written. Remainder type blocks: ${mainBlocks.length}`);
+          fs.appendFileSync(process.env.GITHUB_OUTPUT,
+            `has-omnistudio=true\nhas-remainder=${mainBlocks.length > 0 ? 'true' : 'false'}\n`);
+          EOF
+
       - name: Check rule limits
         if: steps.split-rules.outputs.has-rules == 'true'
         shell: bash
@@ -436,6 +485,36 @@ jobs:
             --test-level NoTestRun \
             --wait "$WAIT"
 
+      - name: Deploy OmniStudio Standard Runtime — first
+        if: steps.split-omnistudio.outputs.has-omnistudio == 'true'
+        shell: bash
+        env:
+          DEPLOY_DIR: ${{ steps.delta.outputs.deploy-dir }}
+          WAIT: ${{ env.EFFECTIVE_WAIT }}
+        run: |
+          set -euo pipefail
+          # --manifest needs sfdx-project.json to resolve source-backed components
+          # from the delta output dir — same redirect the main deploy step
+          # performs (idempotent, so both steps can run it).
+          node <<'NODE'
+          const fs=require('fs');
+          const p=JSON.parse(fs.readFileSync('sfdx-project.json','utf8'));
+          const dd=process.env.DEPLOY_DIR;
+          const sd=dd.replace(/^changed-sources\//,'');
+          let rep=false;
+          p.packageDirectories=p.packageDirectories.map(d=>{if(d.path===sd){rep=true;return{...d,path:dd};}return d;});
+          if(!rep){const di=p.packageDirectories.findIndex(d=>d.default);(di>=0?p.packageDirectories[di]:p.packageDirectories[0]).path=dd;}
+          fs.writeFileSync('sfdx-project.json',JSON.stringify(p,null,2));
+          console.log('Redirected packageDirectories to '+dd);
+          NODE
+          echo "Deploying OmniStudio Standard Runtime metadata ahead of the rest..."
+          # No --test-level on purpose: this package never contains Apex, and
+          # the org default (no tests for an Apex-free package) also works in
+          # production orgs, where an explicit NoTestRun is rejected.
+          sf project deploy start \
+            --manifest changed-sources/omnistudio-pkg.xml \
+            --wait "$WAIT"
+
       - name: Find a reusable validation job-id
         id: lookup
         if: steps.delta.outputs.has-changes == 'true'
@@ -471,7 +550,7 @@ jobs:
 
       - name: Deploy (quick deploy, fallback to full)
         id: deploy
-        if: steps.delta.outputs.has-changes == 'true' && (steps.split-rules.outputs.has-rules != 'true' || steps.split-rules.outputs.has-main-pkg == 'true')
+        if: steps.delta.outputs.has-changes == 'true' && (steps.split-rules.outputs.has-rules != 'true' || steps.split-rules.outputs.has-main-pkg == 'true') && (steps.split-omnistudio.outputs.has-omnistudio != 'true' || steps.split-omnistudio.outputs.has-remainder == 'true')
         shell: bash
         env:
           JOB_ID: ${{ steps.lookup.outputs.job-id }}
@@ -481,6 +560,7 @@ jobs:
           WAIT: ${{ env.EFFECTIVE_WAIT }}
           EFFECTIVE_RULE_DEPLOY: ${{ env.EFFECTIVE_RULE_DEPLOY }}
           HAS_RULES: ${{ steps.split-rules.outputs.has-rules }}
+          HAS_OMNI: ${{ steps.split-omnistudio.outputs.has-omnistudio }}
           ALLOW_DESTRUCTIVE: ${{ env.EFFECTIVE_ALLOW_DESTRUCTIVE_CHANGES }}
           DELTA: ${{ env.EFFECTIVE_DELTA }}
         run: |
@@ -505,6 +585,12 @@ jobs:
             JOB_ID=""
             echo "Rule-deploy path active — skipping quick deploy, using full deploy with rule split."
           fi
+          # Quick deploy replays the validated single-transaction deploy, which
+          # can't honor the OmniStudio-first ordering.
+          if [ "${HAS_OMNI:-}" = "true" ]; then
+            JOB_ID=""
+            echo "OmniStudio-first path active — skipping quick deploy, deploying the remainder from its own manifest."
+          fi
 
           if [ -n "${JOB_ID// /}" ]; then
             echo "Attempting quick deploy of job-id $JOB_ID"
@@ -517,7 +603,9 @@ jobs:
             echo "No reusable validation — running a full deploy."
           fi
 
-          if [ "${EFFECTIVE_RULE_DEPLOY:-}" = "true" ] && [ "${HAS_RULES:-}" = "true" ]; then
+          # The split paths (rules and/or OmniStudio-first) win over the
+          # destructive branch, matching the existing ruleDeploy precedence.
+          if { [ "${EFFECTIVE_RULE_DEPLOY:-}" = "true" ] && [ "${HAS_RULES:-}" = "true" ]; } || [ "${HAS_OMNI:-}" = "true" ]; then
             _use_delta_pkg_dir
             args=(project deploy start --manifest changed-sources/main-pkg.xml \
               --test-level "$TEST_LEVEL" --wait "$WAIT")

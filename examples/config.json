@@ -6,5 +6,6 @@
   "tests": "",
   "wait": "60",
   "rollbackStrategy": "revert-pr",
-  "ruleDeploy": true
+  "ruleDeploy": true,
+  "omnistudioStandardRuntimeFirst": true
 }

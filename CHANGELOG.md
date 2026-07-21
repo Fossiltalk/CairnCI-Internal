@@ -5,6 +5,21 @@ All notable changes to CairnCI are documented here. This project adheres to
 workflows by major tag (e.g. `@v1`); see
 [docs/consumer-setup.md](docs/consumer-setup.md).
 
+## [Unreleased]
+
+### Added
+
+- **`omnistudioStandardRuntimeFirst` deploy setting** — opt-in 2-step deploy
+  path on `sf-deploy.yml` (config key `omnistudioStandardRuntimeFirst`, input
+  `omnistudio-standard-runtime-first`): changed OmniStudio Standard Runtime
+  content (`OmniScript`, `OmniIntegrationProcedure`, `OmniDataTransform`,
+  `OmniUiCard`) deploys in its own step before the rest of the changed
+  metadata, mirroring the `ruleDeploy` split pattern. Adjacent OmniStudio
+  config/tracking types stay in the main deploy. Delta mode only; quick deploy
+  is bypassed when OmniStudio changes are present. Does not apply to
+  managed-package (`vlocity_cmt`) OmniStudio. See
+  [docs/consumer-setup.md](docs/consumer-setup.md) §5e.
+
 ## [v1.2.0] - 2026-07-20
 
 ### Added
