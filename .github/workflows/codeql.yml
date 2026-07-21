@@ -84,9 +84,16 @@ jobs:
           # own JS lives in scripts/ and is still analyzed. paths-ignore
           # applies to the interpreted (javascript-typescript) analysis; the
           # 'actions' analysis is unaffected (force-app has no workflow files).
+          #
+          # Also exclude checked-in action bundles (.github/actions/*/dist):
+          # ncc output vendoring third-party npm dependencies (e.g.
+          # puppeteer-core in omnistudio-standard-runtime-cache-refresh) —
+          # alerts there point at upstream library code we can't fix in place.
+          # The actions' own source (lib/, *.mjs) is still analyzed.
           config: |
             paths-ignore:
               - force-app
+              - .github/actions/*/dist
           # If you wish to specify custom queries, you can do so here or in a config file.
           # By default, queries listed here will override any specified in a config file.
           # Prefix the list here with "+" to use these queries and those in the config file.
