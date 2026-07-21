@@ -145,7 +145,26 @@ unless an org alias is provided, so CI stays org-free:
 OMNI_CACHE_REFRESH_LIVE_ORG=<sf org alias> npm test
 ```
 
-Everything in that suite is read-only against the org. Deliberately not
-automated: driving the compile pages themselves, which mutates org state
-(recompile/reactivation) — exercise that manually against a chosen component
-in a non-production org before tagging a release.
+Everything in that suite is read-only against the org.
+
+### Live-org activation round trip (state-changing)
+
+`tests/live-org-activation.test.mjs` covers the one thing the read-only suite
+cannot: the real browser activation. It deploys a dedicated throwaway
+OmniScript (`tests/fixtures/CairnCITest_CacheRefreshProbe_English_1`) to the
+org **inactive** — the genuine drift state — runs the shipped bundle
+end-to-end (frontdoor session reuse → headless Chrome on the real
+`omnistudio__OmniLwcCompile` page → SOQL re-check flips `IsActive`), then
+verifies that re-deploying the inactive source deactivates the record again
+(the Metadata API keeps-source-state behavior this extension exists to
+compensate for) and destructively deletes the probe. Cleanup runs before and
+after, so crashed runs leave no residue. Because it deploys and deletes
+metadata it has its own gate — **point it only at an org designated for CI
+testing, never a real production org**:
+
+```bash
+OMNI_CACHE_REFRESH_LIVE_ACTIVATION_ORG=<ci test org alias> npm test
+```
+
+Requires a local Chrome/Chromium and an authenticated `sf` CLI session for
+the alias.
