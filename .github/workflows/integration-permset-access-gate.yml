@@ -1,0 +1,96 @@
+# Integration tests for the permset-access-gate extension (org-free — pure
+# node:test plus a filesystem/git smoke run). The gate never talks to
+# Salesforce, so no org secret is needed: it reasons about the git diff and the
+# permission-set XML in the repo. Mirrors integration-extension-caller.yml.
+name: permset-access-gate Tests
+
+on:
+  pull_request:
+    paths:
+      - .github/actions/permset-access-gate/**
+      - .github/workflows/integration-permset-access-gate.yml
+  push:
+    branches: [main, CairnCI-External]
+    paths:
+      - .github/actions/permset-access-gate/**
+      - .github/workflows/integration-permset-access-gate.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    if: github.repository == 'Fossiltalk/CairnCI-Internal'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+
+      - name: Run permset-access-gate unit + CLI tests
+        shell: bash
+        # Explicit glob: Node >= 23 treats a bare directory arg as a module
+        # path, so the glob form works on every Node line.
+        run: node --test .github/actions/permset-access-gate/tests/*.test.mjs
+
+      # Smoke the real CLI against a throwaway fixture repo in a temp dir. We
+      # invoke gate.mjs directly (not `uses: ./...`) because the composite
+      # action would run against this checkout, not the fixture workspace —
+      # same spirit as integration-extension-caller.yml's local smoke.
+      - name: Smoke gate.mjs against a fixture repo
+        shell: bash
+        run: |
+          set -euo pipefail
+          GATE="$PWD/.github/actions/permset-access-gate/gate.mjs"
+          WORK="$(mktemp -d)"
+          cd "$WORK"
+
+          git init -q -b main
+          git config user.email ci@example.com
+          git config user.name "CI"
+          echo base > README.md
+          git add -A && git commit -qm base
+
+          git checkout -q -b feature
+          FIELDS="force-app/main/default/objects/Widget__c/fields"
+          PSETS="force-app/main/default/permissionsets"
+          mkdir -p "$FIELDS" "$PSETS"
+          printf '<?xml version="1.0"?>\n<CustomField><type>Text</type></CustomField>\n' \
+            > "$FIELDS/Note__c.field-meta.xml"
+          # Permission set grants read but the rule below requires edit -> a finding.
+          printf '<?xml version="1.0"?>\n<PermissionSet><fieldPermissions><field>Widget__c.Note__c</field><readable>true</readable><editable>false</editable></fieldPermissions></PermissionSet>\n' \
+            > "$PSETS/Sales_Core.permissionset-meta.xml"
+          mkdir -p .cairnci
+          printf '{"rules":[{"permissionSet":"Sales_Core","fieldAccess":"edit"}]}' \
+            > .cairnci/permset-access-gate.json
+          git add -A && git commit -qm feature
+
+          set +e
+          GATE_BASE_REF=main SOURCE_DIR=force-app node "$GATE" --comment false
+          code=$?
+          set -e
+          echo "gate exit code: $code"
+          # A missing edit permission is an error-severity finding -> exit 1.
+          if [ "$code" -ne 1 ]; then
+            echo "::error::expected exit 1 from the smoke fixture, got $code"
+            exit 1
+          fi
+
+          # Grant edit; the same diff should now pass cleanly (exit 0).
+          printf '<?xml version="1.0"?>\n<PermissionSet><fieldPermissions><field>Widget__c.Note__c</field><readable>true</readable><editable>true</editable></fieldPermissions></PermissionSet>\n' \
+            > "$PSETS/Sales_Core.permissionset-meta.xml"
+          git add -A && git commit -qm grant-edit
+
+          set +e
+          GATE_BASE_REF=main SOURCE_DIR=force-app node "$GATE" --comment false
+          code=$?
+          set -e
+          echo "gate exit code after granting edit: $code"
+          if [ "$code" -ne 0 ]; then
+            echo "::error::expected exit 0 after granting edit, got $code"
+            exit 1
+          fi

@@ -1,0 +1,91 @@
+# CairnCI permset-access-gate — an org-free PR gate. It inspects the current
+# PR's git diff for newly created Salesforce custom fields and objects and
+# verifies that the user-defined permission sets in the repo grant a configured
+# minimum access level to each. No org connection and no sf CLI: pure git +
+# filesystem, so it runs anywhere a checkout exists.
+#
+# It understands the Salesforce special cases that break naive FLS checks:
+# formula / auto-number / roll-up-summary fields are read-only (an "edit"
+# requirement downgrades to "read"); required, master-detail, standard and Id
+# fields are exempt from field-level security; custom-metadata / platform-event
+# / big-object types have no object CRUD; and a master-detail child object
+# additionally requires Read on its master in the same permission set, or the
+# permission set is rejected at deploy time. It also reports editable=true on a
+# read-only field as source/org drift (the org stores editable=false regardless)
+# — on by default, disabled with flagEditableOnReadOnlyFields.
+#
+# Two deployment modes:
+#   1. Standalone job — add this action to a workflow with `permissions:
+#      pull-requests: write` and a full-history checkout (fetch-depth: 0). It
+#      posts a sticky PR comment in addition to annotations and the step
+#      summary.
+#   2. Extension-caller entry — reference run.sh from .cairnci/extensions.json
+#      pinned to permset-access-gate/v1.0.0. In that mode PR commenting is
+#      skipped unless a GITHUB_TOKEN is present in the env; the exit code feeds
+#      the caller's blocking/non-blocking contract (0 ok, 10 warn, else error).
+#
+# Results follow the CairnCI extension exit-code contract: exit 0 = ok,
+# exit 10 = warn (never blocks), any other non-zero = error.
+name: CairnCI permset-access-gate
+description: >-
+  Org-free PR gate that verifies user-defined permission sets grant a configured
+  minimum access to every newly created Salesforce field and object (git +
+  filesystem only, no sf CLI).
+
+inputs:
+  source-dir:
+    description: Salesforce source directory to scan.
+    required: false
+    default: force-app
+  config-file:
+    description: Path to the gate config JSON in the consumer repo.
+    required: false
+    default: .cairnci/permset-access-gate.json
+  base-ref:
+    description: >-
+      Git base ref for the diff. Empty auto-resolves to origin/$GITHUB_BASE_REF
+      on a PR, else HEAD^.
+    required: false
+    default: ""
+  github-token:
+    description: "Token used for the sticky PR comment (needs pull-requests: write)."
+    required: false
+    default: ${{ github.token }}
+  pr-number:
+    description: PR number for the sticky comment (auto-detected on pull_request events).
+    required: false
+    default: ${{ github.event.pull_request.number }}
+  comment-on-pr:
+    description: Post/update a sticky PR comment ("true"/"false").
+    required: false
+    default: "true"
+
+runs:
+  using: composite
+  steps:
+    - name: Run permset-access-gate
+      shell: bash
+      env:
+        SOURCE_DIR: ${{ inputs.source-dir }}
+        CONFIG_FILE: ${{ inputs.config-file }}
+        GATE_BASE_REF: ${{ inputs.base-ref }}
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+        PR_NUMBER: ${{ inputs.pr-number }}
+        COMMENT_ON_PR: ${{ inputs.comment-on-pr }}
+      run: |
+        set -uo pipefail
+        # A composite step must not fail on a warn-severity result (exit 10):
+        # capture the exit code, map 10 -> warning + success, propagate the rest.
+        set +e
+        node "${{ github.action_path }}/gate.mjs" \
+          --source-dir "$SOURCE_DIR" \
+          --config "$CONFIG_FILE" \
+          --base-ref "$GATE_BASE_REF" \
+          --comment "$COMMENT_ON_PR"
+        code=$?
+        set -e
+        if [ "$code" -eq 10 ]; then
+          echo "::warning::permset-access-gate reported warnings (non-blocking)."
+          exit 0
+        fi
+        exit "$code"

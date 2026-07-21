@@ -9,6 +9,47 @@ workflows by major tag (e.g. `@v1`); see
 
 ### Added
 
+- **`omnistudioStandardRuntimeFirst` deploy setting** — opt-in 2-step deploy
+  path on `sf-deploy.yml` (config key `omnistudioStandardRuntimeFirst`, input
+  `omnistudio-standard-runtime-first`): changed OmniStudio Standard Runtime
+  content (`OmniScript`, `OmniIntegrationProcedure`, `OmniDataTransform`,
+  `OmniUiCard`) deploys in its own step before the rest of the changed
+  metadata, mirroring the `ruleDeploy` split pattern. Adjacent OmniStudio
+  config/tracking types stay in the main deploy. Delta mode only; quick deploy
+  is bypassed when OmniStudio changes are present. Does not apply to
+  managed-package (`vlocity_cmt`) OmniStudio. See
+  [docs/consumer-setup.md](docs/consumer-setup.md) §5e.
+- **permset-access-gate extension** — an org-free PR gate
+  (`.github/actions/permset-access-gate/`) that inspects the current PR's git
+  diff for newly created Salesforce custom fields and objects and verifies that
+  the permission sets committed in the repo grant a configured minimum access
+  level to each. No org connection and no `sf` CLI: pure git plus filesystem,
+  so it adds no round trips to the pipeline. Config is source-tracked in the
+  consumer repo (default `.cairnci/permset-access-gate.json`; see
+  `examples/permset-access-gate.json`) with per-permission-set rules, a
+  severity of `error` (blocking) or `warn` (non-blocking), and bypass patterns
+  that apply globally or to a single rule. Findings surface as GitHub
+  annotations, a job-summary table, and a sticky PR comment listing every
+  missing permission, with an exit code following the extension contract
+  (`0` ok, `10` warn, `1` error, `2` config/environment). Runs standalone or
+  through the extension caller. See
+  [docs/extensions.md](docs/extensions.md).
+
+  The Salesforce-specific rules it encodes were verified with check-only
+  deploys against a live org: required and master-detail fields cannot carry
+  field permissions at all (exempt); formula, auto-number and roll-up summary
+  fields accept `editable` but can never honor it, so an `edit` requirement
+  downgrades to `read` rather than failing the PR; and a master-detail child
+  object accepts View All / Modify All but additionally requires `read` on its
+  master in the same permission set, which the gate reports as a
+  `master-dependency` finding.
+
+  Because Salesforce accepts `editable=true` on a formula, auto-number or
+  roll-up field while the org stores `editable=false`, the gate also reports
+  that as a `field-drift` finding at the rule's severity — on by default, since
+  the grant reads as meaningful in review but has no effect in the org. Turn it
+  off with `flagEditableOnReadOnlyFields: false`, globally or on a single rule.
+
 - **omnistudio-standard-runtime-cache-refresh extension** — a post-deploy
   drift check and forced reactivation for OmniStudio **Standard Runtime**
   components (`.github/actions/omnistudio-standard-runtime-cache-refresh/`).
