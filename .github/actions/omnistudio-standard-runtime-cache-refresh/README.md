@@ -133,6 +133,19 @@ npm test          # node --test tests/*.test.mjs — org and browser stubbed
 npm run build     # rebuild dist/ (required before committing source changes)
 ```
 
-Real-org activation cannot be exercised by the unit suite; verify against a
-live Standard Runtime org (workflow_dispatch or a manual run) before tagging
-a release.
+### Live-org validation (read-only)
+
+`tests/live-org.test.mjs` re-verifies every real-org assumption the unit
+suite stubs — SObject fields, default compile-page paths, the metadata
+`fullName` = SObject `UniqueName` key mapping, session reuse, and the bundled
+CLI end-to-end for the in-sync and missing-component paths. It self-skips
+unless an org alias is provided, so CI stays org-free:
+
+```bash
+OMNI_CACHE_REFRESH_LIVE_ORG=<sf org alias> npm test
+```
+
+Everything in that suite is read-only against the org. Deliberately not
+automated: driving the compile pages themselves, which mutates org state
+(recompile/reactivation) — exercise that manually against a chosen component
+in a non-production org before tagging a release.
