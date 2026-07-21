@@ -27,10 +27,15 @@ permissions:
   contents: read
 
 jobs:
+  # All four permutation jobs skip Dependabot-triggered runs: Dependabot PRs
+  # read from the Dependabot secrets store, where SFDX_AUTH_URL is (by
+  # design) not defined, so org validation cannot run — and a dependency
+  # bump cannot change CairnCI's against-org behavior anyway. Skipped jobs
+  # still satisfy required status checks.
   # --- Permutation 1: delta, no destructive ---
   perm-delta-no-destructive:
     name: "delta=true destructive=false"
-    if: github.repository == 'Fossiltalk/CairnCI-Internal'
+    if: github.repository == 'Fossiltalk/CairnCI-Internal' && github.actor != 'dependabot[bot]'
     uses: ./.github/workflows/sf-validate.yml
     with:
       environment: main
@@ -44,7 +49,7 @@ jobs:
   # --- Permutation 2: delta + destructive ---
   perm-delta-destructive:
     name: "delta=true destructive=true"
-    if: github.repository == 'Fossiltalk/CairnCI-Internal'
+    if: github.repository == 'Fossiltalk/CairnCI-Internal' && github.actor != 'dependabot[bot]'
     uses: ./.github/workflows/sf-validate.yml
     with:
       environment: main
@@ -70,7 +75,7 @@ jobs:
   # fixture-untouched commits contains no Apex, so coverage checking never engages there.
   perm-full-no-destructive:
     name: "delta=false destructive=false"
-    if: github.repository == 'Fossiltalk/CairnCI-Internal'
+    if: github.repository == 'Fossiltalk/CairnCI-Internal' && github.actor != 'dependabot[bot]'
     uses: ./.github/workflows/sf-validate.yml
     with:
       environment: main
@@ -86,7 +91,7 @@ jobs:
   # test-level: RunSpecifiedTests — see permutation 3's comment above; same reasoning applies.
   perm-full-destructive:
     name: "delta=false destructive=true"
-    if: github.repository == 'Fossiltalk/CairnCI-Internal'
+    if: github.repository == 'Fossiltalk/CairnCI-Internal' && github.actor != 'dependabot[bot]'
     uses: ./.github/workflows/sf-validate.yml
     with:
       environment: main
