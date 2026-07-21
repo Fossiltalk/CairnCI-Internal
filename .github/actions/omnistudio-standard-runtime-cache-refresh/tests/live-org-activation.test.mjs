@@ -26,14 +26,18 @@ import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { DEFAULTS } from "../lib/cache-refresh.mjs";
 import { findBrowserExecutable } from "../lib/activator.mjs";
 import { soqlQuery } from "../lib/org.mjs";
 
 const ORG = process.env.OMNI_CACHE_REFRESH_LIVE_ACTIVATION_ORG || "";
-const skip = ORG
-  ? false
-  : "set OMNI_CACHE_REFRESH_LIVE_ACTIVATION_ORG=<sf org alias> (a CI test org — this suite deploys and deletes metadata)";
+// The activation step needs a local Chrome/Chromium; on hosts without one
+// this suite skips (with the reason) rather than failing — mirroring the
+// action's own warn-not-fail behavior for a missing browser.
+const skip = !ORG
+  ? "set OMNI_CACHE_REFRESH_LIVE_ACTIVATION_ORG=<sf org alias> (a CI test org — this suite deploys and deletes metadata)"
+  : !findBrowserExecutable({ browserExecutable: "" })
+    ? "no Chrome/Chromium executable found — install one or set CHROME_PATH to run the activation round trip"
+    : false;
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const BUNDLE = path.join(HERE, "..", "dist", "index.mjs");
@@ -152,10 +156,6 @@ function runBundleAgainstProbe() {
 describe("live-org activation round trip (STATE-CHANGING)", { skip }, () => {
   before(() => {
     assert.ok(fs.existsSync(FIXTURE), `fixture missing: ${FIXTURE}`);
-    assert.ok(
-      findBrowserExecutable({ browserExecutable: "" }),
-      "no Chrome/Chromium found locally — required for the activation step",
-    );
     destroyProbe(); // residue from a crashed earlier run must not skew this one
   });
 

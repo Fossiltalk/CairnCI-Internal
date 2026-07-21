@@ -24,6 +24,9 @@ const CHROME_CANDIDATES = [
   "/usr/bin/chromium",
   "/opt/google/chrome/chrome",
   "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+  "/Applications/Chromium.app/Contents/MacOS/Chromium",
+  "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+  "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
 ];
 
 /** Resolve a Chrome/Chromium binary: setting > env vars > known paths. */
@@ -108,7 +111,12 @@ async function driveOne(page, entry, settings, session, logger) {
  * launch once per run, clean teardown even on failure). `recheck(entries)`
  * re-runs the SOQL sync check for the entries just activated and returns the
  * set of UniqueNames now confirmed active — the SOQL layer stays the source
- * of truth (§9). `launch` is injectable for tests.
+ * of truth (§9). `launch` and `findExecutable` are injectable for tests.
+ *
+ * A missing browser is an expected environment, not an error: some runners
+ * (self-hosted, containers) ship no Chrome. Every pending entry then becomes
+ * a warn outcome — the job never fails over a missing dependency, and the
+ * components are re-detected as out of sync on the next run (§9).
  */
 export async function activateAll({
   entries,
@@ -117,11 +125,12 @@ export async function activateAll({
   recheck,
   logger = console,
   launch = launchBrowser,
+  findExecutable = findBrowserExecutable,
 }) {
   const outcomes = [];
   if (entries.length === 0) return outcomes;
 
-  const executablePath = findBrowserExecutable(settings);
+  const executablePath = findExecutable(settings);
   if (!executablePath) {
     for (const e of entries) {
       outcomes.push({

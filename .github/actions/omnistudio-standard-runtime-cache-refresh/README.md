@@ -49,6 +49,12 @@ failure is not a deploy failure, and the SOQL check re-flags anything still
 out of sync on every subsequent run until it is fixed — drift is always either
 fixed or loudly visible, never silent. Hence also no `-gate` in the name.
 
+The same applies to missing dependencies: if no Chrome/Chromium is found on
+the runner (some self-hosted/container runners ship none), or the browser
+fails to launch, every component that needed activation is reported as a
+warning and the job still succeeds — install Chrome or set
+`browser-executable` / `CHROME_PATH` to enable activation on such runners.
+
 Exit codes (CairnCI extension contract):
 
 | Exit | Meaning | Composite-action effect |
