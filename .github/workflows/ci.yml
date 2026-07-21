@@ -1,6 +1,7 @@
 # Self-test for CairnCI: lint the workflow YAML and the bash embedded in the
-# reusable workflows. Org-free, runs in seconds. (Optional extensions and their
-# unit tests live in Fossiltalk/CairnCI-Extensions.)
+# reusable workflows, plus org-free unit tests for the scripts embedded in
+# them (tests/unit/). Runs in seconds. (Optional extensions and their unit
+# tests live in Fossiltalk/CairnCI-Extensions.)
 name: CI
 
 on:
@@ -39,3 +40,18 @@ jobs:
       - name: Run yamllint
         shell: bash
         run: yamllint -c .yamllint.yml .github/
+
+  unit-tests:
+    name: unit tests (node --test)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+      - name: Run unit tests
+        shell: bash
+        # Explicit glob: Node >= 23 treats a bare directory arg as a module
+        # path, so the glob form works on every Node line.
+        run: node --test tests/unit/*.test.mjs

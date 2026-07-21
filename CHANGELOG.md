@@ -9,6 +9,16 @@ workflows by major tag (e.g. `@v1`); see
 
 ### Added
 
+- **`omnistudioStandardRuntimeFirst` deploy setting** — opt-in 2-step deploy
+  path on `sf-deploy.yml` (config key `omnistudioStandardRuntimeFirst`, input
+  `omnistudio-standard-runtime-first`): changed OmniStudio Standard Runtime
+  content (`OmniScript`, `OmniIntegrationProcedure`, `OmniDataTransform`,
+  `OmniUiCard`) deploys in its own step before the rest of the changed
+  metadata, mirroring the `ruleDeploy` split pattern. Adjacent OmniStudio
+  config/tracking types stay in the main deploy. Delta mode only; quick deploy
+  is bypassed when OmniStudio changes are present. Does not apply to
+  managed-package (`vlocity_cmt`) OmniStudio. See
+  [docs/consumer-setup.md](docs/consumer-setup.md) §5e.
 - **permset-access-gate extension** — an org-free PR gate
   (`.github/actions/permset-access-gate/`) that inspects the current PR's git
   diff for newly created Salesforce custom fields and objects and verifies that
