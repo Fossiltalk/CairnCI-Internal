@@ -4,6 +4,25 @@ Layer-2 (org-touching) tests for CairnCI. Layer-1 (lint + unit) lives in
 [`.github/workflows/ci.yml`](../.github/workflows/ci.yml); this layer proves the
 reusable workflows actually work end-to-end against a real Salesforce org.
 
+## Local test suites in this directory
+
+- **`unit/`** — org-free tests for the scripts embedded in the reusable
+  workflows (extracted by step name via `lib/workflow-scripts.mjs` and run
+  against fixture manifests with a stub `sf`). Runs in `ci.yml`:
+  `node --test tests/unit/*.test.mjs`.
+- **`org/`** — org-gated validation of the same assumptions against a live
+  org. Never runs in CI; every test skips unless pointed at an org:
+
+  ```bash
+  CAIRNCI_ORG=<sf org alias> node --test tests/org/*.test.mjs
+  # additionally opt in to the check-only (dry-run) validate test:
+  CAIRNCI_ORG=<alias> CAIRNCI_ORG_VALIDATE=true node --test tests/org/*.test.mjs
+  ```
+
+  The default run is org-read-only (describes, listMetadata, a retrieve). The
+  end-to-end test needs the `sfdx-git-delta` plugin (pin:
+  `sf plugins install sfdx-git-delta@6.31.0`) and skips if it's missing.
+
 ## How it works
 
 [`.github/workflows/integration.yml`](../.github/workflows/integration.yml) calls

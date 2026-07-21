@@ -2,11 +2,11 @@
 // Node built-in runner only — no npm deps:
 //   node --test tests/unit/*.test.mjs
 //
-// The workflow's logic lives in scripts embedded in the YAML (they must — the
-// reusable workflow runs in the consumer's checkout, so it can't reference
-// files from this repo). These tests extract those embedded scripts from
-// sf-deploy.yml by step name and run them against fixture manifests, with a
-// stub `sf` binary on PATH that records every invocation.
+// The embedded workflow scripts are extracted from sf-deploy.yml by step name
+// (see tests/lib/workflow-scripts.mjs) and run against fixture manifests, with
+// a stub `sf` binary on PATH that records every invocation. Org-gated
+// counterparts that validate the same assumptions against a live org live in
+// tests/org/.
 
 import { test, afterEach } from "node:test";
 import assert from "node:assert/strict";
@@ -14,18 +14,11 @@ import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
 
-const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..");
-const workflowYaml = fs.readFileSync(
-  path.join(repoRoot, ".github", "workflows", "sf-deploy.yml"), "utf8");
-
-const OMNI_TYPES = ["OmniScript", "OmniIntegrationProcedure", "OmniDataTransform", "OmniUiCard"];
-const EXCLUDED_TYPES = [
-  "OmniInteractionConfig", "OmniInteractionAccessConfig", "OmniStudioSettings",
-  "OmniSupervisorConfig", "OmniTrackingComponentDef", "OmniTrackingGroup",
-  "OmniExtTrackingDef",
-];
+import {
+  OMNI_TYPES, EXCLUDED_TYPES,
+  stepIf, stepRun, packageXml, typesIn, runSplitScript,
+} from "../lib/workflow-scripts.mjs";
 
 // --- temp-dir bookkeeping ----------------------------------------------------
 let dirs = [];
@@ -39,55 +32,7 @@ afterEach(() => {
   dirs = [];
 });
 
-// --- workflow extraction helpers ----------------------------------------------
-// Steps sit at a fixed indentation in sf-deploy.yml (6 spaces for the list
-// item, 10 for `run: |` content), so plain text slicing is reliable here.
-function stepLines(name) {
-  const lines = workflowYaml.split("\n");
-  const start = lines.findIndex((l) => l === `      - name: ${name}`);
-  assert.notEqual(start, -1, `step not found in sf-deploy.yml: ${name}`);
-  let end = lines.length;
-  for (let i = start + 1; i < lines.length; i++) {
-    if (/^      - name: /.test(lines[i])) { end = i; break; }
-  }
-  return lines.slice(start, end);
-}
-
-function stepIf(name) {
-  const line = stepLines(name).find((l) => /^        if: /.test(l));
-  return line ? line.trim() : "";
-}
-
-// Body of the step's `run: |` block, dedented to what bash actually executes.
-function stepRun(name) {
-  const lines = stepLines(name);
-  const idx = lines.findIndex((l) => /^        run: \|/.test(l));
-  assert.notEqual(idx, -1, `no run block in step: ${name}`);
-  const body = [];
-  for (let i = idx + 1; i < lines.length; i++) {
-    const l = lines[i];
-    if (l === "") { body.push(""); continue; }
-    if (!l.startsWith("          ")) break;
-    body.push(l.slice(10));
-  }
-  return body.join("\n");
-}
-
-// The embedded Node script between  node <<'EOF'  and  EOF .
-function stepNodeScript(name) {
-  const run = stepRun(name);
-  const m = run.match(/node <<'EOF'\n([\s\S]*?)\nEOF(\n|$)/);
-  assert.ok(m, `no node heredoc in step: ${name}`);
-  return m[1];
-}
-
 // --- fixture helpers -----------------------------------------------------------
-function packageXml(types) {
-  const blocks = Object.entries(types).map(([t, members]) =>
-    `    <types>\n${members.map((mm) => `        <members>${mm}</members>`).join("\n")}\n        <name>${t}</name>\n    </types>`);
-  return `<?xml version="1.0" encoding="UTF-8"?>\n<Package xmlns="http://soap.sforce.com/2006/04/metadata">\n${blocks.join("\n")}\n    <version>62.0</version>\n</Package>`;
-}
-
 function makeWorkspace(types) {
   const ws = tmp("ws-");
   fs.mkdirSync(path.join(ws, "changed-sources", "package"), { recursive: true });
@@ -113,27 +58,6 @@ function sfCalls(ws) {
   const log = path.join(ws, "sf.log");
   if (!fs.existsSync(log)) return [];
   return fs.readFileSync(log, "utf8").trim().split("\n").filter(Boolean);
-}
-
-function typesIn(manifestPath) {
-  const xml = fs.readFileSync(manifestPath, "utf8");
-  return [...xml.matchAll(/<name>([^<]+)<\/name>/g)].map((m) => m[1].trim());
-}
-
-// --- script runners --------------------------------------------------------------
-function runSplit(ws, extraEnv = {}) {
-  const script = path.join(ws, "split-omnistudio.cjs");
-  fs.writeFileSync(script, stepNodeScript("Split OmniStudio Standard Runtime metadata"));
-  const outFile = path.join(ws, "github-output");
-  fs.writeFileSync(outFile, "");
-  const res = spawnSync(process.execPath, [script], {
-    cwd: ws, encoding: "utf8",
-    env: { ...process.env, GITHUB_OUTPUT: outFile, ...extraEnv },
-  });
-  assert.equal(res.status, 0, `split script failed: ${res.stderr}`);
-  return Object.fromEntries(
-    fs.readFileSync(outFile, "utf8").trim().split("\n").filter(Boolean)
-      .map((l) => l.split(/=(.*)/s).slice(0, 2)));
 }
 
 function runBashStep(ws, stepName, env) {
@@ -181,7 +105,7 @@ test("test_omnistudio_first_splits_deploy", () => {
     CustomObject: ["MyObj__c"],
   });
 
-  const out = runSplit(ws);
+  const out = runSplitScript(ws);
   assert.equal(out["has-omnistudio"], "true");
   assert.equal(out["has-remainder"], "true");
 
@@ -219,7 +143,7 @@ test("test_omnistudio_first_excludes_adjacent_types", () => {
     ...excluded,
   });
 
-  const out = runSplit(ws);
+  const out = runSplitScript(ws);
   assert.equal(out["has-omnistudio"], "true");
   assert.equal(out["has-remainder"], "true");
 
