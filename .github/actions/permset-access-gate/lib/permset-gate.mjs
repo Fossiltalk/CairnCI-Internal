@@ -594,8 +594,38 @@ export function exitCodeForFindings(findings) {
 
 // --- reporting --------------------------------------------------------------
 
-function escapePipe(s) {
-  return String(s).replace(/\|/g, "\\|");
+/**
+ * Make a value safe to interpolate into a Markdown table cell.
+ *
+ * Component names and reasons are derived from file paths and permission-set
+ * XML in the PR — on a fork PR that is contributor-controlled text rendered
+ * into a bot-authored comment, so it is escaped rather than trusted.
+ *
+ * Order matters: the backslash must be escaped BEFORE the pipe. Escaping only
+ * the pipe leaves a trailing backslash in the input to pair with the one we
+ * add ("\" + "|" -> "\\|"), which Markdown reads as an escaped backslash
+ * followed by a live cell delimiter — the row breaks anyway.
+ *
+ * Newlines are collapsed because a raw one ends the table row: every finding
+ * after it would silently vanish from the report, and the whole point of the
+ * overview is to list them all. Angle brackets and ampersands are neutralized
+ * so metadata cannot inject markup into the comment.
+ */
+function mdCell(value) {
+  return String(value)
+    .replace(/\\/g, "\\\\")
+    .replace(/\|/g, "\\|")
+    .replace(/[\r\n\t]+/g, " ")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;");
+}
+
+/**
+ * Make a value safe inside a `code span`. Backslash escapes do not apply there,
+ * so a backtick cannot be escaped — only removed, or it closes the span early.
+ */
+function mdCode(value) {
+  return String(value).replace(/`/g, "").replace(/[\r\n\t]+/g, " ");
 }
 
 /** Markdown for GITHUB_STEP_SUMMARY: findings table plus a short tally. */
@@ -606,7 +636,7 @@ export function buildStepSummary({ findings, exempt, bypassed, satisfied }) {
   } else {
     md += "| Permission Set | Severity | Type | Component | Required | Found |\n|---|---|---|---|---|---|\n";
     for (const f of findings) {
-      md += `| ${f.permissionSet} | ${f.severity} | ${f.type} | ${f.component} | ${escapePipe(f.required)} | ${escapePipe(f.actual)} |\n`;
+      md += `| ${mdCell(f.permissionSet)} | ${mdCell(f.severity)} | ${mdCell(f.type)} | ${mdCell(f.component)} | ${mdCell(f.required)} | ${mdCell(f.actual)} |\n`;
     }
     md += "\n";
   }
@@ -628,13 +658,15 @@ export function buildCommentBody({ findings, exempt, bypassed }) {
     body += `Found **${findings.length}** permission-set access gap(s):\n\n`;
     body += "| Permission Set | Severity | Component | Required | Found |\n|---|---|---|---|---|\n";
     for (const f of findings) {
-      body += `| ${f.permissionSet} | ${f.severity} | ${f.component} | ${escapePipe(f.required)} | ${escapePipe(f.actual)} |\n`;
+      body += `| ${mdCell(f.permissionSet)} | ${mdCell(f.severity)} | ${mdCell(f.component)} | ${mdCell(f.required)} | ${mdCell(f.actual)} |\n`;
     }
   }
   if (exempt.length || bypassed.length) {
     body += `\n<details><summary>Exempt / bypassed components (${exempt.length + bypassed.length})</summary>\n\n`;
-    for (const e of exempt) body += `- \`${e.component}\` (${e.type}) — exempt: ${e.reason}\n`;
-    for (const b of bypassed) body += `- \`${b.component}\` (${b.type}) — bypassed for ${b.permissionSet}: ${b.reason}\n`;
+    for (const e of exempt) body += `- \`${mdCode(e.component)}\` (${mdCell(e.type)}) — exempt: ${mdCell(e.reason)}\n`;
+    for (const b of bypassed) {
+      body += `- \`${mdCode(b.component)}\` (${mdCell(b.type)}) — bypassed for ${mdCell(b.permissionSet)}: ${mdCell(b.reason)}\n`;
+    }
     body += "\n</details>\n";
   }
   return body;

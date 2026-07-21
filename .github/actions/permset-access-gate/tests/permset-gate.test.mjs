@@ -562,6 +562,73 @@ describe("reporting", () => {
     assert.doesNotMatch(body, /Severity/);
   });
 
+  // Component names and reasons come from file paths and permission-set XML in
+  // the PR, so on a fork PR they are contributor-controlled text rendered into
+  // a bot-authored comment. Every cell must survive hostile input intact.
+  describe("Markdown escaping", () => {
+    const hostile = (over = {}) => ({
+      permissionSet: "PS",
+      severity: "error",
+      type: "field",
+      component: "A__c.X__c",
+      required: "read",
+      actual: "none",
+      ...over,
+    });
+    const rowsOf = (md) => md.split("\n").filter((l) => l.startsWith("|") && !/^\|\s*-+/.test(l));
+
+    test("a pipe in a value does not add a column", () => {
+      const md = buildStepSummary({ findings: [hostile({ component: "A__c.X|Y__c" })], exempt: [], bypassed: [], satisfied: 0 });
+      const row = rowsOf(md).at(-1);
+      assert.match(row, /X\\\|Y/, "pipe must be backslash-escaped");
+      // header defines 6 columns; an unescaped pipe would make the row wider
+      assert.equal(row.split(/(?<!\\)\|/).length, rowsOf(md)[0].split(/(?<!\\)\|/).length);
+    });
+
+    test("a trailing backslash cannot re-open the cell (the CodeQL case)", () => {
+      // Escaping only the pipe turns "\" + "|" into "\\|" — an escaped
+      // backslash followed by a LIVE delimiter. The backslash must go first.
+      const md = buildStepSummary({ findings: [hostile({ actual: "ends\\", required: "r" })], exempt: [], bypassed: [], satisfied: 0 });
+      const row = rowsOf(md).at(-1);
+      assert.match(row, /ends\\\\/, "backslash must be doubled");
+      assert.equal(row.split(/(?<!\\)\|/).length, rowsOf(md)[0].split(/(?<!\\)\|/).length);
+    });
+
+    test("a newline cannot truncate the table and hide later findings", () => {
+      const findings = [hostile({ component: "Evil\n\n## injected", permissionSet: "First" }), hostile({ permissionSet: "Second" })];
+      const md = buildStepSummary({ findings, exempt: [], bypassed: [], satisfied: 0 });
+      assert.equal(rowsOf(md).length, 3, "header + 2 findings must all survive");
+      assert.match(md, /Second/, "the later finding must still be reported");
+      assert.doesNotMatch(md, /^## injected/m, "injected Markdown must not reach block level");
+    });
+
+    test("markup in a value is neutralized in the PR comment", () => {
+      const body = buildCommentBody({
+        findings: [hostile({ component: "<img src=x> & </details>" })],
+        exempt: [],
+        bypassed: [],
+      });
+      assert.doesNotMatch(body, /<img/, "raw tags must not survive");
+      assert.match(body, /&lt;img/);
+      assert.match(body, /&amp;/);
+    });
+
+    test("a backtick cannot break out of the exempt-list code span", () => {
+      const body = buildCommentBody({
+        findings: [],
+        exempt: [{ component: "A__c.`X`__c", type: "field", reason: "required field" }],
+        bypassed: [],
+      });
+      const line = body.split("\n").find((l) => l.startsWith("- "));
+      assert.equal((line.match(/`/g) || []).length, 2, "exactly the two delimiters may remain");
+    });
+
+    test("ordinary API names are left readable", () => {
+      const md = buildStepSummary({ findings: [hostile()], exempt: [], bypassed: [], satisfied: 0 });
+      assert.match(md, /\| A__c\.X__c \|/, "no escaping noise on normal input");
+    });
+  });
+
   test("step summary shows a tally", () => {
     const md = buildStepSummary({ findings: [], exempt: [], bypassed: [], satisfied: 3 });
     assert.match(md, /Tally/);
