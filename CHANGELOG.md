@@ -50,6 +50,30 @@ workflows by major tag (e.g. `@v1`); see
   the grant reads as meaningful in review but has no effect in the org. Turn it
   off with `flagEditableOnReadOnlyFields: false`, globally or on a single rule.
 
+- **omnistudio-standard-runtime-cache-refresh extension** — a post-deploy
+  drift check and forced reactivation for OmniStudio **Standard Runtime**
+  components (`.github/actions/omnistudio-standard-runtime-cache-refresh/`).
+  Not applicable to the `vlocity_cmt` managed-package runtime. Reads the
+  deploy's own delta manifest (Metadata API types `OmniScript`,
+  `OmniIntegrationProcedure`, `OmniUiCard`, `OmniDataTransform`), SOQL-checks
+  active state on the SObject layer (`OmniProcess` / `OmniUiCard` /
+  `OmniDataTransform`, where manifest fullName = `UniqueName`), and only for
+  out-of-sync components drives the org's own compile/activation Visualforce
+  pages (`omnistudio__OmniLwcCompile`, `omnistudio__FlexCardCompilePage`)
+  with a headless browser, reusing the deploy job's existing `sf` session via
+  `frontdoor.jsp` — no credential inputs. Success requires a SOQL re-check;
+  anything unconfirmed becomes an `OmniStudio (Standard Runtime):` `::warning`
+  plus a job-summary row and the job still succeeds — **warn-only by design**
+  (a deliberate deviation from `field-permset-gate`'s fail-on-violation; no
+  rollback, drift is re-detected on every subsequent run). Config via inputs
+  and/or `.cairnci/omnistudio-standard-runtime-policy.json`
+  (`examples/omnistudio-standard-runtime-policy.json`) with **input > file >
+  default** precedence, matching core's `.cairnci/config.json` convention.
+  Unlike its dependency-free siblings it bundles `puppeteer-core` via
+  `@vercel/ncc` into a checked-in `dist/` (no run-time install; uses the
+  runner's preinstalled Chrome). See
+  [docs/omnistudio-standard-runtime.md](docs/omnistudio-standard-runtime.md).
+
 ## [v1.2.0] - 2026-07-20
 
 ### Added

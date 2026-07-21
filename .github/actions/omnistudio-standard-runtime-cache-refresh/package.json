@@ -1,0 +1,19 @@
+{
+  "name": "omnistudio-standard-runtime-cache-refresh",
+  "private": true,
+  "version": "0.1.0",
+  "description": "CairnCI extension: post-deploy drift check and headless reactivation for OmniStudio Standard Runtime components (warn-only).",
+  "type": "module",
+  "main": "main.mjs",
+  "scripts": {
+    "build": "ncc build main.mjs -o dist --minify",
+    "test": "node --test tests/*.test.mjs",
+    "test:omnistudio-cache-refresh": "node --test tests/*.test.mjs"
+  },
+  "dependencies": {
+    "puppeteer-core": "^24.0.0"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.38.3"
+  }
+}

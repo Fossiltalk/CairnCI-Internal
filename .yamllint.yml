@@ -1,6 +1,11 @@
 # Relaxed yamllint config tuned for GitHub Actions YAML.
 extends: default
 
+# Vendored/installed dependencies under an action directory (e.g. the
+# omnistudio-standard-runtime-cache-refresh dev install) are not our YAML.
+ignore: |
+  node_modules/
+
 rules:
   # GitHub Actions workflows have no `---` document start.
   document-start: disable

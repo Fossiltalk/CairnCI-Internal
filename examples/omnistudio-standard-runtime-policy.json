@@ -1,0 +1,7 @@
+{
+  "activationTimeoutSeconds": 240,
+  "activationRetries": 2,
+  "activationMode": "out-of-sync-only",
+  "omniscriptCompilePage": "/apex/omnistudio__OmniLwcCompile",
+  "flexcardCompilePage": "/apex/omnistudio__FlexCardCompilePage"
+}
