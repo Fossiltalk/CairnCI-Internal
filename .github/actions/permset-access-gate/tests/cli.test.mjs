@@ -139,6 +139,45 @@ describe("field FLS special cases (case 1)", () => {
 
 // Semantics live-verified against a real org: a detail object accepts
 // viewAll/modifyAll, but the permission set must also grant Read on the master.
+describe("editable=true drift on read-only fields", () => {
+  // Formula field granted editable=true: deploys, but the org stores false.
+  const feature = { [fieldPath("Acct__c", "Calc__c")]: fieldXml("Number", "<formula>1 + 1</formula>") };
+  const base = (editable) => ({
+    [permsetPath("Sales_Core")]: permsetXml(fieldPerm("Acct__c.Calc__c", true, editable)),
+  });
+
+  test("flagged by default -> exit 1", async () => {
+    const repo = setupRepo({ base: base(true), feature });
+    const r = await runGate(repo, { rules: [{ permissionSet: "Sales_Core", fieldAccess: "read" }] });
+    assert.equal(r.status, 1, r.stdout + r.stderr);
+    assert.match(r.stdout, /editable=true/);
+    assert.match(r.stdout, /drift/i);
+  });
+
+  test("opting out globally -> exit 0", async () => {
+    const repo = setupRepo({ base: base(true), feature });
+    const r = await runGate(repo, {
+      flagEditableOnReadOnlyFields: false,
+      rules: [{ permissionSet: "Sales_Core", fieldAccess: "read" }],
+    });
+    assert.equal(r.status, 0, r.stdout + r.stderr);
+  });
+
+  test("warn severity makes it non-blocking -> exit 10", async () => {
+    const repo = setupRepo({ base: base(true), feature });
+    const r = await runGate(repo, {
+      rules: [{ permissionSet: "Sales_Core", severity: "warn", fieldAccess: "read" }],
+    });
+    assert.equal(r.status, 10, r.stdout + r.stderr);
+  });
+
+  test("editable=false is clean -> exit 0", async () => {
+    const repo = setupRepo({ base: base(false), feature });
+    const r = await runGate(repo, { rules: [{ permissionSet: "Sales_Core", fieldAccess: "read" }] });
+    assert.equal(r.status, 0, r.stdout + r.stderr);
+  });
+});
+
 describe("master-detail object access (case 2)", () => {
   // A new detail object plus the master-detail field that names its master.
   const featureObj = {

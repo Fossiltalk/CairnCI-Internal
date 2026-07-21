@@ -49,6 +49,20 @@ describe("validateConfig", () => {
     assert.throws(() => validateConfig({ rules: [{ permissionSet: "PS" }, { permissionSet: "ps" }] }), ConfigError);
   });
 
+  test("flagEditableOnReadOnlyFields defaults to true and must be a boolean", () => {
+    assert.equal(validateConfig({ rules: [{ permissionSet: "A" }] }).flagEditableOnReadOnlyFields, true);
+    assert.equal(validateConfig({ rules: [{ permissionSet: "A" }] }).rules[0].flagEditableOnReadOnlyFields, true);
+    assert.equal(
+      validateConfig({ flagEditableOnReadOnlyFields: false, rules: [{ permissionSet: "A" }] }).rules[0].flagEditableOnReadOnlyFields,
+      false,
+    );
+    assert.throws(() => validateConfig({ flagEditableOnReadOnlyFields: "no", rules: [{ permissionSet: "A" }] }), ConfigError);
+    assert.throws(
+      () => validateConfig({ rules: [{ permissionSet: "A", flagEditableOnReadOnlyFields: "no" }] }),
+      ConfigError,
+    );
+  });
+
   test("bad severity, bad fieldAccess, and unknown objectAccess are config errors", () => {
     assert.throws(() => validateConfig({ rules: [{ permissionSet: "PS", severity: "loud" }] }), ConfigError);
     assert.throws(() => validateConfig({ rules: [{ permissionSet: "PS", fieldAccess: "delete" }] }), ConfigError);
@@ -237,6 +251,118 @@ describe("audit — field FLS special cases", () => {
   });
 
   test("a normal edit field lacking editable is a finding", () => {
+    const classified = { fields: [{ object: "A__c", field: "X__c", apiName: "A__c.X__c" }], objects: [] };
+    const permsets = new Map([["sales", ps({ "a__c.x__c": { readable: true, editable: false } })]]);
+    const res = audit({ config: validateConfig({ rules: [{ permissionSet: "Sales", fieldAccess: "edit" }] }), classified, permsets });
+    assert.equal(res.findings.length, 1);
+    assert.equal(res.findings[0].type, "field");
+  });
+});
+
+// editable=true on a formula/auto-number/roll-up field deploys, but the org
+// always stores editable=false — source and org then disagree. Flagged by
+// default; the severity comes from the rule like every other finding.
+describe("audit — editable=true drift on read-only fields", () => {
+  const readOnlyKinds = [
+    ["formula", { isFormula: true }],
+    ["auto-number", { isAutoNumber: true }],
+    ["roll-up summary", { isSummary: true }],
+  ];
+  const withPerm = (editable) => new Map([["sales", ps({ "a__c.x__c": { readable: true, editable } })]]);
+  const classifiedFor = (extra) => ({
+    fields: [{ object: "A__c", field: "X__c", apiName: "A__c.X__c", ...extra }],
+    objects: [],
+  });
+
+  for (const [label, extra] of readOnlyKinds) {
+    test(`${label} field with editable=true is flagged by default`, () => {
+      const cfg = validateConfig({ rules: [{ permissionSet: "Sales", fieldAccess: "read" }] });
+      const res = audit({ config: cfg, classified: classifiedFor(extra), permsets: withPerm(true) });
+      const drift = res.findings.filter((f) => f.type === "field-drift");
+      assert.equal(drift.length, 1);
+      assert.equal(drift[0].severity, "error");
+      assert.equal(drift[0].actual, "editable=true");
+      assert.match(drift[0].detail, new RegExp(label.split(" ")[0]));
+    });
+  }
+
+  test("fires even though the access requirement itself is satisfied", () => {
+    const cfg = validateConfig({ rules: [{ permissionSet: "Sales", fieldAccess: "read" }] });
+    const res = audit({ config: cfg, classified: classifiedFor({ isFormula: true }), permsets: withPerm(true) });
+    assert.equal(res.satisfied, 1, "readable=true still satisfies the read requirement");
+    assert.equal(res.findings.length, 1);
+    assert.equal(res.findings[0].type, "field-drift");
+  });
+
+  test("editable=false on a read-only field is clean", () => {
+    const cfg = validateConfig({ rules: [{ permissionSet: "Sales", fieldAccess: "read" }] });
+    const res = audit({ config: cfg, classified: classifiedFor({ isFormula: true }), permsets: withPerm(false) });
+    assert.equal(res.findings.length, 0);
+  });
+
+  test("editable=true on a NORMAL field is not drift", () => {
+    const cfg = validateConfig({ rules: [{ permissionSet: "Sales", fieldAccess: "edit" }] });
+    const res = audit({ config: cfg, classified: classifiedFor({}), permsets: withPerm(true) });
+    assert.equal(res.findings.length, 0);
+  });
+
+  test("global flagEditableOnReadOnlyFields:false turns the check off", () => {
+    const cfg = validateConfig({
+      flagEditableOnReadOnlyFields: false,
+      rules: [{ permissionSet: "Sales", fieldAccess: "read" }],
+    });
+    const res = audit({ config: cfg, classified: classifiedFor({ isFormula: true }), permsets: withPerm(true) });
+    assert.equal(res.findings.length, 0);
+  });
+
+  test("a rule can opt out while another rule still reports", () => {
+    const permsets = new Map([
+      ["core", ps({ "a__c.x__c": { readable: true, editable: true } })],
+      ["extra", ps({ "a__c.x__c": { readable: true, editable: true } })],
+    ]);
+    const cfg = validateConfig({
+      rules: [
+        { permissionSet: "Core", flagEditableOnReadOnlyFields: false },
+        { permissionSet: "Extra" },
+      ],
+    });
+    const res = audit({ config: cfg, classified: classifiedFor({ isFormula: true }), permsets });
+    const drift = res.findings.filter((f) => f.type === "field-drift");
+    assert.equal(drift.length, 1);
+    assert.equal(drift[0].permissionSet, "Extra");
+  });
+
+  test("a rule can opt IN while the global default is off", () => {
+    const cfg = validateConfig({
+      flagEditableOnReadOnlyFields: false,
+      rules: [
+        { permissionSet: "Sales", flagEditableOnReadOnlyFields: true },
+      ],
+    });
+    const res = audit({ config: cfg, classified: classifiedFor({ isFormula: true }), permsets: withPerm(true) });
+    assert.equal(res.findings.filter((f) => f.type === "field-drift").length, 1);
+  });
+
+  test("warn-severity rules report drift as a warning", () => {
+    const cfg = validateConfig({ rules: [{ permissionSet: "Sales", severity: "warn" }] });
+    const res = audit({ config: cfg, classified: classifiedFor({ isFormula: true }), permsets: withPerm(true) });
+    assert.equal(res.findings[0].severity, "warn");
+    assert.equal(exitCodeForFindings(res.findings), 10);
+  });
+
+  test("a bypassed field reports no drift", () => {
+    const cfg = validateConfig({
+      bypass: { fields: ["A__c.*"] },
+      rules: [{ permissionSet: "Sales" }],
+    });
+    const res = audit({ config: cfg, classified: classifiedFor({ isFormula: true }), permsets: withPerm(true) });
+    assert.equal(res.findings.length, 0);
+    assert.equal(res.bypassed.length, 1);
+  });
+});
+
+describe("audit — misc field access", () => {
+  test("a normal edit field lacking editable is still a finding", () => {
     const classified = { fields: [{ object: "A__c", field: "X__c", apiName: "A__c.X__c" }], objects: [] };
     const permsets = new Map([["sales", ps({ "a__c.x__c": { readable: true, editable: false } })]]);
     const res = audit({ config: validateConfig({ rules: [{ permissionSet: "Sales", fieldAccess: "edit" }] }), classified, permsets });

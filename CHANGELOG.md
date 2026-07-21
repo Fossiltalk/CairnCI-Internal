@@ -34,6 +34,12 @@ workflows by major tag (e.g. `@v1`); see
   master in the same permission set, which the gate reports as a
   `master-dependency` finding.
 
+  Because Salesforce accepts `editable=true` on a formula, auto-number or
+  roll-up field while the org stores `editable=false`, the gate also reports
+  that as a `field-drift` finding at the rule's severity — on by default, since
+  the grant reads as meaningful in review but has no effect in the org. Turn it
+  off with `flagEditableOnReadOnlyFields: false`, globally or on a single rule.
+
 ## [v1.2.0] - 2026-07-20
 
 ### Added

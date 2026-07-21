@@ -10,7 +10,9 @@
 # fields are exempt from field-level security; custom-metadata / platform-event
 # / big-object types have no object CRUD; and a master-detail child object
 # additionally requires Read on its master in the same permission set, or the
-# permission set is rejected at deploy time.
+# permission set is rejected at deploy time. It also reports editable=true on a
+# read-only field as source/org drift (the org stores editable=false regardless)
+# — on by default, disabled with flagEditableOnReadOnlyFields.
 #
 # Two deployment modes:
 #   1. Standalone job — add this action to a workflow with `permissions:

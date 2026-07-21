@@ -1,5 +1,7 @@
 {
   "$comment": "Optional. Place at .cairnci/permset-access-gate.json in your repo (or point the config-file input / CONFIG_FILE env elsewhere). The permset-access-gate inspects the PR git diff for newly created custom fields and objects and checks that the permission sets in your repo grant each rule's minimum access. No org connection, no sf CLI — pure git + filesystem. Exit codes: 0 = ok, 10 = warn (never blocks), 1 = an error-severity finding, 2 = config/environment problem. See .github/actions/permset-access-gate/README.md.",
+  "$comment2": "flagEditableOnReadOnlyFields (default true): report editable=true on a formula / auto-number / roll-up summary field as a finding at the rule's severity. Salesforce accepts such a grant on deploy but the org always stores editable=false, so leaving it in source makes the permission set read as granting an edit it can never give. Set false here to turn it off everywhere, or per rule to override the global value.",
+  "flagEditableOnReadOnlyFields": true,
   "bypass": {
     "$comment": "Global bypass, unioned into every rule. `objects` suppresses object-CRUD findings; `fields` (Object.Field API names) suppresses field-FLS findings. Matching is case-insensitive and supports a trailing `*` wildcard segment: `Invoice__c.*` bypasses every field on Invoice__c, `Temp_*` bypasses objects with that prefix.",
     "objects": ["Legacy_Thing__c"],
@@ -15,10 +17,12 @@
       "bypass": { "objects": [], "fields": [] }
     },
     {
+      "$comment": "This rule opts out of the editable-on-read-only-field drift check; the global setting above still applies to every other rule.",
       "permissionSet": "Support_Readonly",
       "severity": "warn",
       "fieldAccess": "read",
-      "objectAccess": ["read"]
+      "objectAccess": ["read"],
+      "flagEditableOnReadOnlyFields": false
     }
   ]
 }

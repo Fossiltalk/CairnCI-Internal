@@ -79,6 +79,15 @@ export function validateConfig(raw) {
     throw new ConfigError("`rules` must be a non-empty array");
   }
   const bypass = normalizeBypass(raw.bypass, "bypass");
+
+  // Drift check, on by default: a permission set may declare editable=true on a
+  // formula / auto-number / roll-up field and Salesforce will deploy it, but the
+  // org always stores editable=false — so source and org silently disagree.
+  const globalFlagEditable =
+    raw.flagEditableOnReadOnlyFields === undefined ? true : raw.flagEditableOnReadOnlyFields;
+  if (typeof globalFlagEditable !== "boolean") {
+    throw new ConfigError("flagEditableOnReadOnlyFields must be a boolean");
+  }
   const seen = new Set();
   const rules = raw.rules.map((r, i) => {
     const where = `rules[${i}]`;
@@ -107,15 +116,25 @@ export function validateConfig(raw) {
         throw new ConfigError(`${where}.objectAccess has unknown value "${a}" (valid: ${OBJECT_ACCESS_FLAGS.join(", ")})`);
       }
     }
+    // Per-rule override of the global drift setting (not a union like bypass —
+    // the nearest explicit value wins).
+    let flagEditableOnReadOnlyFields = r.flagEditableOnReadOnlyFields;
+    if (flagEditableOnReadOnlyFields === undefined) {
+      flagEditableOnReadOnlyFields = globalFlagEditable;
+    } else if (typeof flagEditableOnReadOnlyFields !== "boolean") {
+      throw new ConfigError(`${where}.flagEditableOnReadOnlyFields must be a boolean`);
+    }
+
     return {
       permissionSet: r.permissionSet,
       severity,
       fieldAccess,
       objectAccess,
+      flagEditableOnReadOnlyFields,
       bypass: normalizeBypass(r.bypass, `${where}.bypass`),
     };
   });
-  return { bypass, rules };
+  return { bypass, flagEditableOnReadOnlyFields: globalFlagEditable, rules };
 }
 
 // --- git delta --------------------------------------------------------------
@@ -407,7 +426,8 @@ export function objectExemption(o) {
  * (rule, component); exemptions are nature-based and recorded once; bypasses
  * are per-rule because per-rule bypass unions with the global bypass.
  *
- * Finding types: "field", "object", "master-dependency" (a detail object's
+ * Finding types: "field", "field-drift" (editable=true on a field the org can
+ * never make editable), "object", "master-dependency" (a detail object's
  * master is missing Read in the same permission set) and "permset".
  *
  * @returns {{findings: Array<object>, exempt: Array<object>, bypassed: Array<object>, satisfied: number}}
@@ -486,17 +506,32 @@ export function audit({ config, classified, permsets }) {
       }
       if (ok) {
         satisfied++;
-        continue;
+      } else {
+        findings.push({
+          permissionSet: rule.permissionSet,
+          severity: rule.severity,
+          type: "field",
+          component: f.apiName,
+          required: access + note,
+          actual,
+          detail: `field ${f.apiName} needs ${access} access${note}`,
+        });
       }
-      findings.push({
-        permissionSet: rule.permissionSet,
-        severity: rule.severity,
-        type: "field",
-        component: f.apiName,
-        required: access + note,
-        actual,
-        detail: `field ${f.apiName} needs ${access} access${note}`,
-      });
+
+      // Source/org drift, independent of the access requirement above: a field
+      // can satisfy "read" and still carry an editable=true the org will never
+      // honor. Salesforce accepts the deploy and stores editable=false.
+      if (ro && rule.flagEditableOnReadOnlyFields && perm && perm.editable === true) {
+        findings.push({
+          permissionSet: rule.permissionSet,
+          severity: rule.severity,
+          type: "field-drift",
+          component: f.apiName,
+          required: "editable=false",
+          actual: "editable=true",
+          detail: `field ${f.apiName} is a ${ro}: editable=true deploys but the org stores editable=false, so source and org drift apart`,
+        });
+      }
     }
 
     for (const o of objects) {

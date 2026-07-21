@@ -70,9 +70,21 @@ deploys against a real org:
   permission set does not grant it `read`. If the master-detail field itself is
   not part of the diff the master is unknown, and the check is skipped.
 
-Note that `editable` on a read-only field (formula, auto-number, roll-up) is
-*accepted* by a deploy but can never be honored by the org — which is why an
-`edit` requirement downgrades to `read` instead of failing the PR.
+### `editable=true` on a read-only field
+
+A permission set may declare `editable=true` on a formula, auto-number or
+roll-up summary field. Salesforce **accepts the deploy** but the org always
+stores `editable=false`, so the source and the org silently disagree from then
+on — the grant reads as meaningful in review but has no effect in the org.
+
+The gate reports that as a `field-drift` finding at the rule's severity, **on by
+default**. It is independent of the access requirement: a field can satisfy
+`read` and still be flagged for the stray `editable=true`. Turn it off globally
+with `"flagEditableOnReadOnlyFields": false`, or per rule with the same key.
+
+This is also why an `edit` *requirement* downgrades to `read` for these fields
+rather than failing the PR — asking for `edit` is unsatisfiable, so the gate
+requires the strongest access the org can actually hold.
 
 ## Config
 
@@ -83,6 +95,7 @@ notice and exit 0 (it is opt-in). See
 
 ```json
 {
+  "flagEditableOnReadOnlyFields": true,
   "bypass": {
     "objects": ["Legacy_Thing__c"],
     "fields": ["Account.Legacy_Code__c", "Invoice__c.*"]
@@ -99,7 +112,8 @@ notice and exit 0 (it is opt-in). See
       "permissionSet": "Support_Readonly",
       "severity": "warn",
       "fieldAccess": "read",
-      "objectAccess": ["read"]
+      "objectAccess": ["read"],
+      "flagEditableOnReadOnlyFields": false
     }
   ]
 }
@@ -112,6 +126,7 @@ notice and exit 0 (it is opt-in). See
 | `rules[].severity` | `error` \| `warn` | `error` | Drives the exit code. |
 | `rules[].fieldAccess` | `read` \| `edit` | `read` | |
 | `rules[].objectAccess` | array of `read`\|`create`\|`edit`\|`delete`\|`viewAll`\|`modifyAll` | `["read"]` | Unknown value = config error. |
+| `flagEditableOnReadOnlyFields` / `rules[].flagEditableOnReadOnlyFields` | boolean | `true` | Report `editable=true` on a formula / auto-number / roll-up field as drift, at the rule's severity. The per-rule value **overrides** the global one (nearest explicit value wins — unlike `bypass`, which unions). |
 | `bypass` / `rules[].bypass` | `{objects: string[], fields: string[]}` | `{[],[]}` | Optional. Per-rule bypass unions with the global bypass and applies only to that rule. `objects` suppresses object findings; `fields` (`Object.Field`) suppresses field findings. Matching is case-insensitive with a trailing `*` wildcard segment (`Invoice__c.*`, `Temp_*`). |
 
 ## Exit codes
