@@ -253,8 +253,8 @@ Set `omnistudioStandardRuntimeFirst: true` (in config or via the
 Only those four *content* types are pulled forward. The adjacent OmniStudio
 config/tracking types (`OmniInteractionConfig`, `OmniInteractionAccessConfig`,
 `OmniStudioSettings`, `OmniSupervisorConfig`, `OmniTrackingComponentDef`,
-`OmniTrackingGroup`, `OmniExtTrackingDef`) are settings rather than content and
-stay in the main deploy.
+`OmniTrackingGroup`, `OmniExtTrackingDef`, `OmniExtTrackingEventDef`) are
+settings rather than content and stay in the main deploy.
 
 Note that deploying is not the whole story for Standard Runtime OmniStudio:
 the Metadata API keeps each component's active/compiled state from the source

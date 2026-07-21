@@ -413,8 +413,8 @@ jobs:
           // Standard Runtime content types only. The adjacent config/tracking
           // types (OmniInteractionConfig, OmniInteractionAccessConfig,
           // OmniStudioSettings, OmniSupervisorConfig, OmniTrackingComponentDef,
-          // OmniTrackingGroup, OmniExtTrackingDef) are settings, not content,
-          // and deliberately stay in the main deploy.
+          // OmniTrackingGroup, OmniExtTrackingDef, OmniExtTrackingEventDef)
+          // are settings, not content, and deliberately stay in the main deploy.
           const OMNI_TYPES = ['OmniScript', 'OmniIntegrationProcedure', 'OmniDataTransform', 'OmniUiCard'];
           const typeName = b => { const m = b.match(/<name>([^<]+)<\/name>/); return m ? m[1].trim() : ''; };
           const typeBlocks = pkgXml.match(/<types>[\s\S]*?<\/types>/g) || [];
