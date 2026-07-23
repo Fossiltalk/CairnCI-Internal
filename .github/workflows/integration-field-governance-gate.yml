@@ -1,0 +1,118 @@
+# Integration tests for the field-governance-gate extension (org-free — pure
+# node:test plus a filesystem/git smoke run). The gate never talks to
+# Salesforce, so no org secret is needed: it reasons about the git diff and the
+# field metadata XML in the repo. Mirrors integration-permset-access-gate.yml.
+#
+# The *.org.test.mjs suite is matched by the glob below but its org-touching
+# tests skip themselves: they run check-only deploys and are gated on
+# FIELD_GOV_GATE_LIVE_ORG, which CI never sets. What does run here is that
+# suite's wiring tests, which assert the gate stays skipped without an org —
+# cheap insurance against a live deploy leaking into CI. Run the full suite
+# locally when changing the gate's Salesforce assumptions.
+name: field-governance-gate Tests
+
+on:
+  pull_request:
+    paths:
+      - .github/actions/field-governance-gate/**
+      - .github/workflows/integration-field-governance-gate.yml
+  push:
+    branches: [main, CairnCI-External]
+    paths:
+      - .github/actions/field-governance-gate/**
+      - .github/workflows/integration-field-governance-gate.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    if: github.repository == 'Fossiltalk/CairnCI-Internal'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+
+      - name: Run field-governance-gate unit + CLI tests
+        shell: bash
+        # Explicit glob: Node >= 23 treats a bare directory arg as a module
+        # path, so the glob form works on every Node line.
+        run: node --test .github/actions/field-governance-gate/tests/*.test.mjs
+
+      # Smoke the real CLI against a throwaway fixture repo in a temp dir. We
+      # invoke gate.mjs directly (not `uses: ./...`) because the composite
+      # action would run against this checkout, not the fixture workspace —
+      # same spirit as integration-permset-access-gate.yml's local smoke.
+      - name: Smoke gate.mjs against a fixture repo
+        shell: bash
+        run: |
+          set -euo pipefail
+          GATE="$PWD/.github/actions/field-governance-gate/gate.mjs"
+          WORK="$(mktemp -d)"
+          cd "$WORK"
+
+          git init -q -b main
+          git config user.email ci@example.com
+          git config user.name "CI"
+          echo base > README.md
+          git add -A && git commit -qm base
+
+          git checkout -q -b feature
+          FIELDS="force-app/main/default/objects/Widget__c/fields"
+          mkdir -p "$FIELDS" .cairnci
+          # A new field with no governance metadata at all.
+          printf '<?xml version="1.0"?>\n<CustomField><type>Text</type></CustomField>\n' \
+            > "$FIELDS/Note__c.field-meta.xml"
+          printf '{"severity":"error","require":["description","dataOwner"]}' \
+            > .cairnci/field-governance-gate.json
+          git add -A && git commit -qm feature
+
+          set +e
+          GATE_BASE_REF=main SOURCE_DIR=force-app node "$GATE" --comment false
+          code=$?
+          set -e
+          echo "gate exit code: $code"
+          # Missing description + data owner at error severity -> exit 1.
+          if [ "$code" -ne 1 ]; then
+            echo "::error::expected exit 1 from the smoke fixture, got $code"
+            exit 1
+          fi
+
+          # Same gaps at warn severity must NOT block -> exit 10.
+          printf '{"severity":"warn","require":["description","dataOwner"]}' \
+            > .cairnci/field-governance-gate.json
+          git add -A && git commit -qm warn-severity
+
+          set +e
+          GATE_BASE_REF=main SOURCE_DIR=force-app node "$GATE" --comment false
+          code=$?
+          set -e
+          echo "gate exit code at warn severity: $code"
+          if [ "$code" -ne 10 ]; then
+            echo "::error::expected exit 10 at warn severity, got $code"
+            exit 1
+          fi
+
+          # Populate the metadata; the same diff should now pass cleanly.
+          # <businessOwnerUser> is the real Data Owner element — a bare
+          # <businessOwner> is rejected by Salesforce and must not satisfy it.
+          printf '<?xml version="1.0"?>\n<CustomField><type>Text</type><description>What this field records.</description><businessOwnerUser>owner@example.com</businessOwnerUser></CustomField>\n' \
+            > "$FIELDS/Note__c.field-meta.xml"
+          printf '{"severity":"error","require":["description","dataOwner"]}' \
+            > .cairnci/field-governance-gate.json
+          git add -A && git commit -qm populate
+
+          set +e
+          GATE_BASE_REF=main SOURCE_DIR=force-app node "$GATE" --comment false
+          code=$?
+          set -e
+          echo "gate exit code after populating metadata: $code"
+          if [ "$code" -ne 0 ]; then
+            echo "::error::expected exit 0 after populating metadata, got $code"
+            exit 1
+          fi

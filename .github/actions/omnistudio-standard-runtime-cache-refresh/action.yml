@@ -11,8 +11,8 @@
 #
 # WARN-ONLY BY DESIGN: a failed or unconfirmed reactivation emits a ::warning
 # annotation and a job-summary row and the step exits 0 — it never fails the
-# job and never triggers a rollback. This deliberately deviates from
-# field-permset-gate's fail-on-violation behavior; see this action's README.
+# job and never triggers a rollback. This deliberately deviates from the gate
+# extensions' fail-on-error-finding behavior; see this action's README.
 # Exit 2 (config error, e.g. malformed policy JSON) does still fail.
 name: OmniStudio Standard Runtime — Cache Refresh
 description: >-

@@ -5,6 +5,48 @@ All notable changes to CairnCI are documented here. This project adheres to
 workflows by major tag (e.g. `@v1`); see
 [docs/consumer-setup.md](docs/consumer-setup.md).
 
+## [Unreleased]
+
+### Added
+
+- **field-governance-gate extension** — an org-free PR gate
+  (`.github/actions/field-governance-gate/`) that verifies newly created **and
+  modified** Salesforce fields carry the governance metadata the repo requires:
+  Description, Help Text, Data Owner, Field Usage, Data Sensitivity Level and
+  Compliance Categorization. No org connection and no `sf` CLI — pure git plus
+  filesystem. Policy is source-tracked in the consumer repo (default
+  `.cairnci/field-governance-gate.json`; see
+  `examples/field-governance-gate.json`) and layered: repository-level
+  `severity`/`require`, then per-object-family `objectTypes`, then the first
+  matching scoped rule, then per-object `objectOverrides`. Requirements support
+  `minLength`, `allowed` and `pattern` constraints, not just presence. Bypass
+  patterns for objects and fields work globally and per rule (they union).
+  Follows the extension exit-code contract (0 ok, 10 warn, 1 error, 2 config),
+  and annotations are anchored to the field file so they land on the PR diff.
+  Released as `field-governance-gate/v1.0.0`.
+
+  Because it only audits fields the PR touched, adopting a standard does not
+  require backfilling existing metadata first.
+
+### Changed
+
+- **`field-permset-gate` is renamed to `field-governance-gate`** and rewritten
+  onto the current extension pattern (`run.sh` + `gate.mjs` + pure `lib/`,
+  JSON config, exit-code contract, sticky PR comment). Its permission-set
+  *access* checks are not carried over — those belong to `permset-access-gate`,
+  which shipped in v1.3.0. `forbid-breaking-field-changes` is dropped as
+  out of scope for a governance gate. See the migration table in
+  `.github/actions/field-governance-gate/README.md`. Docs and examples that
+  used `field-permset-gate` as the running example now reference the new name.
+
+### Fixed
+
+- **Data Owner was checked against an element Salesforce rejects.**
+  `field-permset-gate` looked for `<businessOwner>`; a check-only deploy against
+  a live org fails that outright (`Element ...businessOwner invalid at this
+  location in type CustomField`). The real elements are `<businessOwnerUser>`
+  and `<businessOwnerGroup>`, either of which now satisfies the requirement.
+
 ## [v1.3.0] - 2026-07-21
 
 ### Added

@@ -1,0 +1,58 @@
+{
+  "$comment": "Optional. Place at .cairnci/field-governance-gate.json in your repo (or point the config-file input / CONFIG_FILE env elsewhere). The field-governance-gate inspects the PR git diff for newly created AND modified custom fields and checks that each carries the governance metadata you require. No org connection, no sf CLI — pure git + filesystem. Exit codes: 0 = ok, 10 = warn (never blocks), 1 = an error-severity finding, 2 = config/environment problem. See .github/actions/field-governance-gate/README.md.",
+  "$comment2": "Attribute keys and their metadata elements: description -> <description>; inlineHelpText (aliases helpText, tooltip) -> <inlineHelpText>; businessOwner (aliases dataOwner, owner) -> <businessOwnerUser> OR <businessOwnerGroup>; businessStatus (alias fieldUsage) -> <businessStatus>; securityClassification (aliases dataSensitivity, sensitivity) -> <securityClassification>; complianceGroup (alias compliance) -> <complianceGroup>. A bare <businessOwner> element does NOT count — Salesforce rejects it at deploy.",
+  "$comment3": "Policy layers, most general first: built-in defaults -> top-level severity/require -> objectTypes[<family>] -> the FIRST matching rule -> objectOverrides[<Object>]. A layer that omits severity/require inherits it; a layer that sets require replaces the whole set (use \"attribute\": false to drop just one).",
+
+  "severity": "error",
+  "require": ["description"],
+
+  "$comment4": "Standard fields (API name not ending __c) are skipped by default: the platform accepts governance tags on them, but their metadata file is usually a partial customization rather than a field this PR authored. Set true to audit them too.",
+  "includeStandardFields": false,
+
+  "bypass": {
+    "$comment": "Never audited, at any layer. `objects` skips every field on those objects; `fields` takes Object.Field API names. Matching is case-insensitive and supports a trailing `*` wildcard on either segment: `Invoice__c.*` covers every field on Invoice__c, `Temp_*` covers objects with that prefix. Unions with any matching rule's own bypass.",
+    "objects": ["Legacy_Thing__c"],
+    "fields": ["Account.Legacy_Code__c", "Invoice__c.*"]
+  },
+
+  "objectTypes": {
+    "$comment": "Per object family: custom (__c), standard, customMetadata (__mdt), platformEvent (__e), bigObject (__b), externalObject (__x). All enabled by default. Governance metadata deploys on every family (org-verified), so these are conventions you choose, not platform limits.",
+    "customMetadata": { "require": ["description"] },
+    "platformEvent": { "require": ["description"], "severity": "warn" },
+    "bigObject": { "enabled": false }
+  },
+
+  "rules": [
+    {
+      "$comment": "name is required. Rules are matched in declaration order and the FIRST match wins, so put narrow rules first and a catch-all last. Scope with `objects` and/or `fields` (same wildcard syntax as bypass); a rule with neither is the catch-all. Constraints: minLength catches placeholder text like \"TBD\"; allowed pins a value set (a check-only deploy does NOT reject a bogus securityClassification, so the platform will not catch typos for you); pattern takes a regex.",
+      "name": "pii",
+      "objects": ["Contact", "Lead"],
+      "severity": "error",
+      "require": {
+        "description": { "minLength": 20 },
+        "dataSensitivity": { "allowed": ["Confidential", "Restricted"] },
+        "compliance": true
+      }
+    },
+    {
+      "$comment": "A rule-level bypass unions with the global one above, but applies only to the fields this rule governs.",
+      "name": "sandbox",
+      "objects": ["Scratch_*"],
+      "severity": "warn",
+      "require": ["description"],
+      "bypass": { "fields": ["Scratch_Thing__c.Tmp__c"] }
+    },
+    {
+      "$comment": "Catch-all: no objects/fields scope, so it governs everything the rules above did not claim.",
+      "name": "house-default",
+      "severity": "warn",
+      "require": ["description", "helpText"]
+    }
+  ],
+
+  "objectOverrides": {
+    "$comment": "The last word — applied after any matching rule. Use it for repository-wide severity carve-outs, or with enabled:true to re-enable a single object inside a family turned off in objectTypes.",
+    "Case": { "severity": "warn" },
+    "Audited_Archive__b": { "enabled": true, "severity": "warn" }
+  }
+}
