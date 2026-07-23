@@ -82,7 +82,10 @@ it exits 0 and does nothing.**
 {
   // Repository-level defaults.
   "severity": "error",                 // "error" (blocks) | "warn" (never blocks)
-  "require": ["description"],
+  "require": {
+    "description": { "minLength": 20 },   // inherits severity: error
+    "helpText": { "severity": "warn" }    // this tag alone only warns
+  },
   "includeStandardFields": false,
 
   // Never audited, at any layer. Case-insensitive, trailing `*` wildcard.
@@ -134,7 +137,8 @@ built-in defaults  (severity error, require description)
   -> top-level severity / require            repository level
     -> objectTypes[<object family>]
       -> the FIRST matching rule             scoped by objects / fields
-        -> objectOverrides[<Object>]         per object — the last word
+        -> objectOverrides[<Object>]         per object
+          -> require[<tag>].severity         per tag — the last word
 ```
 
 - A layer that **omits** `severity` or `require` inherits it.
@@ -163,9 +167,42 @@ per-attribute constraints:
 |---|---|
 | `true` / `{}` | Must be present and non-empty |
 | `false` | Not required (drops an inherited requirement) |
+| `severity: "error"\|"warn"` | Severity for **this tag alone**, overriding every layer |
 | `minLength: <n>` | Value must be at least *n* characters — catches `description: "TBD"` |
 | `allowed: [ … ]` | Value must be one of these (case-insensitive) |
 | `pattern: "<regex>"` | Value must match |
+
+Any other key is a config error (exit 2) rather than silently ignored — a
+dropped constraint would read as configured while doing nothing.
+
+#### Per-tag severity
+
+`severity` inside `require` is the finest-grained control there is, and it is
+the only way to say *"a missing description blocks the PR, but a missing tooltip
+only warns."* Scoped rules cannot express that: they match per **field**, not
+per attribute, so every tag in one rule shares its severity.
+
+```jsonc
+{
+  "severity": "warn",                 // layer default for anything unset below
+  "require": {
+    "description": { "severity": "error", "minLength": 20 },
+    "dataSensitivity": { "severity": "error" },
+    "helpText": { "severity": "warn" },
+    "dataOwner": true                 // inherits the layer -> warn
+  }
+}
+```
+
+A tag that omits `severity` inherits the resolved layer severity, so you only
+name the exceptions. Per-tag severity beats **every** layer including
+`objectOverrides`, and travels with the `require` set — a narrower layer that
+replaces `require` supplies its own severities.
+
+This composes with the exit-code contract: one error-severity tag blocks the
+run even when the layer default and every other tag is `warn`. That is the
+usual adoption path — turn a new requirement on as `warn` everywhere, then
+promote tags to `error` one at a time.
 
 `allowed` earns its keep: a check-only deploy did **not** reject an arbitrary
 `<securityClassification>` or `<businessStatus>` value, so the platform will not

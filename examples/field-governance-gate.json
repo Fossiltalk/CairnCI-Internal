@@ -3,8 +3,13 @@
   "$comment2": "Attribute keys and their metadata elements: description -> <description>; inlineHelpText (aliases helpText, tooltip) -> <inlineHelpText>; businessOwner (aliases dataOwner, owner) -> <businessOwnerUser> OR <businessOwnerGroup>; businessStatus (alias fieldUsage) -> <businessStatus>; securityClassification (aliases dataSensitivity, sensitivity) -> <securityClassification>; complianceGroup (alias compliance) -> <complianceGroup>. A bare <businessOwner> element does NOT count — Salesforce rejects it at deploy.",
   "$comment3": "Policy layers, most general first: built-in defaults -> top-level severity/require -> objectTypes[<family>] -> the FIRST matching rule -> objectOverrides[<Object>]. A layer that omits severity/require inherits it; a layer that sets require replaces the whole set (use \"attribute\": false to drop just one).",
 
+  "$comment5": "severity inside a require entry sets the severity for THAT TAG ALONE and beats every layer, including objectOverrides. It is the only way to say \"a missing description blocks the PR but a missing tooltip only warns\" — scoped rules match per field, not per tag, so every tag in one rule shares its severity. A tag that omits severity inherits the resolved layer severity, so you only name the exceptions. Usual adoption path: turn a requirement on as warn everywhere, then promote tags to error one at a time. Any key other than severity/minLength/allowed/pattern is a config error rather than silently ignored.",
+
   "severity": "error",
-  "require": ["description"],
+  "require": {
+    "description": { "minLength": 20 },
+    "helpText": { "severity": "warn" }
+  },
 
   "$comment4": "Standard fields (API name not ending __c) are skipped by default: the platform accepts governance tags on them, but their metadata file is usually a partial customization rather than a field this PR authored. Set true to audit them too.",
   "includeStandardFields": false,
@@ -31,7 +36,8 @@
       "require": {
         "description": { "minLength": 20 },
         "dataSensitivity": { "allowed": ["Confidential", "Restricted"] },
-        "compliance": true
+        "compliance": true,
+        "dataOwner": { "severity": "warn" }
       }
     },
     {

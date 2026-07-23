@@ -18,12 +18,22 @@ workflows by major tag (e.g. `@v1`); see
   `.cairnci/field-governance-gate.json`; see
   `examples/field-governance-gate.json`) and layered: repository-level
   `severity`/`require`, then per-object-family `objectTypes`, then the first
-  matching scoped rule, then per-object `objectOverrides`. Requirements support
-  `minLength`, `allowed` and `pattern` constraints, not just presence. Bypass
-  patterns for objects and fields work globally and per rule (they union).
-  Follows the extension exit-code contract (0 ok, 10 warn, 1 error, 2 config),
-  and annotations are anchored to the field file so they land on the PR diff.
-  Released as `field-governance-gate/v1.0.0`.
+  matching scoped rule, then per-object `objectOverrides`, then per-tag.
+  Requirements support `severity`, `minLength`, `allowed` and `pattern`
+  constraints, not just presence. Bypass patterns for objects and fields work
+  globally and per rule (they union). Follows the extension exit-code contract
+  (0 ok, 10 warn, 1 error, 2 config), and annotations are anchored to the field
+  file so they land on the PR diff. Released as `field-governance-gate/v1.0.0`.
+
+- **Per-tag severity in `field-governance-gate`** (`field-governance-gate/v1.1.0`)
+  — `severity` inside a `require` entry sets the severity for that one tag,
+  overriding every layer including `objectOverrides`. It is the only way to
+  express "a missing description blocks the PR but a missing tooltip only
+  warns": scoped rules match per *field*, not per tag, so every tag in one rule
+  otherwise shares its severity. Tags that omit it inherit the resolved layer
+  severity, so only the exceptions need naming. Supports the usual adoption
+  path — enable a requirement as `warn` everywhere, then promote tags to
+  `error` one at a time.
 
   Because it only audits fields the PR touched, adopting a standard does not
   require backfilling existing metadata first.
@@ -41,6 +51,13 @@ workflows by major tag (e.g. `@v1`); see
 
 ### Fixed
 
+- **`field-governance-gate` silently ignored unknown `require` constraints.** A
+  typo'd or unsupported key inside a constraints object was dropped, so a
+  policy that looked configured did nothing — a `severty` typo would leave a
+  requirement blocking merges with no indication why. Unknown keys are now a
+  config error (exit 2) naming the valid set. Shipped in
+  `field-governance-gate/v1.1.0`; stricter than v1.0.0, but v1.0.0 was
+  published the same day and no consumer config predates it.
 - **Data Owner was checked against an element Salesforce rejects.**
   `field-permset-gate` looked for `<businessOwner>`; a check-only deploy against
   a live org fails that outright (`Element ...businessOwner invalid at this

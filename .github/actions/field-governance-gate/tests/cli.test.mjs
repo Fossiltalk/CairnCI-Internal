@@ -286,6 +286,32 @@ describe("severity: warn is non-blocking, error is blocking", () => {
     assert.equal(r.status, 1, r.stdout + r.stderr);
   });
 
+  test("severity is settable per required tag", async () => {
+    const repo = setupRepo({ feature });
+    const r = await runGate(repo, {
+      severity: "warn",
+      require: { description: { severity: "error" }, helpText: { severity: "warn" }, dataOwner: true },
+    });
+    // The one error-severity tag blocks, even though the layer default is warn.
+    assert.equal(r.status, 1, r.stdout + r.stderr);
+    assert.match(r.stdout, /\[error\] Acct__c\.X__c: missing Description/);
+    assert.match(r.stdout, /\[warn\] Acct__c\.X__c: missing Help Text/);
+    assert.match(r.stdout, /\[warn\] Acct__c\.X__c: missing Data Owner/);
+  });
+
+  test("per-tag warn keeps a run non-blocking under an error-severity layer", async () => {
+    const repo = setupRepo({ feature });
+    const r = await runGate(repo, { severity: "error", require: { description: { severity: "warn" } } });
+    assert.equal(r.status, 10, r.stdout + r.stderr);
+  });
+
+  test("a typo'd constraint is rejected rather than silently ignored", async () => {
+    const repo = setupRepo({ feature });
+    const r = await runGate(repo, { require: { description: { severty: "warn" } } });
+    assert.equal(r.status, 2, r.stdout + r.stderr);
+    assert.match(r.stdout, /unknown constraint "severty"/);
+  });
+
   test("warn-only run leaves the whole repo unblocked", async () => {
     const repo = setupRepo({
       feature: { [fieldPath("A__c", "X__c")]: fieldXml(), [fieldPath("B__c", "Y__c")]: fieldXml() },
