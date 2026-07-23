@@ -39,10 +39,12 @@ stay stale for end users. After an OmniStudio-first deploy this action:
    table plus one `::warning` annotation per unconfirmed component, prefixed
    `OmniStudio (Standard Runtime):`.
 
-## Warn-only by design (deviation from `field-permset-gate`)
+## Warn-only by design (deviation from the gate extensions)
 
-`field-permset-gate` fails the check on a violation. **This action never fails
-the job for a reactivation problem** — a failed, timed-out, or unconfirmable
+The gate extensions (`field-governance-gate`, `permset-access-gate`) fail the
+check on an error-severity finding, and severity is theirs to configure.
+**This action never fails the job for a reactivation problem** — a failed,
+timed-out, or unconfirmable
 activation exits 0 (after `::warning` annotations and job-summary rows), and
 no rollback is attempted. That is deliberate, not an oversight: a reactivation
 failure is not a deploy failure, and the SOQL check re-flags anything still
@@ -70,9 +72,11 @@ policy file (default `.cairnci/omnistudio-standard-runtime-policy.json`; see
 `examples/omnistudio-standard-runtime-policy.json`).
 
 **Precedence: explicit input > policy file > built-in default.** This matches
-core CairnCI's `.cairnci/config.json` convention and deliberately reverses
-`field-permset-gate`'s file-wins-over-input choice — resolving the known
-inconsistency between the two conventions in favor of core's.
+core CairnCI's `.cairnci/config.json` convention, and deliberately reverses the
+file-wins-over-input choice made by the retired `field-permset-gate` —
+resolving the known inconsistency between the two conventions in favor of
+core's. (The gate extensions have since dropped input-level policy entirely:
+their config file is the single source.)
 
 | Input | Policy key | Default | Notes |
 |---|---|---|---|

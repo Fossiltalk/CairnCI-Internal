@@ -1,0 +1,101 @@
+# CairnCI field-governance-gate — an org-free PR gate. It inspects the current
+# PR's git diff for newly created AND modified Salesforce custom fields and
+# verifies that each one carries the governance metadata the repo requires:
+# Description, Help Text, Data Owner, Field Usage, Data Sensitivity Level and
+# Compliance Categorization. No org connection and no sf CLI: pure git +
+# filesystem, so it runs anywhere a checkout exists.
+#
+# It is a "running change" gate — only the fields this PR added or touched are
+# audited, so a repo can adopt a standard without first backfilling every
+# legacy field.
+#
+# Policy is source-tracked in .cairnci/field-governance-gate.json and layered,
+# most general first:
+#   built-in defaults -> top-level severity/require (repository level)
+#     -> objectTypes[<kind>] (custom / __mdt / __e / __b / standard)
+#       -> the first matching rule (scoped by objects/fields patterns)
+#         -> objectOverrides[<Object>] (per object — the last word)
+#
+# Org-verified: governance tags are accepted on every field type (formula,
+# auto-number, required, master-detail) and on every object family, so nothing
+# is hard-exempted for platform reasons. The one platform fact the gate encodes
+# is that Data Owner is <businessOwnerUser>/<businessOwnerGroup> — a bare
+# <businessOwner> is rejected at deploy. Standard fields are skipped by default
+# (policy, not a platform limit); set includeStandardFields to audit them.
+#
+# Two deployment modes:
+#   1. Standalone job — add this action to a workflow with `permissions:
+#      pull-requests: write` and a full-history checkout (fetch-depth: 0). It
+#      posts a sticky PR comment in addition to annotations and the step
+#      summary.
+#   2. Extension-caller entry — reference run.sh from .cairnci/extensions.json
+#      pinned to field-governance-gate/v1.0.0. In that mode PR commenting is
+#      skipped unless a GITHUB_TOKEN is present in the env; the exit code feeds
+#      the caller's blocking/non-blocking contract (0 ok, 10 warn, else error).
+#
+# Results follow the CairnCI extension exit-code contract: exit 0 = ok,
+# exit 10 = warn (never blocks), any other non-zero = error.
+name: CairnCI field-governance-gate
+description: >-
+  Org-free PR gate that verifies newly created and modified Salesforce fields
+  carry the required governance metadata — description, help text, data owner,
+  field usage, data sensitivity and compliance categorization (git + filesystem
+  only, no sf CLI).
+
+inputs:
+  source-dir:
+    description: Salesforce source directory to scan.
+    required: false
+    default: force-app
+  config-file:
+    description: Path to the gate config JSON in the consumer repo.
+    required: false
+    default: .cairnci/field-governance-gate.json
+  base-ref:
+    description: >-
+      Git base ref for the diff. Empty auto-resolves to origin/$GITHUB_BASE_REF
+      on a PR, else HEAD^.
+    required: false
+    default: ""
+  github-token:
+    description: "Token used for the sticky PR comment (needs pull-requests: write)."
+    required: false
+    default: ${{ github.token }}
+  pr-number:
+    description: PR number for the sticky comment (auto-detected on pull_request events).
+    required: false
+    default: ${{ github.event.pull_request.number }}
+  comment-on-pr:
+    description: Post/update a sticky PR comment ("true"/"false").
+    required: false
+    default: "true"
+
+runs:
+  using: composite
+  steps:
+    - name: Run field-governance-gate
+      shell: bash
+      env:
+        SOURCE_DIR: ${{ inputs.source-dir }}
+        CONFIG_FILE: ${{ inputs.config-file }}
+        GATE_BASE_REF: ${{ inputs.base-ref }}
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+        PR_NUMBER: ${{ inputs.pr-number }}
+        COMMENT_ON_PR: ${{ inputs.comment-on-pr }}
+      run: |
+        set -uo pipefail
+        # A composite step must not fail on a warn-severity result (exit 10):
+        # capture the exit code, map 10 -> warning + success, propagate the rest.
+        set +e
+        node "${{ github.action_path }}/gate.mjs" \
+          --source-dir "$SOURCE_DIR" \
+          --config "$CONFIG_FILE" \
+          --base-ref "$GATE_BASE_REF" \
+          --comment "$COMMENT_ON_PR"
+        code=$?
+        set -e
+        if [ "$code" -eq 10 ]; then
+          echo "::warning::field-governance-gate reported warnings (non-blocking)."
+          exit 0
+        fi
+        exit "$code"

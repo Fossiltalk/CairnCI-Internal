@@ -42,13 +42,13 @@ the caller no-ops. See `examples/extensions.json` for a full example:
       "env": { "SOURCE_DIR": "force-app" }
     },
     {
-      "id": "field-permset-gate",
+      "id": "field-governance-gate",
       "phases": ["post-validate-success"],
       "run": {
         "type": "git",
         "repo": "https://github.com/Fossiltalk/CairnCI-Extensions.git",
-        "ref": "field-permset-gate/v1.0.0",
-        "entry": ".github/actions/field-permset-gate/run.sh"
+        "ref": "field-governance-gate/v1.0.0",
+        "entry": ".github/actions/field-governance-gate/run.sh"
       }
     }
   ]
@@ -136,10 +136,16 @@ Each extension lives under `.github/actions/<extension-name>/`:
 
 ```
 .github/actions/
-  field-permset-gate/
+  field-governance-gate/
     action.yml                        ← composite action definition
+    run.sh                            ← extension-caller entry point
+    gate.mjs                          ← CLI: all the IO
+    lib/
+      field-governance-gate.mjs       ← pure, side-effect-free logic
+    README.md
     tests/
-      field_permset_gate.bats         ← unit tests (shell logic)
+      field-governance-gate.test.mjs  ← unit tests (node --test)
+      cli.test.mjs                    ← end-to-end CLI tests
 ```
 
 This mirrors the path in CairnCI-Extensions exactly, so local test workflows
@@ -164,10 +170,10 @@ Add a per-extension integration workflow at
 ```yaml
 on:
   pull_request:
-    paths: [.github/actions/field-permset-gate/**]
+    paths: [.github/actions/field-governance-gate/**]
   push:
     branches: [main]
-    paths: [.github/actions/field-permset-gate/**]
+    paths: [.github/actions/field-governance-gate/**]
   workflow_dispatch:
 
 jobs:
@@ -177,7 +183,7 @@ jobs:
     environment: main          # provides SFDX_AUTH_URL for org-analysis extensions
     steps:
       - uses: actions/checkout@v7
-      - uses: ./.github/actions/field-permset-gate
+      - uses: ./.github/actions/field-governance-gate
         with:
           source-dir: force-app
 ```
@@ -188,31 +194,31 @@ Tags are scoped to the extension name so they don't collide with core tags or
 each other:
 
 ```bash
-git tag field-permset-gate/v1.0.0
-git push origin field-permset-gate/v1.0.0
+git tag field-governance-gate/v1.0.0
+git push origin field-governance-gate/v1.0.0
 ```
 
 `publish-extension.yml` fires automatically and:
 
-1. Validates `.github/actions/field-permset-gate/action.yml` exists
+1. Validates `.github/actions/field-governance-gate/action.yml` exists
 2. Syncs only that extension's directory to CairnCI-Extensions (other extensions
    are untouched)
 3. Pushes two tags to CairnCI-Extensions:
-   - `field-permset-gate/v1.0.0` — exact, immutable
-   - `field-permset-gate/v1` — floating major alias, updated on each release
+   - `field-governance-gate/v1.0.0` — exact, immutable
+   - `field-governance-gate/v1` — floating major alias, updated on each release
 
 ## Consumer reference
 
 Consumers pin to the floating major alias for automatic patch/minor updates:
 
 ```yaml
-uses: Fossiltalk/CairnCI-Extensions/.github/actions/field-permset-gate@field-permset-gate/v1
+uses: Fossiltalk/CairnCI-Extensions/.github/actions/field-governance-gate@field-governance-gate/v1
 ```
 
 Or lock to an exact version for full reproducibility:
 
 ```yaml
-uses: Fossiltalk/CairnCI-Extensions/.github/actions/field-permset-gate@field-permset-gate/v1.0.0
+uses: Fossiltalk/CairnCI-Extensions/.github/actions/field-governance-gate@field-governance-gate/v1.0.0
 ```
 
 ## Setup checklist

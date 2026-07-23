@@ -9,14 +9,14 @@
       "env": { "SOURCE_DIR": "force-app" }
     },
     {
-      "id": "field-permset-gate",
+      "id": "field-governance-gate",
       "phases": ["post-validate-success"],
       "blocking": true,
       "run": {
         "type": "git",
         "repo": "https://github.com/Fossiltalk/CairnCI-Extensions.git",
-        "ref": "field-permset-gate/v1.0.0",
-        "entry": ".github/actions/field-permset-gate/run.sh"
+        "ref": "field-governance-gate/v1.0.0",
+        "entry": ".github/actions/field-governance-gate/run.sh"
       }
     },
     {

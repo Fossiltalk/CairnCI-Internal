@@ -38,11 +38,24 @@ jobs:
   # Each extension runs after `validate` passes. Remove any you don't need.
   # ---------------------------------------------------------------------------
 
-  # CairnCI-Extensions: field-level permission set governance gate.
-  # Fails the PR if field-level security is missing from any permission set.
+  # CairnCI-Extensions: field metadata governance gate.
+  # Fails the PR when a new or modified field is missing required governance
+  # metadata (description, help text, data owner, sensitivity, ...).
+  # Policy lives at .cairnci/field-governance-gate.json; without it the gate
+  # does nothing. Needs fetch-depth: 0 on the checkout to diff against the base.
   # field-governance:
   #   needs: validate
-  #   uses: Fossiltalk/CairnCI-Extensions/.github/actions/field-permset-gate@v1
+  #   uses: Fossiltalk/CairnCI-Extensions/.github/actions/field-governance-gate@field-governance-gate/v1
+  #   with:
+  #     source-dir: force-app
+  #   secrets: inherit
+
+  # CairnCI-Extensions: permission-set access gate.
+  # Fails the PR when a newly created field or object is not granted a
+  # configured minimum access in the repo's permission sets.
+  # permset-access:
+  #   needs: validate
+  #   uses: Fossiltalk/CairnCI-Extensions/.github/actions/permset-access-gate@permset-access-gate/v1
   #   with:
   #     source-dir: force-app
   #   secrets: inherit

@@ -1,12 +1,12 @@
 # Publishes a composite action from .github/actions/<name>/ to
 # Fossiltalk/CairnCI-Extensions when a scoped version tag is pushed.
 #
-# Tag format: <extension-name>/v<semver>  e.g. field-permset-gate/v1.0.0
+# Tag format: <extension-name>/v<semver>  e.g. field-governance-gate/v1.0.0
 #
 # The workflow syncs only the tagged extension's directory, commits any file
 # changes to CairnCI-Extensions main, then pushes two tags:
-#   field-permset-gate/v1.0.0  — exact version (immutable)
-#   field-permset-gate/v1      — floating major alias (consumers pin to this)
+#   field-governance-gate/v1.0.0  — exact version (immutable)
+#   field-governance-gate/v1      — floating major alias (consumers pin to this)
 #
 # Required: GitHub App installed on Fossiltalk/CairnCI-Extensions with
 # Contents: Read and write. Uses the same CAIRNCI_APP_ID /
@@ -96,7 +96,7 @@ jobs:
 
           # Exact semver tag (immutable — do not force)
           git tag "${TAG}"
-          # Floating major alias (e.g. field-permset-gate/v1) — force-updated on each release
+          # Floating major alias (e.g. field-governance-gate/v1) — force-updated on each release
           git tag "${MAJOR_TAG}" --force
 
           git push origin "${TAG}"
