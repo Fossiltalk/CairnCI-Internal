@@ -372,6 +372,21 @@ describe("policy layering", () => {
     assert.equal(effectivePolicy({ config: c, object: "Audited__b", field: "N__c" }).enabled, true);
   });
 
+  test("a disabled rule acts as an exclusion rule, consuming the match", () => {
+    // First-match-wins means a disabled rule placed ahead of the catch-all
+    // carves its scope out without touching the global bypass.
+    const c = cfg({
+      rules: [
+        { name: "vendor", objects: ["vendor_*"], enabled: false },
+        { name: "catch-all", require: ["description"] },
+      ],
+    });
+    const excluded = effectivePolicy({ config: c, object: "vendor_Thing__c", field: "N__c" });
+    assert.equal(excluded.enabled, false);
+    assert.equal(excluded.disabledBy, "rules.vendor");
+    assert.equal(effectivePolicy({ config: c, object: "Own__c", field: "N__c" }).enabled, true);
+  });
+
   test("ruleMatches: object patterns, field patterns, wildcards, catch-all", () => {
     assert.ok(ruleMatches({ objects: [], fields: [] }, "Account", "N__c"));
     assert.ok(ruleMatches({ objects: ["Account"], fields: [] }, "account", "N__c"));
@@ -699,6 +714,19 @@ describe("audit: bypasses", () => {
     assert.deepEqual(r.findings, []);
     assert.equal(r.bypassed.length, 1);
     assert.equal(r.bypassed[0].rule, "pii");
+  });
+
+  test("a disabled rule skips its fields end to end", () => {
+    const config = cfg({
+      severity: "error",
+      require: ["description"],
+      rules: [{ name: "vendor", objects: ["vendor_*"], enabled: false }, { name: "ours" }],
+    });
+    const r = audit({ config, fields: [mkField("vendor_Pkg__c", "A__c"), mkField("Ours__c", "B__c")] });
+    assert.equal(r.skipped.length, 1);
+    assert.match(r.skipped[0].reason, /rules.vendor/);
+    assert.equal(r.findings.length, 1);
+    assert.equal(r.findings[0].component, "Ours__c.B__c");
   });
 
   test("bypassed and skipped fields are not counted as audited", () => {

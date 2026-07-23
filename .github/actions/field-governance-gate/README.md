@@ -140,9 +140,14 @@ built-in defaults  (severity error, require description)
 - A layer that **omits** `severity` or `require` inherits it.
 - A layer that **sets** `require` replaces the set wholesale. To drop just one
   requirement, restate the set with `"attributeName": false`.
-- `enabled: false` on an `objectTypes` family or an `objectOverrides` object
-  turns the gate off for it; an `objectOverrides` entry with `enabled: true`
-  re-enables a single object inside a disabled family.
+- `enabled: false` turns the gate off for whatever the layer covers — an
+  `objectTypes` family, an `objectOverrides` object, or a `rule`'s scope. A
+  disabled **rule** still consumes the match (first-match-wins), which makes it
+  an exclusion rule: put `{"name": "vendor", "objects": ["vendor_*"],
+  "enabled": false}` ahead of your catch-all to carve those fields out without
+  touching the global bypass.
+- `objectOverrides` is the last word in both directions: an entry with
+  `enabled: true` re-enables a single object inside a disabled family.
 
 Rules are **first-match-wins**, unlike `permset-access-gate` (whose rules each
 target a different permission set and therefore all apply). Every rule here
