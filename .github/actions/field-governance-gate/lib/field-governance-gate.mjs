@@ -68,6 +68,9 @@ export const ATTRIBUTE_ALIASES = {
 
 export const ATTRIBUTE_KEYS = Object.keys(ATTRIBUTES);
 
+/** Valid keys inside a `require` constraints object. */
+export const CONSTRAINT_KEYS = ["severity", "minLength", "allowed", "pattern"];
+
 /** Canonical attribute key for a config-supplied name, or null if unknown. */
 export function canonicalAttribute(name) {
   if (typeof name !== "string") return null;
@@ -204,7 +207,23 @@ export function normalizeRequire(raw, where) {
     if (typeof value !== "object" || value === null || Array.isArray(value)) {
       throw new ConfigError(`${where}.${name} must be true, false, or a constraints object`);
     }
+    // Reject unknown keys rather than dropping them. A silently ignored
+    // constraint reads as configured while doing nothing, which is the worst
+    // possible failure for a policy file — a typo'd `severty` would leave the
+    // requirement blocking merges with no indication why.
+    for (const k of Object.keys(value)) {
+      if (k.startsWith("$")) continue;
+      if (!CONSTRAINT_KEYS.includes(k)) {
+        throw new ConfigError(`${where}.${name} has unknown constraint "${k}" (valid: ${CONSTRAINT_KEYS.join(", ")})`);
+      }
+    }
     const c = {};
+    // Per-attribute severity: overrides the layer's severity for this one
+    // requirement, so "a missing description blocks, a missing tooltip only
+    // warns" is expressible without splitting the policy into scoped rules
+    // (which are matched per field, not per attribute, so they cannot do it).
+    const sev = normalizeSeverity(value.severity, `${where}.${name}.severity`);
+    if (sev !== undefined) c.severity = sev;
     if (value.minLength !== undefined) {
       if (!Number.isInteger(value.minLength) || value.minLength < 0) {
         throw new ConfigError(`${where}.${name}.minLength must be a non-negative integer`);
@@ -675,7 +694,8 @@ export function audit({ config, fields }) {
         continue;
       }
       findings.push({
-        severity: policy.severity,
+        // Per-attribute severity wins over the layer's; omitted means inherit.
+        severity: constraints.severity ?? policy.severity,
         rule: policy.rule,
         attribute: key,
         component: apiName,

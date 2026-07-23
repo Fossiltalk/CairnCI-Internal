@@ -231,12 +231,34 @@ describe("config validation", () => {
     assert.deepEqual(normalizeRequire({ description: true, helpText: false }, "require"), { description: {} });
   });
 
+  test("require accepts a per-attribute severity", () => {
+    const c = cfg({ severity: "warn", require: { description: { severity: "error" }, helpText: true } });
+    assert.equal(c.require.description.severity, "error");
+    assert.equal(c.require.inlineHelpText.severity, undefined, "omitted severity must stay unset so it can inherit");
+  });
+
+  test("unknown constraint keys are rejected, not silently dropped", () => {
+    // A silently ignored constraint reads as configured while doing nothing —
+    // the worst failure mode for a policy file.
+    assert.throws(
+      () => cfg({ require: { description: { severty: "warn" } } }),
+      (e) => e instanceof ConfigError && /unknown constraint "severty"/.test(e.message),
+    );
+    assert.throws(
+      () => cfg({ require: { description: { minLen: 5 } } }),
+      (e) => e instanceof ConfigError && /unknown constraint "minLen"/.test(e.message),
+    );
+    // $-prefixed keys stay allowed for inline documentation.
+    assert.doesNotThrow(() => cfg({ require: { description: { $comment: "why", minLength: 5 } } }));
+  });
+
   test("rejects malformed config", () => {
     const bad = [
       [[], "config must be a JSON object"],
       [{ severity: "fatal" }, /must be "error" or "warn"/],
       [{ require: ["nope"] }, /unknown attribute/],
       [{ require: { description: { minLength: -1 } } }, /non-negative integer/],
+      [{ require: { description: { severity: "fatal" } } }, /must be "error" or "warn"/],
       [{ require: { description: { allowed: [] } } }, /non-empty array/],
       [{ require: { description: { pattern: "[" } } }, /not a valid regular expression/],
       [{ includeStandardFields: "yes" }, /must be a boolean/],
@@ -558,6 +580,42 @@ describe("audit: severity — warn is non-blocking, error is blocking", () => {
   test("no findings yields exit 0", () => {
     assert.equal(exitCodeForFindings([]), 0);
   });
+
+  test("severity is settable per required tag, and omitted tags inherit", () => {
+    // Scoped rules match per FIELD, so they cannot express "a missing
+    // description blocks but a missing tooltip only warns" — this can.
+    const config = cfg({
+      severity: "warn",
+      require: { description: { severity: "error" }, helpText: { severity: "warn" }, dataOwner: true },
+    });
+    const r = audit({ config, fields: [mkField("Acct__c", "X__c")] });
+    const sev = Object.fromEntries(r.findings.map((f) => [f.attribute, f.severity]));
+    assert.deepEqual(sev, { description: "error", inlineHelpText: "warn", businessOwner: "warn" });
+    // One error-severity tag is enough to block, even though the layer is warn.
+    assert.equal(exitCodeForFindings(r.findings), 1);
+  });
+
+  test("per-tag severity beats every layer, including an objectOverride", () => {
+    const config = cfg({
+      severity: "error",
+      require: { description: { severity: "warn" } },
+      objectOverrides: { Acct__c: { severity: "error" } },
+    });
+    const r = audit({ config, fields: [mkField("Acct__c", "X__c")] });
+    assert.equal(r.findings[0].severity, "warn");
+    assert.equal(exitCodeForFindings(r.findings), 10, "the whole run stays non-blocking");
+  });
+
+  test("per-tag severity travels with the require set a layer replaces", () => {
+    const config = cfg({
+      severity: "error",
+      require: { description: { severity: "error" } },
+      rules: [{ name: "relaxed", objects: ["Scratch__c"], require: { description: { severity: "warn" } } }],
+    });
+    const r = audit({ config, fields: [mkField("Scratch__c", "A__c"), mkField("Other__c", "B__c")] });
+    const sev = Object.fromEntries(r.findings.map((f) => [f.component, f.severity]));
+    assert.deepEqual(sev, { "Scratch__c.A__c": "warn", "Other__c.B__c": "error" });
+  });
 });
 
 // ---------------------------------------------------------------------------
@@ -809,6 +867,16 @@ describe("reporting", () => {
     const pii = effectivePolicy({ config: c, object: "Contact", field: "SSN__c" });
     assert.equal(pii.rule, "pii");
     assert.equal(pii.require.description.minLength, 20);
+
+    // ...including the per-tag severity the file advertises.
+    assert.equal(c.require.inlineHelpText.severity, "warn");
+    assert.equal(c.require.description.severity, undefined, "description should inherit the repo-level error");
+    const piiFindings = audit({
+      config: c,
+      fields: [mkField("Contact", "SSN__c")],
+    }).findings;
+    assert.equal(piiFindings.find((f) => f.attribute === "businessOwner").severity, "warn");
+    assert.equal(piiFindings.find((f) => f.attribute === "description").severity, "error");
     assert.equal(effectivePolicy({ config: c, object: "Case", field: "X__c" }).severity, "warn");
     assert.equal(effectivePolicy({ config: c, object: "Other__b", field: "X__c" }).enabled, false);
     assert.equal(effectivePolicy({ config: c, object: "Audited_Archive__b", field: "X__c" }).enabled, true);
