@@ -11,5 +11,6 @@ using the listed Node.js version. Pin to a `✅ validated` version.
 
 | `@salesforce/cli` | Node | `sfdx-git-delta` | Status | Validated on |
 |---|---|---|---|---|
+| `2.144.6` | 22 | 6.31.0 | ✅ validated | 2026-07-27 |
 | `2.143.6` | 22 | 6.31.0 | ✅ validated | 2026-07-20 |
 | `2.142.7` | 22 | 6.31.0 | ✅ validated | 2026-07-14 |
