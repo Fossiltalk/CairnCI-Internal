@@ -48,8 +48,9 @@ workflows by major tag (e.g. `@v1`); see
   run can never trigger an expensive one: org-free unit and CLI suites on every
   change; a read-only live-org suite (minutes) that checks the Salesforce claims
   the logic rests on; and a full-org retrieval (hours) that indexes, chunks,
-  retrieves, branches, commits and pushes for real — limited to pushes to `main`
-  and explicit dispatch. The full tier runs in a throwaway repo whose `origin`
+  retrieves, branches, commits and pushes for real — gated to pull requests into
+  `main` so a reviewer sees a real snapshot before approving, with superseded
+  runs cancelled. The full tier runs in a throwaway repo whose `origin`
   is a local bare repo, so the push path is exercised without creating snapshot
   branches in this repository, and it reports its measured runtime against the
   350-minute budget the example caller documents.

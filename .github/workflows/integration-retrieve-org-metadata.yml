@@ -10,8 +10,9 @@
 #                                      SALESFORCE the logic rests on.
 #   full-retrieve hours    live org    ORG_METADATA_FULL_RETRIEVE. The real
 #                                      thing — full index, multi-chunk retrieve,
-#                                      snapshot branch, commit and push. Pushes
-#                                      to main and explicit dispatch only.
+#                                      snapshot branch, commit and push. Runs on
+#                                      pull requests into main, so a reviewer
+#                                      sees a real snapshot before approving.
 #
 # The `test` job's glob (tests/*.test.mjs) matches the gated files too. Their
 # org-touching suites skip themselves there, and what runs instead is each
@@ -261,10 +262,19 @@ jobs:
   # calls it. This is what proves we test what we publish; the two jobs above
   # never retrieve at org scale and never create a branch.
   #
-  # Hours, not minutes, so it does not run on pull requests: those get the
-  # org-free `test` job plus the ~2-minute read-only `org-tests` job. This one
-  # runs when the tool lands on main (the paths filter above already limits
-  # that to changes to the tool), or on demand via the workflow_dispatch input.
+  # Hours, not minutes, so it is scoped to changes that are actually headed for
+  # production: pull requests targeting main (the paths filter above already
+  # limits that to changes to this tool), or an explicit workflow_dispatch. It
+  # is a REVIEW gate, not a post-merge one — the point is to see a real snapshot
+  # before approving, not after. A push to main is therefore not a trigger: the
+  # merge commit carries the same tree the PR run already retrieved.
+  #
+  # Fork PRs are excluded because `environment: main`'s SFDX_AUTH_URL is not
+  # exposed to them; the job would burn a runner only to fail at auth.
+  #
+  # `concurrency` matters more here than anywhere else in the repo: without it,
+  # every push to an open PR would queue another multi-hour retrieval behind the
+  # last one. Superseded runs are cancelled.
   #
   # It writes into a throwaway git repo under the runner's temp dir whose
   # `origin` is a local bare repo, so the push path is genuinely exercised
@@ -274,10 +284,15 @@ jobs:
     name: full org retrieve + snapshot branch (live org)
     if: >-
       github.repository == 'Fossiltalk/CairnCI-Internal' &&
-      ((github.event_name == 'push' && github.ref == 'refs/heads/main') ||
+      ((github.event_name == 'pull_request' &&
+        github.base_ref == 'main' &&
+        github.event.pull_request.head.repo.full_name == github.repository) ||
        (github.event_name == 'workflow_dispatch' && inputs.run-full-retrieve))
     runs-on: ubuntu-latest
     environment: main
+    concurrency:
+      group: full-retrieve-${{ github.event.pull_request.number || github.ref }}
+      cancel-in-progress: true
     # GitHub's hard job ceiling is 360 minutes. 350 matches what the example
     # caller documents, so the test measures the budget consumers are told to
     # set. The suite's own timeout is 300 minutes so a hang fails as a test

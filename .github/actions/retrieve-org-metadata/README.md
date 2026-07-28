@@ -331,8 +331,13 @@ budget the example caller documents. That last number was a guess until this
 test started measuring it; the measured runtime is written to the job summary
 on every run.
 
-In CI it runs only on pushes to `main` and on `workflow_dispatch` with
-`run-full-retrieve: true`. Pull requests get the two short suites.
+In CI it runs on **pull requests into `main`**, and on `workflow_dispatch` with
+`run-full-retrieve: true`. That is deliberately a review gate rather than a
+post-merge one: a real snapshot is worth seeing before approving, not after.
+Because it is hours long, the job cancels its own superseded runs, so pushing
+again to an open PR replaces the running retrieval instead of queueing behind
+it. PRs from forks are skipped — `environment: main`'s `SFDX_AUTH_URL` is not
+exposed to them.
 
 Layout follows the repo convention — `lib/*.mjs` is pure and side-effect-free,
 `retrieve.mjs` owns all IO (argv, annotations, job summary, outputs, exit
