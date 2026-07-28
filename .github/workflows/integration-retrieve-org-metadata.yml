@@ -1,0 +1,244 @@
+# Integration tests for the retrieve-org-metadata admin tool (org-free — pure
+# node:test plus a CLI smoke run against a stub `sf` on PATH). Nothing here
+# touches a Salesforce org, so no org secret is needed.
+#
+# The *.org.test.mjs suite is matched by the glob below but its org-touching
+# tests skip themselves: they are gated on ORG_METADATA_LIVE_ORG, which CI never
+# sets. What does run here is that suite's wiring tests, which assert it stays
+# skipped without an org and that it cannot import the branch-creating code —
+# cheap insurance against a live retrieve leaking into CI. Run the full suite
+# locally when changing this tool's Salesforce assumptions:
+#
+#   ORG_METADATA_LIVE_ORG=CairnCI_Production \
+#     node --test .github/actions/retrieve-org-metadata/tests/*.org.test.mjs
+#
+# Full-org runtime against GitHub's 6h job cap still cannot be exercised
+# anywhere but a real dispatched run — see
+# examples/caller-retrieve-org-metadata.yml.
+name: retrieve-org-metadata Tests
+
+on:
+  pull_request:
+    paths:
+      - .github/actions/retrieve-org-metadata/**
+      - .github/workflows/integration-retrieve-org-metadata.yml
+  push:
+    branches: [main, CairnCI-External]
+    paths:
+      - .github/actions/retrieve-org-metadata/**
+      - .github/workflows/integration-retrieve-org-metadata.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    if: github.repository == 'Fossiltalk/CairnCI-Internal'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+
+      - name: Run retrieve-org-metadata unit + CLI tests
+        shell: bash
+        # Explicit glob: Node >= 23 treats a bare directory arg as a module
+        # path, so the glob form works on every Node line.
+        run: node --test .github/actions/retrieve-org-metadata/tests/*.test.mjs
+
+      # Smoke the real CLI end to end against a fixture repo and a stub `sf`.
+      # We invoke retrieve.mjs directly (not `uses: ./...`) because the
+      # composite action would run against this checkout — which holds a
+      # 31k-file force-app tree — rather than the fixture workspace. Same
+      # spirit as integration-field-governance-gate.yml's local smoke.
+      - name: Smoke retrieve.mjs against a fixture repo
+        shell: bash
+        run: |
+          set -euo pipefail
+          CLI="$PWD/.github/actions/retrieve-org-metadata/retrieve.mjs"
+          WORK="$(mktemp -d)"
+          BIN="$WORK/bin"
+          mkdir -p "$BIN"
+
+          # Stub `sf`: two metadata types, six components, retrieves succeed.
+          cat > "$BIN/sf" <<'STUB'
+          #!/usr/bin/env node
+          const fs = require('node:fs');
+          const path = require('node:path');
+          const argv = process.argv.slice(2);
+          const arg = (n) => { const i = argv.indexOf(n); return i === -1 ? undefined : argv[i + 1]; };
+          const cmd = argv.filter((a) => !a.startsWith('--')).join(' ');
+          const ok = (r) => { process.stdout.write(JSON.stringify({ status: 0, result: r })); process.exit(0); };
+          if (cmd.startsWith('org display')) ok({ id: '00D8b000000XyZaEAK', apiVersion: '62.0' });
+          if (cmd.startsWith('org list metadata-types')) ok({ metadataObjects: [{ xmlName: 'ApexClass', childXmlNames: [] }, { xmlName: 'Flow', childXmlNames: [] }] });
+          if (cmd.startsWith('org list metadata')) {
+            const t = arg('--metadata-type');
+            ok(Array.from({ length: 3 }, (_, i) => ({ fullName: t + '_' + i })));
+          }
+          if (cmd.startsWith('data query')) ok({ records: [] });
+          if (cmd.startsWith('project retrieve start')) {
+            fs.mkdirSync(path.join(arg('--target-metadata-dir'), 'unpackaged', 'unpackaged'), { recursive: true });
+            ok({});
+          }
+          if (cmd.startsWith('project convert mdapi')) {
+            const out = path.join(arg('--output-dir'), 'main', 'default', 'classes');
+            fs.mkdirSync(out, { recursive: true });
+            fs.writeFileSync(path.join(out, 'R' + process.pid + Math.random() + '.cls'), 'public class C {}');
+            ok({});
+          }
+          process.stdout.write(JSON.stringify({ status: 1, message: 'unexpected: ' + cmd }));
+          process.exit(1);
+          STUB
+          chmod +x "$BIN/sf"
+
+          cd "$WORK"
+          git init -q -b main
+          git config user.email ci@example.com
+          git config user.name "CI"
+          mkdir -p force-app/main/default/classes
+          echo 'public class Stale {}' > force-app/main/default/classes/Stale.cls
+          git add -A && git commit -qm base
+
+          export PATH="$BIN:$PATH"
+          export GITHUB_EVENT_NAME=schedule
+          export GITHUB_OUTPUT="$WORK/gh-output"
+          : > "$GITHUB_OUTPUT"
+
+          set +e
+          node "$CLI" --target-org stub-org --push false
+          code=$?
+          set -e
+          echo "retrieve.mjs exit code: $code"
+          if [ "$code" -ne 0 ]; then
+            echo "::error::expected exit 0 from the smoke fixture, got $code"
+            exit 1
+          fi
+
+          branch="$(git rev-parse --abbrev-ref HEAD)"
+          echo "snapshot branch: $branch"
+          # Branch name must document org, UTC timestamp and trigger.
+          if ! echo "$branch" | grep -Eq '^org-snapshot/00D8b000000XyZa/[0-9]{8}-[0-9]{6}Z-schedule$'; then
+            echo "::error::branch name does not match the documented pattern: $branch"
+            exit 1
+          fi
+
+          # The wholesale replace must record the stale component as a deletion.
+          if ! git diff --name-status main.."$branch" -- force-app | grep -q '^D.*Stale\.cls$'; then
+            echo "::error::expected Stale.cls to be deleted by the wholesale replace"
+            git diff --name-status main.."$branch" -- force-app
+            exit 1
+          fi
+
+          # Provenance must be committed alongside the metadata.
+          for f in metadata-index-summary.md retrieve-report.json reconciliation.json; do
+            if ! git show --name-only --format= HEAD | grep -q "^.org-snapshot/$f$"; then
+              echo "::error::missing provenance file .org-snapshot/$f"
+              exit 1
+            fi
+          done
+
+          grep -q '^total-components=6$' "$GITHUB_OUTPUT" || {
+            echo "::error::expected total-components=6"; cat "$GITHUB_OUTPUT"; exit 1; }
+
+          echo "smoke OK"
+
+      # A retrieve failure must never fail the job. Drive the composite action
+      # itself so the exit-code remap in action.yml is what is under test.
+      - name: Composite action must not fail the job when the org is unreachable
+        id: unreachable
+        uses: ./.github/actions/retrieve-org-metadata
+        with:
+          target-org: definitely-not-a-real-org-alias
+          create-branch: "false"
+          push: "false"
+
+      - name: Assert the unreachable-org run reported success
+        shell: bash
+        # Passed through env rather than interpolated into the script body:
+        # a ${{ }} expression spliced into shell is both a script-injection
+        # vector and a constant to shellcheck.
+        env:
+          OUTCOME: ${{ steps.unreachable.outcome }}
+        run: |
+          set -euo pipefail
+          echo "outcome: $OUTCOME"
+          if [ "$OUTCOME" != "success" ]; then
+            echo "::error::the tool must never fail the calling job (see the action README)"
+            exit 1
+          fi
+
+  # The org-gated suite. Separate job because it needs the `main` environment's
+  # SFDX_AUTH_URL, and because it is minutes rather than seconds — the `test`
+  # job above stays the fast signal on every push.
+  #
+  # This is the half the stubs cannot cover: it checks the CLAIMS ABOUT
+  # SALESFORCE the tool is built on. It is read-only — no branch, no commit, no
+  # push, no writes into force-app — and the suite's own wiring tests enforce
+  # that (it cannot even import the branch-creating code).
+  org-tests:
+    name: org-gated tests (live org)
+    if: github.repository == 'Fossiltalk/CairnCI-Internal'
+    runs-on: ubuntu-latest
+    environment: main
+    # Live indexing is bounded by how fast `sf` processes start, not by the org.
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+
+      - name: Install Salesforce CLI
+        shell: bash
+        run: npm install --global @salesforce/cli@latest
+
+      - name: Authenticate to the org
+        shell: bash
+        env:
+          SFDX_AUTH_URL: ${{ secrets.SFDX_AUTH_URL }}
+        run: |
+          set -euo pipefail
+          if [ -z "${SFDX_AUTH_URL:-}" ]; then
+            echo "::error::SFDX_AUTH_URL secret is empty or not set on the 'main' environment." >&2
+            exit 1
+          fi
+          authfile="$(mktemp)"
+          printf '%s' "$SFDX_AUTH_URL" > "$authfile"
+          sf org login sfdx-url --sfdx-url-file "$authfile" --alias target-org --set-default
+          rm -f "$authfile"
+
+      - name: Run org-gated tests
+        shell: bash
+        # --test-concurrency=1 is required, not tidiness: every `sf` call is a
+        # separate Node process, and running the suites in parallel saturates a
+        # 2-core runner long before it troubles the org's API limits.
+        env:
+          ORG_METADATA_LIVE_ORG: target-org
+          ORG_METADATA_CONCURRENCY: "2"
+        run: |
+          set -euo pipefail
+          node --test --test-concurrency=1 \
+            .github/actions/retrieve-org-metadata/tests/*.org.test.mjs
+
+      - name: Confirm the org suite left no branch behind
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          branch="$(git rev-parse --abbrev-ref HEAD)"
+          echo "HEAD is still: $branch"
+          if git branch --list 'org-snapshot/*' | grep -q .; then
+            echo "::error::the org suite created a snapshot branch; it must stay read-only"
+            git branch --list 'org-snapshot/*'
+            exit 1
+          fi
+          if ! git diff --quiet -- force-app; then
+            echo "::error::the org suite modified force-app; it must stay read-only"
+            exit 1
+          fi

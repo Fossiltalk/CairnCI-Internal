@@ -1,0 +1,13 @@
+{
+  "name": "retrieve-org-metadata",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "main": "retrieve.mjs",
+  "description": "CairnCI admin tool: full org metadata retrieval onto a timestamped snapshot branch. Zero runtime dependencies.",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "test:retrieve-org-metadata": "node --test tests/*.test.mjs",
+    "test:retrieve-org-metadata:org": "node --test --test-concurrency=1 tests/*.org.test.mjs"
+  }
+}

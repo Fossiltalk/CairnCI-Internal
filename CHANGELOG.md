@@ -9,6 +9,76 @@ workflows by major tag (e.g. `@v1`); see
 
 ### Added
 
+- **Admin tools — a third class of composite action** (see
+  [docs/admin-tools.md](docs/admin-tools.md)). Until now everything under
+  `.github/actions/` was either core framework or a pipeline extension, leaving
+  nowhere for capabilities that *set up and maintain* a CairnCI repo rather
+  than gate a change inside one. Admin tools are named `Tool: …`, run only as
+  standalone scheduled or dispatched jobs (no `run.sh`, so they cannot be wired
+  into an extension-caller lifecycle phase), never fail the calling job by
+  default, take no credential inputs, and ship to **CairnCI-Public on the core
+  `v*` channel** — they are prerequisites for adopting CairnCI, not optional
+  add-ons. `publish-extension.yml` now rejects `<tool-name>/v*` tags.
+
+- **Full Org Metadata Retrieval tool** (`.github/actions/retrieve-org-metadata/`)
+  — retrieves every available metadata component from an org onto a new branch
+  named for when and how the run happened
+  (`org-snapshot/<orgId>/<UTC>Z-<trigger>`), replacing the source tree
+  wholesale so the branch diff is exactly the org's drift, deletions included.
+  Runs on a schedule or manually; see
+  `examples/caller-retrieve-org-metadata.yml`.
+
+  Retrievals are split into `package.xml` chunks that stay under the Metadata
+  API's 10,000-**file** ceiling using a weighted, type-atomic first-fit-
+  decreasing packer: types are placed whole (largest first) and split only when
+  a single type exceeds the ceiling on its own, which keeps a failed chunk
+  legible and packs fewer, fuller chunks than sequential fill. Unretrievable
+  components never abort the run — documented limitations are explained from
+  the tracked `known-unretrievable.json` (category, reason, workaround, source
+  link), and anything else is reported as either a permissions problem or an
+  undocumented incompatibility, with permissions named as the first thing to
+  check. Types the installed `sf` CLI does not know are dropped from the
+  manifest and the chunk retried.
+
+  This is the tooling formerly at `scripts/org-metadata-export/`, now with unit
+  tests, an action wrapper, and branch creation. Ships with the next core
+  release.
+
+### Fixed
+
+- **Folder-based metadata in `unfiled$public` was silently missed** by the org
+  metadata export. Folder discovery queried only the `Folder` object, but
+  `unfiled$public` is a pseudo-folder that accepts `--folder` while having no
+  `Folder` record — so everything in it was invisible to the index, with no
+  error and no warning. Verified against `CairnCI_Production` (API 67.0): the
+  org has **zero** `Folder` rows of type `Email` and **42 EmailTemplates, all
+  in `unfiled$public`** — the type indexed as 0, a total silent loss — plus 37
+  reports there beyond the 67 real report folders. That pseudo-folder is now
+  probed unconditionally for every folder-based type.
+
+- **`Folder` rows with a null `DeveloperName`** (personal folders have them)
+  produced an *unfoldered* `listMetadata` call, because a null fell through the
+  `if (folder)` guard when building the CLI arguments. Harmless in the org
+  tested — the calls returned nothing and no members were duplicated — but 15
+  wasted round trips per run, and a duplication risk had they returned rows.
+  Such rows are now filtered out.
+
+- **`listMetadata` can return the same component twice.** Verified against
+  `CairnCI_Production`: `CustomObject` came back with 814 rows for 813 distinct
+  objects — two byte-identical `Account` entries, same fileName, ids and
+  timestamps, nothing to distinguish them. The duplicate reached `package.xml`
+  as a repeated `<members>` entry and inflated every count. Members are now
+  deduplicated by `fullName`, and the number dropped is recorded rather than
+  silently discarded.
+
+- **A repo without an `sfdx-project.json` failed every chunk confusingly.**
+  `sf project convert mdapi` turns out to have a two-sided requirement: the
+  `--root-dir` must be *outside* any Salesforce project tree (already handled by
+  staging in the OS temp dir), **and** the working directory must be *inside*
+  one, or the CLI returns `RequiresProjectError` and converts nothing. Since
+  the tool never fails the job, that surfaced as an empty snapshot with a vague
+  warning. A preflight check now says so once, up front, naming the cause.
+
 - **field-governance-gate extension** — an org-free PR gate
   (`.github/actions/field-governance-gate/`) that verifies newly created **and
   modified** Salesforce fields carry the governance metadata the repo requires:
