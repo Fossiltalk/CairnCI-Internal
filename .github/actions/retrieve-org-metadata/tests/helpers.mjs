@@ -5,6 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { createSfClient } from '../lib/sf-cli.mjs';
+import { GIT_MAX_BUFFER } from '../lib/snapshot-branch.mjs';
 
 /**
  * Builds a stub sf client from a declarative org description.
@@ -116,8 +117,12 @@ export function tempDir(prefix = 'rom-test-') {
   return fs.mkdtempSync(path.join(os.tmpdir(), prefix));
 }
 
+// maxBuffer matches the product's for the same reason: a listing of a large
+// tree exceeds spawnSync's 1 MB default, and on overflow Node kills git and
+// reports status: null, which reads as a git failure. See snapshot-branch.mjs.
 export function git(args, cwd) {
-  const res = spawnSync('git', args, { cwd, encoding: 'utf8' });
+  const res = spawnSync('git', args, { cwd, encoding: 'utf8', maxBuffer: GIT_MAX_BUFFER });
+  if (res.error) throw new Error(`git ${args.join(' ')} could not run: ${res.error.message}`);
   if (res.status !== 0) throw new Error(`git ${args.join(' ')}: ${res.stderr || res.stdout}`);
   return (res.stdout ?? '').trim();
 }

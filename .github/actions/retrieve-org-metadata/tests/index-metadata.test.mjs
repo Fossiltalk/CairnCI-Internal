@@ -193,6 +193,53 @@ describe('index phase', () => {
     assert.equal(index.types.Report.duplicatesDropped, 1);
   });
 
+  // Filtering known-unretrievable types before the index is a runtime
+  // optimisation, so what matters is that it saves the CALL — not merely that
+  // the members are dropped afterwards.
+  test('skips known-unretrievable types without ever calling listMetadata for them', async () => {
+    const sf = makeStubSf({
+      types: { ApexClass: ['Alpha'], StandardValueSet: ['Industry'], IdentityVerificationProcDtl: ['X'] },
+    });
+
+    const { index } = await runIndexPhase({
+      sf,
+      targetOrg: 'test-org',
+      runDir: runDir(),
+      skipTypes: new Set(['StandardValueSet', 'IdentityVerificationProcDtl']),
+      ...quiet,
+    });
+
+    const listed = sf.calls.listMetadata.map((c) => c.type);
+    assert.deepEqual(listed, ['ApexClass'], 'a skipped type must cost no org round trip');
+    assert.equal(index.types.StandardValueSet, undefined, 'a skipped type must not appear in the index');
+    assert.deepEqual(index.skippedTypes.sort(), ['IdentityVerificationProcDtl', 'StandardValueSet']);
+    assert.equal(index.totalComponents, 1, 'skipped members must not be counted');
+  });
+
+  test('records as skipped only the types the org actually has', async () => {
+    const sf = makeStubSf({ types: { ApexClass: ['Alpha'] } });
+
+    const { index } = await runIndexPhase({
+      sf,
+      targetOrg: 'test-org',
+      runDir: runDir(),
+      // Two of these are not in this org at all. Reporting them as skipped
+      // would tell the user their org has metadata it does not have.
+      skipTypes: new Set(['StandardValueSet', 'IdentityVerificationProcDtl']),
+      ...quiet,
+    });
+
+    assert.deepEqual(index.skippedTypes, []);
+  });
+
+  test('indexes everything when no skip list is supplied', async () => {
+    const sf = makeStubSf({ types: { ApexClass: ['Alpha'], StandardValueSet: ['Industry'] } });
+    const { index } = await runIndexPhase({ sf, targetOrg: 'test-org', runDir: runDir(), ...quiet });
+
+    assert.deepEqual(index.skippedTypes, []);
+    assert.equal(index.totalComponents, 2);
+  });
+
   test('requires an sf client and a target org', async () => {
     await assert.rejects(() => runIndexPhase({ targetOrg: 'o', runDir: runDir() }), /sf client is required/);
     await assert.rejects(

@@ -8,6 +8,7 @@ import {
   collectFindings,
   loadKnownUnretrievable,
   buildUnretrievableSummary,
+  skippableTypes,
   UNKNOWN_GUIDANCE,
 } from '../lib/unretrievable.mjs';
 import { makeIndex } from './helpers.mjs';
@@ -37,6 +38,53 @@ describe('known-unretrievable.json', () => {
 
   test('points at the canonical Salesforce unsupported-types list', () => {
     assert.match(known.canonicalDocs.unsupportedMetadataTypes, /developer\.salesforce\.com/);
+  });
+});
+
+describe('pre-retrieval skipping', () => {
+  test('every entry declares whether it can be skipped, and gives a reason when it can', () => {
+    for (const [type, entry] of Object.entries(known.types)) {
+      assert.equal(
+        typeof entry.skipBeforeRetrieval,
+        'boolean',
+        `${type} must declare skipBeforeRetrieval — the run uses it to decide whether to list the type at all`,
+      );
+      if (entry.skipBeforeRetrieval) {
+        assert.ok(entry.skipReason, `${type} is skipped, so it must say why it yields nothing`);
+      }
+    }
+  });
+
+  test('skips only types that yield nothing, never partial ones', () => {
+    const skippable = skippableTypes(known);
+
+    // A cli-registry-gap type fails the WHOLE chunk it lands in, so skipping it
+    // is the actual runtime win.
+    assert.ok(skippable.has('IdentityVerificationProcDtl'));
+    assert.ok(skippable.has('IdentityVerificationProcFld'));
+    // listMetadata returns zero rows for this one, so listing it is pure cost.
+    assert.ok(skippable.has('StandardValueSet'));
+
+    // These retrieve real components and are only PARTIALLY limited. Skipping
+    // them would trade data for time, which is the wrong trade for a backup.
+    for (const partial of ['Report', 'Dashboard', 'ConnectedApp', 'CustomMetadata']) {
+      assert.ok(!skippable.has(partial), `${partial} retrieves real components and must never be skipped`);
+    }
+  });
+
+  test('a skipped type is still reported, with the reason it was skipped', () => {
+    const index = makeIndex({ ApexClass: ['Alpha'] }, { skippedTypes: ['IdentityVerificationProcDtl'] });
+    const result = collectFindings({ index, report: { chunks: [] }, known });
+
+    assert.equal(result.findings.length, 1, 'filtering a type out of the run must not filter it out of the summary');
+    assert.equal(result.findings[0].type, 'IdentityVerificationProcDtl');
+    assert.equal(result.knownCount, 1);
+    assert.equal(result.unknownCount, 0);
+    assert.match(result.findings[0].error, /fails the entire chunk/i);
+  });
+
+  test('returns an empty set when the reference file is missing', () => {
+    assert.equal(skippableTypes(loadKnownUnretrievable('/nonexistent/known-unretrievable.json')).size, 0);
   });
 });
 

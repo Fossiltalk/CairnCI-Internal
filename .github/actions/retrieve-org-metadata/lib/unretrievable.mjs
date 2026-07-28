@@ -68,9 +68,35 @@ export function classifyFailure(type, error, known = loadKnownUnretrievable()) {
 }
 
 /**
- * Collect every unretrievable finding for a run, from both places a type can
- * fail: the index phase (listMetadata refused) and the retrieve phase (the
- * type was excluded from a chunk, or its chunk failed outright).
+ * Types to drop BEFORE the index lists them, so they never reach a manifest.
+ *
+ * Only entries flagged `skipBeforeRetrieval` qualify, and the flag means "this
+ * type yields nothing": listMetadata returns no rows, or the CLI's local
+ * registry rejects it and takes the whole chunk down. Entries describing a
+ * PARTIAL limitation (Report's personal folders, ConnectedApp's redacted
+ * secret, CustomMetadata's under-count) are deliberately not skippable —
+ * they retrieve real components, and skipping them would lose data to save
+ * time, which is the wrong trade for a backup tool.
+ *
+ * Skipping is a runtime optimisation with a real payoff on the registry gaps:
+ * the CLI validates a manifest against its bundled registry before it contacts
+ * the org, so an unknown type does not fail alone, it fails every member of
+ * whatever chunk it lands in. Org-verified against CairnCI_Production: two PSS
+ * types forced two full retries of a 4,983-member chunk.
+ */
+export function skippableTypes(known = loadKnownUnretrievable()) {
+  return new Set(
+    Object.entries(known.types ?? {})
+      .filter(([, entry]) => entry.skipBeforeRetrieval === true)
+      .map(([type]) => type),
+  );
+}
+
+/**
+ * Collect every unretrievable finding for a run, from all three places a type
+ * can drop out: skipped up front as known-unretrievable, refused by
+ * listMetadata during the index, or excluded from a chunk (or its chunk failed
+ * outright) during the retrieve.
  */
 export function collectFindings({ index, report, known = loadKnownUnretrievable() } = {}) {
   const byType = new Map();
@@ -79,6 +105,12 @@ export function collectFindings({ index, report, known = loadKnownUnretrievable(
     if (!byType.has(type)) byType.set(type, classifyFailure(type, error, known));
   };
 
+  // Skipped types are still reported. Filtering them out of the run must not
+  // filter them out of the summary — "we did not attempt this, and here is
+  // why" is exactly what the user needs to see.
+  for (const type of index?.skippedTypes ?? []) {
+    add(type, known.types?.[type]?.skipReason ?? 'Skipped before retrieval as a known-unretrievable type.');
+  }
   for (const { type, error } of index?.erroredTypes ?? []) add(type, error);
   for (const type of index?.truncatedUnresolvedTypes ?? []) {
     add(type, 'listMetadata truncated at 3,000 rows with no Tooling API fallback registered for this type.');

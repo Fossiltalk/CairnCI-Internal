@@ -59,6 +59,9 @@ export async function runIndexPhase({
   runDir,
   apiVersion: apiVersionArg,
   concurrency = 6,
+  // Types to drop before listing. See skippableTypes() in unretrievable.mjs
+  // for what earns a place here — the short version is "yields nothing".
+  skipTypes,
   log = console.log,
   warn = console.warn,
 } = {}) {
@@ -76,8 +79,19 @@ export async function runIndexPhase({
   const apiVersion = apiVersionArg ?? orgInfo.apiVersion;
   log(`[index] api version: ${apiVersion}`);
 
-  const { listable, skipped } = await getListableTypes(sf, targetOrg, apiVersion);
+  const { listable: allListable, skipped } = await getListableTypes(sf, targetOrg, apiVersion);
+
+  // Drop known-unretrievable types before a single listMetadata call. Only
+  // types the org actually HAS are recorded as skipped, so the summary never
+  // claims to have skipped something that was never there.
+  const skipSet = skipTypes instanceof Set ? skipTypes : new Set(skipTypes ?? []);
+  const listable = allListable.filter((t) => !skipSet.has(t.xmlName));
+  const skippedTypes = allListable.filter((t) => skipSet.has(t.xmlName)).map((t) => t.xmlName);
+
   log(`[index] ${listable.length} directly-listable types, ${skipped.length} child-only types skipped`);
+  if (skippedTypes.length > 0) {
+    log(`[index] ${skippedTypes.length} known-unretrievable type(s) skipped before listing: ${skippedTypes.join(', ')}`);
+  }
 
   const folderTypes = listable.filter((t) => FOLDER_TYPE_MAP[t.xmlName]);
   const plainTypes = listable.filter((t) => !FOLDER_TYPE_MAP[t.xmlName]);
@@ -217,6 +231,7 @@ export async function runIndexPhase({
     generatedAt: new Date().toISOString(),
     totalComponents,
     skippedChildTypes: skipped,
+    skippedTypes,
     truncatedUnresolvedTypes: truncatedUnresolved,
     erroredTypes,
     types,
@@ -258,7 +273,7 @@ export function buildSummaryMarkdown(index) {
 - Generated: ${index.generatedAt}
 - Total components: **${index.totalComponents}**
 - Child-only types skipped (retrieved with their parent): ${index.skippedChildTypes.length}
-${index.truncatedUnresolvedTypes.length > 0 ? `- **Unresolved truncated types (hit 3,000-row cap, no Tooling fallback): ${index.truncatedUnresolvedTypes.join(', ')}**\n` : ''}
+${index.skippedTypes?.length > 0 ? `- Known-unretrievable types skipped before listing: ${index.skippedTypes.join(', ')}\n` : ''}${index.truncatedUnresolvedTypes.length > 0 ? `- **Unresolved truncated types (hit 3,000-row cap, no Tooling fallback): ${index.truncatedUnresolvedTypes.join(', ')}**\n` : ''}
 ## Components per type
 
 | Type | Count |

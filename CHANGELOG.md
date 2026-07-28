@@ -57,6 +57,27 @@ workflows by major tag (e.g. `@v1`); see
 
 ### Fixed
 
+- **A full-org snapshot could not be committed at all.** `commitSnapshot` read
+  the staged file list with `spawnSync`, whose default 1 MB `maxBuffer` a real
+  org blows straight through — `git diff --cached --name-only` over ~30,000
+  staged paths prints ~2.5 MB. On overflow Node kills the child and returns
+  `status: null`, which the git helper reported as a git failure, with a
+  megabyte of truncated file paths as the error message. Org-verified: 20
+  minutes of successful retrieval, then nothing committed. The helper now sets
+  a 256 MB ceiling, distinguishes a spawn failure from a nonzero exit, and
+  truncates error text so a failure stays readable in an annotation. Found by
+  the full-org retrieval test on its first run.
+
+- **Known-unretrievable types are now skipped before the index**, not just
+  explained afterwards. Entries flagged `skipBeforeRetrieval` never reach a
+  manifest. This matters most for CLI registry gaps: the `sf` CLI validates a
+  manifest against its bundled type registry *before* contacting the org, so an
+  unknown type fails every member of the chunk it landed in — two Public Sector
+  Solutions types forced two full retries of a 4,983-member chunk against
+  CairnCI_Production. Types with a *partial* limitation (`Report`, `Dashboard`,
+  `ConnectedApp`, `CustomMetadata`) are deliberately not skippable; they
+  retrieve real components. Skipped types are still reported in the job summary.
+
 - **Folder-based metadata in `unfiled$public` was silently missed** by the org
   metadata export. Folder discovery queried only the `Folder` object, but
   `unfiled$public` is a pseudo-folder that accepts `--folder` while having no

@@ -219,12 +219,39 @@ or an undocumented Metadata API incompatibility* — check permissions first,
 since the Metadata API only returns what that user can see. If it turns out to
 be a real limitation, add it to `known-unretrievable.json` with a source.
 
-A third case is handled automatically: the installed `sf` CLI validates every
+### Skipped before the index
+
+An entry can also carry `skipBeforeRetrieval: true`, which drops the type
+before a single `listMetadata` call — it never reaches a manifest at all. This
+is a **runtime optimisation**, and the flag is set only when the type yields
+nothing:
+
+| Type | Why it is skipped |
+|---|---|
+| `StandardValueSet` | `listMetadata` returns zero rows, so it contributes no members either way |
+| `IdentityVerificationProcDtl`, `IdentityVerificationProcFld` | The CLI rejects them and takes the whole chunk down with them |
+
+That second row is where the time goes. The installed `sf` CLI validates every
 manifest member against its own bundled type registry *before* contacting the
-org, so one type the CLI doesn't know (confirmed:
-`IdentityVerificationProcDtl`, a Public Sector Solutions type) fails the entire
-chunk. The run detects this from the error, drops that type, and retries the
-chunk. Upgrade `@salesforce/cli` to actually capture such types.
+org, so a type the CLI doesn't know does not fail alone — it fails **every
+member of whatever chunk it landed in**. Org-verified against
+CairnCI_Production: those two Public Sector Solutions types forced two full
+retries of a 4,983-member chunk. Skipping them up front removes both.
+
+Types describing a **partial** limitation are deliberately *not* skippable —
+`Report` and `Dashboard` (personal folders only), `ConnectedApp` (one redacted
+field), `CustomMetadata` (an under-count above 3,000). They retrieve real
+components, and skipping them would trade data for time, which is the wrong
+trade for a backup tool.
+
+Skipping is an optimisation, not a silence: skipped types still appear in the
+job summary as expected findings, with the reason they were skipped.
+
+The retrieve-time fallback remains as the safety net for gaps **not yet in the
+file**: the run detects the registry error, drops that type, and retries the
+chunk — then reports it as *unexplained*, which is the prompt to add it with
+`skipBeforeRetrieval: true` so the next run pays nothing. Upgrading
+`@salesforce/cli` is what actually captures such types.
 
 ## Runtime
 

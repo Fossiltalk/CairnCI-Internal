@@ -45,6 +45,7 @@ import path from 'node:path';
 import { createSfClient } from '../lib/sf-cli.mjs';
 import { runFullRetrieval, EXIT } from '../lib/retrieve-org-metadata.mjs';
 import { DEFAULT_MAX_WEIGHT } from '../lib/plan-manifests.mjs';
+import { GIT_MAX_BUFFER } from '../lib/snapshot-branch.mjs';
 
 const ORG = process.env.ORG_METADATA_FULL_RETRIEVE || '';
 
@@ -94,9 +95,14 @@ after(() => {
   for (const d of roots) fs.rmSync(d, { recursive: true, force: true });
 });
 
+// Same maxBuffer trap the product hit: `ls-tree -r` and `diff --name-status`
+// over a full org print megabytes, and spawnSync's 1 MB default would kill git
+// and report it as a failure. The assertions here would then "fail" for a
+// reason that has nothing to do with the snapshot.
 function git(args, cwd) {
-  const res = spawnSync('git', args, { cwd, encoding: 'utf8' });
-  assert.equal(res.status, 0, `git ${args.join(' ')} failed: ${(res.stderr || res.stdout || '').trim()}`);
+  const res = spawnSync('git', args, { cwd, encoding: 'utf8', maxBuffer: GIT_MAX_BUFFER });
+  assert.equal(res.error, undefined, `git ${args.join(' ')} could not run: ${res.error?.message}`);
+  assert.equal(res.status, 0, `git ${args.join(' ')} failed: ${(res.stderr || res.stdout || '').trim().slice(0, 2000)}`);
   return (res.stdout ?? '').trim();
 }
 
@@ -266,6 +272,30 @@ describe('live: full org retrieval onto a snapshot branch', { skip: skipReason()
       [],
       'the org produced unretrievable types that known-unretrievable.json does not explain — ' +
         "check the running user's permissions first, then add each with a source",
+    );
+  });
+
+  test('pays no failed-chunk tax for a registry gap it already knows about', async () => {
+    const { report, index } = await fullRun();
+
+    // A type missing from the CLI's local registry does not fail alone — the
+    // CLI rejects the manifest before contacting the org, so it fails every
+    // member of whatever chunk it landed in, and the chunk is retried without
+    // it. Org-verified: two PSS types forced two retries of a 4,983-member
+    // chunk. Types in known-unretrievable.json are now dropped before the
+    // index, so nothing should reach the retrieve-time fallback.
+    assert.deepEqual(
+      report.summary.excludedTypes,
+      [],
+      'a type was excluded mid-retrieve, costing a failed round trip. If it is a genuine registry gap, ' +
+        'add it to known-unretrievable.json with skipBeforeRetrieval: true so the next run skips it up front',
+    );
+
+    // The flip side: the skip list must actually be doing something here, or
+    // the assertion above passes for the wrong reason.
+    assert.ok(
+      index.skippedTypes.length > 0,
+      `no known-unretrievable types were skipped in ${ORG}; the pre-retrieval filter is not being exercised`,
     );
   });
 

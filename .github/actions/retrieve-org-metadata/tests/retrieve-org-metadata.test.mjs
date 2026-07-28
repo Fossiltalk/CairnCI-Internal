@@ -112,31 +112,38 @@ describe('full retrieval run', () => {
     assert.equal(result.branch.committed, true, 'a partial snapshot is still committed');
   });
 
-  test('survives a type the installed sf CLI does not know, excluding it and retrying', async () => {
+  // The retrieve-time fallback is the safety net for registry gaps we have NOT
+  // seen yet. A documented one never gets this far — it is skipped before the
+  // index (see the pre-retrieval test below), which is the whole point of the
+  // reference data. So this fixture uses a type that is deliberately absent
+  // from known-unretrievable.json.
+  test('survives an undocumented type the installed sf CLI does not know, excluding it and retrying', async () => {
     const { cwd } = repo();
+    const NEW_GAP = 'SomeUnreleasedIndustriesType';
     const seen = new Set();
     const org = {
-      types: { ApexClass: members('Cls', 50), IdentityVerificationProcDtl: members('Ivp', 5) },
+      types: { ApexClass: members('Cls', 50), [NEW_GAP]: members('New', 5) },
       onRetrieve: (manifestPath) => {
         const xml = fs.readFileSync(manifestPath, 'utf8');
-        if (xml.includes('IdentityVerificationProcDtl') && !seen.has(manifestPath)) {
+        if (xml.includes(NEW_GAP) && !seen.has(manifestPath)) {
           seen.add(manifestPath);
-          throw new Error("Missing metadata type definition in registry for id 'IdentityVerificationProcDtl'");
+          throw new Error(`Missing metadata type definition in registry for id '${NEW_GAP}'`);
         }
       },
     };
 
     const result = await run(cwd, org);
 
-    assert.ok(
-      result.report.summary.excludedTypes.includes('IdentityVerificationProcDtl'),
-      'the unknown type must be recorded as excluded',
-    );
+    assert.ok(result.report.summary.excludedTypes.includes(NEW_GAP), 'the unknown type must be recorded as excluded');
     assert.equal(result.report.summary.failed, 0, 'excluding the bad type must rescue the chunk');
-    assert.ok(
-      result.findings.findings.some((f) => f.type === 'IdentityVerificationProcDtl' && f.known),
-      'the exclusion must be explained from known-unretrievable.json',
-    );
+
+    // Reported as UNEXPLAINED, on purpose: that is the prompt to add it to
+    // known-unretrievable.json so the next run skips it instead of paying for
+    // a failed chunk first.
+    const finding = result.findings.findings.find((f) => f.type === NEW_GAP);
+    assert.ok(finding, 'the exclusion must be reported');
+    assert.equal(finding.known, false);
+    assert.equal(result.findings.unknownCount, 1);
   });
 
   test('records an unlistable type as an unexplained finding without aborting', async () => {
@@ -190,6 +197,43 @@ describe('full retrieval run', () => {
     const result = await run(cwd, { types: { ApexClass: ['A'] } }, { createBranch: false });
     assert.equal(result.branch, null);
     assert.equal(git(['rev-parse', '--abbrev-ref', 'HEAD'], cwd), 'main');
+  });
+
+  // Wiring, not logic: the skip list is derived from the shipped
+  // known-unretrievable.json and must reach the index phase. The unit test for
+  // WHICH types qualify lives in unretrievable.test.mjs.
+  test('drops known-unretrievable types before the org is ever asked about them', async () => {
+    const { cwd } = repo();
+    const sf = makeStubSf({
+      types: {
+        ApexClass: members('Cls', 5),
+        // Both are flagged skipBeforeRetrieval in the shipped reference data:
+        // the CLI rejects them and takes the whole chunk down with them.
+        IdentityVerificationProcDtl: members('Idv', 3),
+        IdentityVerificationProcFld: members('Fld', 3),
+      },
+    });
+
+    const result = await run(cwd, {}, { sf });
+
+    const listed = sf.calls.listMetadata.map((c) => c.type);
+    assert.deepEqual(listed, ['ApexClass'], 'skipped types must cost no listMetadata call');
+    assert.equal(result.index.totalComponents, 5);
+    assert.deepEqual(
+      result.index.skippedTypes.sort(),
+      ['IdentityVerificationProcDtl', 'IdentityVerificationProcFld'],
+    );
+
+    // Still explained in the summary — skipping is an optimisation, not a
+    // silence.
+    assert.deepEqual(
+      result.findings.findings.map((f) => f.type).sort(),
+      ['IdentityVerificationProcDtl', 'IdentityVerificationProcFld'],
+    );
+    assert.equal(result.findings.unknownCount, 0);
+
+    // And the invariant survives: nothing indexed went unplanned.
+    assert.equal(result.reconciliation.allIndexedPlanned, true);
   });
 
   test('requires an sf client and a target org', async () => {

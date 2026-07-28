@@ -1,6 +1,7 @@
 {
   "$comment": "Metadata the CLI can see but the Metadata API cannot return, or returns incompletely. Tracked in the branch so a run can tell a user 'this is expected' instead of 'something broke'. Every entry carries a source; entries marked verified:'observed' were confirmed against a real org from this repo, verified:'docs' are from Salesforce documentation. This is a SEED, not an exhaustive list — extend it from real run output rather than guessing.",
   "$comment2": "Salesforce also documents whole FEATURES whose metadata types are unavailable API-wide. That list changes every release and is not duplicated here; see canonicalDocs below.",
+  "$comment3": "skipBeforeRetrieval decides whether a type is dropped BEFORE the index lists it, so it never reaches a manifest. Set it true only when the type yields NOTHING — listMetadata returns no rows, or the CLI rejects the type and takes the whole chunk down with it. Set it false when the entry describes a PARTIAL limitation (some members missing, one field redacted, a count that under-reports): those types retrieve real components and skipping them would lose data. Skipped types are still reported in the job summary as expected findings.",
   "canonicalDocs": {
     "unsupportedMetadataTypes": "https://developer.salesforce.com/docs/atlas.en-us.api_meta.meta/api_meta/meta_unsupported_types.htm",
     "metadataTypesList": "https://developer.salesforce.com/docs/atlas.en-us.api_meta.meta/api_meta/meta_types_list.htm",
@@ -19,7 +20,9 @@
       "reason": "listMetadata returns zero rows for StandardValueSet, so this tool's index cannot discover its members. The type itself IS retrievable — but only when each value set is named explicitly in package.xml.",
       "workaround": "Add the standard value sets you care about to a hand-maintained manifest and retrieve them separately, or use Workbench > Migration > Retrieve with an explicit package.xml. There is no way to enumerate them from the API.",
       "source": "https://github.com/mdapi-issues/listmetadata-standardvalueset",
-      "verified": "docs"
+      "verified": "docs",
+      "skipBeforeRetrieval": true,
+      "skipReason": "listMetadata returns zero rows, so the type contributes no members to any manifest. Listing it is a wasted round trip."
     },
     "Report": {
       "category": "api-limitation",
@@ -27,7 +30,8 @@
       "workaround": "None for personal folders. Move a report into a shared folder if it needs to be source-tracked. Expect the retrieved count to be lower than what the Reports tab shows.",
       "source": "https://ideas.salesforce.com/s/idea/a0B8W00000GdhhrUAB/metadata-api-access-to-unfiled-public-reports-and-my-personal-reports",
       "verified": "docs",
-      "appliesTo": "personal-folder members only"
+      "appliesTo": "personal-folder members only",
+      "skipBeforeRetrieval": false
     },
     "Dashboard": {
       "category": "api-limitation",
@@ -35,7 +39,8 @@
       "workaround": "Move the dashboard to a shared folder to make it retrievable.",
       "source": "https://ideas.salesforce.com/s/idea/a0B8W00000GdhhrUAB/metadata-api-access-to-unfiled-public-reports-and-my-personal-reports",
       "verified": "docs",
-      "appliesTo": "personal-folder members only"
+      "appliesTo": "personal-folder members only",
+      "skipBeforeRetrieval": false
     },
     "ConnectedApp": {
       "category": "api-limitation",
@@ -43,21 +48,34 @@
       "workaround": "Read the consumer key/secret from Setup > App Manager > Manage Consumer Details, and set the secret by hand in the destination org after deploying.",
       "source": "https://help.salesforce.com/s/articleView?id=000390339&language=en_US&type=1",
       "verified": "docs",
-      "appliesTo": "consumer secret only; the rest of the component retrieves normally"
+      "appliesTo": "consumer secret only; the rest of the component retrieves normally",
+      "skipBeforeRetrieval": false
     },
     "CustomMetadata": {
       "category": "api-limitation",
       "reason": "listMetadata silently caps at 3,000 rows with no pagination, and CustomMetadata records span arbitrary __mdt objects with no single queryable Tooling object, so there is no fallback query to recover the full list. In an org with more than 3,000 custom metadata records the index under-counts this type.",
       "workaround": "Discover each custom metadata type and query its records individually, then retrieve with an explicit manifest. If you need this routinely, add a fallback for it in lib/tooling-fallback.mjs.",
       "source": "https://developer.salesforce.com/docs/atlas.en-us.api_meta.meta/api_meta/meta_listmetadata.htm",
-      "verified": "observed"
+      "verified": "observed",
+      "skipBeforeRetrieval": false
     },
     "IdentityVerificationProcDtl": {
       "category": "cli-registry-gap",
       "reason": "A Public Sector Solutions type that exists in the org and appears in describeMetadata/listMetadata output, but is missing from the installed @salesforce/cli's bundled metadata registry. The CLI rejects the whole manifest before contacting the org, so one unknown type fails an entire chunk.",
-      "workaround": "The run auto-recovers: the offending type is dropped from the chunk and the retrieve is retried (see lib/retrieve-metadata.mjs). To actually capture the type, upgrade @salesforce/cli and re-run. Any Industries/PSS type can hit this after a Salesforce release the CLI has not caught up with.",
+      "workaround": "Upgrade @salesforce/cli and re-run to capture the type; a newer registry may carry it. Any Industries/PSS type can hit this after a Salesforce release the CLI has not caught up with — one that is NOT listed here still auto-recovers at retrieve time (the type is dropped from the chunk and the retrieve retried, see lib/retrieve-metadata.mjs), it just costs a failed round trip first.",
       "source": "https://github.com/forcedotcom/cli/issues",
-      "verified": "observed"
+      "verified": "observed",
+      "skipBeforeRetrieval": true,
+      "skipReason": "The CLI validates the manifest against its local registry before contacting the org, so this type does not fail alone — it fails the entire chunk it lands in. Observed against CairnCI_Production on @salesforce/cli 2.144.6: chunk 3 of 3 (4,983 members) had to be retried twice before it succeeded."
+    },
+    "IdentityVerificationProcFld": {
+      "category": "cli-registry-gap",
+      "reason": "The field-level sibling of IdentityVerificationProcDtl, and unknown to the installed @salesforce/cli's metadata registry for the same reason. Both appear in describeMetadata for a Public Sector Solutions org.",
+      "workaround": "Upgrade @salesforce/cli and re-run. See IdentityVerificationProcDtl.",
+      "source": "https://github.com/forcedotcom/cli/issues",
+      "verified": "observed",
+      "skipBeforeRetrieval": true,
+      "skipReason": "Same chunk-level failure as IdentityVerificationProcDtl. Observed in the same CairnCI_Production run — the two together forced both of chunk 3's retries."
     }
   }
 }

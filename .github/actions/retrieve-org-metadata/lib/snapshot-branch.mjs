@@ -75,10 +75,38 @@ export function buildCommitMessage({ index, report, reconciliation, branchName }
   return lines.join('\n');
 }
 
+/**
+ * spawnSync's default maxBuffer is 1 MB, and a full-org snapshot blows straight
+ * through it: `git diff --cached --name-only` prints every staged path, which
+ * for CairnCI_Production's 7,536 components is roughly 30,000 files and ~2.5 MB
+ * of output. On overflow Node KILLS the child and returns `status: null`, which
+ * this helper read as a git failure — so a retrieval that had just succeeded
+ * died at the commit with an error message made of a megabyte of truncated file
+ * paths. Org-verified: 20 minutes of retrieval, then nothing committed.
+ *
+ * 256 MB is a ceiling, not an allocation. It is set far above any plausible
+ * path listing precisely so that hitting it means something is genuinely wrong
+ * rather than that the org grew.
+ */
+export const GIT_MAX_BUFFER = 256 * 1024 * 1024;
+
+// Error text ends up in a ::warning:: annotation and the job summary, so a
+// multi-megabyte message is its own bug. Keep the head, say what was dropped.
+function truncate(text, limit = 2000) {
+  const s = String(text ?? '').trim();
+  return s.length <= limit ? s : `${s.slice(0, limit)}\n… (${s.length - limit} more characters suppressed)`;
+}
+
 function git(args, cwd) {
-  const res = spawnSync('git', args, { cwd, encoding: 'utf8' });
+  const res = spawnSync('git', args, { cwd, encoding: 'utf8', maxBuffer: GIT_MAX_BUFFER });
+  // Checked before `status`: on a spawn problem — including a maxBuffer
+  // overflow — status is null, which is "not 0" but is not a git exit code.
+  // Reporting it as one is what made the original failure unreadable.
+  if (res.error) {
+    throw new Error(`git ${args.join(' ')} could not run: ${res.error.message}`);
+  }
   if (res.status !== 0) {
-    throw new Error(`git ${args.join(' ')} failed: ${(res.stderr || res.stdout || '').trim()}`);
+    throw new Error(`git ${args.join(' ')} failed (exit ${res.status}): ${truncate(res.stderr || res.stdout)}`);
   }
   return (res.stdout ?? '').trim();
 }

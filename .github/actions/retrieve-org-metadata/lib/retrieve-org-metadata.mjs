@@ -10,7 +10,7 @@ import { runPaths, ensureDir, newRunId, outRoot, defaultTargetDir, resolveWorksp
 import { runIndexPhase } from './index-metadata.mjs';
 import { planManifestsPhase, DEFAULT_MAX_WEIGHT, DEFAULT_WEIGHTS } from './plan-manifests.mjs';
 import { retrievePhase, reconcile } from './retrieve-metadata.mjs';
-import { collectFindings, loadKnownUnretrievable } from './unretrievable.mjs';
+import { collectFindings, loadKnownUnretrievable, skippableTypes } from './unretrievable.mjs';
 import { buildBranchName, startSnapshotBranch, commitSnapshot, triggerFor, DEFAULT_BRANCH_PREFIX } from './snapshot-branch.mjs';
 
 /** Exit codes, matching the CairnCI extension contract. */
@@ -46,8 +46,22 @@ export async function runFullRetrieval({
   const resolvedRunDir = runDir ?? path.join(outRoot(cwd), runId);
   ensureDir(resolvedRunDir);
 
+  // Loaded before phase 1, not after phase 3: the reference data now shapes
+  // the run (which types are worth listing at all), not just how it is
+  // explained afterwards.
+  const known = loadKnownUnretrievable();
+
   // --- Phase 1: index -------------------------------------------------------
-  const { index } = await runIndexPhase({ sf, targetOrg, runDir: resolvedRunDir, apiVersion, concurrency, log, warn });
+  const { index } = await runIndexPhase({
+    sf,
+    targetOrg,
+    runDir: resolvedRunDir,
+    apiVersion,
+    concurrency,
+    skipTypes: skippableTypes(known),
+    log,
+    warn,
+  });
 
   // --- Phase 2: plan --------------------------------------------------------
   const { plan } = await planManifestsPhase({ runDir: resolvedRunDir, maxWeight, weights, log });
@@ -93,7 +107,6 @@ export async function runFullRetrieval({
 
   // --- Phase 4: reconcile + classify ---------------------------------------
   const reconciliation = reconcile(index, plan, report);
-  const known = loadKnownUnretrievable();
   const findings = collectFindings({ index, report, known });
 
   if (!reconciliation.allIndexedPlanned) {

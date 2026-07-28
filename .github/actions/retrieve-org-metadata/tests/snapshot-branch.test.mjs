@@ -254,3 +254,83 @@ describe('branch lifecycle', () => {
     );
   });
 });
+
+// Regression: the failure that killed the first live full-org run. The
+// retrieval succeeded, then commitSnapshot threw, because `git diff --cached
+// --name-only` over ~30,000 staged paths produced ~2.5 MB of output and
+// spawnSync's default 1 MB maxBuffer made Node kill git mid-write. `status`
+// came back null, the helper read "not 0" as a git failure, and the error
+// message was a megabyte of truncated file paths.
+//
+// Scale is the whole point of this suite, so the fixture is built to exceed
+// 1 MB of PATH TEXT with as few files as possible: long, deeply nested names
+// rather than 30,000 real ones. The assertion on the listing size is there so
+// the test cannot quietly stop covering the bug if git's output shrinks.
+describe('snapshots larger than the default spawn buffer', () => {
+  const DEEP = 'd'.repeat(180);
+  const NAME = 'n'.repeat(180);
+
+  function writeWideTree(cwd, fileCount) {
+    const rel = [];
+    for (let i = 0; i < fileCount; i++) {
+      const dir = path.join('force-app', 'main', 'default', `${DEEP}${i % 8}`, `${DEEP}${i % 4}`);
+      fs.mkdirSync(path.join(cwd, dir), { recursive: true });
+      const file = path.join(dir, `${NAME}${i}.cls`);
+      fs.writeFileSync(path.join(cwd, file), 'public class C {}');
+      rel.push(file);
+    }
+    return rel;
+  }
+
+  test('commits a staged listing far larger than 1 MB instead of dying on it', () => {
+    const { cwd } = repo();
+    const targetDir = path.join(cwd, 'force-app');
+
+    startSnapshotBranch({ cwd, branchName: 'snap/huge', targetDir, ...quiet });
+    const files = writeWideTree(cwd, 2000);
+
+    // The bug only reproduces above 1 MB of output, so prove the fixture is
+    // actually over it. +1 for each newline git prints.
+    const listingBytes = files.reduce((n, f) => n + Buffer.byteLength(f) + 1, 0);
+    assert.ok(
+      listingBytes > 1024 * 1024,
+      `fixture only produces ${listingBytes} bytes of path listing; it no longer exercises the 1 MB default`,
+    );
+
+    const result = commitSnapshot({
+      cwd,
+      branchName: 'snap/huge',
+      targetDir,
+      index: makeIndex({ ApexClass: ['A'] }),
+      report,
+      reconciliation,
+      summaryMarkdown: '#\n',
+      push: false,
+      ...quiet,
+    });
+
+    assert.equal(result.committed, true, 'a large snapshot must still commit');
+    assert.ok(
+      result.changedFiles >= files.length,
+      `only ${result.changedFiles} of ${files.length} files counted as changed`,
+    );
+
+    // And the committed tree really holds them — a count taken from a
+    // truncated listing would pass the assertion above while losing files.
+    const tracked = git(['ls-tree', '-r', '--name-only', 'snap/huge'], cwd).split('\n');
+    assert.equal(tracked.filter((f) => f.startsWith('force-app/')).length, files.length);
+  });
+
+  test('reports a real git failure as a git failure, not as a wall of output', () => {
+    const { cwd } = repo();
+    // A branch name git will reject, so the error path runs on a real failure.
+    assert.throws(
+      () => startSnapshotBranch({ cwd, branchName: 'snap/..bad', targetDir: path.join(cwd, 'force-app'), ...quiet }),
+      (err) => {
+        assert.match(err.message, /^git checkout/, 'the message must name the command that failed');
+        assert.ok(err.message.length < 4000, `error message is ${err.message.length} chars; it must stay readable`);
+        return true;
+      },
+    );
+  });
+});
