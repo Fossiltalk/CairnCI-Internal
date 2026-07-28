@@ -168,7 +168,33 @@ export function buildUnretrievableSummary({ findings, failedChunks }, canonicalD
   return lines.join('\n');
 }
 
-// Markdown tables break on raw pipes and newlines.
+/**
+ * Escape a value for a Markdown table cell. Mirrors `mdCell` in
+ * field-governance-gate and permset-access-gate — same problem, same fix.
+ *
+ * The text here is a Salesforce CLI error message, i.e. org-controlled rather
+ * than ours, so it is escaped rather than trusted.
+ *
+ * Order matters: the backslash must be escaped BEFORE the pipe. Escaping only
+ * the pipe leaves a trailing backslash in the input to pair with the one we add
+ * ("\" + "|" -> "\\|"), which Markdown reads as an escaped backslash followed
+ * by a live cell delimiter — the row breaks anyway.
+ *
+ * Whitespace is collapsed with a single `\s+`, not `\s*\n\s*`: `\s` matches `\n`
+ * too, so that pattern's quantifiers overlap and it backtracks polynomially on a
+ * long whitespace run (CodeQL js/polynomial-redos). One `\s+` is unambiguous and
+ * linear. A raw newline would also end the table row, hiding every subsequent
+ * finding — and CLI errors are wrapped multi-line text, so runs are collapsed
+ * rather than merely replaced (the sibling gates use `[\r\n\t]+`; they format
+ * short field names, not wrapped error output). Angle brackets and ampersands
+ * are neutralized so an error string cannot inject markup into the job summary.
+ */
 function cell(text) {
-  return String(text).replace(/\|/g, '\\|').replace(/\s*\n\s*/g, ' ').trim();
+  return String(text)
+    .replace(/\\/g, '\\\\')
+    .replace(/\|/g, '\\|')
+    .replace(/\s+/g, ' ')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .trim();
 }

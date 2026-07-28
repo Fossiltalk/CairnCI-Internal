@@ -153,4 +153,42 @@ describe('job summary rendering', () => {
     const row = md.split('\n').find((l) => l.startsWith('| `T`'));
     assert.ok(row.includes('a \\| b c'), `pipe/newline not escaped in: ${row}`);
   });
+
+  // CodeQL js/incomplete-sanitization. Escaping the pipe alone lets a trailing
+  // backslash in the input pair with the one we add ("\" + "|" -> "\\|"), which
+  // Markdown reads as an escaped backslash followed by a LIVE delimiter — the
+  // row breaks anyway. The backslash must be escaped first.
+  test('escapes backslashes before pipes, so a trailing backslash cannot free the delimiter', () => {
+    const findings = {
+      findings: [{ type: 'T', known: false, error: 'before \\| after', reason: 'r', workaround: 'w', source: null }],
+      failedChunks: [],
+    };
+    const md = buildUnretrievableSummary(findings, {});
+    const row = md.split('\n').find((l) => l.startsWith('| `T`'));
+
+    assert.ok(row.includes('before \\\\\\| after'), `backslash not escaped first in: ${row}`);
+    // The row must still have exactly the 3 delimiters of a 3-column table:
+    // any unescaped pipe from the payload would add a fourth cell.
+    const liveDelimiters = row.replace(/\\\\/g, '').split(/(?<!\\)\|/).length - 1;
+    assert.equal(liveDelimiters, 3, `payload broke out into extra cells: ${row}`);
+  });
+
+  // CodeQL js/polynomial-redos. `\s*\n\s*` is ambiguous because \s matches \n,
+  // so a long whitespace run backtracks quadratically. Guard the fix with a
+  // payload big enough that a regression is unmissable rather than merely slow.
+  test('collapses long whitespace runs in linear time (no polynomial backtracking)', () => {
+    const payload = `x${' '.repeat(60000)}\n${' '.repeat(60000)}y`;
+    const findings = {
+      findings: [{ type: 'T', known: false, error: payload, reason: 'r', workaround: 'w', source: null }],
+      failedChunks: [],
+    };
+
+    const started = Date.now();
+    const md = buildUnretrievableSummary(findings, {});
+    const elapsed = Date.now() - started;
+
+    const row = md.split('\n').find((l) => l.startsWith('| `T`'));
+    assert.ok(row.includes('x y'), `whitespace run not collapsed in: ${row.slice(0, 120)}`);
+    assert.ok(elapsed < 1000, `took ${elapsed}ms — the regex is backtracking`);
+  });
 });
