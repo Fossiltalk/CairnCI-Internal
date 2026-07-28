@@ -1,20 +1,28 @@
-# Integration tests for the retrieve-org-metadata admin tool (org-free — pure
-# node:test plus a CLI smoke run against a stub `sf` on PATH). Nothing here
-# touches a Salesforce org, so no org secret is needed.
+# Integration tests for the retrieve-org-metadata admin tool, in three jobs of
+# increasing cost. Each one is gated by a DIFFERENT environment variable, so a
+# cheap job can never accidentally run an expensive suite:
 #
-# The *.org.test.mjs suite is matched by the glob below but its org-touching
-# tests skip themselves: they are gated on ORG_METADATA_LIVE_ORG, which CI never
-# sets. What does run here is that suite's wiring tests, which assert it stays
-# skipped without an org and that it cannot import the branch-creating code —
-# cheap insurance against a live retrieve leaking into CI. Run the full suite
-# locally when changing this tool's Salesforce assumptions:
+#   test          seconds  no org      unit suites + a CLI smoke against a stub
+#                                      `sf` on PATH, plus the composite action's
+#                                      never-fail contract.
+#   org-tests     minutes  live org    ORG_METADATA_LIVE_ORG. Read-only, scoped
+#                                      to a few types. Checks the CLAIMS ABOUT
+#                                      SALESFORCE the logic rests on.
+#   full-retrieve hours    live org    ORG_METADATA_FULL_RETRIEVE. The real
+#                                      thing — full index, multi-chunk retrieve,
+#                                      snapshot branch, commit and push. Pushes
+#                                      to main and explicit dispatch only.
 #
-#   ORG_METADATA_LIVE_ORG=CairnCI_Production \
-#     node --test .github/actions/retrieve-org-metadata/tests/*.org.test.mjs
+# The `test` job's glob (tests/*.test.mjs) matches the gated files too. Their
+# org-touching suites skip themselves there, and what runs instead is each
+# suite's wiring tests — cheap insurance that a live retrieve cannot leak into
+# a job that has no org.
 #
-# Full-org runtime against GitHub's 6h job cap still cannot be exercised
-# anywhere but a real dispatched run — see
-# examples/caller-retrieve-org-metadata.yml.
+# Locally:
+#
+#   cd .github/actions/retrieve-org-metadata
+#   ORG_METADATA_LIVE_ORG=CairnCI_Production      npm run test:retrieve-org-metadata:org
+#   ORG_METADATA_FULL_RETRIEVE=CairnCI_Production npm run test:retrieve-org-metadata:full
 name: retrieve-org-metadata Tests
 
 on:
@@ -28,6 +36,11 @@ on:
       - .github/actions/retrieve-org-metadata/**
       - .github/workflows/integration-retrieve-org-metadata.yml
   workflow_dispatch:
+    inputs:
+      run-full-retrieve:
+        description: Also run the multi-hour full-org retrieval test
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -240,5 +253,88 @@ jobs:
           fi
           if ! git diff --quiet -- force-app; then
             echo "::error::the org suite modified force-app; it must stay read-only"
+            exit 1
+          fi
+
+  # The real thing: a full-org index, plan, multi-chunk retrieve, snapshot
+  # branch, commit and push — `runFullRetrieval` called exactly as action.yml
+  # calls it. This is what proves we test what we publish; the two jobs above
+  # never retrieve at org scale and never create a branch.
+  #
+  # Hours, not minutes, so it does not run on pull requests: those get the
+  # org-free `test` job plus the ~2-minute read-only `org-tests` job. This one
+  # runs when the tool lands on main (the paths filter above already limits
+  # that to changes to the tool), or on demand via the workflow_dispatch input.
+  #
+  # It writes into a throwaway git repo under the runner's temp dir whose
+  # `origin` is a local bare repo, so the push path is genuinely exercised
+  # without creating org-snapshot branches in this repository. That is why
+  # `contents: read` is enough — the job could not push here if it tried.
+  full-retrieve:
+    name: full org retrieve + snapshot branch (live org)
+    if: >-
+      github.repository == 'Fossiltalk/CairnCI-Internal' &&
+      ((github.event_name == 'push' && github.ref == 'refs/heads/main') ||
+       (github.event_name == 'workflow_dispatch' && inputs.run-full-retrieve))
+    runs-on: ubuntu-latest
+    environment: main
+    # GitHub's hard job ceiling is 360 minutes. 350 matches what the example
+    # caller documents, so the test measures the budget consumers are told to
+    # set. The suite's own timeout is 300 minutes so a hang fails as a test
+    # with output rather than as a killed job with none.
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+
+      - name: Install Salesforce CLI
+        shell: bash
+        run: npm install --global @salesforce/cli@latest
+
+      - name: Authenticate to the org
+        shell: bash
+        env:
+          SFDX_AUTH_URL: ${{ secrets.SFDX_AUTH_URL }}
+        run: |
+          set -euo pipefail
+          if [ -z "${SFDX_AUTH_URL:-}" ]; then
+            echo "::error::SFDX_AUTH_URL secret is empty or not set on the 'main' environment." >&2
+            exit 1
+          fi
+          authfile="$(mktemp)"
+          printf '%s' "$SFDX_AUTH_URL" > "$authfile"
+          sf org login sfdx-url --sfdx-url-file "$authfile" --alias target-org --set-default
+          rm -f "$authfile"
+
+      - name: Run the full retrieval against the live org
+        shell: bash
+        # No ORG_METADATA_CONCURRENCY here on purpose: the test falls back to
+        # the same default of 6 that action.yml ships, so the run under test is
+        # the run consumers get.
+        env:
+          ORG_METADATA_FULL_RETRIEVE: target-org
+        run: |
+          set -euo pipefail
+          node --test --test-concurrency=1 \
+            .github/actions/retrieve-org-metadata/tests/*.live.test.mjs
+
+      - name: Confirm the full retrieval left this checkout untouched
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          branch="$(git rev-parse --abbrev-ref HEAD)"
+          echo "HEAD is still: $branch"
+          if git branch --list 'org-snapshot/*' | grep -q .; then
+            echo "::error::the full retrieval created a snapshot branch in this repo; it must work in a temp repo"
+            git branch --list 'org-snapshot/*'
+            exit 1
+          fi
+          if ! git diff --quiet -- force-app; then
+            echo "::error::the full retrieval modified this checkout's force-app"
             exit 1
           fi

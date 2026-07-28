@@ -296,9 +296,43 @@ even import the branch-creating code.
 That glob is matched by `tests/*.test.mjs`, so the org file is loaded in CI —
 its suites simply skip, and only the wiring guards run.
 
-What still **cannot** be covered anywhere: a full-org retrieve's runtime
-against GitHub's 6h job cap. Verify that with a `workflow_dispatch` run before
-releasing.
+### The full-retrieval test
+
+`tests/full-retrieve.live.test.mjs` runs the real thing: a full-org index, a
+multi-chunk retrieve of **every** chunk, a snapshot branch, a commit and a
+push — `runFullRetrieval` called exactly as `action.yml` calls it, at the
+shipped default concurrency. It is what makes "we test what we publish" true;
+the two suites above never retrieve at org scale and never create a branch.
+
+```bash
+cd .github/actions/retrieve-org-metadata
+ORG_METADATA_FULL_RETRIEVE=CairnCI_Production npm run test:retrieve-org-metadata:full
+```
+
+It is gated on its **own** variable. `ORG_METADATA_LIVE_ORG` deliberately does
+not trigger it: that one belongs to the two-minute read-only suite, and nobody
+should start a multi-hour run by setting the casual variable.
+
+It writes into a throwaway git repo under the OS temp dir, seeded as a
+Salesforce project with one tracked component that exists in no org. That
+sentinel is what proves the replace is **wholesale** rather than a merge — the
+branch must record it as a deletion. The temp repo's `origin` is a local bare
+repo, so `git push` genuinely runs and the ref is read back out of the remote,
+without ever creating `org-snapshot/*` branches in this repository. Three
+wiring tests enforce the isolation structurally.
+
+Assertions it alone can make: every indexed component reaches a manifest and
+comes back (`reconciliation`), more than one chunk is planned and each stays
+under the weight budget, every unretrievable type the org produces is explained
+by `known-unretrievable.json`, the branch name matches the documented pattern,
+the commit carries thousands of source files across several type directories
+plus the three provenance files — and the run finishes inside the 350-minute
+budget the example caller documents. That last number was a guess until this
+test started measuring it; the measured runtime is written to the job summary
+on every run.
+
+In CI it runs only on pushes to `main` and on `workflow_dispatch` with
+`run-full-retrieve: true`. Pull requests get the two short suites.
 
 Layout follows the repo convention — `lib/*.mjs` is pure and side-effect-free,
 `retrieve.mjs` owns all IO (argv, annotations, job summary, outputs, exit
