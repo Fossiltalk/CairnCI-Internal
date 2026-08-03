@@ -11,6 +11,7 @@ using the listed Node.js version. Pin to a `✅ validated` version.
 
 | `@salesforce/cli` | Node | `sfdx-git-delta` | Status | Validated on |
 |---|---|---|---|---|
+| `2.145.6` | 22 | — | ❌ failing <br><sub>Integration probe failed (delta=failure, full=failure). See https://github.com/Fossiltalk/CairnCI-Internal/actions/runs/30794114698</sub> | 2026-08-03 |
 | `2.144.6` | 22 | 6.31.0 | ✅ validated | 2026-07-27 |
 | `2.143.6` | 22 | 6.31.0 | ✅ validated | 2026-07-20 |
 | `2.142.7` | 22 | 6.31.0 | ✅ validated | 2026-07-14 |

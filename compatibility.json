@@ -17,6 +17,12 @@
       "node": "22",
       "sgd": "6.31.0",
       "status": "validated"
+    },
+    "2.145.6": {
+      "date": "2026-08-03",
+      "node": "22",
+      "reason": "Integration probe failed (delta=failure, full=failure). See https://github.com/Fossiltalk/CairnCI-Internal/actions/runs/30794114698",
+      "status": "failing"
     }
   }
 }
