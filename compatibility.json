@@ -23,6 +23,12 @@
       "node": "22",
       "reason": "Integration probe failed (delta=failure, full=failure). See https://github.com/Fossiltalk/CairnCI-Internal/actions/runs/30794114698",
       "status": "failing"
+    },
+    "2.146.3": {
+      "date": "2026-08-10",
+      "node": "22",
+      "reason": "Integration probe failed (delta=failure, full=failure). See https://github.com/Fossiltalk/CairnCI-Internal/actions/runs/31359203702",
+      "status": "failing"
     }
   }
 }
