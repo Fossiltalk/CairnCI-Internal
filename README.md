@@ -28,6 +28,11 @@ through inputs, secrets, and an optional in-repo config file. Two adoption paths
 - **Optional extensions** — opt-in add-ons (e.g. a field governance gate that blocks new
   fields lacking permission-set access or required governance metadata) live in
   [CairnCI-Extensions](https://github.com/Fossiltalk/CairnCI-Extensions).
+- **Admin tools** — included capabilities for standing up and maintaining a CairnCI repo,
+  such as [Full Org Metadata Retrieval](.github/actions/retrieve-org-metadata/): a
+  scheduled or manual full-org snapshot onto a timestamped branch, which is how you seed
+  `force-app/` in the first place and how you track drift afterwards. See
+  [docs/admin-tools.md](docs/admin-tools.md).
 
 **Start here:** [docs/consumer-setup.md](docs/consumer-setup.md) ·
 example callers in [`examples/`](examples) ·

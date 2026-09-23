@@ -1,5 +1,3 @@
-import { sfQuery } from './sf-cli.mjs';
-
 // `sf org list metadata` (Metadata API listMetadata) silently caps at 3,000
 // rows per call with no pagination. For types known to plausibly exceed that
 // in a large org, query the Tooling/REST API instead, which supports normal
@@ -76,11 +74,13 @@ export function hasFallback(xmlName) {
 /**
  * Returns the full, un-truncated member list for a type via Tooling/REST API
  * SOQL, or null if no fallback is registered for that type.
+ *
+ * @param {ReturnType<import('./sf-cli.mjs').createSfClient>} sf
  */
-export async function fetchFullMemberList(targetOrg, xmlName) {
+export async function fetchFullMemberList(sf, targetOrg, xmlName) {
   const fallback = FALLBACKS[xmlName];
   if (!fallback) return null;
-  const rows = await sfQuery(targetOrg, fallback.soql, { toolingApi: fallback.tooling });
+  const rows = await sf.query(targetOrg, fallback.soql, { toolingApi: fallback.tooling });
   return fallback.buildMembers(rows);
 }
 

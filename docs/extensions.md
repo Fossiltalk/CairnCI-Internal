@@ -1,9 +1,17 @@
 # Extension Development Guide
 
 Extensions are composite actions developed and validated in CairnCI-Internal
-(on the `CairnCI-External` development branch), then published to
+(on a feature branch off `main`), then published to
 [Fossiltalk/CairnCI-Extensions](https://github.com/Fossiltalk/CairnCI-Extensions).
 They version independently from the core CairnCI workflows.
+
+> Not everything under `.github/actions/` is an extension. **Admin tools** —
+> capabilities for setting up and maintaining a CairnCI repo, rather than
+> gating a change inside a pipeline — are a separate class with different
+> rules: they never fail the calling job, ship no `run.sh`, and publish to
+> CairnCI-Public on the core `v*` channel. See [admin-tools.md](admin-tools.md).
+> The `extension-caller` is a third case again: core framework, documented
+> below.
 
 There are two ways consumers run extensions:
 
