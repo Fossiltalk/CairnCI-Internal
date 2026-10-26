@@ -1,0 +1,159 @@
+# CairnCI admin tool — Full Org Metadata Retrieval. Indexes every metadata
+# component in a connected org and retrieves all of it onto a new branch named
+# for when and how the run happened.
+#
+# This is an ADMIN TOOL, not an extension (see docs/admin-tools.md). It runs as
+# a standalone scheduled or manually dispatched job, never as an
+# extension-caller lifecycle phase — a full-org retrieve takes hours and has no
+# business inside a deploy pipeline. There is deliberately no run.sh.
+#
+# How it works:
+#   1. Index    — describeMetadata enumerates every type; listMetadata (with a
+#                 Tooling API fallback for types that hit listMetadata's silent
+#                 3,000-row cap) enumerates the members of each.
+#   2. Plan     — members are packed into package.xml chunks by WEIGHTED total,
+#                 because the Metadata API ceiling is 10,000 FILES per retrieve,
+#                 not 10,000 <members>: a CustomObject expands into far more
+#                 files than an ApexClass. Types are placed whole, largest
+#                 first, and split across chunks only when one type alone
+#                 exceeds the ceiling.
+#   3. Retrieve — chunks retrieve sequentially. A failed chunk is recorded and
+#                 the run continues. Types the installed sf CLI does not know
+#                 are dropped from the manifest and the chunk is retried.
+#   4. Commit   — force-app/main/default is replaced wholesale on a new branch,
+#                 so the branch diff is exactly the org's drift, deletions
+#                 included.
+#
+# IT NEVER FAILS THE CALLING JOB. Every nonzero exit is mapped to success with
+# a ::warning:: annotation and a job summary, because a partial org snapshot is
+# still a useful org snapshot and a nightly backup should not page anyone. This
+# is a deliberate deviation from the fail-on-violation behavior of the
+# field-governance-gate / permset-access-gate extensions — set fail-on-error to
+# "true" to opt back in. See this action's README.
+#
+# CREDENTIALS: none. This action adds no credential inputs and stores nothing.
+# It reuses the org session the calling job already established (the alias set
+# by `sf org login sfdx-url`, matching sf-deploy.yml).
+name: "Tool: Full Org Metadata Retrieval"
+description: >-
+  Retrieves every available metadata component from a Salesforce org onto a
+  new, timestamped branch, splitting the retrieve into chunks that stay under
+  the Metadata API's 10,000-file ceiling. Never fails the calling job.
+
+inputs:
+  target-org:
+    description: Org alias or username the calling job already authenticated.
+    required: false
+    default: target-org
+  target-dir:
+    description: Source directory the retrieved metadata is written to (replaced wholesale).
+    required: false
+    default: force-app
+  branch-prefix:
+    description: First segment of the snapshot branch name.
+    required: false
+    default: org-snapshot
+  create-branch:
+    description: Create and commit to a snapshot branch ("true"/"false").
+    required: false
+    default: "true"
+  push:
+    description: >-
+      Push the snapshot branch to origin ("true"/"false"). Requires the calling
+      job to grant contents write permission.
+    required: false
+    default: "true"
+  max-weight:
+    description: Max weighted components per retrieve chunk. The hard API ceiling is 10,000 files.
+    required: false
+    default: "9000"
+  concurrency:
+    description: Parallel `sf org list metadata` calls during indexing.
+    required: false
+    default: "6"
+  wait:
+    description: Per-chunk retrieve timeout, in minutes.
+    required: false
+    default: "60"
+  api-version:
+    description: Metadata API version. Empty uses the org's current version.
+    required: false
+    default: ""
+  skip-retrieve:
+    description: Stop after building the index and manifests ("true"/"false").
+    required: false
+    default: "false"
+  keep-staging:
+    description: Retain per-chunk mdapi staging directories for debugging ("true"/"false").
+    required: false
+    default: "false"
+  fail-on-error:
+    description: >-
+      Fail the job when the retrieval had problems ("true"/"false"). Defaults to
+      "false": this tool reports through warnings and the job summary instead.
+    required: false
+    default: "false"
+
+outputs:
+  branch-name:
+    description: The snapshot branch that was created, or empty if none was.
+    value: ${{ steps.retrieve.outputs.branch-name }}
+  total-components:
+    description: Number of metadata components discovered in the org index.
+    value: ${{ steps.retrieve.outputs.total-components }}
+  chunks-succeeded:
+    description: Number of retrieve chunks that completed.
+    value: ${{ steps.retrieve.outputs.chunks-succeeded }}
+  chunks-failed:
+    description: Number of retrieve chunks that failed.
+    value: ${{ steps.retrieve.outputs.chunks-failed }}
+  types-unretrievable:
+    description: Comma-separated metadata types that could not be retrieved.
+    value: ${{ steps.retrieve.outputs.types-unretrievable }}
+
+runs:
+  using: composite
+  steps:
+    - name: Retrieve full org metadata
+      id: retrieve
+      shell: bash
+      env:
+        TARGET_ORG: ${{ inputs.target-org }}
+        TARGET_DIR: ${{ inputs.target-dir }}
+        BRANCH_PREFIX: ${{ inputs.branch-prefix }}
+        CREATE_BRANCH: ${{ inputs.create-branch }}
+        PUSH_BRANCH: ${{ inputs.push }}
+        MAX_WEIGHT: ${{ inputs.max-weight }}
+        CONCURRENCY: ${{ inputs.concurrency }}
+        WAIT_MINUTES: ${{ inputs.wait }}
+        API_VERSION: ${{ inputs.api-version }}
+        SKIP_RETRIEVE: ${{ inputs.skip-retrieve }}
+        KEEP_STAGING: ${{ inputs.keep-staging }}
+        FAIL_ON_ERROR: ${{ inputs.fail-on-error }}
+      run: |
+        set -uo pipefail
+        # This tool never fails the calling job by default: capture the exit
+        # code and map every nonzero value to a warning + success. Findings are
+        # reported through ::warning:: annotations and the job summary, which
+        # the run already wrote before exiting. fail-on-error: "true" opts back
+        # into the usual blocking behavior.
+        set +e
+        node "${{ github.action_path }}/retrieve.mjs" \
+          --target-org "$TARGET_ORG" \
+          --target-dir "$TARGET_DIR" \
+          --branch-prefix "$BRANCH_PREFIX" \
+          --create-branch "$CREATE_BRANCH" \
+          --push "$PUSH_BRANCH" \
+          --max-weight "$MAX_WEIGHT" \
+          --concurrency "$CONCURRENCY" \
+          --wait "$WAIT_MINUTES" \
+          --api-version "$API_VERSION" \
+          --skip-retrieve "$SKIP_RETRIEVE" \
+          --keep-staging "$KEEP_STAGING"
+        code=$?
+        set -e
+        if [ "$code" -ne 0 ] && [ "$FAIL_ON_ERROR" != "true" ]; then
+          echo "::warning::Full Org Metadata Retrieval finished with issues (exit ${code}); see the job summary. Not failing the job."
+          exit 0
+        fi
+        exit "$code"

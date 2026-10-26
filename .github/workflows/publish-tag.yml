@@ -4,10 +4,16 @@
 #
 # IMPORTANT: this does NOT mirror the internal repo. CairnCI-Internal is a
 # private working space that also holds a full org-metadata export under
-# force-app/, the export tooling under scripts/, test fixtures, and
-# internal-only CI. Only the curated allowlist below may ever reach the public
-# repo. The publish rebuilds the public tree from that allowlist (clean slate),
-# so the internal git history and any non-allowlisted files never leave.
+# force-app/, internal scripts, test fixtures, and internal-only CI. Only the
+# curated allowlist below may ever reach the public repo. The publish rebuilds
+# the public tree from that allowlist (clean slate), so the internal git
+# history and any non-allowlisted files never leave.
+#
+# The allowlist carries two things beyond the core workflows: the
+# extension-caller (core framework, versioned in lockstep with the workflows)
+# and retrieve-org-metadata (an admin tool — a prerequisite for adopting
+# CairnCI at all, so it ships on the core channel rather than to
+# CairnCI-Extensions). See docs/admin-tools.md.
 #
 # Push an exact semver tag to CairnCI-Internal to release, e.g. `v1.0.0`. The
 # workflow republishes the curated content to CairnCI-Public's main and pushes
@@ -69,6 +75,7 @@ jobs:
             .github/workflows/sf-validate.yml
             .github/workflows/sf-deploy.yml
             .github/actions/extension-caller
+            .github/actions/retrieve-org-metadata
           )
 
           for p in "${PUBLISH_PATHS[@]}"; do
@@ -98,7 +105,7 @@ jobs:
           # Safety net on top of the allowlist copy: hard-fail if anything
           # outside the intended public shape got staged.
           if git diff --cached --name-only \
-            | grep -Ev '^(LICENSE|NOTICE|README\.md|CHANGELOG\.md|\.gitignore|docs/.*|examples/.*|\.github/workflows/sf-(validate|deploy)\.yml|\.github/actions/extension-caller/.*)$'; then
+            | grep -Ev '^(LICENSE|NOTICE|README\.md|CHANGELOG\.md|\.gitignore|docs/.*|examples/.*|\.github/workflows/sf-(validate|deploy)\.yml|\.github/actions/(extension-caller|retrieve-org-metadata)/.*)$'; then
             echo "::error::Unexpected file staged for public publish (listed above). Aborting." >&2
             exit 1
           fi

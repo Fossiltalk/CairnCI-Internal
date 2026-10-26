@@ -1,0 +1,98 @@
+# Drop this in your repo at .github/workflows/org-snapshot.yml
+# It retrieves EVERY available metadata component from your org onto a new
+# branch named for when and how the run happened, e.g.
+#   org-snapshot/00D8b000000XyZa/20260726-041500Z-schedule
+#
+# This is a CairnCI admin tool, not a pipeline gate — see docs/admin-tools.md.
+# Typical uses: seeding force-app/ when first adopting CairnCI, and keeping a
+# periodic drift baseline afterwards.
+#
+# The job NEVER fails on a retrieval problem. Unretrievable metadata and failed
+# chunks are reported as warnings and in the job summary; a partial snapshot is
+# still committed. Set fail-on-error: "true" if you would rather be paged.
+#
+# Store the org's SFDX_AUTH_URL secret on a GitHub Environment (Settings >
+# Environments) and name that environment below. The action itself takes no
+# credentials — it reuses the session this job establishes.
+name: Org Metadata Snapshot
+
+on:
+  schedule:
+    # Weekly, Sunday 04:00 UTC. A full retrieve of a large org takes hours;
+    # nightly is usually more than you need.
+    - cron: "0 4 * * 0"
+  workflow_dispatch:
+    inputs:
+      target-org:
+        description: Org alias to snapshot (must match the environment's secret).
+        required: false
+        default: target-org
+
+permissions:
+  contents: write # the action pushes the snapshot branch
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    environment: main # provides SFDX_AUTH_URL
+    # A full retrieve of a large Industries / Public Sector org runs for hours.
+    # GitHub's hard ceiling is 360 minutes; stop just short so the job reports
+    # rather than being killed mid-commit.
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+
+      - name: Install Salesforce CLI
+        shell: bash
+        run: npm install --global @salesforce/cli@latest
+
+      # Same auth shape as CairnCI's sf-deploy.yml. The action reuses this
+      # session; it never sees the secret itself.
+      - name: Authenticate to the org
+        shell: bash
+        env:
+          SFDX_AUTH_URL: ${{ secrets.SFDX_AUTH_URL }}
+        run: |
+          set -euo pipefail
+          if [ -z "${SFDX_AUTH_URL:-}" ]; then
+            echo "::error::SFDX_AUTH_URL secret is empty or not set." >&2
+            exit 1
+          fi
+          authfile="$(mktemp)"
+          printf '%s' "$SFDX_AUTH_URL" > "$authfile"
+          sf org login sfdx-url --sfdx-url-file "$authfile" --alias target-org --set-default
+          rm -f "$authfile"
+
+      - name: Retrieve full org metadata
+        id: snapshot
+        uses: Fossiltalk/CairnCI-Public/.github/actions/retrieve-org-metadata@v1
+        with:
+          target-org: ${{ inputs.target-org || 'target-org' }}
+          target-dir: force-app
+          # Tune if your org's CustomObjects carry an unusually high or low
+          # average field count. The Metadata API ceiling is 10,000 FILES per
+          # retrieve, and the default weights assume a typical spread.
+          # max-weight: "9000"
+
+      - name: Report where the snapshot landed
+        shell: bash
+        # Step outputs come through env, not spliced into the script body —
+        # interpolating a ${{ }} expression into shell is a script-injection
+        # vector.
+        env:
+          BRANCH: ${{ steps.snapshot.outputs.branch-name }}
+          COMPONENTS: ${{ steps.snapshot.outputs.total-components }}
+          OK: ${{ steps.snapshot.outputs.chunks-succeeded }}
+          FAILED: ${{ steps.snapshot.outputs.chunks-failed }}
+          SKIPPED: ${{ steps.snapshot.outputs.types-unretrievable }}
+        run: |
+          set -euo pipefail
+          echo "Branch:     $BRANCH"
+          echo "Components: $COMPONENTS"
+          echo "Chunks:     $OK ok, $FAILED failed"
+          echo "Skipped:    $SKIPPED"
