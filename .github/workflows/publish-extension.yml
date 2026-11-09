@@ -44,13 +44,20 @@ jobs:
             echo "major-tag=${MAJOR_TAG}"
           } >> "$GITHUB_OUTPUT"
 
-          # The extension-caller is core framework: it ships to CairnCI-Public
-          # with the sf-validate/sf-deploy workflows (publish-tag.yml), never
-          # to CairnCI-Extensions.
-          if [ "${EXT_NAME}" = "extension-caller" ]; then
-            echo "::error::extension-caller is published to CairnCI-Public via core v* tags, not to CairnCI-Extensions. Remove the ${TAG} tag." >&2
-            exit 1
-          fi
+          # Not everything under .github/actions/ is an extension. Two classes
+          # ship to CairnCI-Public on core v* tags instead (publish-tag.yml's
+          # allowlist), never here:
+          #   - extension-caller: core framework, versioned in lockstep with
+          #     the sf-validate/sf-deploy workflows.
+          #   - retrieve-org-metadata: an admin tool — a prerequisite for
+          #     adopting CairnCI, so it belongs on the core channel.
+          # See docs/admin-tools.md.
+          case "${EXT_NAME}" in
+            extension-caller | retrieve-org-metadata)
+              echo "::error::${EXT_NAME} is published to CairnCI-Public via core v* tags, not to CairnCI-Extensions. Remove the ${TAG} tag." >&2
+              exit 1
+              ;;
+          esac
 
           if [ ! -f ".github/actions/${EXT_NAME}/action.yml" ]; then
             echo "::error::No action.yml found at .github/actions/${EXT_NAME}/action.yml" >&2

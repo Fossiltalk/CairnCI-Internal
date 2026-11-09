@@ -1,14 +1,14 @@
-import { sfDescribeMetadata } from './sf-cli.mjs';
-
 /**
  * Returns the set of metadata types that are directly listable via
  * `sf org list metadata`, excluding types that only ever appear as a child
  * of another type (e.g. CustomLabel under CustomLabels, WorkflowAlert under
  * Workflow) — those are retrieved automatically with their parent and
  * listMetadata calls against them return nothing useful.
+ *
+ * @param {ReturnType<import('./sf-cli.mjs').createSfClient>} sf
  */
-export async function getListableTypes(targetOrg, apiVersion) {
-  const described = await sfDescribeMetadata(targetOrg, apiVersion);
+export async function getListableTypes(sf, targetOrg, apiVersion) {
+  const described = await sf.describeMetadata(targetOrg, apiVersion);
   const allTypes = described.metadataObjects ?? [];
 
   const childTypeNames = new Set();
