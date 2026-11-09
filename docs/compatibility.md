@@ -11,6 +11,7 @@ using the listed Node.js version. Pin to a `✅ validated` version.
 
 | `@salesforce/cli` | Node | `sfdx-git-delta` | Status | Validated on |
 |---|---|---|---|---|
+| `2.157.8` | 22 | — | ❌ failing <br><sub>Integration probe failed (delta=failure, full=failure). See https://github.com/Fossiltalk/CairnCI-Internal/actions/runs/42619115038</sub> | 2026-11-09 |
 | `2.156.8` | 22 | — | ❌ failing <br><sub>Integration probe failed (delta=failure, full=failure). See https://github.com/Fossiltalk/CairnCI-Internal/actions/runs/41442550586</sub> | 2026-11-02 |
 | `2.155.7` | 22 | — | ❌ failing <br><sub>Integration probe failed (delta=failure, full=failure). See https://github.com/Fossiltalk/CairnCI-Internal/actions/runs/40303534471</sub> | 2026-10-26 |
 | `2.154.4` | 22 | — | ❌ failing <br><sub>Integration probe failed (delta=failure, full=failure). See https://github.com/Fossiltalk/CairnCI-Internal/actions/runs/39232412536</sub> | 2026-10-19 |
